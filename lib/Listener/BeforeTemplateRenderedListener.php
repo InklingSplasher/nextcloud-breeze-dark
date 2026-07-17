@@ -28,48 +28,74 @@ declare(strict_types=1);
 
 namespace OCA\BreezeDark\Listener;
 
+use OCP\AppFramework\Http\Events\BeforeTemplateRenderedEvent;
 use OCP\AppFramework\Http\TemplateResponse;
+use OCP\Config\IUserConfig;
 use OCP\EventDispatcher\Event;
 use OCP\EventDispatcher\IEventListener;
-use OCP\IConfig;
+use OCP\IAppConfig;
 use OCP\IUserSession;
 
+/** @implements IEventListener<BeforeTemplateRenderedEvent> */
 class BeforeTemplateRenderedListener implements IEventListener {
-
-    protected $appName;
-    private IUserSession $userSession;
-	private IConfig $config;
+	private const APP_ID = 'breezedark';
 
 	public function __construct(
-		IUserSession $userSession,
-		IConfig $config
+		private IUserSession $userSession,
+		private IAppConfig $appConfig,
+		private IUserConfig $userConfig,
 	) {
-        $this->appName = "breezedark";
-		$this->userSession = $userSession;
-		$this->config = $config;
 	}
 
 	public function handle(Event $event): void {
-        $response = $event->getResponse();
-        $themeEnforced = $this->config->getAppValue($this->appName, 'theme_enforced', "0");
-        $params = $response->getParams();
+		if (!$event instanceof BeforeTemplateRenderedEvent) {
+			return;
+		}
 
-        if ($themeEnforced) {
-            $params = array_merge(["enabledThemes" => ["breezedark", "dark"]], $params);
-            $response->setParams($params);
-            return;
-        }
+		$response = $event->getResponse();
+		$params = $response->getParams();
+		$enabledThemes = $this->normalizeThemes($params['enabledThemes'] ?? []);
 
-        if ($response->getRenderAs() === TemplateResponse::RENDER_AS_USER) {
-            $userId = $this->userSession->getUser()->getUID();
-            $themeEnabled = $this->config->getUserValue($userId, $this->appName, "theme_enabled", "0");
+		if ($this->appConfig->getValueString(self::APP_ID, 'theme_enforced', '0') === '1') {
+			$params['enabledThemes'] = array_values(array_unique(['breezedark', 'dark', ...$enabledThemes]));
+			$response->setParams($params);
+			return;
+		}
 
-            if ($themeEnabled) {
-                $enabledThemes = json_decode($this->config->getUserValue($userId, "theming", "enabled-themes", "[]"));
-                $enabledThemes = array_merge(["breezedark"], $enabledThemes);
-                $params = array_merge(["enabledThemes" => $enabledThemes], $params);
-                $response->setParams($params);
-            }
-        }
+		if ($response->getRenderAs() !== TemplateResponse::RENDER_AS_USER) {
+			return;
+		}
+
+		$user = $this->userSession->getUser();
+		if ($user === null) {
+			return;
+		}
+
+		$userId = $user->getUID();
+		if ($this->userConfig->getValueString($userId, self::APP_ID, 'theme_enabled', '0') !== '1') {
+			return;
+		}
+
+		$storedThemes = json_decode(
+			$this->userConfig->getValueString($userId, 'theming', 'enabled-themes', '[]'),
+			true,
+		);
+		$params['enabledThemes'] = array_values(array_unique([
+			'breezedark',
+			...$enabledThemes,
+			...$this->normalizeThemes($storedThemes),
+		]));
+		$response->setParams($params);
+	}
+
+	/**
+	 * @return list<string>
+	 */
+	private function normalizeThemes(mixed $themes): array {
+		if (!is_array($themes)) {
+			return [];
+		}
+
+		return array_values(array_filter($themes, static fn (mixed $theme): bool => is_string($theme) && $theme !== ''));
 	}
 }

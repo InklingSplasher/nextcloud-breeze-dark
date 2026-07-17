@@ -23,28 +23,33 @@
  *
  */
 
-
 script('breezedark', 'settings-personal');
 style('breezedark', 'settings');
 ?>
 
-<div id="breezedark" class="breezedark-personal section">
-    <h2><?php p($l->t("Breeze Dark")); ?></h2>
-    <p><?php p($l->t("A Breeze Dark theme for Nextcloud.")); ?></p>
+<div
+    id="breezedark"
+    class="breezedark-personal section"
+    data-settings-url="<?php p($settingsUrl); ?>"
+    data-saved-label="<?php p($l->t('Saved')); ?>"
+    data-error-label="<?php p($l->t('Error')); ?>"
+>
+    <h2><?php p($l->t('Breeze Dark')); ?></h2>
+    <p><?php p($l->t('A Breeze Dark theme for Nextcloud.')); ?></p>
     <div class="preview-list">
         <div class="preview">
             <div class="preview-image" style='background-image: url("<?php p($appWebPath); ?>/img/theme-breeze-dark.png");'></div>
             <div class="preview-description">
-                <h3><?php p($l->t("Breeze Dark theme")); ?></h3>
-                <p><?php p($l->t("A Dark theme based on Breeze Dark by the KDE project. Please refresh the page for changes to take effect.")); ?></p>
+                <h3><?php p($l->t('Breeze Dark theme')); ?></h3>
+                <p><?php p($l->t('A Dark theme based on Breeze Dark by the KDE project. Please refresh the page for changes to take effect.')); ?></p>
                 <?php if ($themeEnforced) : ?>
                     <input type="checkbox" class="checkbox" id="breezedark-enabled" disabled checked>
                 <?php else : ?>
-                    <input type="checkbox" class="checkbox" id="breezedark-enabled" <?php p($themeEnabled ? "checked" : ""); ?>>
+                    <input type="checkbox" class="checkbox" id="breezedark-enabled" <?php p($themeEnabled ? 'checked' : ''); ?>>
                 <?php endif; ?>
-                <label for="breezedark-enabled"><?php p($l->t("Enable Breeze Dark theme")); ?></label>
-                <input type="checkbox" class="checkbox" id="breezedark-automatic-activation-enabled" <?php p($themeAutomaticActivation ? "checked" : ""); ?>>
-                <label for="breezedark-automatic-activation-enabled"><?php p($l->t("Enable Breeze Dark automated activation by clients system settings")); ?></label>
+                <label for="breezedark-enabled"><?php p($l->t('Enable Breeze Dark theme')); ?></label>
+                <input type="checkbox" class="checkbox" id="breezedark-automatic-activation-enabled" <?php p($themeAutomaticActivation ? 'checked' : ''); ?>>
+                <label for="breezedark-automatic-activation-enabled"><?php p($l->t('Enable Breeze Dark automated activation by clients system settings')); ?></label>
             </div>
         </div>
     </div>

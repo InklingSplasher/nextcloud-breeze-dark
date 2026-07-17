@@ -28,67 +28,60 @@ declare(strict_types=1);
 
 namespace OCA\BreezeDark\Migration;
 
+use OCP\Config\IUserConfig;
+use OCP\IAppConfig;
 use OCP\IConfig;
-use OCP\IDBConnection;
-use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\Migration\IOutput;
 use OCP\Migration\IRepairStep;
 
-class MigrateUserThemeSettings implements IRepairStep
-{
-    /** @var IDBConnection */
-	private $db;
+class MigrateUserThemeSettings implements IRepairStep {
+	public function __construct(
+		private IAppConfig $appConfig,
+		private IUserConfig $userConfig,
+		private IConfig $systemConfig,
+	) {
+	}
 
-    /** @var IConfig */
-	private $config;
+	public function getName(): string {
+		return 'Migrate user theme settings';
+	}
 
-    public function __construct(IDBConnection $db, IConfig $config)
-    {
-        $this->db = $db;
-        $this->config = $config;   
-    }
+	public function run(IOutput $output): void {
+		$settingsVersion = $this->appConfig->getValueString('breezedark', 'theme_settings_version', '0');
 
-    public function getName(): string
-    {
-        return "Migrate user theme settings";
-    }
+		if ($settingsVersion >= '3') {
+			return;
+		}
 
-    public function run(IOutput $output): void
-    {
-        $settingsVersion = $this->config->getAppValue("breezedark", "theme_settings_version", "0");
+		foreach ($this->userConfig->searchUsersByValueString('breezedark', 'theme_enabled', '1') as $userId) {
+			$enabledThemes = json_decode(
+				$this->userConfig->getValueString($userId, 'theming', 'enabled-themes', '[]'),
+				true,
+			);
+			if (!is_array($enabledThemes)) {
+				$enabledThemes = [];
+			}
 
-        if ($settingsVersion >= "3") {
-            return;
-        }
+			$key = array_search('breezedark', $enabledThemes);
 
-        $userQb = $this->db->getQueryBuilder();
-        $userQb->select('userid')->from('preferences')->where(
-            $userQb->expr()->eq('appid', $userQb->createNamedParameter('breezedark'), IQueryBuilder::PARAM_STR),
-            $userQb->expr()->eq('configkey', $userQb->createNamedParameter('theme_enabled')),
-            $userQb->expr()->eq('configvalue', $userQb->createNamedParameter('1'))
-        );
-        $result = $userQb->executeQuery();
+			if ($key !== false) {
+				unset($enabledThemes[$key]);
+			}
 
-        $users = $result->fetchAll();
+			$this->userConfig->setValueString(
+				$userId,
+				'theming',
+				'enabled-themes',
+				json_encode(array_values(array_unique($enabledThemes)), JSON_THROW_ON_ERROR),
+			);
+		}
 
-        foreach($users as $user) {
-            $enabledThemes = json_decode($this->config->getUserValue($user["userid"], "theming", "enabled-themes", "[]"));
+		$currentEnforcedTheme = $this->systemConfig->getSystemValueString('enforce_theme', '');
 
-            $key = array_search("breezedark", $enabledThemes);
+		if ($currentEnforcedTheme === 'breezedark') {
+			$this->systemConfig->setSystemValue('enforce_theme', 'dark');
+		}
 
-            if ($key !== false) {
-                unset($enabledThemes[$key]);
-            }
-
-            $this->config->setUserValue($user["userid"], "theming", "enabled-themes", json_encode(array_values(array_unique($enabledThemes))));
-        }
-
-        $currentEnforcedTheme = $this->config->getSystemValue("enforce_theme", "");
-
-        if ($currentEnforcedTheme === "breezedark") {
-            $this->config->setSystemValue("enforce_theme", "dark");
-        }
-
-        $this->config->setAppValue("breezedark", "theme_settings_version", "3");
-    }
+		$this->appConfig->setValueString('breezedark', 'theme_settings_version', '3');
+	}
 }

@@ -28,108 +28,113 @@ declare(strict_types=1);
 
 namespace OCA\BreezeDark\AppInfo;
 
+use OCA\BreezeDark\Listener\BeforeTemplateRenderedListener;
 use OCP\AppFramework\App;
 use OCP\AppFramework\Bootstrap\IBootContext;
 use OCP\AppFramework\Bootstrap\IBootstrap;
 use OCP\AppFramework\Bootstrap\IRegistrationContext;
-use OCP\IConfig;
+use OCP\AppFramework\Http\Events\BeforeTemplateRenderedEvent;
+use OCP\Config\IUserConfig;
+use OCP\IAppConfig;
+use OCP\IURLGenerator;
 use OCP\IUserSession;
 use OCP\Util;
-use OCP\IURLGenerator;
-use OCP\AppFramework\Http\Events\BeforeTemplateRenderedEvent;
-use OCA\BreezeDark\Listener\BeforeTemplateRenderedListener;
 
-class Application extends App implements IBootstrap
-{
+class Application extends App implements IBootstrap {
 
-    /** @var string */
-    public const APP_NAME = 'breezedark';
+	/** @var string */
+	public const APP_NAME = 'breezedark';
 
-    /** @var string */
-    protected $appName;
+	public function __construct() {
+		parent::__construct(self::APP_NAME);
+	}
 
-    public function __construct()
-    {
-        parent::__construct(self::APP_NAME);
-        $this->appName  = self::APP_NAME;
-    }
+	public function register(IRegistrationContext $context): void {
+		$context->registerEventListener(BeforeTemplateRenderedEvent::class, BeforeTemplateRenderedListener::class);
+	}
 
-    public function register(IRegistrationContext $context): void
-    {
-        $context->registerEventListener(BeforeTemplateRenderedEvent::class, BeforeTemplateRenderedListener::class);
-    }
+	public function boot(IBootContext $context): void {
+		$context->injectFn([$this, 'doTheming']);
+	}
 
-    public function boot(IBootContext $context): void
-    {
-        $context->injectFn([$this, 'doTheming']);
-    }
+	/**
+	 * Check if the theme should be applied
+	 *
+	 */
+	public function doTheming(
+		IAppConfig $appConfig,
+		IUserConfig $userConfig,
+		IUserSession $userSession,
+		IURLGenerator $urlGenerator,
+	): void {
+		$user = $userSession->getUser();
+		$enforced = $appConfig->getValueString(self::APP_NAME, 'theme_enforced', '0') === '1';
+		$loginPage = $appConfig->getValueString(self::APP_NAME, 'theme_login_page', '1') === '1';
+		$cachebuster = $appConfig->getValueString(self::APP_NAME, 'theme_cachebuster', '0');
+		$automaticActivation = $appConfig->getValueString(self::APP_NAME, 'theme_automatic_activation_enabled', '0') === '1';
 
-    /**
-     * Check if the theme should be applied
-     *
-     * @param IConfig $config
-     * @param IUserSession $userSession
-     * @param IURLGenerator $urlGenerator
-     */
-    public function doTheming(IConfig $config, IUserSession $userSession, IURLGenerator $urlGenerator): void
-    {
-        $user = $userSession->getUser();
-        $enforced = $config->getAppValue($this->appName, "theme_enforced", "0");
-        $loginPage = $config->getAppValue($this->appName, "theme_login_page", "1");
-        $cachebuster = $config->getAppValue($this->appName, "theme_cachebuster", "0");
-        $automaticActivation = $config->getAppValue($this->appName, "theme_automatic_activation_enabled", "0");
+		if ($enforced) {
+			if ($user !== null) {
+				$automaticActivation = $userConfig->getValueString(
+					$user->getUID(),
+					self::APP_NAME,
+					'theme_automatic_activation_enabled',
+					$automaticActivation ? '1' : '0',
+				) === '1';
+			}
+			$this->addStyling($urlGenerator, $loginPage, $cachebuster, $automaticActivation);
+		} elseif ($user !== null && $userConfig->getValueString($user->getUID(), self::APP_NAME, 'theme_enabled', '0') === '1') {
+			// When shown the 2FA login page you are logged in while also being on a login page,
+			// so a logged in user still needs the guests.css stylesheet
+			$automaticActivation = $userConfig->getValueString(
+				$user->getUID(),
+				self::APP_NAME,
+				'theme_automatic_activation_enabled',
+				'0',
+			) === '1';
+			$this->addStyling($urlGenerator, $loginPage, $cachebuster, $automaticActivation);
+		}
+	}
 
-        if ($enforced) {
-            if (!is_null($user)) {
-                $automaticActivation = $config->getUserValue($user->getUID(), $this->appName, "theme_automatic_activation_enabled", $automaticActivation);
-            }
-            $this->addStyling($urlGenerator, $loginPage, $cachebuster, $automaticActivation);
-        } elseif (!is_null($user) and $config->getUserValue($user->getUID(), $this->appName, "theme_enabled", "0")) {
-            // When shown the 2FA login page you are logged in while also being on a login page,
-            // so a logged in user still needs the guests.css stylesheet
-            $this->addStyling($urlGenerator, $loginPage, $cachebuster, $config->getUserValue($user->getUID(), $this->appName, "theme_automatic_activation_enabled", "0"));
-        }
-    }
+	/**
+	 * Add stylesheet(s) to nextcloud
+	 *
+	 */
+	public function addStyling(
+		IURLGenerator $urlGenerator,
+		bool $loginPage,
+		string $cachebuster,
+		bool $automaticActivation,
+	): void {
+		if ($automaticActivation) {
+			Util::addStyle(self::APP_NAME, 'server-automatic');
+		} else {
+			Util::addStyle(self::APP_NAME, 'server');
+		}
+		Util::addScript(self::APP_NAME, 'breezedark');
 
-    /**
-     * Add stylesheet(s) to nextcloud
-     *
-     * @param IURLGenerator $urlGenerator
-     * @param string $loginPage
-     * @param string $cachebuster
-     * @param string $automaticActivation
-     */
-    public function addStyling(IURLGenerator $urlGenerator, string $loginPage, string $cachebuster, string $automaticActivation): void
-    {
-        if ($automaticActivation) {
-            Util::addStyle($this->appName, 'server-automatic');
-        } else {
-            Util::addStyle($this->appName, 'server');
-        }
-        Util::addScript($this->appName, 'breezedark');
+		// If the styling for the login page is wanted, load the stylesheet.
+		if ($loginPage) {
+			if ($automaticActivation) {
+				Util::addStyle(self::APP_NAME, 'guest-automatic');
+			} else {
+				Util::addStyle(self::APP_NAME, 'guest');
+			}
+		}
 
-        // If the styling for the login page is wanted, load the stylesheet.
-        if ($loginPage) {
-            if ($automaticActivation) {
-                Util::addStyle($this->appName, 'guest-automatic');
-            } else {
-                Util::addStyle($this->appName, 'guest');
-            }
-        }
-
-        // Only request the stylesheet if there is any styling to request
-        if ($cachebuster) {
-            $linkToCustomStyling = $urlGenerator->linkToRoute(
-                'breezedark.Theming.getCustomStyling',
-                ['v' => $cachebuster,]
-            );
-            Util::addHeader(
-                'link',
-                [
-                    'rel' => 'stylesheet',
-                    'href' => $linkToCustomStyling,
-                ]
-            );
-        }
-    }
+		// Only request the stylesheet if there is any styling to request
+		if ($cachebuster !== '' && $cachebuster !== '0') {
+			$linkToCustomStyling = $urlGenerator->linkToRoute(
+				'breezedark.Theming.getCustomStyling',
+				['v' => $cachebuster,]
+			);
+			Util::addHeader(
+				'link',
+				[
+					'rel' => 'stylesheet',
+					'href' => $linkToCustomStyling,
+				]
+			);
+		}
+	}
 }

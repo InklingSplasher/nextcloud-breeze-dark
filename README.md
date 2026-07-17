@@ -8,16 +8,19 @@ If you have any questions, problems or anything else you're welcome to come hang
 
 ## Supported versions
 
-The currently supported and maintained Nextcloud releases are:
+This branch is a local compatibility fork for:
 
--   Nextcloud 29
--   Nextcloud 28
+-   Nextcloud 33
+-   Nextcloud 34
 
-I try my best to maintain 2 Nextcloud releases at once, to allow for smoother transitions, but for various reason I might decide to drop support for older releases early.
+It is based on upstream Breeze Dark 29.0.0. The PHP integration, settings
+requests and Nextcloud colour variables were ported to Nextcloud 33 and 34.
+Run the documented visual regression matrix before enabling the theme on a
+production instance after a Nextcloud major upgrade.
 
 Previous unmaintained releases:
 
--   Nextcloud 17-27 (App)
+-   Nextcloud 17-29 (upstream App)
 -   Nextcloud 11-16 (Theme folder)
 
 ## Version numbering

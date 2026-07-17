@@ -5,138 +5,115 @@ declare(strict_types=1);
 /**
  * Breeze Dark theme for Nextcloud
  *
- * @copyright Copyright (C) 2020  Magnus Walbeck <mw@mwalbeck.org>
- *
- * @author Magnus Walbeck <mw@mwalbeck.org>
+ * @copyright Copyright (C) 2020 Magnus Walbeck <mw@mwalbeck.org>
+ * @copyright Copyright (C) 2026 inkcurity.net
  *
  * @license GNU AGPL version 3 or any later version
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
  */
 
 namespace OCA\BreezeDark\Controller;
 
 use OCP\AppFramework\Controller;
+use OCP\AppFramework\Http\Attribute\NoAdminRequired;
+use OCP\AppFramework\Http\DataResponse;
+use OCP\Config\IUserConfig;
+use OCP\IAppConfig;
 use OCP\IConfig;
 use OCP\IRequest;
 use OCP\IUserSession;
 
-class SettingsController extends Controller
-{
+class SettingsController extends Controller {
+	private const MAX_CUSTOM_CSS_BYTES = 65535;
 
-    /** @var string */
-    protected $appName;
+	private ?string $userId;
 
-    /** @var IConfig */
-    private $config;
+	public function __construct(
+		string $appName,
+		private IAppConfig $appConfig,
+		private IUserConfig $userConfig,
+		private IConfig $systemConfig,
+		IUserSession $userSession,
+		IRequest $request,
+	) {
+		parent::__construct($appName, $request);
+		$this->userId = $userSession->getUser()?->getUID();
+	}
 
-    /** @var string */
-    private $userId;
+	#[NoAdminRequired]
+	public function personal(): DataResponse {
+		if ($this->userId === null) {
+			return new DataResponse(['status' => 'error', 'message' => 'Authentication required'], 401);
+		}
 
-    /**
-     * @param string $appName
-     * @param IConfig $config
-     * @param IUserSession $userSession
-     * @param IRequest $request
-     */
-    public function __construct(
-        string $appName,
-        IConfig $config,
-        IUserSession $userSession,
-        IRequest $request
-    ) {
-        parent::__construct($appName, $request);
-        $this->config = $config;
-        $this->userId = $userSession->getUser()->getUID();
-    }
+		if ($this->appConfig->getValueString($this->appName, 'theme_enforced', '0') !== '1') {
+			$this->userConfig->setValueString(
+				$this->userId,
+				$this->appName,
+				'theme_enabled',
+				$this->isEnabled('theme_enabled') ? '1' : '0',
+			);
+		}
 
-    /**
-     * @NoAdminRequired
-     *
-     * Set user theme option
-     */
-    public function personal(): void
-    {
-        $themeEnforced = $this->config->getAppValue($this->appName, 'theme_enforced', "0");
+		$this->userConfig->setValueString(
+			$this->userId,
+			$this->appName,
+			'theme_automatic_activation_enabled',
+			$this->isEnabled('theme_automatic_activation_enabled') ? '1' : '0',
+		);
 
-        if (!$themeEnforced) {
-            if ($this->request->getParam("theme_enabled")) {
-                $this->config->setUserValue($this->userId, $this->appName, "theme_enabled", "1");
-            } else {
-                $this->config->setUserValue($this->userId, $this->appName, "theme_enabled", "0");
-            }
-        }
+		return new DataResponse(['status' => 'ok']);
+	}
 
-        if ($this->request->getParam("theme_automatic_activation_enabled")) {
-            $this->config->setUserValue($this->userId, $this->appName, "theme_automatic_activation_enabled", "1");
-        } else {
-            $this->config->setUserValue($this->userId, $this->appName, "theme_automatic_activation_enabled", "0");
-        }
-    }
+	public function admin(): DataResponse {
+		$wasThemeEnforced = $this->appConfig->getValueString($this->appName, 'theme_enforced', '0') === '1';
+		$themeEnforced = $this->isEnabled('theme_enforced');
+		$this->appConfig->setValueString($this->appName, 'theme_enforced', $themeEnforced ? '1' : '0');
+		$this->appConfig->setValueString(
+			$this->appName,
+			'theme_login_page',
+			$this->isEnabled('theme_login_page') ? '1' : '0',
+		);
+		$this->appConfig->setValueString(
+			$this->appName,
+			'theme_automatic_activation_enabled',
+			$this->isEnabled('theme_automatic_activation_enabled') ? '1' : '0',
+		);
+		$this->enforceTheme($themeEnforced, $wasThemeEnforced);
 
-    /**
-     * Set global theme option
-     */
-    public function admin(): void
-    {
-        if ($this->request->getParam("theme_enforced")) {
-            $this->config->setAppValue($this->appName, "theme_enforced", "1");
-            $this->enforceTheme("on");
-        } else {
-            $this->config->setAppValue($this->appName, "theme_enforced", "0");
-            $this->enforceTheme("off");
-        }
+		return new DataResponse(['status' => 'ok']);
+	}
 
-        if ($this->request->getParam("theme_login_page")) {
-            $this->config->setAppValue($this->appName, "theme_login_page", "1");
-        } else {
-            $this->config->setAppValue($this->appName, "theme_login_page", "0");
-        }
+	public function customStyling(): DataResponse {
+		$customStyling = $this->request->getParam('theme_custom_styling', '');
+		if (!is_string($customStyling)) {
+			return new DataResponse(['status' => 'error', 'message' => 'Invalid CSS value'], 400);
+		}
+		if (strlen($customStyling) > self::MAX_CUSTOM_CSS_BYTES) {
+			return new DataResponse(['status' => 'error', 'message' => 'Custom CSS is too large'], 413);
+		}
 
-        if ($this->request->getParam("theme_automatic_activation_enabled")) {
-            $this->config->setAppValue($this->appName, "theme_automatic_activation_enabled", "1");
-        } else {
-            $this->config->setAppValue($this->appName, "theme_automatic_activation_enabled", "0");
-        }
-    }
+		$this->appConfig->setValueString($this->appName, 'theme_custom_styling', $customStyling);
+		$this->appConfig->setValueString(
+			$this->appName,
+			'theme_cachebuster',
+			$customStyling === '' ? '0' : substr(hash('sha256', $customStyling), 0, 16),
+		);
 
-    /**
-     * Set custom styling option
-     */
-    public function customStyling(): void
-    {
-        if ($this->request->getParam("theme_custom_styling")) {
-            $this->config->setAppValue($this->appName, "theme_custom_styling", $this->request->getParam("theme_custom_styling"));
-            $this->config->setAppValue($this->appName, "theme_cachebuster", time());
-        } else {
-            // If the request is empty set custom_styling to empty string and
-            // set cachebuster to 0 to indicate that no custom styling is available
-            $this->config->setAppValue($this->appName, "theme_custom_styling", "");
-            $this->config->setAppValue($this->appName, "theme_cachebuster", 0);
-        }
-    }
+		return new DataResponse(['status' => 'ok']);
+	}
 
-    public function enforceTheme($state): void 
-    {
-        if ($state === "on") {
-            $this->config->setSystemValue("enforce_theme", "dark");
-        }
+	private function isEnabled(string $parameter): bool {
+		return in_array($this->request->getParam($parameter), [1, '1', true, 'true', 'on'], true);
+	}
 
-        if ($state === "off") {
-            $this->config->setSystemValue("enforce_theme", "");
-        }
-        
-    }
+	private function enforceTheme(bool $enabled, bool $wasEnabled): void {
+		if ($enabled) {
+			$this->systemConfig->setSystemValue('enforce_theme', 'dark');
+			return;
+		}
+
+		if ($wasEnabled && $this->systemConfig->getSystemValueString('enforce_theme', '') === 'dark') {
+			$this->systemConfig->setSystemValue('enforce_theme', '');
+		}
+	}
 }

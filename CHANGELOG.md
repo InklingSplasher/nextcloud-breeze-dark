@@ -2,6 +2,26 @@
 
 ## [Unreleased]
 
+### Added
+
+-   Add local Nextcloud 33 and 34 compatibility and document the production test gate.
+
+### Changed
+
+-   Replace jQuery settings requests with native Fetch requests and explicit CSRF headers.
+-   Move app and user preferences to the supported `IAppConfig` and `IUserConfig` APIs.
+-   Return structured responses from settings endpoints and validate custom CSS size and type.
+-   Bump the app release to 34.0.0 and validate the integration against Nextcloud OCP 34.
+
+### Fixed
+
+-   Handle unauthenticated template events without dereferencing a missing user.
+-   Preserve and de-duplicate existing enabled themes.
+-   Synchronize Nextcloud 33 theme attributes during automatic colour-scheme changes.
+-   Preserve independently configured core themes when Breeze Dark is not globally enforced.
+-   Restore visible login-card bounds and respect Nextcloud's configured background image variable.
+-   Correct Nextcloud RGB and scrollbar custom-property formats and remove a dead login background fallback.
+
 ## 29.0.0 - 2024-08-04
 
 ### Added 
