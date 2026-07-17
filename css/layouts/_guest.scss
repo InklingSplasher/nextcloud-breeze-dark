@@ -1,0 +1,68 @@
+body#body-login,
+body#body-public {
+    color: var(--breeze-text);
+    background-color: var(--breeze-canvas);
+    background-image: var(--image-background, none), var(--breeze-login-background);
+    background-position: center;
+    background-size: cover;
+}
+
+body#body-login #header.header-guest,
+body#body-public #header.header-guest {
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+}
+
+body#body-login #header.header-guest .logo,
+body#body-public #header.header-guest .logo {
+    background-color: transparent;
+    box-shadow: none;
+}
+
+body#body-login .guest-box.login-box,
+body#body-login .body-login-container,
+body#body-public .public-share {
+    border: 1px solid var(--breeze-border-strong);
+    border-block-start: 4px solid var(--breeze-accent);
+    border-radius: var(--breeze-radius-container);
+    background: var(--breeze-header);
+    box-shadow: var(--breeze-accent-shadow), var(--breeze-shadow-popover);
+    backdrop-filter: blur(18px);
+}
+
+body#body-login .guest-box.login-box,
+body#body-login .body-login-container {
+    box-sizing: border-box;
+    inline-size: min(calc(100vw - var(--breeze-space-8)), 400px);
+    margin-inline: auto;
+    padding: var(--breeze-space-6);
+}
+
+body#body-login .login-box__alternative-logins:not(:empty) {
+    margin-block-start: var(--breeze-space-5);
+    padding-block-start: var(--breeze-space-5);
+    border-block-start: 1px solid var(--breeze-border);
+}
+
+body#body-login > footer.guest-box,
+body#body-public > footer.guest-box {
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+}
+
+body#body-public .public-share {
+    margin: var(--breeze-space-4);
+    overflow: clip;
+}
+
+@media (width <= 768px) {
+    body#body-login .guest-box.login-box,
+    body#body-login .body-login-container {
+        inline-size: calc(100vw - var(--breeze-space-4));
+        padding: var(--breeze-space-4);
+    }
+}

@@ -1,0 +1,42 @@
+:where([data-theme-breezedark], .theme--breezedark) {
+    table,
+    .files-list,
+    .list-item,
+    .app-content-list {
+        color: var(--breeze-text);
+    }
+
+    thead,
+    .list-item__wrapper {
+        border-color: var(--breeze-border);
+    }
+
+    tbody tr,
+    .list-item,
+    .files-list__row {
+        border-color: var(--breeze-border);
+        transition: background-color var(--breeze-duration) ease;
+    }
+
+    tbody tr:hover,
+    .list-item:hover,
+    .files-list__row:hover {
+        background: var(--breeze-surface-hover);
+    }
+
+    tbody tr.selected,
+    tbody tr[aria-selected="true"],
+    .list-item.active,
+    .files-list__row--selected {
+        background: var(--breeze-accent-soft);
+        color: var(--breeze-text);
+        box-shadow: inset 4px 0 var(--breeze-accent);
+    }
+
+    th,
+    .list-item__subtitle,
+    .files-list__row-size,
+    .files-list__row-mtime {
+        color: var(--breeze-text-muted);
+    }
+}

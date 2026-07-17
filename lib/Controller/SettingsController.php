@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace OCA\BreezeDark\Controller;
 
+use OCA\BreezeDark\Theme\Accent;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\Attribute\NoAdminRequired;
 use OCP\AppFramework\Http\DataResponse;
@@ -45,12 +46,26 @@ class SettingsController extends Controller {
 			return new DataResponse(['status' => 'error', 'message' => 'Authentication required'], 401);
 		}
 
+		$currentAccent = $this->userConfig->getValueString(
+			$this->userId,
+			$this->appName,
+			'theme_accent',
+			Accent::USER_DEFAULT,
+		);
+		$accent = $this->request->getParam('theme_accent', $currentAccent);
+		if (!Accent::isValidUserValue($accent)) {
+			return new DataResponse(['status' => 'error', 'message' => 'Invalid theme accent'], 400);
+		}
+
+		$themeEnabled = $this->isEnabled('theme_enabled');
+		$automaticActivation = $this->isEnabled('theme_automatic_activation_enabled');
+
 		if ($this->appConfig->getValueString($this->appName, 'theme_enforced', '0') !== '1') {
 			$this->userConfig->setValueString(
 				$this->userId,
 				$this->appName,
 				'theme_enabled',
-				$this->isEnabled('theme_enabled') ? '1' : '0',
+				$themeEnabled ? '1' : '0',
 			);
 		}
 
@@ -58,13 +73,33 @@ class SettingsController extends Controller {
 			$this->userId,
 			$this->appName,
 			'theme_automatic_activation_enabled',
-			$this->isEnabled('theme_automatic_activation_enabled') ? '1' : '0',
+			$automaticActivation ? '1' : '0',
+		);
+		$this->userConfig->setValueString($this->userId, $this->appName, 'theme_accent', $accent);
+
+		$serverAccent = $this->appConfig->getValueString(
+			$this->appName,
+			'theme_default_accent',
+			Accent::Plasma->value,
 		);
 
-		return new DataResponse(['status' => 'ok']);
+		return new DataResponse([
+			'status' => 'ok',
+			'accent' => Accent::resolve($accent, $serverAccent)->value,
+		]);
 	}
 
 	public function admin(): DataResponse {
+		$currentAccent = $this->appConfig->getValueString(
+			$this->appName,
+			'theme_default_accent',
+			Accent::Plasma->value,
+		);
+		$accent = $this->request->getParam('theme_default_accent', $currentAccent);
+		if (!is_string($accent) || Accent::tryFrom($accent) === null) {
+			return new DataResponse(['status' => 'error', 'message' => 'Invalid theme accent'], 400);
+		}
+
 		$wasThemeEnforced = $this->appConfig->getValueString($this->appName, 'theme_enforced', '0') === '1';
 		$themeEnforced = $this->isEnabled('theme_enforced');
 		$this->appConfig->setValueString($this->appName, 'theme_enforced', $themeEnforced ? '1' : '0');
@@ -78,9 +113,10 @@ class SettingsController extends Controller {
 			'theme_automatic_activation_enabled',
 			$this->isEnabled('theme_automatic_activation_enabled') ? '1' : '0',
 		);
+		$this->appConfig->setValueString($this->appName, 'theme_default_accent', $accent);
 		$this->enforceTheme($themeEnforced, $wasThemeEnforced);
 
-		return new DataResponse(['status' => 'ok']);
+		return new DataResponse(['status' => 'ok', 'accent' => $accent]);
 	}
 
 	public function customStyling(): DataResponse {

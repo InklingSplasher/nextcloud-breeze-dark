@@ -1,0 +1,12 @@
+:where([data-theme-breezedark], .theme--breezedark) {
+    .photos-navigation,
+    .photos-grid,
+    .photos-picker {
+        background: var(--breeze-surface);
+    }
+
+    .photos-grid-item:focus-visible,
+    .photos-grid-item[aria-selected="true"] {
+        box-shadow: inset 0 0 0 3px var(--breeze-accent);
+    }
+}

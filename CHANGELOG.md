@@ -1,5 +1,40 @@
 # Changelog
 
+## 34.1.5
+
+- Updated the visible app maintainer and project links for the Breeze Next fork.
+
+## 34.1.4
+
+- Unified notification panels and context menus with the main Breeze gray while retaining accent state cues.
+
+## 34.1.3
+
+- Isolated every accent swatch so examples retain their own color while the selected accent changes.
+- Unified the NC34 login form and alternative-login buttons into one aligned card.
+- Calmed the header to the classic Breeze main gray instead of a contrasting raised band.
+
+## 34.1.2
+
+- Corrected NC34 cascade priority so Breeze tokens are no longer replaced by the core dark palette.
+- Restored the classic soft-gray Breeze surface hierarchy around `#31363b`.
+- Fixed the guest header/logo and footer selectors that produced stretched blue rectangles.
+- Added a reliable gray login background fallback while preserving configured background images.
+- Promoted accents through active navigation, card rails, selections and primary actions.
+
+## 34.1.1
+
+- Raised the graphite surfaces for a lighter overall hierarchy.
+- Replaced the centered login aura with a quieter directional background treatment.
+- Strengthened accent fills, borders, focus rings, active navigation and primary actions.
+
+## 34.1.0
+
+- Rebuilt the theme as the Breeze Next semantic design system for Nextcloud 33 and 34.
+- Added Plasma, Iris, Coral, Mint and Honey server/user accent preferences.
+- Migrated settings to Vue 3 and TypeScript and consolidated automatic activation into one bundle.
+- Added accessibility modes, focused app adapters, tests and bundle-size budgets.
+
 ## [Unreleased]
 
 ### Added

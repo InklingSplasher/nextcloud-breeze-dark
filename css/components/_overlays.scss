@@ -1,0 +1,39 @@
+:where([data-theme-breezedark], .theme--breezedark) {
+    .popover,
+    .popovermenu,
+    .menu,
+    [role="menu"],
+    .v-popper__inner,
+    .multiselect__content-wrapper,
+    .vs__dropdown-menu {
+        border: 1px solid var(--breeze-border);
+        border-radius: var(--breeze-radius-menu);
+        background: var(--breeze-surface);
+        color: var(--breeze-text);
+        box-shadow: var(--breeze-shadow-popover);
+    }
+
+    .modal-mask,
+    .modal-wrapper,
+    .dialog__modal-mask {
+        background: var(--breeze-overlay);
+    }
+
+    .modal-container,
+    .modal__content,
+    [role="dialog"] {
+        border: 1px solid var(--breeze-border);
+        border-radius: var(--breeze-radius-container);
+        background: var(--breeze-surface-popover);
+        color: var(--breeze-text);
+        box-shadow: var(--breeze-shadow-popover);
+    }
+
+    [role="menuitem"][aria-current="true"],
+    [role="menuitem"][aria-selected="true"],
+    .menuitem.active,
+    .action--active {
+        background: var(--breeze-accent-soft);
+        color: var(--breeze-accent-hover);
+    }
+}

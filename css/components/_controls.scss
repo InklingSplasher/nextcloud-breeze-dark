@@ -1,0 +1,50 @@
+:where([data-theme-breezedark], .theme--breezedark) {
+    button,
+    .button,
+    input[type="button"],
+    input[type="submit"],
+    [role="button"] {
+        border-radius: var(--breeze-radius-control);
+        transition:
+            background-color var(--breeze-duration) ease,
+            border-color var(--breeze-duration) ease,
+            color var(--breeze-duration) ease,
+            box-shadow var(--breeze-duration) ease;
+    }
+
+    button:not(.primary),
+    .button:not(.primary) {
+        border-color: var(--breeze-border);
+        background: var(--breeze-surface-raised);
+        color: var(--breeze-text);
+    }
+
+    button.primary,
+    .button.primary,
+    input[type="submit"].primary {
+        border-color: var(--breeze-accent);
+        background: var(--breeze-accent);
+        color: var(--breeze-text-on-accent);
+        box-shadow: var(--breeze-accent-shadow);
+    }
+
+    button:hover,
+    .button:hover,
+    [role="button"]:hover {
+        border-color: var(--breeze-accent-border);
+        background: var(--breeze-surface-hover);
+    }
+
+    button.primary:hover,
+    .button.primary:hover {
+        background: var(--breeze-accent-hover);
+        color: var(--breeze-text-on-accent);
+        box-shadow: var(--breeze-accent-shadow);
+    }
+
+    button:disabled,
+    .button:disabled,
+    [aria-disabled="true"] {
+        opacity: 0.52;
+    }
+}

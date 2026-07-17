@@ -1,0 +1,44 @@
+:where([data-theme-breezedark], .theme--breezedark) {
+    input:not([type="checkbox"], [type="radio"]),
+    textarea,
+    select,
+    .multiselect__tags,
+    .vs__dropdown-toggle {
+        border-color: var(--breeze-border);
+        border-radius: var(--breeze-radius-control);
+        background: var(--breeze-canvas);
+        color: var(--breeze-text);
+        transition:
+            border-color var(--breeze-duration) ease,
+            box-shadow var(--breeze-duration) ease;
+    }
+
+    input:hover,
+    textarea:hover,
+    select:hover {
+        border-color: var(--breeze-border-strong);
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+        border-color: var(--breeze-accent);
+        box-shadow: 0 0 0 2px var(--breeze-accent-soft);
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+        color: var(--breeze-text-muted);
+        opacity: 1;
+    }
+
+    input[type="checkbox"],
+    input[type="radio"] {
+        accent-color: var(--breeze-accent);
+    }
+
+    label,
+    legend {
+        color: var(--breeze-text-secondary);
+    }
+}

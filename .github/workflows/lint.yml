@@ -1,18 +1,57 @@
-name: Lint
+name: Static checks
 
-on: pull_request
+on:
+    pull_request:
+    push:
+        branches: [master]
+
+permissions:
+    contents: read
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Install dependencies
-        run: npm install
-      - name: Run prettier
-        if: ${{ always() }}
-        run: npm run prettier
-      # - name: Run stylelint
-      #   continue-on-error: true
-      #   if: ${{ always() }}
-      #   run: npm run stylelint
+    compatibility:
+        runs-on: ubuntu-latest
+        strategy:
+            fail-fast: false
+            matrix:
+                php: ["8.2", "8.4"]
+                ocp: ["^33.0", "^34.0"]
+        steps:
+            - uses: actions/checkout@v4
+            - uses: shivammathur/setup-php@v2
+              with:
+                  php-version: ${{ matrix.php }}
+                  tools: composer:v2
+                  coverage: none
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: 22
+                  cache: npm
+            - name: Validate Composer metadata
+              run: composer validate --strict
+            - name: Select OCP compatibility target
+              run: composer require --dev --no-update "nextcloud/ocp:${{ matrix.ocp }}"
+            - name: Install PHP dependencies
+              run: composer update nextcloud/ocp --with-all-dependencies --no-interaction --prefer-dist
+            - name: Audit PHP dependencies
+              run: composer audit
+            - name: Lint PHP
+              run: find lib templates -name '*.php' -print0 | xargs -0 -n1 php -l
+            - name: Test PHP accent enum
+              run: php tests/php/accent.php
+            - name: Check PHP coding style
+              run: vendor/bin/php-cs-fixer fix --dry-run --diff --allow-risky=yes --sequential
+            - name: Install frontend dependencies
+              run: npm ci
+            - name: Typecheck
+              run: npm run typecheck
+            - name: Lint TypeScript and Vue
+              run: npm run eslint
+            - name: Check formatting
+              run: npm run prettier
+            - name: Lint Sass
+              run: npm run stylelint
+            - name: Test
+              run: npm test
+            - name: Build and enforce size budgets
+              run: npm run build

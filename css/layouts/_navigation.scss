@@ -1,0 +1,37 @@
+:where([data-theme-breezedark], .theme--breezedark) {
+    #appmenu li a,
+    .app-navigation-entry-link,
+    .app-navigation-entry__link,
+    .app-navigation__list a {
+        border-radius: var(--breeze-radius-control);
+        color: var(--breeze-text-secondary);
+        transition:
+            background-color var(--breeze-duration) ease,
+            color var(--breeze-duration) ease;
+    }
+
+    #appmenu li:hover a,
+    .app-navigation-entry-link:hover,
+    .app-navigation-entry__link:hover {
+        background: var(--breeze-surface-hover);
+        color: var(--breeze-text);
+    }
+
+    #appmenu li.active a,
+    .app-navigation-entry.active .app-navigation-entry-link,
+    .app-navigation-entry--active .app-navigation-entry__link,
+    [aria-current="page"] {
+        background: var(--breeze-accent-soft);
+        border: 1px solid var(--breeze-accent-border);
+        color: var(--breeze-accent-hover);
+        box-shadow: inset 4px 0 var(--breeze-accent);
+        font-weight: 600;
+    }
+
+    #searchbox,
+    .unified-search__input {
+        border: 1px solid var(--breeze-border);
+        border-radius: var(--breeze-radius-control);
+        background: var(--breeze-canvas);
+    }
+}

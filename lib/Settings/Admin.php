@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace OCA\BreezeDark\Settings;
 
+use OCA\BreezeDark\Theme\Accent;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\IAppConfig;
 use OCP\IURLGenerator;
@@ -27,11 +28,16 @@ class Admin implements ISettings {
 	}
 
 	public function getForm(): TemplateResponse {
+		$defaultAccent = Accent::serverDefault(
+			$this->appConfig->getValueString($this->appName, 'theme_default_accent', Accent::Plasma->value),
+		);
+
 		return new TemplateResponse('breezedark', 'admin', [
 			'themeEnforced' => $this->appConfig->getValueString($this->appName, 'theme_enforced', '0') === '1',
 			'themeLoginPage' => $this->appConfig->getValueString($this->appName, 'theme_login_page', '1') === '1',
 			'themeAutomaticActivation' => $this->appConfig->getValueString($this->appName, 'theme_automatic_activation_enabled', '0') === '1',
 			'themeCustomStyling' => $this->appConfig->getValueString($this->appName, 'theme_custom_styling', ''),
+			'themeDefaultAccent' => $defaultAccent->value,
 			'settingsUrl' => $this->urlGenerator->linkToRoute('breezedark.Settings.admin'),
 			'customStylingUrl' => $this->urlGenerator->linkToRoute('breezedark.Settings.customStyling'),
 		]);

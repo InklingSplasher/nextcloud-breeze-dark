@@ -1,0 +1,14 @@
+:where([data-theme-breezedark], .theme--breezedark) {
+    .app-calendar .fc-theme-standard td,
+    .app-calendar .fc-theme-standard th,
+    .calendar-picker .mx-calendar {
+        border-color: var(--breeze-border);
+    }
+
+    .app-calendar .fc-day-today,
+    .calendar-picker .cell.active {
+        background: var(--breeze-accent-soft);
+    }
+
+    /* Calendar event colors intentionally remain app-owned. */
+}

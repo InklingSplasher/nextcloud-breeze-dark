@@ -1,0 +1,12 @@
+:where([data-theme-breezedark], .theme--breezedark) {
+    .contacts-list,
+    .contact-details,
+    .contact-header {
+        border-color: var(--breeze-border);
+        background: var(--breeze-surface);
+    }
+
+    .contacts-list .active {
+        background: var(--breeze-accent-soft);
+    }
+}

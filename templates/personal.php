@@ -1,56 +1,45 @@
 <?php
+
+declare(strict_types=1);
+
 /**
- * Breeze Dark theme for Nextcloud
+ * Breeze Next personal settings mount point.
  *
- * @copyright Copyright (C) 2020  Magnus Walbeck <mw@mwalbeck.org>
- *
- * @author Magnus Walbeck <mw@mwalbeck.org>
- *
+ * @copyright Copyright (C) 2026 inkcurity.net
  * @license GNU AGPL version 3 or any later version
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
  */
 
-script('breezedark', 'settings-personal');
+script('breezedark', 'settings');
+style('breezedark', 'theme');
 style('breezedark', 'settings');
+
+$config = [
+	'kind' => 'personal',
+	'settingsUrl' => $settingsUrl,
+	'themeEnforced' => $themeEnforced,
+	'themeEnabled' => $themeEnabled,
+	'themeAutomaticActivation' => $themeAutomaticActivation,
+	'themeAccent' => $themeAccent,
+	'themeDefaultAccent' => $themeDefaultAccent,
+	'resolvedAccent' => $resolvedAccent,
+	'labels' => [
+		'title' => $l->t('Breeze Next'),
+		'intro' => $l->t('A calm, modern Breeze-inspired dark theme for Nextcloud.'),
+		'enabled' => $l->t('Enable Breeze Next'),
+		'enforced' => $l->t('Breeze Next is enforced by the administrator.'),
+		'automatic' => $l->t('Follow my device color scheme'),
+		'accent' => $l->t('Accent color'),
+		'preview' => $l->t('Live preview'),
+		'saved' => $l->t('Saved'),
+		'error' => $l->t('Could not save the setting'),
+		'serverDefault' => $l->t('Server default'),
+		'plasma' => $l->t('Plasma'),
+		'iris' => $l->t('Iris'),
+		'coral' => $l->t('Coral'),
+		'mint' => $l->t('Mint'),
+		'honey' => $l->t('Honey'),
+	],
+];
 ?>
 
-<div
-    id="breezedark"
-    class="breezedark-personal section"
-    data-settings-url="<?php p($settingsUrl); ?>"
-    data-saved-label="<?php p($l->t('Saved')); ?>"
-    data-error-label="<?php p($l->t('Error')); ?>"
->
-    <h2><?php p($l->t('Breeze Dark')); ?></h2>
-    <p><?php p($l->t('A Breeze Dark theme for Nextcloud.')); ?></p>
-    <div class="preview-list">
-        <div class="preview">
-            <div class="preview-image" style='background-image: url("<?php p($appWebPath); ?>/img/theme-breeze-dark.png");'></div>
-            <div class="preview-description">
-                <h3><?php p($l->t('Breeze Dark theme')); ?></h3>
-                <p><?php p($l->t('A Dark theme based on Breeze Dark by the KDE project. Please refresh the page for changes to take effect.')); ?></p>
-                <?php if ($themeEnforced) : ?>
-                    <input type="checkbox" class="checkbox" id="breezedark-enabled" disabled checked>
-                <?php else : ?>
-                    <input type="checkbox" class="checkbox" id="breezedark-enabled" <?php p($themeEnabled ? 'checked' : ''); ?>>
-                <?php endif; ?>
-                <label for="breezedark-enabled"><?php p($l->t('Enable Breeze Dark theme')); ?></label>
-                <input type="checkbox" class="checkbox" id="breezedark-automatic-activation-enabled" <?php p($themeAutomaticActivation ? 'checked' : ''); ?>>
-                <label for="breezedark-automatic-activation-enabled"><?php p($l->t('Enable Breeze Dark automated activation by clients system settings')); ?></label>
-            </div>
-        </div>
-    </div>
-</div>
+<div id="breeze-next-settings" data-config="<?php p(json_encode($config, JSON_THROW_ON_ERROR)); ?>"></div>

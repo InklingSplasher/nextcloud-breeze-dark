@@ -1,0 +1,75 @@
+:where([data-theme-breezedark], .theme--breezedark) {
+    #header:not(.header-guest),
+    header.app-header {
+        border-block-end: 1px solid var(--breeze-border);
+        background: var(--breeze-header);
+        box-shadow: 0 4px 16px var(--breeze-shadow-color);
+        backdrop-filter: blur(12px);
+    }
+
+    #appmenu li.active {
+        position: relative;
+    }
+
+    #appmenu li.active::after {
+        position: absolute;
+        inset-inline: 22%;
+        inset-block-end: -2px;
+        block-size: 4px;
+        border-radius: var(--breeze-radius-control);
+        background: var(--breeze-accent);
+        box-shadow: var(--breeze-accent-shadow);
+        content: "";
+    }
+
+    #content,
+    #content-vue,
+    .content,
+    .app-content {
+        background: var(--breeze-surface);
+    }
+
+    #app-navigation,
+    .app-navigation {
+        border-inline-end: 1px solid var(--breeze-border);
+        background: var(--breeze-canvas-background);
+    }
+
+    #app-sidebar,
+    .app-sidebar {
+        border-inline-start: 1px solid var(--breeze-border);
+        background: var(--breeze-surface-raised);
+        box-shadow: -8px 0 24px var(--breeze-shadow-color);
+    }
+
+    .app-content-details,
+    .settings-section,
+    .section {
+        border-radius: var(--breeze-radius-container);
+    }
+}
+
+@media (width <= 1024px) {
+    :where([data-theme-breezedark], .theme--breezedark) {
+        #app-sidebar,
+        .app-sidebar {
+            box-shadow: var(--breeze-shadow-popover);
+        }
+    }
+}
+
+@media (width <= 768px) {
+    :where([data-theme-breezedark], .theme--breezedark) {
+        #content,
+        #content-vue,
+        .content {
+            border-radius: 0;
+        }
+
+        #app-navigation,
+        .app-navigation {
+            border-inline-end: 0;
+            box-shadow: var(--breeze-shadow-popover);
+        }
+    }
+}

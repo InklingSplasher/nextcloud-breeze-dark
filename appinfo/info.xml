@@ -2,11 +2,11 @@
 <info xmlns:xsi= "http://www.w3.org/2001/XMLSchema-instance"
       xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
     <id>breezedark</id>
-    <name>Breeze Dark</name>
-    <summary><![CDATA[Breeze Dark theme for Nextcloud, based on the theme by KDE]]></summary>
+    <name>Breeze Next</name>
+    <summary><![CDATA[A modern Breeze-inspired dark design system for Nextcloud]]></summary>
     <description><![CDATA[
-# Breeze Dark
-This is a breeze dark theme for Nextcloud, based on the Breeze Dark theme made by the KDE Project.
+# Breeze Next
+Breeze Next is a modern dark design system for Nextcloud, inspired by KDE Breeze.
 
 ## Usage
 
@@ -23,7 +23,7 @@ You can also choose whether the login page should be themed. Though this only ha
 You can find the global options here:
 
 ```
-Settings > Administration > Theming > Breeze Dark
+Settings > Administration > Theming > Breeze Next
 ```
 
 ### Personal
@@ -31,21 +31,21 @@ Settings > Administration > Theming > Breeze Dark
 The personal option allows each user to enable / disable the theme unless it's being enforced by the global options. They can though choose whether the theme should follow the theming choice reported by the browser. This option is also available when the theme is being enforced globally. If the user hasn't set a preference they will follow the global default. You can find the personal option here:
 
 ```
-Settings > Personal > Appearance and accessibility > Breeze Dark
+Settings > Personal > Appearance and accessibility > Breeze Next
 ```
 
 ### Custom styling
 
 Under the Theming section in the admin settings you can add your own custom styling to the theme. Only standard CSS can be used. This custom styling will be applied whenever the theme is enabled and only affects the Breeze Dark theme.
     ]]></description>
-    <version>34.0.0</version>
+    <version>34.1.5</version>
     <licence>AGPL-3.0-or-later</licence>
-    <author mail="mw@mwalbeck.org" homepage="https://github.com/mwalbeck/nextcloud-breeze-dark">Magnus Walbeck</author>
+    <author homepage="https://github.com/InklingSplasher/nextcloud-breeze-dark">Jan Klotz</author>
     <namespace>BreezeDark</namespace>
     <category>customization</category>
-    <website>https://github.com/mwalbeck/nextcloud-breeze-dark</website>
-    <bugs>https://github.com/mwalbeck/nextcloud-breeze-dark/issues</bugs>
-    <screenshot>https://raw.githubusercontent.com/mwalbeck/nextcloud-breeze-dark/master/screenshot.png</screenshot>
+    <website>https://github.com/InklingSplasher/nextcloud-breeze-dark</website>
+    <bugs>https://github.com/InklingSplasher/nextcloud-breeze-dark/issues</bugs>
+    <screenshot>https://raw.githubusercontent.com/InklingSplasher/nextcloud-breeze-dark/master/screenshot.png</screenshot>
     <dependencies>
         <php min-version="8.2" max-version="8.5"/>
         <nextcloud min-version="33" max-version="34"/>

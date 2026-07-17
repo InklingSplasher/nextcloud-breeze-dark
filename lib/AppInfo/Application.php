@@ -29,6 +29,7 @@ declare(strict_types=1);
 namespace OCA\BreezeDark\AppInfo;
 
 use OCA\BreezeDark\Listener\BeforeTemplateRenderedListener;
+use OCA\BreezeDark\Theme\Accent;
 use OCP\AppFramework\App;
 use OCP\AppFramework\Bootstrap\IBootContext;
 use OCP\AppFramework\Bootstrap\IBootstrap;
@@ -72,9 +73,21 @@ class Application extends App implements IBootstrap {
 		$loginPage = $appConfig->getValueString(self::APP_NAME, 'theme_login_page', '1') === '1';
 		$cachebuster = $appConfig->getValueString(self::APP_NAME, 'theme_cachebuster', '0');
 		$automaticActivation = $appConfig->getValueString(self::APP_NAME, 'theme_automatic_activation_enabled', '0') === '1';
+		$serverAccent = $appConfig->getValueString(
+			self::APP_NAME,
+			'theme_default_accent',
+			Accent::Plasma->value,
+		);
+		$userAccent = Accent::USER_DEFAULT;
 
 		if ($enforced) {
 			if ($user !== null) {
+				$userAccent = $userConfig->getValueString(
+					$user->getUID(),
+					self::APP_NAME,
+					'theme_accent',
+					Accent::USER_DEFAULT,
+				);
 				$automaticActivation = $userConfig->getValueString(
 					$user->getUID(),
 					self::APP_NAME,
@@ -82,7 +95,13 @@ class Application extends App implements IBootstrap {
 					$automaticActivation ? '1' : '0',
 				) === '1';
 			}
-			$this->addStyling($urlGenerator, $loginPage, $cachebuster, $automaticActivation);
+			$this->addStyling(
+				$urlGenerator,
+				$loginPage,
+				$cachebuster,
+				$automaticActivation,
+				Accent::resolve($userAccent, $serverAccent),
+			);
 		} elseif ($user !== null && $userConfig->getValueString($user->getUID(), self::APP_NAME, 'theme_enabled', '0') === '1') {
 			// When shown the 2FA login page you are logged in while also being on a login page,
 			// so a logged in user still needs the guests.css stylesheet
@@ -92,7 +111,19 @@ class Application extends App implements IBootstrap {
 				'theme_automatic_activation_enabled',
 				'0',
 			) === '1';
-			$this->addStyling($urlGenerator, $loginPage, $cachebuster, $automaticActivation);
+			$userAccent = $userConfig->getValueString(
+				$user->getUID(),
+				self::APP_NAME,
+				'theme_accent',
+				Accent::USER_DEFAULT,
+			);
+			$this->addStyling(
+				$urlGenerator,
+				$loginPage,
+				$cachebuster,
+				$automaticActivation,
+				Accent::resolve($userAccent, $serverAccent),
+			);
 		}
 	}
 
@@ -105,21 +136,22 @@ class Application extends App implements IBootstrap {
 		bool $loginPage,
 		string $cachebuster,
 		bool $automaticActivation,
+		Accent $accent,
 	): void {
-		if ($automaticActivation) {
-			Util::addStyle(self::APP_NAME, 'server-automatic');
-		} else {
-			Util::addStyle(self::APP_NAME, 'server');
-		}
+		Util::addStyle(self::APP_NAME, 'theme');
 		Util::addScript(self::APP_NAME, 'breezedark');
+		Util::addHeader('meta', [
+			'name' => 'breeze-next-accent',
+			'content' => $accent->value,
+		]);
+		Util::addHeader('meta', [
+			'name' => 'breeze-next-automatic',
+			'content' => $automaticActivation ? '1' : '0',
+		]);
 
 		// If the styling for the login page is wanted, load the stylesheet.
 		if ($loginPage) {
-			if ($automaticActivation) {
-				Util::addStyle(self::APP_NAME, 'guest-automatic');
-			} else {
-				Util::addStyle(self::APP_NAME, 'guest');
-			}
+			Util::addStyle(self::APP_NAME, 'guest');
 		}
 
 		// Only request the stylesheet if there is any styling to request

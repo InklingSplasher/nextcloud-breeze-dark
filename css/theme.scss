@@ -1,0 +1,13 @@
+/**
+ * Breeze Next 34.1 design system.
+ *
+ * Colors live exclusively in tokens/_palette.scss. Compatibility overrides
+ * that require !important live exclusively in compatibility/_legacy.scss.
+ */
+
+@use "tokens/index" as tokens;
+@use "foundations/index" as foundations;
+@use "components/index" as components;
+@use "layouts/index" as layouts;
+@use "adapters/index" as adapters;
+@use "compatibility/legacy";

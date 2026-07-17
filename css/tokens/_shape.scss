@@ -1,0 +1,17 @@
+:where([data-theme-breezedark], .theme--breezedark, .breeze-next-settings) {
+    --breeze-radius-control: 8px;
+    --breeze-radius-menu: 12px;
+    --breeze-radius-container: 16px;
+    --breeze-space-1: 4px;
+    --breeze-space-2: 8px;
+    --breeze-space-3: 12px;
+    --breeze-space-4: 16px;
+    --breeze-space-6: 24px;
+    --breeze-space-8: 32px;
+    --breeze-duration: 140ms;
+    --breeze-shadow-raised: 0 8px 24px var(--breeze-shadow-color);
+    --breeze-shadow-popover: 0 16px 48px var(--breeze-shadow-color);
+    --border-radius: var(--breeze-radius-control);
+    --border-radius-large: var(--breeze-radius-menu);
+    --default-clickable-area: 44px;
+}

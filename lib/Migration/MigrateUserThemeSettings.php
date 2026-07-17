@@ -28,6 +28,7 @@ declare(strict_types=1);
 
 namespace OCA\BreezeDark\Migration;
 
+use OCA\BreezeDark\Theme\Accent;
 use OCP\Config\IUserConfig;
 use OCP\IAppConfig;
 use OCP\IConfig;
@@ -49,39 +50,50 @@ class MigrateUserThemeSettings implements IRepairStep {
 	public function run(IOutput $output): void {
 		$settingsVersion = $this->appConfig->getValueString('breezedark', 'theme_settings_version', '0');
 
-		if ($settingsVersion >= '3') {
+		if ($settingsVersion >= '4') {
 			return;
 		}
 
-		foreach ($this->userConfig->searchUsersByValueString('breezedark', 'theme_enabled', '1') as $userId) {
-			$enabledThemes = json_decode(
-				$this->userConfig->getValueString($userId, 'theming', 'enabled-themes', '[]'),
-				true,
-			);
-			if (!is_array($enabledThemes)) {
-				$enabledThemes = [];
+		if ($settingsVersion < '3') {
+			foreach ($this->userConfig->searchUsersByValueString('breezedark', 'theme_enabled', '1') as $userId) {
+				$enabledThemes = json_decode(
+					$this->userConfig->getValueString($userId, 'theming', 'enabled-themes', '[]'),
+					true,
+				);
+				if (!is_array($enabledThemes)) {
+					$enabledThemes = [];
+				}
+
+				$key = array_search('breezedark', $enabledThemes);
+
+				if ($key !== false) {
+					unset($enabledThemes[$key]);
+				}
+
+				$this->userConfig->setValueString(
+					$userId,
+					'theming',
+					'enabled-themes',
+					json_encode(array_values(array_unique($enabledThemes)), JSON_THROW_ON_ERROR),
+				);
 			}
 
-			$key = array_search('breezedark', $enabledThemes);
+			$currentEnforcedTheme = $this->systemConfig->getSystemValueString('enforce_theme', '');
 
-			if ($key !== false) {
-				unset($enabledThemes[$key]);
+			if ($currentEnforcedTheme === 'breezedark') {
+				$this->systemConfig->setSystemValue('enforce_theme', 'dark');
 			}
-
-			$this->userConfig->setValueString(
-				$userId,
-				'theming',
-				'enabled-themes',
-				json_encode(array_values(array_unique($enabledThemes)), JSON_THROW_ON_ERROR),
-			);
 		}
 
-		$currentEnforcedTheme = $this->systemConfig->getSystemValueString('enforce_theme', '');
-
-		if ($currentEnforcedTheme === 'breezedark') {
-			$this->systemConfig->setSystemValue('enforce_theme', 'dark');
+		$defaultAccent = $this->appConfig->getValueString(
+			'breezedark',
+			'theme_default_accent',
+			Accent::Plasma->value,
+		);
+		if (Accent::tryFrom($defaultAccent) === null) {
+			$defaultAccent = Accent::Plasma->value;
 		}
-
-		$this->appConfig->setValueString('breezedark', 'theme_settings_version', '3');
+		$this->appConfig->setValueString('breezedark', 'theme_default_accent', $defaultAccent);
+		$this->appConfig->setValueString('breezedark', 'theme_settings_version', '4');
 	}
 }

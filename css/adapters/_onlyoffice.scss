@@ -1,0 +1,17 @@
+:where([data-theme-breezedark], .theme--breezedark) {
+    #onlyofficeFrame,
+    .onlyoffice-editor,
+    .richdocuments-editor {
+        border: 1px solid var(--breeze-border);
+        border-radius: var(--breeze-radius-container);
+        background: var(--breeze-surface-raised);
+        box-shadow: var(--breeze-shadow-raised);
+    }
+
+    .onlyoffice-loading,
+    .richdocuments-loading {
+        color: var(--breeze-text-muted);
+    }
+
+    /* The foreign editor iframe itself is deliberately not themed. */
+}

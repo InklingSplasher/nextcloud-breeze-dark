@@ -1,0 +1,21 @@
+:where([data-theme-breezedark], .theme--breezedark) {
+    #notifications .header-menu__wrapper,
+    .notification-container,
+    .notification-wrapper {
+        border-color: var(--breeze-border);
+        background: var(--breeze-surface);
+    }
+
+    #notifications .header-menu__caret {
+        border-block-end-color: var(--breeze-surface);
+    }
+
+    #notifications .notification {
+        border-color: var(--breeze-border);
+        background: transparent;
+    }
+
+    #notifications .notification .notification-time {
+        color: var(--breeze-text-muted);
+    }
+}

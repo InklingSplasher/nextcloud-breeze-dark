@@ -1,0 +1,20 @@
+:where([data-theme-breezedark], .theme--breezedark) {
+    #app-content-files .files-list__header,
+    #app-content-files .files-list__row,
+    .file-picker__main,
+    .file-picker__navigation {
+        border-color: var(--breeze-border);
+    }
+
+    .files-list__row--selected,
+    .file-picker__file--selected {
+        background: var(--breeze-accent-soft);
+    }
+
+    .upload-picker,
+    .new-file-menu {
+        border-radius: var(--breeze-radius-menu);
+        background: var(--breeze-surface);
+        box-shadow: var(--breeze-shadow-popover);
+    }
+}

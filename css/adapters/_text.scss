@@ -1,0 +1,17 @@
+:where([data-theme-breezedark], .theme--breezedark) {
+    .text-editor,
+    .editor__content,
+    .ProseMirror,
+    .toastui-editor-contents {
+        background: var(--breeze-surface);
+        color: var(--breeze-text);
+    }
+
+    .editor__toolbar,
+    .menubar {
+        border-color: var(--breeze-border);
+        background: var(--breeze-surface-raised);
+    }
+
+    /* Document and collaborative cursor colors intentionally remain app-owned. */
+}

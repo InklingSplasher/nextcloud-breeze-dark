@@ -1,0 +1,34 @@
+:where([data-theme-breezedark], .theme--breezedark) {
+    background: var(--breeze-canvas-background);
+    color: var(--breeze-text);
+
+    body,
+    #content,
+    #content-vue,
+    #app-content,
+    .app-content {
+        color: var(--breeze-text);
+    }
+
+    a:not(.button) {
+        color: var(--breeze-accent);
+        text-decoration-color: var(--breeze-accent-border);
+        text-decoration-thickness: 0.1em;
+        text-underline-offset: 0.16em;
+    }
+
+    ::selection {
+        background: var(--breeze-accent-soft);
+        color: var(--breeze-text);
+    }
+
+    hr {
+        border-color: var(--breeze-border);
+    }
+
+    code,
+    pre {
+        background: var(--breeze-canvas);
+        color: var(--breeze-text-secondary);
+    }
+}

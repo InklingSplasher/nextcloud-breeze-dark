@@ -14,6 +14,6 @@
     },
     "require-dev": {
         "nextcloud/coding-standard": "^1.5.0",
-        "nextcloud/ocp": "^34.0"
+        "nextcloud/ocp": "^33.0 || ^34.0"
     }
 }

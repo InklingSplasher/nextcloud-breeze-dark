@@ -1,0 +1,29 @@
+:where([data-theme-breezedark], .theme--breezedark) {
+    .toastify,
+    .toast,
+    .notification,
+    .snackbar {
+        border: 1px solid var(--breeze-border);
+        border-radius: var(--breeze-radius-menu);
+        background: var(--breeze-surface-popover);
+        color: var(--breeze-text);
+        box-shadow: var(--breeze-shadow-raised);
+    }
+
+    progress,
+    .progress-bar {
+        accent-color: var(--breeze-accent);
+    }
+
+    .empty-content,
+    .empty-content__description,
+    .empty-state {
+        color: var(--breeze-text-muted);
+    }
+
+    .empty-content__icon,
+    .empty-state__icon {
+        color: var(--breeze-accent);
+        opacity: 0.8;
+    }
+}

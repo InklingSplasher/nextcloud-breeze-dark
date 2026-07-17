@@ -1,0 +1,23 @@
+/**
+ * Nextcloud/legacy compatibility escape hatch.
+ *
+ * These declarations need to beat inline rules in NC33 and older app markup.
+ * No product styling may add !important outside this documented adapter.
+ */
+:where([data-theme-breezedark], .theme--breezedark) {
+    #app-sidebar,
+    .app-sidebar {
+        background-color: var(--breeze-surface-raised) !important;
+    }
+
+    .popovermenu,
+    .menu {
+        background-color: var(--breeze-surface) !important;
+    }
+
+    input,
+    textarea,
+    select {
+        color: var(--breeze-text) !important;
+    }
+}

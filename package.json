@@ -1,21 +1,48 @@
 {
     "name": "breezedark",
-    "version": "34.0.0",
-    "description": "Breeze Dark theme for Nextcloud",
-    "author": "Magnus Walbeck",
+    "version": "34.1.5",
+    "description": "Breeze Next theme for Nextcloud 33 and 34",
+    "private": true,
+    "type": "module",
+    "dependencies": {
+        "@nextcloud/vue": "^9.0.0",
+        "vue": "^3.5.0"
+    },
     "devDependencies": {
+        "@eslint/js": "^9.0.0",
+        "@types/node": "^24.0.0",
+        "@vitejs/plugin-vue": "^6.0.0",
+        "@vue/test-utils": "^2.4.6",
+        "eslint": "^9.0.0",
+        "eslint-plugin-vue": "^10.0.0",
+        "globals": "^16.0.0",
+        "jsdom": "^26.0.0",
         "postcss-scss": "^4.0.9",
-        "prettier": "^3.9.5",
-        "sass": "^1.101.0",
-        "stylelint": "^17.14.0",
-        "stylelint-prettier": "^5.0.3"
+        "prettier": "^3.6.0",
+        "sass": "^1.89.0",
+        "stylelint": "^16.20.0",
+        "stylelint-config-standard-scss": "^14.0.0",
+        "stylelint-prettier": "^5.0.3",
+        "typescript": "^5.8.0",
+        "typescript-eslint": "^8.0.0",
+        "vite": "^7.0.0",
+        "vitest": "^3.2.0",
+        "vue-eslint-parser": "^10.0.0",
+        "vue-tsc": "^3.0.0"
     },
     "scripts": {
-        "watch": "sass --poll --watch css/server.scss:css/server.css css/server-automatic.scss:css/server-automatic.css",
-        "build": "sass css/server.scss:css/server.css css/server-automatic.scss:css/server-automatic.css",
-        "prettier": "prettier --check css js",
-        "prettier:fix": "prettier --write css js",
-        "stylelint": "stylelint css",
-        "stylelint:fix": "stylelint css --fix"
+        "watch": "vite build --watch",
+        "watch:sass": "sass --poll --watch css/theme.scss:css/theme.css css/guest.scss:css/guest.css",
+        "build": "npm run build:sass && npm run build:js && npm run size",
+        "build:sass": "sass --no-source-map --style=compressed css/theme.scss:css/theme.css css/guest.scss:css/guest.css",
+        "build:js": "vite build --mode runtime && vite build --mode settings && node scripts/install-assets.mjs",
+        "typecheck": "vue-tsc --noEmit",
+        "test": "vitest run",
+        "eslint": "eslint src tests vite.config.ts eslint.config.js",
+        "prettier": "prettier --check css src tests scripts vite.config.ts eslint.config.js",
+        "prettier:fix": "prettier --write css src tests scripts vite.config.ts eslint.config.js",
+        "stylelint": "stylelint \"css/**/*.scss\"",
+        "stylelint:fix": "stylelint \"css/**/*.scss\" --fix",
+        "size": "node scripts/check-size.mjs"
     }
 }

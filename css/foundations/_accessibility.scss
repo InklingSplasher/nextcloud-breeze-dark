@@ -1,0 +1,35 @@
+:where([data-theme-breezedark], .theme--breezedark) {
+    :focus-visible {
+        outline: 3px solid var(--breeze-accent);
+        outline-offset: 3px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    :where([data-theme-breezedark], .theme--breezedark),
+    :where([data-theme-breezedark], .theme--breezedark) *,
+    :where([data-theme-breezedark], .theme--breezedark) *::before,
+    :where([data-theme-breezedark], .theme--breezedark) *::after {
+        scroll-behavior: auto;
+        transition-duration: 0s;
+        animation-duration: 0s;
+        animation-iteration-count: 1;
+    }
+}
+
+@media (prefers-contrast: more) {
+    :where([data-theme-breezedark], .theme--breezedark) {
+        --breeze-border: var(--breeze-text-secondary);
+        --breeze-border-strong: var(--breeze-text);
+        --breeze-surface-hover: var(--breeze-surface-popover);
+    }
+}
+
+@media (forced-colors: active) {
+    :where([data-theme-breezedark], .theme--breezedark),
+    :where([data-theme-breezedark], .theme--breezedark) * {
+        forced-color-adjust: auto;
+        box-shadow: none;
+        backdrop-filter: none;
+    }
+}

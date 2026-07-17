@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace OCA\BreezeDark\Settings;
 
-use OCP\App\IAppManager;
+use OCA\BreezeDark\Theme\Accent;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\Config\IUserConfig;
 use OCP\IAppConfig;
@@ -29,7 +29,6 @@ class Personal implements ISettings {
 		private IAppConfig $appConfig,
 		private IUserConfig $userConfig,
 		IUserSession $userSession,
-		private IAppManager $appManager,
 		private IURLGenerator $urlGenerator,
 	) {
 		$this->userId = $userSession->getUser()?->getUID();
@@ -45,6 +44,18 @@ class Personal implements ISettings {
 			'theme_automatic_activation_enabled',
 			'0',
 		);
+		$serverAccent = Accent::serverDefault(
+			$this->appConfig->getValueString($this->appName, 'theme_default_accent', Accent::Plasma->value),
+		);
+		$userAccent = $this->userConfig->getValueString(
+			$this->userId,
+			$this->appName,
+			'theme_accent',
+			Accent::USER_DEFAULT,
+		);
+		if (!Accent::isValidUserValue($userAccent)) {
+			$userAccent = Accent::USER_DEFAULT;
+		}
 
 		return new TemplateResponse('breezedark', 'personal', [
 			'themeEnforced' => $this->appConfig->getValueString($this->appName, 'theme_enforced', '0') === '1',
@@ -55,7 +66,9 @@ class Personal implements ISettings {
 				'theme_automatic_activation_enabled',
 				$defaultAutomaticActivation,
 			) === '1',
-			'appWebPath' => $this->appManager->getAppWebPath($this->appName),
+			'themeAccent' => $userAccent,
+			'resolvedAccent' => Accent::resolve($userAccent, $serverAccent->value)->value,
+			'themeDefaultAccent' => $serverAccent->value,
 			'settingsUrl' => $this->urlGenerator->linkToRoute('breezedark.Settings.personal'),
 		]);
 	}

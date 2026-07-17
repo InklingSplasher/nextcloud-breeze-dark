@@ -1,0 +1,12 @@
+:where([data-theme-breezedark], .theme--breezedark) {
+    .tasks-list .task-item,
+    .task-body,
+    .task-details {
+        border-color: var(--breeze-border);
+        background: var(--breeze-surface);
+    }
+
+    .tasks-list .task-item.active {
+        background: var(--breeze-accent-soft);
+    }
+}

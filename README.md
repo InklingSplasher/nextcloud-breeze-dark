@@ -1,94 +1,153 @@
-# Breeze Dark Theme
+# Breeze Next
 
-This is a Breeze Dark Theme for [Nextcloud](https://nextcloud.com) based on the Breeze Dark theme made by the KDE Project.
+Breeze Next 34.1 is a modern dark design system for [Nextcloud](https://nextcloud.com),
+inspired by KDE Breeze. It uses soft gray surfaces, restrained depth and five
+accessible accent palettes while retaining the existing `breezedark` app ID and
+stored preferences.
 
-![screenshot of theme](screenshot.png)
+![Breeze Next screenshot](screenshot.png)
 
-If you have any questions, problems or anything else you're welcome to come hangout in the dedicated matrix room: #nextcloud-breeze-dark:mwalbeck.org
+Maintained by [Jan Klotz](https://github.com/InklingSplasher) in the
+[Breeze Next repository](https://github.com/InklingSplasher/nextcloud-breeze-dark).
 
-## Supported versions
+## Compatibility
 
-This branch is a local compatibility fork for:
+- Nextcloud 33
+- Nextcloud 34
+- PHP 8.2–8.5
 
--   Nextcloud 33
--   Nextcloud 34
-
-It is based on upstream Breeze Dark 29.0.0. The PHP integration, settings
-requests and Nextcloud colour variables were ported to Nextcloud 33 and 34.
-Run the documented visual regression matrix before enabling the theme on a
-production instance after a Nextcloud major upgrade.
-
-Previous unmaintained releases:
-
--   Nextcloud 17-29 (upstream App)
--   Nextcloud 11-16 (Theme folder)
-
-## Version numbering
-
-This project follows semantic versioning. The major version number also follows the Nextcloud version the specific release is intended for to make it easier to know what Nextcloud version the release works with.
+The project is based on Breeze Dark 29.0.0. Breeze Next uses one shared theme
+bundle, Dart Sass modules, a framework-free TypeScript runtime and Vue 3 settings
+built with official Nextcloud components.
 
 ## Installation
 
-It's available in the [Nextcloud app store](https://apps.nextcloud.com/apps/breezedark), just search for Breeze Dark, or look under customizations.
+Breeze Next 34.1 is a manually distributed fork and is not the version currently
+published under the upstream Breeze Dark entry in the Nextcloud App Store. Build
+and install the package from this repository instead.
 
-Or you can clone this repo into your app folder and enable it in the app menu in Nextcloud.
+### Build the package
+
+Node.js 22, PHP and Composer are required:
+
+```sh
+npm ci
+composer install
+make check
+make appstore
+```
+
+The installable archive is written to `build/breezedark.tar.gz` and contains a
+top-level `breezedark` directory.
+
+### Fresh installation
+
+Replace `/var/www/nextcloud` if your Nextcloud root differs:
+
+```sh
+sudo tar -xzf build/breezedark.tar.gz -C /var/www/nextcloud/apps
+sudo chown -R www-data:www-data /var/www/nextcloud/apps/breezedark
+sudo -u www-data php /var/www/nextcloud/occ app:enable breezedark
+sudo -u www-data php /var/www/nextcloud/occ upgrade
+```
+
+### Upgrade an existing installation
+
+Back up the current app and its configuration before replacing it. Use an empty
+backup directory for each rollout:
+
+```sh
+sudo install -d -m 0750 /var/backups/nextcloud-breezedark
+sudo cp -a /var/www/nextcloud/apps/breezedark \
+    /var/backups/nextcloud-breezedark/breezedark-before-upgrade
+sudo -u www-data php /var/www/nextcloud/occ config:list breezedark \
+    | sudo tee /var/backups/nextcloud-breezedark/config-breezedark.json >/dev/null
+
+sudo -u www-data php /var/www/nextcloud/occ maintenance:mode --on
+sudo mv /var/www/nextcloud/apps/breezedark \
+    /var/backups/nextcloud-breezedark/breezedark-replaced
+sudo tar -xzf build/breezedark.tar.gz -C /var/www/nextcloud/apps
+sudo chown -R www-data:www-data /var/www/nextcloud/apps/breezedark
+sudo -u www-data php /var/www/nextcloud/occ upgrade
+sudo -u www-data php /var/www/nextcloud/occ maintenance:mode --off
+```
+
+If the upgrade fails, restore `breezedark-replaced` before disabling maintenance
+mode. After a successful rollout, verify the instance:
+
+```sh
+sudo -u www-data php /var/www/nextcloud/occ status
+sudo -u www-data php /var/www/nextcloud/occ integrity:check-core
+sudo -u www-data php /var/www/nextcloud/occ integrity:check-app breezedark
+```
+
+Local development packages are unsigned unless an App Store developer certificate
+is available. In that case the app integrity command reports that the missing app
+signature is skipped; core integrity must still finish without errors.
 
 ## Usage
 
-After you install the theme, you need to enable it. There are two options for this, a global and a personal one.
+### Administration
 
-### Global
+Open `Settings > Administration > Theming > Breeze Next` to:
 
-With the global options you can enforce the use of the theme for all users as well as unauthenticated visits. Please note that when the theme is enforced for all users it isn't possible for them to disable the theme or choose a different theme.
+- enforce Breeze Next globally;
+- theme login and guest pages;
+- follow the browser's light/dark preference;
+- choose Plasma, Iris, Coral, Mint or Honey as the server accent;
+- add optional custom CSS in the collapsed expert section.
 
-There is also an option to let the theme be enabled / disabled based on the theming preferences reported by browser. When the theme is deactivated using this method, Nextcloud will revert to using the default light theme. This setting only sets the default for when the theme is globally enforced and can be overridden by the user.
+### Personal settings
 
-You can also choose whether the login page should be themed. Though this only has an effect if the theme is enforced globally, or during the login phase of a user that has the theme enabled.
+Open `Settings > Personal > Appearance and accessibility > Breeze Next` to enable
+the theme, configure automatic activation and inherit or override the server
+accent. A personal accent also works when Breeze Next is globally enforced.
 
-You can find the global options here:
+## Development
 
+Generated production assets are written to `css/theme.css`, `css/guest.css`,
+`css/settings.css`, `js/breezedark.js` and `js/settings.js`.
+
+Run the full local gate before every commit:
+
+```sh
+npm ci
+composer install
+make check
+make appstore
 ```
-Settings > Administration > Theming > Breeze Dark
+
+CI validates PHP 8.2 and 8.4 against OCP 33 and OCP 34. The local gate covers
+formatting, Stylelint, TypeScript, ESLint, Vitest, PHP lint, PHP-CS-Fixer, Sass
+without deprecation warnings and bundle-size budgets.
+
+## Contributing
+
+Create a focused branch, run the complete check and review the staged changes
+before creating a signed commit:
+
+```sh
+git switch -c feature/<short-description>
+npm ci
+composer install
+make check
+git status --short
+git diff --check
+git add -A
+git diff --cached --stat
+git commit -S -m "<type>: <description>"
+git push -u origin HEAD
 ```
 
-### Personal
+Use concise commits and keep unrelated changes separate. The signing and SSH
+prompts intentionally remain interactive. Do not commit `node_modules`, `vendor`,
+build staging directories, local certificates or Nextcloud configuration exports.
 
-The personal option allows each user to enable / disable the theme unless it's being enforced by the global options. They can though choose whether the theme should follow the theming choice reported by the browser. This option is also available when the theme is being enforced globally. If the user hasn't set a preference they will follow the global default. You can find the personal option here:
+## Issues and credits
 
-```
-Settings > Personal > Appearance and accessibility > Breeze Dark
-```
+Report bugs and styling requests in the
+[fork issue tracker](https://github.com/InklingSplasher/nextcloud-breeze-dark/issues).
 
-### Custom styling
-
-Under the Theming section in the admin settings you can add your own custom styling to the theme. Only standard CSS can be used. This custom styling will be applied whenever the theme is enabled and only affects the Breeze Dark theme.
-
-## Contributions
-
-### Issues
-
-If you find an issue with the theme I would greatly appreciate it if you opened a bug report, so it can be fixed.
-
-You're also very welcome to open a styling request, if there is an app you would like to see supported by this theme.
-
-A full list of supported apps can be found on the [wiki](https://github.com/mwalbeck/nextcloud-breeze-dark/wiki/Styled-apps).
-
-## Donations
-
-If you like the theme and would like to donate you can use the following ways:
-
-**Liberapay:**  
-https://liberapay.com/mwalbeck/
-
-**Ko-fi:**  
-https://ko-fi.com/mwalbeck
-
-**PayPal:**  
-https://www.paypal.me/magnuswalbeck
-
-**Crypto:**  
-BTC: bc1ql59kgyrhx0l252d8xan2rrvrtz64j2zr8zucmf  
-LTC: ltc1qzn9appss8ecadz9yts46u4vacm9ehwhc29uq4d  
-XMR: 84eXmuNS5RKWnn3YqAmk71U8EkHi2dqLRZN87si5UUdoQp9YPCwL4WFVz84j5hcDmZPkHzFVwM1aGDTfpdaFqQ64PuuLUj2
-
-Thank you!
+Breeze Next is derived from
+[Breeze Dark by Magnus Walbeck](https://github.com/mwalbeck/nextcloud-breeze-dark)
+and remains licensed under AGPL-3.0-or-later.
