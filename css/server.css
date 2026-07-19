@@ -79,7 +79,7 @@
   --color-loading-light: var(--color-alternate-gray) !important;
   --color-loading-dark: var(--color-coastal-fog) !important;
   --color-box-shadow: rgba(0, 0, 0, 0) !important;
-  --color-box-shadow-rgb: rgba(0, 0, 0, 0) !important;
+  --color-box-shadow-rgb: 0, 0, 0 !important;
   --color-border: var(--color-border-grey) !important;
   --color-border-dark: var(--color-border) !important;
   --color-border-maxcontrast: var(--color-border) !important;
@@ -90,8 +90,8 @@
   --table-color-background: var(--color-main-background) !important;
   --table-color-background-hover: var(--color-background-hover) !important;
   --table-border-radius: var(--border-radius) !important;
-  --color-main-background-rgb: rgb(23, 23, 23) !important;
-  --color-main-background-blur: rgba(23, 23, 23, 0.8) !important;
+  --color-main-background-rgb: 49, 54, 59 !important;
+  --color-main-background-blur: rgba(var(--color-main-background-rgb), 0.8) !important;
   --background-invert-if-dark: invert(100%) !important;
   --background-invert-if-bright: no !important;
   --color-success-rgb: 70, 186, 97 !important;
@@ -100,7 +100,7 @@
   --color-warning-hover: #efb832 !important;
   --color-error-rgb: 233, 50, 45 !important;
   --color-error-hover: #ed5a56 !important;
-  --color-scrollbar: #3d3d3d !important;
+  --color-scrollbar: #6b6b6b #31363b !important;
   --color-text-maxcontrast-background-blur: #919191 !important;
   --color-text-maxcontrast-default: #8c8c8c !important;
   --color-placeholder-light: #313131 !important;

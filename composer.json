@@ -1,13 +1,19 @@
 {
+    "name": "inkcurity/nextcloud-breeze-dark",
+    "description": "Local Nextcloud 33 and 34 compatibility port of the Breeze Dark theme",
+    "type": "project",
+    "license": "AGPL-3.0-or-later",
     "autoload-dev": {
         "psr-4": {
-            "OCP\\": "vendor/christophwurst/nextcloud/OCP",
+            "OCP\\": "vendor/nextcloud/ocp/OCP",
             "OCA\\BreezeDark\\": "lib/"
         }
     },
-    "require": {},
+    "require": {
+        "php": ">=8.2 <8.6"
+    },
     "require-dev": {
-        "nextcloud/coding-standard": "^0.5.0",
-        "nextcloud/ocp": "^28"
+        "nextcloud/coding-standard": "^1.5.0",
+        "nextcloud/ocp": "^34.0"
     }
 }

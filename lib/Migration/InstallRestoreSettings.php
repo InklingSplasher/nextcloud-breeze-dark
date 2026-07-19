@@ -28,42 +28,33 @@ declare(strict_types=1);
 
 namespace OCA\BreezeDark\Migration;
 
+use OCP\IAppConfig;
 use OCP\IConfig;
-use OCP\IDBConnection;
 use OCP\Migration\IOutput;
 use OCP\Migration\IRepairStep;
 
-class InstallRestoreSettings implements IRepairStep
-{
-    /** @var IDBConnection */
-	private $db;
+class InstallRestoreSettings implements IRepairStep {
+	public function __construct(
+		private IAppConfig $appConfig,
+		private IConfig $systemConfig,
+	) {
+	}
 
-    /** @var IConfig */
-	private $config;
+	public function getName(): string {
+		return 'Restore enabled-themes and enforce_theme settings that were removed during an uninstall';
+	}
 
-    public function __construct(IDBConnection $db, IConfig $config)
-    {
-        $this->db = $db;
-        $this->config = $config;   
-    }
+	public function run(IOutput $output): void {
+		$themeEnforced = $this->appConfig->getValueString('breezedark', 'theme_enforced', '0') === '1';
+		$currentEnforcedTheme = $this->systemConfig->getSystemValueString('enforce_theme', '');
 
-    public function getName(): string
-    {
-        return "Restore enabled-themes and enforce_theme settings that where removed during an uninstall";
-    }
-
-    public function run(IOutput $output): void
-    {
-        $themeEnforced = $this->config->getAppValue("breezedark", "theme_enforced", "0");
-        $currentEnforcedTheme = $this->config->getSystemValue("enforce_theme", "");
-
-        if ($themeEnforced && $currentEnforcedTheme === "") {
-            // Re-enable enforcement of the theme if no enforced theme is currently set
-            $this->config->setSystemValue("enforce_theme", "dark");
-        } elseif ($themeEnforced && $currentEnforcedTheme !== "dark") {
-            // Disable theme enforcement of breezedark if a theme other than
-            // the one breezedark set is currently being enforced
-            $this->config->setAppValue("breezedark", "theme_enforced", "0");
-        }
-    }
+		if ($themeEnforced && $currentEnforcedTheme === '') {
+			// Re-enable enforcement of the theme if no enforced theme is currently set
+			$this->systemConfig->setSystemValue('enforce_theme', 'dark');
+		} elseif ($themeEnforced && $currentEnforcedTheme !== 'dark') {
+			// Disable theme enforcement of breezedark if a theme other than
+			// the one breezedark set is currently being enforced
+			$this->appConfig->setValueString('breezedark', 'theme_enforced', '0');
+		}
+	}
 }

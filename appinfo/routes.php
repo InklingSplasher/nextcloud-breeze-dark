@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Breeze Dark theme for Nextcloud
  *
@@ -23,12 +24,11 @@
  *
  */
 
-
 return [
-    'routes' => [
-        ['name' => 'Settings#personal', 'url' => '/settings', 'verb' => 'POST'],
-        ['name' => 'Settings#admin', 'url' => '/settings/admin', 'verb' => 'POST'],
-        ['name' => 'Settings#customStyling', 'url' => '/settings/custom-styling', 'verb' => 'POST'],
-        ['name' => 'Theming#getCustomStyling', 'url' => '/custom-styling', 'verb' => 'GET'],
-    ],
+	'routes' => [
+		['name' => 'Settings#personal', 'url' => '/settings', 'verb' => 'POST'],
+		['name' => 'Settings#admin', 'url' => '/settings/admin', 'verb' => 'POST'],
+		['name' => 'Settings#customStyling', 'url' => '/settings/custom-styling', 'verb' => 'POST'],
+		['name' => 'Theming#getCustomStyling', 'url' => '/custom-styling', 'verb' => 'GET'],
+	],
 ];

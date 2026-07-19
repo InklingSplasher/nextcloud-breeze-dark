@@ -30,45 +30,34 @@ namespace OCA\BreezeDark\Controller;
 
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
+use OCP\AppFramework\Http\Attribute\NoCSRFRequired;
+use OCP\AppFramework\Http\Attribute\PublicPage;
 use OCP\AppFramework\Http\DataDisplayResponse;
-use OCP\IConfig;
+use OCP\IAppConfig;
 use OCP\IRequest;
 
-class ThemingController extends Controller
-{
+class ThemingController extends Controller {
 
-    /** @var string */
-    protected $appName;
+	/** @var string */
+	protected $appName;
 
-    /** @var IConfig */
-    private $config;
+	public function __construct(
+		string $appName,
+		private IAppConfig $appConfig,
+		IRequest $request,
+	) {
+		parent::__construct($appName, $request);
+	}
 
-    /**
-     * @param string $appName
-     * @param IConfig $config
-     * @param IRequest $request
-     */
-    public function __construct(
-        string $appName,
-        IConfig $config,
-        IRequest $request
-    ) {
-        parent::__construct($appName, $request);
-        $this->config = $config;
-    }
-
-    /**
-     * @NoCSRFRequired
-     * @PublicPage
-     * @NoSameSiteCookieRequired
-     *
-     * @return DataDisplayResponse|NotFoundResponse
-     */
-    public function getCustomStyling(): DataDisplayResponse
-    {
-        $customStyling = $this->config->getAppValue($this->appName, 'theme_custom_styling', '');
-        $response = new DataDisplayResponse($customStyling, Http::STATUS_OK, ['Content-Type' => 'text/css']);
-        $response->cacheFor(86400);
-        return $response;
-    }
+	#[NoCSRFRequired]
+	#[PublicPage]
+	public function getCustomStyling(): DataDisplayResponse {
+		$customStyling = $this->appConfig->getValueString($this->appName, 'theme_custom_styling', '');
+		$response = new DataDisplayResponse($customStyling, Http::STATUS_OK, [
+			'Content-Type' => 'text/css; charset=UTF-8',
+			'X-Content-Type-Options' => 'nosniff',
+		]);
+		$response->cacheFor(86400);
+		return $response;
+	}
 }

@@ -1,131 +1,122 @@
 /**
- * Breeze Dark theme for Nextcloud
- *
- * @copyright Copyright (C) 2020  Magnus Walbeck <mw@mwalbeck.org>
- *
- * @author Magnus Walbeck <mw@mwalbeck.org>
+ * Breeze Dark settings for Nextcloud.
  *
  * @license GNU AGPL version 3 or any later version
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
  */
 
-function postSuccess(selector, id) {
-    $(selector).after(
-        " <span id='" + id + "' class='msg success'>" + t("breezedark", "Saved") + "</span>"
-    );
-    setTimeout(function () {
-        $("#" + id).remove();
-    }, 3000);
+function showBreezeDarkMessage(anchor, id, message, success) {
+    if (!(anchor instanceof Element)) {
+        return;
+    }
+
+    document.getElementById(id)?.remove();
+
+    const status = document.createElement("span");
+    status.id = id;
+    status.classList.add("msg", success ? "success" : "error");
+    status.textContent = ` ${message}`;
+    anchor.insertAdjacentElement("afterend", status);
+
+    window.setTimeout(() => status.remove(), 3000);
 }
 
-function postError(selector, id) {
-    $(selector).after(
-        " <span id='" + id + "' class='msg error'>" + t("breezedark", "Error") + "</span>"
-    );
-    setTimeout(function () {
-        $("#" + id).remove();
-    }, 3000);
+async function postBreezeDarkForm(url, values) {
+    const requestToken = document.head.dataset.requesttoken;
+    if (!requestToken) {
+        throw new Error("Missing Nextcloud request token");
+    }
+
+    const response = await fetch(url, {
+        method: "POST",
+        credentials: "same-origin",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+            requesttoken: requestToken,
+            "X-Requested-With": "XMLHttpRequest",
+        },
+        body: new URLSearchParams(values),
+    });
+
+    if (!response.ok) {
+        throw new Error(`Breeze Dark settings request failed with HTTP ${response.status}`);
+    }
 }
 
-window.addEventListener("DOMContentLoaded", function () {
-    $("#breezedark-theme-enabled").change(function () {
-        $.post(OC.generateUrl("apps/breezedark/settings/admin"), {
-            theme_enforced: this.checked ? 1 : 0,
-            theme_automatic_activation_enabled: $("#breezedark-automatic-activation-enabled").prop(
-                "checked"
-            )
-                ? 1
-                : 0,
-            theme_login_page: $("#breezedark-theme-login-page").prop("checked") ? 1 : 0,
-        })
-            .done(function () {
-                postSuccess(
-                    "label[for='breezedark-theme-enabled']",
-                    "breezedark-theme-enabled-msg"
-                );
-            })
-            .fail(function () {
-                postError("label[for='breezedark-theme-enabled']", "breezedark-theme-enabled-msg");
-            });
+window.addEventListener("DOMContentLoaded", () => {
+    const root = document.querySelector(".breezedark-admin");
+    if (!(root instanceof HTMLElement)) {
+        return;
+    }
 
-        $("#breezedark-automatic-activation-enabled").prop(
-            "disabled",
-            !$("#breezedark-theme-enabled").prop("checked")
+    const enforceTheme = root.querySelector("#breezedark-theme-enabled");
+    const automaticActivation = root.querySelector("#breezedark-automatic-activation-enabled");
+    const loginPage = root.querySelector("#breezedark-theme-login-page");
+    const customStyling = root.querySelector("#breezedark-theme-custom-styling");
+    const customStylingButton = root.querySelector("#breezedark-theme-custom-styling-button");
+
+    if (
+        !(enforceTheme instanceof HTMLInputElement) ||
+        !(automaticActivation instanceof HTMLInputElement) ||
+        !(loginPage instanceof HTMLInputElement) ||
+        !(customStyling instanceof HTMLTextAreaElement) ||
+        !(customStylingButton instanceof HTMLButtonElement)
+    ) {
+        return;
+    }
+
+    let saveQueue = Promise.resolve();
+    const settingsValues = () => ({
+        theme_enforced: enforceTheme.checked ? "1" : "0",
+        theme_automatic_activation_enabled: automaticActivation.checked ? "1" : "0",
+        theme_login_page: loginPage.checked ? "1" : "0",
+    });
+    const queueSave = (url, values, anchor, messageId) => {
+        if (typeof url !== "string" || url === "") {
+            showBreezeDarkMessage(anchor, messageId, root.dataset.errorLabel, false);
+            return;
+        }
+
+        saveQueue = saveQueue.catch(() => undefined).then(() => postBreezeDarkForm(url, values));
+        saveQueue.then(
+            () => showBreezeDarkMessage(anchor, messageId, root.dataset.savedLabel, true),
+            () => showBreezeDarkMessage(anchor, messageId, root.dataset.errorLabel, false),
+        );
+    };
+
+    enforceTheme.addEventListener("change", () => {
+        automaticActivation.disabled = !enforceTheme.checked;
+        queueSave(
+            root.dataset.settingsUrl,
+            settingsValues(),
+            root.querySelector("label[for='breezedark-theme-enabled']"),
+            "breezedark-theme-enabled-msg",
         );
     });
 
-    $("#breezedark-automatic-activation-enabled").change(function () {
-        $.post(OC.generateUrl("apps/breezedark/settings/admin"), {
-            theme_enforced: $("#breezedark-theme-enabled").prop("checked") ? 1 : 0,
-            theme_automatic_activation_enabled: this.checked ? 1 : 0,
-            theme_login_page: $("#breezedark-theme-login-page").prop("checked") ? 1 : 0,
-        })
-            .done(function () {
-                postSuccess(
-                    "label[for='breezedark-automatic-activation-enabled']",
-                    "breezedark-theme-automatic-activation-enabled-msg"
-                );
-            })
-            .fail(function () {
-                postError(
-                    "label[for='breezedark-automatic-activation-enabled']",
-                    "breezedark-theme-automatic-activation-enabled-msg"
-                );
-            });
+    automaticActivation.addEventListener("change", () => {
+        queueSave(
+            root.dataset.settingsUrl,
+            settingsValues(),
+            root.querySelector("label[for='breezedark-automatic-activation-enabled']"),
+            "breezedark-theme-automatic-activation-enabled-msg",
+        );
     });
 
-    $("#breezedark-theme-login-page").change(function () {
-        $.post(OC.generateUrl("apps/breezedark/settings/admin"), {
-            theme_login_page: this.checked ? 1 : 0,
-            theme_enforced: $("#breezedark-theme-enabled").prop("checked") ? 1 : 0,
-            theme_automatic_activation_enabled: $("#breezedark-automatic-activation-enabled").prop(
-                "checked"
-            )
-                ? 1
-                : 0,
-        })
-            .done(function () {
-                postSuccess(
-                    "label[for='breezedark-theme-login-page']",
-                    "breezedark-theme-login-page-msg"
-                );
-            })
-            .fail(function () {
-                postError(
-                    "label[for='breezedark-theme-login-page']",
-                    "breezedark-theme-login-page-msg"
-                );
-            });
+    loginPage.addEventListener("change", () => {
+        queueSave(
+            root.dataset.settingsUrl,
+            settingsValues(),
+            root.querySelector("label[for='breezedark-theme-login-page']"),
+            "breezedark-theme-login-page-msg",
+        );
     });
 
-    $("#breezedark-theme-custom-styling-button").click(function () {
-        $.post(OC.generateUrl("apps/breezedark/settings/custom-styling"), {
-            theme_custom_styling: $("#breezedark-theme-custom-styling").val(),
-        })
-            .done(function () {
-                postSuccess(
-                    "#breezedark-theme-custom-styling-button",
-                    "breezedark-theme-custom-styling-button-msg"
-                );
-            })
-            .fail(function () {
-                postError(
-                    "#breezedark-theme-custom-styling-button",
-                    "breezedark-theme-custom-styling-button-msg"
-                );
-            });
+    customStylingButton.addEventListener("click", () => {
+        queueSave(
+            root.dataset.customStylingUrl,
+            { theme_custom_styling: customStyling.value },
+            customStylingButton,
+            "breezedark-theme-custom-styling-button-msg",
+        );
     });
 });

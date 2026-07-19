@@ -43,14 +43,15 @@ appstore:
 	--exclude="node_modules" \
 	--exclude="vendor" \
 	--exclude=".gitignore" \
-	--exclude=".php_cs.cache" \
-	--exclude=".php_cs.dist" \
+	--exclude=".php-cs-fixer.cache" \
+	--exclude=".php-cs-fixer.dist.php" \
 	--exclude=".prettierignore" \
 	--exclude=".prettierrc" \
 	--exclude=".stylelintignore" \
 	--exclude=".stylelintrc.json" \
 	--exclude="composer.json" \
 	--exclude="composer.lock" \
+	--exclude="css/*.map" \
 	--exclude="Makefile" \
 	--exclude="package-lock.json" \
 	--exclude="package.json" \

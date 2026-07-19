@@ -1,5 +1,6 @@
 {
-    "extends": ["stylelint-config-sass-guidelines", "stylelint-prettier/recommended"],
+    "customSyntax": "postcss-scss",
+    "extends": ["stylelint-prettier/recommended"],
     "rules": {
         "prettier/prettier": [
             true,
@@ -8,12 +9,6 @@
                 "singleQuote": false,
                 "printWidth": 100
             }
-        ],
-        "string-quotes": "double",
-        "max-nesting-depth": 2,
-        "selector-no-qualifying-type": null,
-        "selector-max-compound-selectors": null,
-        "selector-class-pattern": null,
-        "selector-max-id": null
+        ]
     }
 }

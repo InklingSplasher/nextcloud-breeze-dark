@@ -15,4 +15,5 @@ $config
 	->notPath('src')
 	->notPath('vendor')
 	->in(__DIR__);
+
 return $config;

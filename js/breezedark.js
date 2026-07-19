@@ -23,20 +23,48 @@
  */
 
 const cssMediaDark = window.matchMedia("(prefers-color-scheme: dark)");
-function updateColorSheme() {
-    if (
-        getComputedStyle(document.body).getPropertyValue(
-            "--breezedark-automatic-activation-enabled"
-        ) != 1 ||
-        cssMediaDark.matches
-    ) {
-        document.body.classList.add("theme--dark", "theme--breezedark");
-        document.body.classList.remove("theme--light");
+
+function setThemeEnabled(body, themeId, enabled) {
+    const enabledThemes = new Set(
+        (body.dataset.themes ?? "")
+            .split(",")
+            .map((theme) => theme.trim())
+            .filter(Boolean),
+    );
+
+    if (enabled) {
+        body.setAttribute(`data-theme-${themeId}`, "");
+        enabledThemes.add(themeId);
     } else {
-        document.body.classList.remove("theme--dark", "theme--breezedark");
-        document.body.classList.add("theme--light");
+        body.removeAttribute(`data-theme-${themeId}`);
+        enabledThemes.delete(themeId);
     }
+
+    body.dataset.themes = Array.from(enabledThemes).join(",");
 }
 
-cssMediaDark.addEventListener("change", updateColorSheme);
-document.addEventListener("DOMContentLoaded", updateColorSheme);
+function updateColorScheme() {
+    const body = document.body;
+    if (!body) {
+        return;
+    }
+
+    const automaticActivationEnabled =
+        getComputedStyle(body)
+            .getPropertyValue("--breezedark-automatic-activation-enabled")
+            .trim() === "1";
+    const darkEnabled = !automaticActivationEnabled || cssMediaDark.matches;
+
+    body.classList.toggle("theme--dark", darkEnabled);
+    body.classList.toggle("theme--breezedark", darkEnabled);
+    body.classList.toggle("theme--light", !darkEnabled);
+    setThemeEnabled(body, "dark", darkEnabled);
+    setThemeEnabled(body, "breezedark", darkEnabled);
+}
+
+cssMediaDark.addEventListener("change", updateColorScheme);
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", updateColorScheme, { once: true });
+} else {
+    updateColorScheme();
+}
