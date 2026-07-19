@@ -41,7 +41,7 @@ class InstallRestoreSettings implements IRepairStep {
 	}
 
 	public function getName(): string {
-		return 'Restore enabled-themes and enforce_theme settings that where removed during an uninstall';
+		return 'Restore enabled-themes and enforce_theme settings that were removed during an uninstall';
 	}
 
 	public function run(IOutput $output): void {
