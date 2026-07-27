@@ -1,3 +1,10 @@
+html:has(> body#body-login),
+html:has(> body#body-public),
+body#body-login,
+body#body-public {
+    overscroll-behavior-y: none;
+}
+
 body#body-login,
 body#body-public {
     color: var(--breeze-text);

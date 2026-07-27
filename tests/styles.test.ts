@@ -28,6 +28,12 @@ describe("NC34 style regressions", () => {
         expect(guest).toContain("> footer.guest-box");
     });
 
+    it("prevents the legacy page background from showing during guest-page overscroll", () => {
+        expect(guest).toContain("html:has(> body#body-login)");
+        expect(guest).toContain("html:has(> body#body-public)");
+        expect(guest).toContain("overscroll-behavior-y: none;");
+    });
+
     it("keeps every accent example scoped to its own swatch", () => {
         for (const accent of ["plasma", "iris", "coral", "mint", "honey"]) {
             expect(palette).toContain(`.breeze-next-settings [data-breeze-accent="${accent}"]`);
