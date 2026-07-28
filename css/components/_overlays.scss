@@ -21,12 +21,22 @@
 
     .modal-container,
     .modal__content,
-    [role="dialog"] {
+    [role="dialog"]:not(.modal-mask) {
         border: 1px solid var(--breeze-border);
         border-radius: var(--breeze-radius-container);
         background: var(--breeze-surface-popover);
         color: var(--breeze-text);
         box-shadow: var(--breeze-shadow-popover);
+    }
+
+    .app-settings:not(.app-settings--legacy) > .modal-wrapper > .modal-container {
+        --nav-tint: var(--breeze-surface-raised);
+        --nav-tint-strong: var(--breeze-surface-hover);
+
+        .navigation-list__link--active:hover,
+        .navigation-list__link--active:focus-visible {
+            background-color: var(--breeze-surface-hover);
+        }
     }
 
     [role="menuitem"][aria-current="true"],

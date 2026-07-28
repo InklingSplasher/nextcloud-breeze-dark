@@ -47,4 +47,10 @@ describe("NC34 style regressions", () => {
         expect(notifications).toContain("background: transparent;");
         expect(notifications).not.toContain("var(--breeze-surface-popover)");
     });
+
+    it("keeps app settings neutral without styling the modal mask as a dialog card", () => {
+        expect(overlays).toContain('[role="dialog"]:not(.modal-mask)');
+        expect(overlays).toContain("--nav-tint: var(--breeze-surface-raised);");
+        expect(overlays).toContain("--nav-tint-strong: var(--breeze-surface-hover);");
+    });
 });
