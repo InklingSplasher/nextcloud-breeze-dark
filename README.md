@@ -14,6 +14,7 @@ Maintained by [Jan Klotz](https://github.com/InklingSplasher) in the
 
 - Nextcloud 33
 - Nextcloud 34
+- Nextcloud 35 (requires PHP 8.3+)
 - PHP 8.2–8.5
 
 The project is based on Breeze Dark 29.0.0. Breeze Next uses one shared theme

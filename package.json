@@ -1,7 +1,7 @@
 {
     "name": "breezedark",
-    "version": "34.1.5",
-    "description": "Breeze Next theme for Nextcloud 33 and 34",
+    "version": "35.1.0",
+    "description": "Breeze Next theme for Nextcloud 33, 34 and 35",
     "private": true,
     "type": "module",
     "dependencies": {

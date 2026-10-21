@@ -38,7 +38,7 @@ Settings > Personal > Appearance and accessibility > Breeze Next
 
 Under the Theming section in the admin settings you can add your own custom styling to the theme. Only standard CSS can be used. This custom styling will be applied whenever the theme is enabled and only affects the Breeze Dark theme.
     ]]></description>
-    <version>34.1.5</version>
+    <version>35.1.0</version>
     <licence>AGPL-3.0-or-later</licence>
     <author homepage="https://github.com/InklingSplasher/nextcloud-breeze-dark">Jan Klotz</author>
     <namespace>BreezeDark</namespace>
@@ -48,7 +48,7 @@ Under the Theming section in the admin settings you can add your own custom styl
     <screenshot>https://raw.githubusercontent.com/InklingSplasher/nextcloud-breeze-dark/master/screenshot.png</screenshot>
     <dependencies>
         <php min-version="8.2" max-version="8.5"/>
-        <nextcloud min-version="33" max-version="34"/>
+        <nextcloud min-version="33" max-version="35"/>
     </dependencies>
     <repair-steps>
 		<post-migration>

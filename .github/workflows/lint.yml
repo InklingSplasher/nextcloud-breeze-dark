@@ -15,7 +15,10 @@ jobs:
             fail-fast: false
             matrix:
                 php: ["8.2", "8.4"]
-                ocp: ["^33.0", "^34.0"]
+                ocp: ["^33.0", "^34.0", "^35.0"]
+                exclude:
+                    - php: "8.2"
+                      ocp: "^35.0"
         steps:
             - uses: actions/checkout@v4
             - uses: shivammathur/setup-php@v2

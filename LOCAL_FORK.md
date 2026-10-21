@@ -1,4 +1,4 @@
-# Local Nextcloud 33 and 34 port
+# Local Nextcloud 33, 34 and 35 port
 
 This branch is an AGPL-3.0-or-later local fork of
 `mwalbeck/nextcloud-breeze-dark`, based on upstream commit
@@ -25,3 +25,7 @@ follow-up branch so compatibility fixes remain reviewable on their own.
 Nextcloud 34 compatibility is declared after updating the development API to
 OCP 34. Repeat the visual regression matrix after the core upgrade because core
 and app markup may change independently of the PHP and JavaScript APIs.
+
+Nextcloud 35 compatibility is declared after updating the development API to
+OCP 35. Nextcloud 35 requires PHP 8.3 or newer; the app itself still accepts
+PHP 8.2 for Nextcloud 33 and 34 installations.

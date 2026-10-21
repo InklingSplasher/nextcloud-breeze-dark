@@ -1,5 +1,11 @@
 # Changelog
 
+## 35.1.0
+
+- Declared compatibility with Nextcloud 35 (tested against OCP 35.0.2) while keeping Nextcloud 33 and 34 support.
+- Validated that every used OCP API and all core theming variables are unchanged in Nextcloud 35.
+- Added the OCP 35 target to the CI compatibility matrix (PHP 8.3+ only, as required by Nextcloud 35).
+
 ## 34.1.5
 
 - Updated the visible app maintainer and project links for the Breeze Next fork.
