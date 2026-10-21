@@ -31,7 +31,7 @@ watch:
 build:
 	npm run build
 
-appstore:
+appstore: build
 	rm -rf $(build_directory)
 	mkdir -p $(sign_directory)
 	rsync -a \

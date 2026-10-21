@@ -1,0 +1,180 @@
+/***
+ * InkCurity Dark — the signature flourishes
+ *
+ * The backdrop (void, one cyan bloom, a guest magenta bloom, film grain), the
+ * scan-line under the header, the cyan caret and focus ring, mono labels,
+ * display headings and the blinking cursor on the dashboard greeting.
+ * One signature moment per screen; everything else stays calm.
+ *
+ * @copyright Copyright (c) 2026 inkcurity.net
+ *
+ * @license GNU AGPL version 3 or any later version, see COPYING file for more.
+ */
+
+/* Backdrop ----------------------------------------------------------------- */
+
+// Film grain as an inline SVG tile (fractal noise, alpha 5%): no request, no
+// blend mode, drawn only in the void around the content container.
+$ic-grain: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E";
+
+@mixin ic-backdrop($cyan-x: 12%, $cyan-y: -10%, $magenta-x: 100%, $magenta-y: 0%) {
+    background-color: var(--ic-ink-void) !important;
+    background-image:
+        url($ic-grain),
+        radial-gradient(
+            900px 620px at #{$cyan-x} #{$cyan-y},
+            rgba(var(--ic-splash-cyan-rgb), 0.14),
+            transparent 62%
+        ),
+        radial-gradient(
+            720px 520px at #{$magenta-x} #{$magenta-y},
+            rgba(var(--ic-splash-magenta-rgb), 0.07),
+            transparent 62%
+        ) !important;
+    background-size:
+        200px 200px,
+        auto,
+        auto !important;
+    background-repeat: repeat, no-repeat, no-repeat !important;
+    background-position:
+        0 0,
+        0 0,
+        0 0 !important;
+    background-attachment: fixed !important;
+}
+
+#body-user,
+#body-settings,
+#body-public {
+    @include ic-backdrop;
+}
+
+/* Header scan-line: the radar sweep, one tile of 720px looping seamlessly --- */
+
+#header:not(.header-guest)::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    inset-block-end: 0;
+    height: 2px;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(var(--ic-splash-cyan-rgb), 0) 15%,
+        rgba(var(--ic-splash-cyan-rgb), 0.85) 40%,
+        rgba(var(--ic-splash-magenta-rgb), 0.78) 50%,
+        rgba(var(--ic-splash-cyan-rgb), 0.85) 60%,
+        rgba(var(--ic-splash-cyan-rgb), 0) 85%,
+        transparent 100%
+    );
+    background-size: 720px 100%;
+    background-repeat: repeat-x;
+    box-shadow: 0 0 14px rgba(var(--ic-splash-cyan-rgb), 0.3);
+    animation: ic-scan 11s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes ic-scan {
+    from {
+        background-position: 0 0;
+    }
+
+    to {
+        background-position: -720px 0;
+    }
+}
+
+/* Caret, selection, focus ---------------------------------------------------- */
+
+// The brand has a literal blinking cursor. Every field gets it for free.
+input,
+textarea,
+[contenteditable="true"] {
+    caret-color: var(--ic-splash-cyan);
+}
+
+:focus-visible {
+    outline-color: var(--ic-splash-cyan) !important;
+}
+
+* {
+    scrollbar-width: thin;
+}
+
+/* Mono labels: uppercase, tracked wide, like terminal tags ------------------- */
+
+%ic-mono-label {
+    font-family: var(--ic-font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: var(--ic-tracking-mono);
+    text-transform: uppercase;
+    color: var(--ic-ink-mute);
+}
+
+.app-navigation-caption__title,
+.app-navigation-caption__name,
+#app-navigation:not(.vue) .app-navigation-caption {
+    @extend %ic-mono-label;
+
+    opacity: 1 !important;
+}
+
+.app-menu-entry__label,
+.app-sidebar-header__subname,
+.counter-bubble__counter,
+.app-navigation-entry__counter,
+.files-list__row-size,
+.files-list__row-mtime,
+.v-popper--theme-tooltip .v-popper__inner {
+    font-family: var(--ic-font-mono);
+    font-variant-numeric: tabular-nums;
+}
+
+/* Display headings: set tight, in the display face when it is installed ----- */
+
+.settings-section__name,
+.settings-section__title,
+.section > h2,
+#app-dashboard h2,
+.app-sidebar-header__mainname,
+.modal-header .modal-name,
+.dialog__name,
+.empty-content__name,
+.panel--header h2 {
+    font-family: var(--ic-font-display);
+    letter-spacing: var(--ic-tracking-tight);
+    text-wrap: balance;
+}
+
+/* The dashboard greeting gets the cursor ------------------------------------- */
+
+#app-dashboard > h2::after {
+    content: "▌" / "";
+    display: inline-block;
+    margin-inline-start: 0.12em;
+    color: var(--ic-splash-cyan);
+    animation: ic-blink 1s steps(1, end) infinite;
+}
+
+@keyframes ic-blink {
+    50% {
+        opacity: 0;
+    }
+}
+
+/* Reduced motion: the sweep and the cursor stand still ------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+    #header:not(.header-guest)::after,
+    #app-dashboard > h2::after {
+        animation: none;
+    }
+}
+
+[data-themes*="reduced-motion"] {
+    #header:not(.header-guest)::after,
+    #app-dashboard > h2::after {
+        animation: none;
+    }
+}

@@ -1,39 +1,70 @@
 /***
  * @copyright Copyright (c) 2020, Magnus Walbeck <mw@mwalbeck.org>
+ * @copyright Copyright (c) 2026 inkcurity.net
  *
  * @license GNU AGPL version 3 or any later version, see COPYING file for more.
  */
 
 /* Dashboard ---------------------------------------------------------------- */
 
+// The dashboard is the one screen that lives directly on the void: the panels
+// are ink-deep cards with a hairline, the greeting carries the cursor.
 #app-dashboard {
     --color-background-translucent: var(--color-dashboard-grey) !important;
-    --color-main-background: var(--color-background-darker) !important;
-}
 
-.background-selector .background.color {
-    background-color: var(--color-background-darker) !important;
-}
+    > h2 {
+        color: var(--ic-ink-hi);
+        font-weight: 500;
+        text-shadow: 0 0 40px rgba(var(--ic-splash-cyan-rgb), 0.25);
+    }
 
-.modal__content li label {
-    background-color: var(--color-main-background) !important;
-    border-color: var(--color-border) !important;
+    .panel,
+    .panels > div {
+        background-color: var(--ic-ink-deep) !important;
+        border: 1px solid var(--ic-ink-line) !important;
+        border-radius: var(--border-radius-container) !important;
+        backdrop-filter: none !important;
+        box-shadow: none !important;
+        transition:
+            border-color var(--tr-dur-fade) var(--tr-ease-soft),
+            box-shadow var(--tr-dur-fade) var(--tr-ease-soft);
 
-    &:hover {
-        border-color: var(--color-primary-element) !important;
+        &:hover,
+        &:focus-within {
+            border-color: rgba(var(--ic-splash-cyan-rgb), 0.3) !important;
+            box-shadow: 0 0 32px -8px rgba(var(--ic-splash-cyan-rgb), 0.4) !important;
+        }
+    }
+
+    .panel--header h2 {
+        color: var(--ic-ink-fg);
+    }
+
+    .statuses .button-vue,
+    .footer .button-vue {
+        border: unset !important;
+    }
+
+    .user-status-menu-item__toggle--inline {
+        box-shadow: none !important;
     }
 }
 
-#app-dashboard .footer .button-vue {
-    border: unset !important;
+.background-selector .background.color {
+    background-color: var(--ic-ink-raised) !important;
 }
 
-#app-dashboard .user-status-menu-item__toggle--inline {
-    box-shadow: none !important;
+.modal__content li label {
+    background-color: var(--ic-ink-deep) !important;
+    border-color: var(--ic-ink-line) !important;
+
+    &:hover {
+        border-color: var(--ic-splash-cyan) !important;
+    }
 }
 
 #status-weather .button-vue {
-    background-color: var(--color-main-background-blur) !important;
+    background-color: var(--ic-ink-raised) !important;
     border: unset !important;
 
     &:hover {
@@ -53,16 +84,10 @@
 
 /* Tasks */
 .center-button .button-vue--vue-secondary {
-    background-color: var(--color-background-darker) !important;
-    color: var(--color-main-text) !important;
+    background-color: var(--ic-ink-raised) !important;
+    color: var(--ic-ink-fg) !important;
 
     &:hover {
-        background-color: var(--color-background-hover) !important;
-    }
-
-    &:active,
-    &:focus {
-        background-color: var(--color-primary-element) !important;
-        color: var(--color-primary-text) !important;
+        color: var(--ic-splash-cyan) !important;
     }
 }

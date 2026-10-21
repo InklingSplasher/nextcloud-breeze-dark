@@ -4,10 +4,24 @@
 
 ### Added
 
+-   InkCurity Dark: a one-of-a-kind design language on top of the Breeze Dark port. Ink scale
+    (`#02060f` void, `#08152b` surfaces), one cyan accent, a magenta guest star, glows instead
+    of shadows, 10px keys, 14px cards and a 20px body container; motion curves and press
+    feedback from Trumpf.
+-   Signature flourishes: a radar scan-line under the header, a cyan caret in every field, the
+    blinking cursor on the dashboard greeting and the login headline, mono column headers and
+    captions, a redacted line in the login footer. All of them stand still under reduced motion.
+-   The login page as SCSS sources (`css/guest.scss`, `css/guest-automatic.scss`) built by
+    `npm run build`; the `appstore` make target builds first.
+-   A preview of the theme in the personal settings and two screenshots.
 -   Add local Nextcloud 33 and 34 compatibility and document the production test gate.
 
 ### Changed
 
+-   The theme owns its backdrop: the body background image is replaced by the ink void with a
+    cyan bloom and film grain. A custom background can be restored with custom CSS, see README.
+-   The theme is named InkCurity Dark in the settings and the app store listing; the app id stays
+    `breezedark` so existing preferences remain valid.
 -   Replace jQuery settings requests with native Fetch requests and explicit CSRF headers.
 -   Move app and user preferences to the supported `IAppConfig` and `IUserConfig` APIs.
 -   Return structured responses from settings endpoints and validate custom CSS size and type.

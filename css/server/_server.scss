@@ -1,10 +1,47 @@
 /***
+ * InkCurity Dark — server chrome
+ *
+ * Header, navigation column, content container, sidebar, menus, modals,
+ * toasts, tooltips, search and settings. Grouped lists on the well, cells on
+ * the deep surface, hairlines instead of frames, glows instead of shadows.
+ *
  * @copyright Copyright (c) 2017, Magnus Walbeck <mw@mwalbeck.org>
+ * @copyright Copyright (c) 2026 inkcurity.net
  *
  * @license GNU AGPL version 3 or any later version, see COPYING file for more.
  */
 
 /* Header -------------------------------------------------------------------- */
+
+#header:not(.header-guest) {
+    .app-menu-entry {
+        &__label {
+            font-size: 10px !important;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        &__link:hover .app-menu-entry__icon,
+        &__link:focus-visible .app-menu-entry__icon {
+            filter: drop-shadow(0 0 6px rgba(var(--ic-splash-cyan-rgb), 0.55));
+        }
+
+        // The active app carries a cyan tick instead of a white one.
+        &--active::before {
+            background-color: var(--ic-splash-cyan) !important;
+            box-shadow: 0 0 10px rgba(var(--ic-splash-cyan-rgb), 0.7);
+        }
+
+        &--active .app-menu-entry__label {
+            color: var(--ic-splash-cyan) !important;
+        }
+    }
+
+    #nextcloud:hover .logo,
+    #nextcloud:focus-visible .logo {
+        filter: drop-shadow(0 0 8px rgba(var(--ic-splash-cyan-rgb), 0.45));
+    }
+}
 
 #settings #expand:hover #expandDisplayName,
 #settings #expand:focus #expandDisplayName,
@@ -19,15 +56,216 @@
     background-color: unset !important;
 }
 
-/* Menues -------------------------------------------------------------------- */
+// Header menus: notifications, contacts, account
+.header-menu__wrapper {
+    background-color: var(--ic-ink-raised) !important;
+    border: 1px solid var(--ic-ink-line);
+    border-radius: var(--border-radius-container) !important;
+    box-shadow: var(--ic-elevation) !important;
+}
+
+.header-menu__carret {
+    border-bottom-color: var(--ic-ink-raised) !important;
+}
+
+.header-menu__wrapper .action-button,
+.header-menu__wrapper .action-link,
+.header-menu__wrapper .action-router {
+    border-radius: var(--border-radius-element) !important;
+}
+
+/* Content container ----------------------------------------------------------- */
+
+// The container floats on the void with a hairline and a soft cyan glow.
+#content,
+#content-vue {
+    box-shadow: var(--ic-elevation);
+}
+
+/* Navigation column: grouped list on the well ----------------------------------- */
+
+.app-navigation,
+#app-navigation:not(.vue) {
+    background-color: var(--ic-ink-well) !important;
+    border-inline-end: 1px solid var(--ic-ink-line);
+}
+
+.app-navigation-entry {
+    border-radius: var(--border-radius-element) !important;
+    transition: background-color var(--tr-dur-fade) var(--tr-ease-soft);
+
+    &.active {
+        background-color: var(--color-primary-element-light) !important;
+
+        // nextcloud-vue assumes a filled primary entry; keep icons and text light.
+        .app-navigation-entry-link,
+        .app-navigation-entry__title,
+        .app-navigation-entry__name,
+        .app-navigation-entry-button {
+            color: var(--ic-ink-hi) !important;
+        }
+
+        .app-navigation-entry-icon,
+        .app-navigation-entry__icon {
+            color: var(--ic-splash-cyan) !important;
+        }
+
+        .app-navigation-entry-icon[class*="icon-"],
+        .app-navigation-entry-icon [class*="icon-"] {
+            filter: var(--background-invert-if-dark) !important;
+        }
+
+        // The cursor: a cyan bar with a glow, the brand's ▌.
+        &::before {
+            content: "";
+            position: absolute;
+            inset-inline-start: 4px;
+            top: 25%;
+            width: 3px;
+            height: 50%;
+            border-radius: 2px;
+            background-color: var(--ic-splash-cyan);
+            box-shadow: 0 0 10px rgba(var(--ic-splash-cyan-rgb), 0.65);
+            pointer-events: none;
+        }
+    }
+}
+
+.app-navigation-entry__counter,
+.counter-bubble__counter {
+    border-radius: var(--border-radius-pill) !important;
+    font-size: 11px !important;
+}
+
+.counter-bubble__counter {
+    color: var(--color-primary-element-light-text) !important;
+}
+
+.app-navigation-entry__children .app-navigation-entry {
+    &::before {
+        display: none;
+    }
+}
+
+// Legacy navigation
+#app-navigation:not(.vue) {
+    > ul > li > a,
+    > ul > li > ul > li > a {
+        opacity: 1;
+    }
+
+    > ul > li > ul > li:hover > a,
+    > ul > li > ul > li:focus > a {
+        background-color: unset;
+    }
+
+    > ul > li.active > a {
+        background-color: var(--color-primary-element-light) !important;
+        color: var(--ic-ink-hi) !important;
+    }
+
+    .collapsible::before {
+        background-color: unset;
+    }
+
+    .collapsible:hover > .svg {
+        background-color: var(--color-background-hover);
+        background-image: none !important;
+    }
+}
+
+#app-settings-header .settings-button,
+#app-settings__header .settings-button,
+.app-settings__header .settings-button,
+.contacts-settings .contacts-settings-button {
+    background-color: transparent !important;
+    border: unset !important;
+    opacity: 1;
+}
+
+/* Sidebar ------------------------------------------------------------------- */
+
+.app-sidebar,
+#app-sidebar {
+    border-inline-start: 1px solid var(--ic-ink-line) !important;
+}
+
+.app-sidebar-header__figure {
+    border-bottom: 1px solid var(--ic-ink-line);
+}
+
+.app-sidebar-tabs__nav {
+    border-bottom: 1px solid var(--ic-ink-line);
+}
+
+.app-sidebar-tabs__tab a {
+    &:not(.active):hover,
+    &:not(.active):focus {
+        border-bottom-color: var(--ic-ink-line-strong) !important;
+        box-shadow: inset 0 -1px 0 var(--ic-ink-line-strong) !important;
+    }
+
+    &.active,
+    &.active:focus,
+    &.active:active {
+        border-bottom-color: var(--ic-splash-cyan) !important;
+        box-shadow: inset 0 -1px 0 var(--ic-splash-cyan) !important;
+    }
+}
+
+.app-sidebar-tabs__content section {
+    box-shadow: none !important;
+}
+
+.versionsTabView li {
+    border-color: var(--ic-ink-line);
+
+    &:hover {
+        background: var(--color-background-hover);
+    }
+}
+
+#tab-comments .comment-form form input[type="submit"] {
+    opacity: 0.7;
+
+    &:hover {
+        opacity: 1;
+    }
+}
+
+#app-sidebar-vue.app-sidebar .app-sidebar-header__desc .app-sidebar-header__star .star--star,
+#app-sidebar.app-sidebar .app-sidebar-header__desc .app-sidebar-header__star .star--star {
+    color: var(--ic-ink-soft);
+
+    &:hover {
+        color: var(--ic-splash-lemon);
+    }
+}
+
+#app-sidebar-vue.app-sidebar .app-sidebar-header__desc .app-sidebar-header__star .star--starred,
+#app-sidebar.app-sidebar .app-sidebar-header__desc .app-sidebar-header__star .star--starred {
+    color: var(--ic-splash-lemon);
+    filter: drop-shadow(0 0 6px rgba(var(--ic-splash-lemon-rgb), 0.5));
+
+    &:hover {
+        color: var(--ic-ink-fg);
+        filter: none;
+    }
+}
+
+/* Menus and popovers ------------------------------------------------------------- */
 
 .menu,
 .popovermenu,
 .bubble,
 .popover,
 .app-navigation-entry-menu,
-.v-popper__popper .v-popper__inner {
-    border: 1px solid var(--color-border);
+.v-popper__popper .v-popper__inner,
+.action-item__menu {
+    background-color: var(--ic-ink-raised) !important;
+    border: 1px solid var(--ic-ink-line) !important;
+    border-radius: var(--border-radius-container) !important;
+    box-shadow: var(--ic-elevation) !important;
 }
 
 .menu.notification-container {
@@ -38,156 +276,111 @@
 .app-navigation-entry-menu::after,
 .menu::after,
 .popovermenu::after,
+.action-item__menu .action-item__menu_arrow,
 .v-popper--theme-dropdown.v-popper__popper[data-popper-placement^="bottom"]
     .v-popper__arrow-container {
-    border-bottom-color: var(--color-border) !important;
+    border-bottom-color: var(--ic-ink-raised) !important;
+}
+
+.v-popper__popper .v-popper__arrow-outer {
+    border-color: var(--ic-ink-line) !important;
+}
+
+.v-popper__popper .v-popper__arrow-inner {
+    border-color: var(--ic-ink-raised) !important;
 }
 
 .popover__arrow {
-    border-color: var(--color-border) !important;
+    border-color: var(--ic-ink-line) !important;
 }
 
-// Menu used for devices & sessions under Settings > Personal > Security
+// On the raised surface the default hover (deep + 5%) would be darker than the
+// menu itself: fade a faint white fill in instead, and tint the text cyan.
+.v-popper__popper .v-popper__inner,
+.popovermenu,
+.header-menu__wrapper,
 .action-item__menu {
-    border: 1px solid var(--color-border);
+    .action-button,
+    .action-link,
+    .action-router,
+    .action-checkbox__label,
+    .action-radio__label,
+    .action-input__label,
+    .action-text-editable__label {
+        border-radius: var(--border-radius-element) !important;
+        transition:
+            background-color var(--tr-dur-fade) var(--tr-ease-soft),
+            color var(--tr-dur-fade) var(--tr-ease-soft);
+    }
 
-    .action-item__menu_arrow {
-        border-bottom-color: var(--color-border) !important;
+    .action-button:hover,
+    .action-button:focus-visible,
+    .action-link:hover,
+    .action-link:focus-visible,
+    .action-router:hover,
+    .action-router:focus-visible,
+    .action-checkbox__label:hover,
+    .action-radio__label:hover,
+    li:hover > .action-button {
+        background-color: rgba(255, 255, 255, 0.06) !important;
+        color: var(--ic-splash-cyan) !important;
+    }
+
+    .action--disabled:hover {
+        background-color: transparent !important;
+        color: inherit !important;
+    }
+
+    .action-separator,
+    .action-separator__hr {
+        background-color: var(--ic-ink-line) !important;
     }
 }
 
-.v-popper__popper button.action-button {
-    border-radius: 6px !important;
+/* Tooltips: terminal tags ----------------------------------------------------- */
+
+.v-popper--theme-tooltip .v-popper__inner {
+    background-color: var(--ic-ink-raised) !important;
+    border: 1px solid var(--ic-ink-line) !important;
+    border-radius: var(--border-radius-element) !important;
+    box-shadow: none !important;
+    color: var(--ic-ink-fg) !important;
+    font-size: 12px;
 }
 
-/* Search ------------------------------------------------------------------- */
-
-.header-menu__wrapper {
-    border: 1px solid var(--color-border);
+.v-popper--theme-tooltip .v-popper__arrow-outer {
+    border-color: var(--ic-ink-line) !important;
 }
 
-.header-menu__carret {
-    border-bottom-color: var(--color-border) !important;
+.v-popper--theme-tooltip .v-popper__arrow-inner {
+    border-color: var(--ic-ink-raised) !important;
 }
-
-.unified-search__form-reset {
-    background-color: transparent !important;
-}
-
-.unified-search__result-icon img[src$="integration_discourse/img/app-dark.svg"] {
-    filter: invert(95%);
-}
-
-/* File picker --------------------------------------------------------------- */
-
-.oc-dialog {
-    border: 1px solid var(--color-border);
-
-    .filepicker_element_selected,
-    #oc-dialog-filepicker-content .filepicker_element_selected {
-        background-color: var(--color-primary);
-        color: var(--color-primary-text);
-    }
-
-    .fileexists label,
-    .fileexists .conflict .filename {
-        color: var(--color-main-text) !important;
-    }
-}
-
-.reference-picker .oc-dialog {
-    border: none;
-}
-
-/* Settings ------------------------------------------------------------------ */
-
-// Image cropper
-// For cropping images, found under personal settings for adding avatar
-#cropper .inner-container {
-    background-color: var(--color-main-background) !important;
-    border: 1px solid var(--color-border);
-    color: var(--color-main-text) !important;
-}
-
-// Section Container
-// Primarily seems to be used under settings
-.followupsection {
-    color: var(--color-main-text) !important;
-}
-
-// Link Buttons
-// Settings > Administration > Support
-.link-button {
-    background-color: var(--color-main-background) !important;
-    border: 1px solid var(--color-border) !important;
-    color: var(--color-main-text) !important;
-
-    &:hover,
-    &.button:hover {
-        border-color: var(--color-primary-element) !important;
-        color: var(--color-main-text) !important;
-    }
-
-    &:active,
-    &:focus {
-        background-color: var(--color-primary) !important;
-        border-color: var(--color-primary-element) !important;
-        color: var(--color-main-text) !important;
-    }
-}
-
-// Profile
-.preview-card .preview-card__footer {
-    border: 1px solid var(--color-border);
-    border-bottom-left-radius: var(--border-radius);
-    border-bottom-right-radius: var(--border-radius);
-    border-top: unset;
-}
-
-.profile .user-actions .profile__primary-action-button img[src$="spreed/img/app-dark.svg"],
-.profile .user-actions .user-actions__other a {
-    filter: invert(95%);
-}
-
-// User administration
-#addgroup {
-    // Remove icon spam in addgroup form under user section
-    button.icon-confirm,
-    button.icon-close {
-        background-image: none !important;
-    }
-}
-
-// Breeze Dark settings
-.breezedark-admin p {
-    margin-top: 1em;
-}
-
-/* Tooltips ----------------------------------------------------------------- */
 
 .tooltip,
 .vue-tooltip {
     filter: none !important;
 
     .tooltip-inner {
-        border: 1px solid var(--color-border);
+        background-color: var(--ic-ink-raised) !important;
+        border: 1px solid var(--ic-ink-line);
+        color: var(--ic-ink-fg) !important;
     }
 
     &[x-placement^="right"],
     &.right .tooltip-arrow {
-        border-right-color: var(--color-border) !important;
+        border-right-color: var(--ic-ink-line) !important;
     }
 
     &[x-placement^="left"],
     &.left .tooltip-arrow {
-        border-left-color: var(--color-border) !important;
+        border-left-color: var(--ic-ink-line) !important;
     }
 
     &[x-placement^="bottom"] .tooltip-arrow,
     &.bottom .tooltip-arrow,
     &.bottom-left .tooltip-arrow,
     &.bottom-right .tooltip-arrow {
-        border-bottom-color: var(--color-border) !important;
+        border-bottom-color: var(--ic-ink-line) !important;
     }
 
     &[x-placement^="top"] .arrow,
@@ -198,25 +391,208 @@
     &.top-left .tooltip-arrow,
     &.top-right .arrow,
     &.top-right .tooltip-arrow {
-        border-top-color: var(--color-border) !important;
+        border-top-color: var(--ic-ink-line) !important;
     }
 }
 
-/* Toasts ------------------------------------------------------------------- */
+/* Modals and dialogs --------------------------------------------------------- */
 
-.toastify.dialogs {
-    border: 1px solid var(--color-border);
+// The scrim removes the page, it does not blur it.
+.modal-mask,
+.oc-dialog-dim {
+    background-color: var(--ic-scrim) !important;
+    backdrop-filter: none !important;
 }
 
-/* App Store ---------------------------------------------------------------- */
+.modal-container,
+.dialog,
+.oc-dialog,
+.reference-picker-modal .modal-container {
+    background-color: var(--ic-ink-deep) !important;
+    border: 1px solid var(--ic-ink-line);
+    border-radius: var(--border-radius-container-large) !important;
+    box-shadow: var(--ic-glow-lg) !important;
+}
+
+.reference-picker .oc-dialog {
+    border: none;
+}
+
+.modal-header {
+    .modal-name,
+    .modal-title {
+        color: var(--ic-ink-hi) !important;
+    }
+}
+
+.dialog__actions,
+.oc-dialog-buttonrow {
+    border-top: 1px solid var(--ic-ink-line);
+}
+
+.oc-dialog {
+    .filepicker_element_selected,
+    #oc-dialog-filepicker-content .filepicker_element_selected {
+        background-color: var(--color-primary-element-light);
+        color: var(--ic-splash-cyan);
+    }
+
+    .fileexists label,
+    .fileexists .conflict .filename {
+        color: var(--ic-ink-fg) !important;
+    }
+}
+
+.file-picker__side .button-vue--vue-primary,
+.file-picker__breadcrumbs {
+    border-radius: var(--border-radius-element) !important;
+}
+
+/* Toasts ---------------------------------------------------------------------- */
+
+.toastify.dialogs {
+    background-color: var(--ic-ink-raised) !important;
+    border: 1px solid var(--ic-ink-line);
+    border-radius: var(--border-radius-container) !important;
+    box-shadow: var(--ic-elevation) !important;
+    color: var(--ic-ink-fg) !important;
+
+    &.toast-success {
+        border-inline-start: 3px solid var(--ic-ok) !important;
+    }
+
+    &.toast-error {
+        border-inline-start: 3px solid var(--ic-danger) !important;
+    }
+
+    &.toast-warning {
+        border-inline-start: 3px solid var(--ic-splash-lemon) !important;
+    }
+
+    &.toast-info {
+        border-inline-start: 3px solid var(--ic-splash-cyan) !important;
+    }
+
+    .toast-undo-button {
+        border-radius: var(--border-radius-element) !important;
+    }
+}
+
+/* Search ------------------------------------------------------------------- */
+
+.unified-search__form-reset {
+    background-color: transparent !important;
+}
+
+.unified-search-modal {
+    .unified-search-modal__filters .button-vue {
+        box-shadow: none;
+    }
+
+    .result-items__item:hover,
+    .result-items__item:focus-within {
+        background-color: var(--color-background-hover) !important;
+        border-radius: var(--border-radius-element);
+    }
+}
+
+.unified-search__result-icon img[src$="integration_discourse/img/app-dark.svg"] {
+    filter: invert(95%);
+}
+
+/* Settings ------------------------------------------------------------------ */
+
+.settings-section,
+.section {
+    border-color: var(--ic-ink-line) !important;
+}
+
+.settings-section__desc,
+.settings-hint,
+.section .hint {
+    color: var(--ic-ink-soft) !important;
+}
+
+// Image cropper, found under personal settings for adding an avatar
+#cropper .inner-container {
+    background-color: var(--ic-ink-deep) !important;
+    border: 1px solid var(--ic-ink-line);
+    color: var(--ic-ink-fg) !important;
+}
+
+.followupsection {
+    color: var(--ic-ink-fg) !important;
+}
+
+// Link buttons: Settings > Administration > Support
+.link-button {
+    background-color: var(--ic-ink-raised) !important;
+    border: 1px solid var(--ic-ink-line) !important;
+    border-radius: var(--border-radius-element) !important;
+    color: var(--ic-ink-fg) !important;
+
+    &:hover,
+    &.button:hover,
+    &:focus-visible {
+        border-color: var(--ic-splash-cyan) !important;
+        color: var(--ic-splash-cyan) !important;
+    }
+}
+
+// Profile
+.preview-card .preview-card__footer {
+    border: 1px solid var(--ic-ink-line);
+    border-bottom-left-radius: var(--border-radius-container);
+    border-bottom-right-radius: var(--border-radius-container);
+    border-top: unset;
+}
+
+.profile .user-actions .profile__primary-action-button img[src$="spreed/img/app-dark.svg"],
+.profile .user-actions .user-actions__other a {
+    filter: invert(95%);
+}
+
+// User administration: remove icon spam in the add-group form
+#addgroup {
+    button.icon-confirm,
+    button.icon-close {
+        background-image: none !important;
+    }
+}
+
+// Theme settings (this app)
+.breezedark-admin p {
+    margin-top: 1em;
+}
+
+.breezedark-admin textarea {
+    font-family: var(--ic-font-mono);
+    font-size: 13px;
+}
+
+/* App store ------------------------------------------------------------------- */
 
 .app-level .official {
-    border-color: var(--color-success);
+    border-color: var(--ic-ok);
+}
+
+.app-settings #app-sidebar-vue .app-sidebar-header__figure {
+    filter: invert(5%);
 }
 
 /* Smart picker ------------------------------------------------------------- */
 
 .tribute-container-link {
-    border: 1px solid var(--color-border);
-    border-radius: 6px !important;
+    border: 1px solid var(--ic-ink-line);
+    border-radius: var(--border-radius-element) !important;
+}
+
+/* Empty states ---------------------------------------------------------------- */
+
+.empty-content__icon {
+    opacity: 0.7;
+}
+
+.empty-content__description {
+    color: var(--ic-ink-soft);
 }

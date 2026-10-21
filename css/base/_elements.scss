@@ -1,126 +1,291 @@
 /***
+ * InkCurity Dark — base elements
+ *
+ * Buttons are keys, not lozenges: 10px corners, one filled key per view,
+ * press feedback at 0.97. Inputs sit in a sunk well with a hairline that turns
+ * cyan on focus. Glows do the work of shadows.
+ *
  * @copyright Copyright (c) 2020, Magnus Walbeck <mw@mwalbeck.org>
+ * @copyright Copyright (c) 2026 inkcurity.net
  *
  * @license GNU AGPL version 3 or any later version, see COPYING file for more.
  */
 
 /* Buttons ------------------------------------------------------------------- */
 
-button:not(.color-picker__simple-color-circle):not(.property-color__color-preview),
-.button,
+.button-vue {
+    border-radius: var(--border-radius-element) !important;
+    font-weight: 600 !important;
+    transition:
+        background-color var(--tr-dur-fade) var(--tr-ease-soft),
+        color var(--tr-dur-fade) var(--tr-ease-soft),
+        box-shadow var(--tr-dur-fade) var(--tr-ease-soft),
+        transform var(--tr-dur-press) var(--tr-ease-soft) !important;
+
+    &:active:not(:disabled) {
+        transform: scale(var(--tr-press-scale));
+    }
+
+    // Primary: the one cyan key. Hover lights an ink-bloom behind it.
+    &--vue-primary:not(:disabled) {
+        &:hover,
+        &:focus-visible {
+            box-shadow: var(--ic-glow-sm);
+        }
+
+        &:active {
+            background-color: #4cdacc !important;
+            box-shadow: none;
+        }
+    }
+
+    // Secondary: raised ink with a hairline. Hover turns the edge and the text cyan.
+    &--vue-secondary:not(.unified-search__button):not(.property-color__color-preview) {
+        background-color: var(--ic-ink-raised) !important;
+        color: var(--ic-ink-fg) !important;
+        box-shadow: inset 0 0 0 1px var(--ic-ink-line);
+
+        &:hover:not(:disabled),
+        &:focus-visible:not(:disabled) {
+            color: var(--ic-splash-cyan) !important;
+            box-shadow: inset 0 0 0 1px var(--ic-splash-cyan);
+        }
+    }
+
+    // Tertiary: a faint fill fades in, nothing else moves.
+    &--vue-tertiary:not(:disabled),
+    &--vue-tertiary-no-background:not(:disabled) {
+        &:hover,
+        &:focus-visible {
+            background-color: rgba(255, 255, 255, 0.06) !important;
+        }
+    }
+
+    // Danger: outlined, never filled, until it is pressed.
+    &--vue-error:not(:disabled) {
+        background-color: transparent !important;
+        color: var(--ic-danger) !important;
+        box-shadow: inset 0 0 0 1px rgba(var(--ic-danger-rgb), 0.35);
+
+        &:hover,
+        &:focus-visible {
+            background-color: rgba(var(--ic-danger-rgb), 0.1) !important;
+            box-shadow: inset 0 0 0 1px rgba(var(--ic-danger-rgb), 0.6);
+        }
+    }
+
+    &--vue-success:not(:disabled) {
+        background-color: transparent !important;
+        color: var(--ic-ok) !important;
+        box-shadow: inset 0 0 0 1px rgba(var(--ic-ok-rgb), 0.35);
+
+        &:hover,
+        &:focus-visible {
+            background-color: rgba(var(--ic-ok-rgb), 0.1) !important;
+        }
+    }
+
+    &.close-button,
+    &.unified-search__button {
+        box-shadow: none;
+    }
+}
+
+// Legacy buttons (core settings pages, apps without nextcloud-vue)
+button:not(.button-vue):not(.color-picker__simple-color-circle):not(
+        .property-color__color-preview
+    ):not(.action-button),
+.button:not(.button-vue),
 input[type="button"],
 input[type="submit"] {
-    &.primary {
-        background-color: var(--color-main-background) !important;
-        border-color: var(--color-border) !important;
-        color: var(--color-main-text) !important;
+    border-radius: var(--border-radius-element) !important;
+    font-weight: 600;
+    transition:
+        background-color var(--tr-dur-fade) var(--tr-ease-soft),
+        color var(--tr-dur-fade) var(--tr-ease-soft),
+        border-color var(--tr-dur-fade) var(--tr-ease-soft),
+        box-shadow var(--tr-dur-fade) var(--tr-ease-soft);
+
+    &:not(.primary):not(:disabled) {
+        background-color: var(--ic-ink-raised) !important;
+        border: 1px solid var(--ic-ink-line) !important;
+        color: var(--ic-ink-fg) !important;
+
+        &:hover,
+        &:focus-visible {
+            border-color: var(--ic-splash-cyan) !important;
+            color: var(--ic-splash-cyan) !important;
+        }
     }
 
-    &.primary:hover {
-        border-color: var(--color-primary-element) !important;
+    &.primary:not(:disabled) {
+        background-color: var(--ic-splash-cyan) !important;
+        border: 1px solid transparent !important;
+        color: var(--ic-ink-void) !important;
+
+        &:hover,
+        &:focus-visible {
+            background-color: var(--color-primary-element-hover) !important;
+            box-shadow: var(--ic-glow-sm);
+        }
     }
-
-    &:focus,
-    &:active,
-    &.primary:focus,
-    &.primary:active {
-        background-color: var(--color-primary) !important;
-        border-color: var(--color-primary-element) !important;
-    }
-}
-
-.button-vue.button-vue--vue-secondary:not(.property-color__color-preview):not(
-        .unified-search__button
-    ) {
-    background-color: var(--color-main-background) !important;
-    border: 1px solid var(--color-border) !important;
-    color: var(--color-main-text) !important;
-
-    &:hover {
-        border-color: var(--color-primary-element) !important;
-    }
-
-    &:focus,
-    &:active {
-        background-color: var(--color-primary) !important;
-        border-color: var(--color-primary-element) !important;
-    }
-
-    &.close-button {
-        border: none !important;
-    }
-}
-
-.button-vue.unified-search__button:hover {
-    opacity: 1 !important;
 }
 
 input[type="text"] + .icon-confirm,
 input[type="password"] + .icon-confirm,
 input[type="email"] + .icon-confirm {
-    background-color: var(--color-background-darker) !important;
+    background-color: var(--ic-ink-raised) !important;
+    border-color: var(--ic-ink-line-strong) !important;
 }
 
-/* Input Fields -------------------------------------------------------------- */
+/* Input fields -------------------------------------------------------------- */
 
-// div.select2-drop .select2-search input:not(:disabled):not(.primary):active,
-// .pager li a:not(:disabled):not(.primary):active {
-// }
+input:not([type="range"]):not([type="button"]):not([type="submit"]):not([type="checkbox"]):not(
+        [type="radio"]
+    ):not([type="color"]):not([type="file"]),
+textarea,
+.input-field__input,
+select:not(.vs__dropdown-toggle) {
+    background-color: var(--ic-ink-well) !important;
+    border: 1px solid var(--ic-ink-line-strong) !important;
+    border-radius: var(--border-radius-element);
+    color: var(--ic-ink-fg);
+    transition:
+        border-color var(--tr-dur-fade) var(--tr-ease-soft),
+        box-shadow var(--tr-dur-fade) var(--tr-ease-soft);
 
-input:not([type="range"]):not([type="button"]):not([type="submit"]) {
-    background-color: var(--color-background-darker);
+    &::placeholder {
+        color: var(--ic-ink-mute);
+        opacity: 1;
+    }
 
+    &:hover:not(:disabled):not(:focus) {
+        border-color: var(--ic-ink-soft) !important;
+    }
+
+    &:focus,
+    &:focus-visible,
     &:active {
-        background-color: var(--color-background-darker);
+        border-color: var(--ic-splash-cyan) !important;
+        box-shadow: 0 0 0 3px rgba(var(--ic-splash-cyan-rgb), 0.18) !important;
+        outline: none;
     }
 }
 
-div[contenteditable="true"]:not(:disabled),
-textarea:not(:disabled) {
+// nextcloud-vue draws the focused border 2px wide: keep the hairline and the ring.
+.input-field__input:focus,
+.input-field__input:focus-visible {
+    border-width: 1px !important;
+    padding-inline: calc(var(--default-grid-baseline) * 3 - 1px) !important;
+}
+
+.input-field__label {
+    color: var(--ic-ink-mute) !important;
+}
+
+div[contenteditable="true"]:not(:disabled) {
     &:hover,
     &:focus,
     &:active {
-        border-color: var(--color-primary-element) !important;
+        border-color: var(--ic-splash-cyan) !important;
     }
 }
 
-.multiselect {
-    .multiselect__input {
-        background-color: inherit !important;
-    }
+.multiselect .multiselect__input {
+    background-color: inherit !important;
+    border: unset !important;
 }
 
-.checkbox-radio-switch:not(.checkbox-radio-switch--disabled)
-    .checkbox-radio-switch__input:hover
-    + .checkbox-radio-switch__label,
-.checkbox-radio-switch:not(.checkbox-radio-switch--disabled)
-    .checkbox-radio-switch__input:focus
-    + .checkbox-radio-switch__label,
-.checkbox-radio-switch:not(.checkbox-radio-switch--disabled) .checkbox-radio-switch__label:hover,
-.checkbox-radio-switch:not(.checkbox-radio-switch--disabled)
+/* Checkboxes, radios, switches ---------------------------------------------- */
+
+.checkbox-radio-switch:not(.checkbox-radio-switch--disabled) {
+    .checkbox-radio-switch__input:hover + .checkbox-radio-switch__content,
+    .checkbox-radio-switch__input:focus + .checkbox-radio-switch__content,
+    .checkbox-radio-switch__content:hover,
+    .checkbox-radio-switch__content:focus-within,
+    .checkbox-radio-switch__input:hover + .checkbox-radio-switch__label,
+    .checkbox-radio-switch__input:focus + .checkbox-radio-switch__label,
+    .checkbox-radio-switch__label:hover,
     .checkbox-radio-switch__label:focus-within {
-    background-color: var(--color-background-hover) !important;
+        background-color: rgba(255, 255, 255, 0.05) !important;
+    }
+
+    .checkbox-radio-switch__input:focus + .checkbox-radio-switch__label {
+        box-shadow: unset !important;
+    }
+
+    .checkbox-radio-switch__input:focus-visible + .checkbox-radio-switch__content {
+        outline: 2px solid var(--ic-splash-cyan);
+        outline-offset: 2px;
+    }
 }
 
-.checkbox-radio-switch:not(.checkbox-radio-switch--disabled)
-    .checkbox-radio-switch__input:focus
-    + .checkbox-radio-switch__label {
-    box-shadow: unset !important;
+// Button-variant groups (sidebar tabs, segmented choices)
+.checkbox-radio-switch--button-variant {
+    .checkbox-radio-switch__content {
+        border-color: var(--ic-ink-line) !important;
+    }
+
+    &.checkbox-radio-switch--checked .checkbox-radio-switch__content {
+        border-color: var(--ic-splash-cyan) !important;
+        background-color: var(--color-primary-element-light) !important;
+        color: var(--ic-splash-cyan) !important;
+    }
 }
 
 /* Action items -------------------------------------------------------------- */
 
 .action-input .action-input__label,
 .action-text-editable .action-text-editable__label {
-    background-color: var(--color-background-darker);
+    background-color: var(--ic-ink-well);
 }
 
-/* select -------------------------------------------------------------------- */
+/* Selects ------------------------------------------------------------------- */
 
 // To prevent white text on white background on windows
 select option {
-    background-color: var(--color-main-background);
-    color: var(--color-main-text);
+    background-color: var(--ic-ink-deep);
+    color: var(--ic-ink-fg);
+}
+
+.select .vs__dropdown-toggle,
+.v-select .vs__dropdown-toggle {
+    background-color: var(--ic-ink-well) !important;
+    border: 1px solid var(--ic-ink-line-strong) !important;
+    border-radius: var(--border-radius-element) !important;
+    transition: border-color var(--tr-dur-fade) var(--tr-ease-soft);
+
+    &:hover {
+        border-color: var(--ic-ink-soft) !important;
+    }
+}
+
+.select.vs--open .vs__dropdown-toggle,
+.v-select.vs--open .vs__dropdown-toggle {
+    border-color: var(--ic-splash-cyan) !important;
+    box-shadow: 0 0 0 3px rgba(var(--ic-splash-cyan-rgb), 0.18) !important;
+}
+
+.vs__dropdown-menu {
+    background-color: var(--ic-ink-raised) !important;
+    border: 1px solid var(--ic-ink-line) !important;
+    border-radius: var(--border-radius-container) !important;
+    box-shadow: var(--ic-elevation) !important;
+
+    .vs__dropdown-option--highlight {
+        background-color: rgba(255, 255, 255, 0.06) !important;
+        color: var(--ic-splash-cyan) !important;
+    }
+
+    .vs__dropdown-option--selected {
+        color: var(--ic-splash-cyan) !important;
+    }
+}
+
+.vs__search {
+    background-color: unset !important;
+    border: unset !important;
+    box-shadow: none !important;
 }
 
 .select2-choices .select2-search-choice {
@@ -129,25 +294,46 @@ select option {
 
 .select2-dropdown-open .select2-choice,
 .select2-dropdown-open .select2-choices {
-    background: var(--color-main-background) !important;
-    border-color: var(--color-border) !important;
+    background: var(--ic-ink-well) !important;
+    border-color: var(--ic-splash-cyan) !important;
 }
 
 .select2-drop .select2-drop-active {
-    border-top-color: var(--color-border) !important;
+    border-top-color: var(--ic-ink-line) !important;
 }
 
 .multiselect .multiselect__content-wrapper .multiselect__option--highlight {
-    background-color: var(--color-background-hover) !important;
+    background-color: rgba(255, 255, 255, 0.06) !important;
+    color: var(--ic-splash-cyan) !important;
 }
 
-/* vs__search ---------------------------------------------------------------- */
+/* Code and keys -------------------------------------------------------------- */
 
-.vs__search {
-    background-color: unset !important;
+code,
+kbd,
+samp {
+    font-family: var(--ic-font-mono);
+    font-variant-numeric: tabular-nums;
 }
 
-/* Table --------------------------------------------------------------------- */
+:not(pre) > code {
+    padding: 0.1em 0.35em;
+    border: 1px solid rgba(var(--ic-splash-cyan-rgb), 0.18);
+    border-radius: 4px;
+    background: rgba(var(--ic-splash-cyan-rgb), 0.08);
+    color: var(--ic-splash-cyan);
+}
+
+kbd {
+    padding: 0.1em 0.45em;
+    border: 1px solid var(--ic-ink-line-strong);
+    border-bottom-width: 2px;
+    border-radius: var(--border-radius-small);
+    background: var(--ic-ink-raised);
+    color: var(--ic-ink-fg);
+}
+
+/* Tables -------------------------------------------------------------------- */
 
 tbody tr:hover,
 tbody tr:focus,
@@ -164,5 +350,20 @@ tbody tr:active {
 /* Progress ------------------------------------------------------------------ */
 
 progress:not(.vue) {
-    background-color: var(--color-border);
+    background-color: var(--ic-ink-line);
+    border-radius: var(--border-radius-pill);
+    overflow: hidden;
+
+    &::-webkit-progress-bar {
+        background-color: var(--ic-ink-line);
+    }
+
+    &::-webkit-progress-value {
+        background-color: var(--ic-splash-cyan);
+        box-shadow: 0 0 10px rgba(var(--ic-splash-cyan-rgb), 0.6);
+    }
+
+    &::-moz-progress-bar {
+        background-color: var(--ic-splash-cyan);
+    }
 }

@@ -1,11 +1,14 @@
+@charset "UTF-8";
 /**
  * =============================================================================
- * Breeze Dark for Nextcloud
- * Source code: https://github.com/mwalbeck/nextcloud-breeze-dark
- * Made with the help of contributors! See AUTHORS.md
+ * InkCurity Dark for Nextcloud
+ * Source code: https://github.com/InklingSplasher/nextcloud-breeze-dark
+ * Based on Breeze Dark by Magnus Walbeck, made with the help of contributors.
+ * See AUTHORS.md
  * =============================================================================
- * 
+ *
  * @copyright Copyright (C) 2017  Magnus Walbeck <mw@mwalbeck.org>
+ * @copyright Copyright (C) 2026 inkcurity.net
  *
  * @author Magnus Walbeck <mw@mwalbeck.org>
  * 
@@ -32,12 +35,14 @@
 @media (prefers-color-scheme: dark) {
   /**
    * =============================================================================
-   * Breeze Dark for Nextcloud
-   * Source code: https://github.com/mwalbeck/nextcloud-breeze-dark
-   * Made with the help of contributors! See AUTHORS.md
+   * InkCurity Dark for Nextcloud
+   * Source code: https://github.com/InklingSplasher/nextcloud-breeze-dark
+   * Based on Breeze Dark by Magnus Walbeck, made with the help of contributors.
+   * See AUTHORS.md
    * =============================================================================
-   * 
+   *
    * @copyright Copyright (C) 2017  Magnus Walbeck <mw@mwalbeck.org>
+   * @copyright Copyright (C) 2026 inkcurity.net
    *
    * @author Magnus Walbeck <mw@mwalbeck.org>
    * 
@@ -58,209 +63,495 @@
    * 
    */
   /***
+   * InkCurity Dark — design tokens
+   *
+   * Ink scale, splash accents, glows and radii come from the InkCurity design
+   * system ("wet ink on a CRT"). Motion curves, press feedback and the hairline
+   * rules come from Trumpf ("Ruhe zuerst"). Everything is mapped onto the
+   * Nextcloud theming variables so core and every app follow along.
+   *
+   * The mixin is included once for logged-in pages ([data-themes*="breezedark"])
+   * and once on :root for the guest/login pages, which never carry the theme
+   * attribute.
+   *
    * @copyright Copyright (c) 2019, Magnus Walbeck <mw@mwalbeck.org>
+   * @copyright Copyright (c) 2026 inkcurity.net
    *
    * @license GNU AGPL version 3 or any later version, see COPYING file for more.
    */
   [data-themes*=breezedark] {
-    --color-paper-white: rgba(252, 252, 252, 1);
-    --color-cardboard-gray: rgba(239, 240, 241, 1);
-    --color-icon-gray: rgba(77, 77, 77, 1);
-    --color-charcoal-gray: rgba(49, 54, 59, 1);
-    --color-shade-black: rgba(35, 38, 41, 1);
-    --color-plasma-blue: rgba(61, 174, 233, 1);
-    --color-icon-red: rgba(218, 68, 83, 1);
-    --color-danger-red: rgba(237, 21, 21, 1);
-    --color-beware-orange: rgba(246, 116, 0, 1);
-    --color-icon-yellow: rgba(253, 188, 75, 1);
-    --color-sunbeam-yellow: rgba(201, 206, 59, 1);
-    --color-verdant-green: rgba(17, 209, 22, 1);
-    --color-icon-blue: rgba(29, 153, 243, 1);
-    --color-noble-fir: rgba(39, 174, 96, 1);
-    --color-abyss-blue: rgba(41, 128, 185, 1);
-    --color-coastal-fog: rgba(127, 140, 141, 1);
-    --color-alternate-gray: rgba(189, 195, 199, 1);
-    --color-hover-blue: rgba(61, 174, 233, 0.3);
-    --color-border-grey: rgba(103, 107, 110, 1);
-    --color-dashboard-grey: rgba(49, 54, 59, 0.8);
-    --color-selected-blue: rgba(61, 174, 233, 0.4);
-    --color-main-text: var(--color-cardboard-gray) !important;
-    --color-main-background: var(--color-charcoal-gray) !important;
-    --color-main-background-translucent: var(--color-main-background) !important;
-    --color-background-hover: var(--color-hover-blue) !important;
-    --color-background-dark: var(--color-main-background) !important;
-    --color-background-darker: var(--color-shade-black) !important;
-    --color-background-translucent: var(--color-dashboard-grey) !important;
-    --color-background-plain: var(--color-shade-black) !important;
-    --color-primary: var(--color-plasma-blue) !important;
-    --color-primary-light: var(--color-primary) !important;
-    --color-primary-text: var(--color-paper-white) !important;
-    --color-primary-text-dark: var(--color-main-text) !important;
-    --color-primary-element: var(--color-primary) !important;
-    --color-primary-element-light: var(--color-primary) !important;
-    --color-error: var(--color-icon-red) !important;
-    --color-warning: var(--color-beware-orange) !important;
-    --color-neutral: var(--color-sunbeam-yellow) !important;
-    --color-success: var(--color-noble-fir) !important;
-    --color-text-maxcontrast: var(--color-alternate-gray) !important;
-    --color-text-light: var(--color-main-text) !important;
-    --color-text-lighter: var(--color-text-maxcontrast) !important;
-    --color-text-dark: rgba(0, 0, 0, 1) !important;
-    --color-text-selection: var(--color-hover-blue) !important;
-    --color-text-link: rgba(30, 168, 226, 1) !important;
-    --color-loading-light: var(--color-alternate-gray) !important;
-    --color-loading-dark: var(--color-coastal-fog) !important;
-    --color-box-shadow: rgba(0, 0, 0, 0) !important;
-    --color-box-shadow-rgb: 0, 0, 0 !important;
-    --color-border: var(--color-border-grey) !important;
-    --color-border-dark: var(--color-border) !important;
-    --color-border-maxcontrast: var(--color-border) !important;
-    --color-icon: rgba(242, 242, 242, 1);
-    --table-color-border: var(--color-border) !important;
-    --table-color-heading: var(--color-primary-text) !important;
-    --table-color-heading-border: var(--color-border) !important;
-    --table-color-background: var(--color-main-background) !important;
-    --table-color-background-hover: var(--color-background-hover) !important;
-    --table-border-radius: var(--border-radius) !important;
-    --color-main-background-rgb: 49, 54, 59 !important;
-    --color-main-background-blur: rgba(var(--color-main-background-rgb), 0.8) !important;
+    /* Ink scale ------------------------------------------------------------- */
+    --ic-ink-void: #02060f;
+    --ic-ink-well: #050e1d;
+    --ic-ink-deep: #08152b;
+    --ic-ink-hover: #11213a;
+    --ic-ink-raised: #12253f;
+    --ic-ink-line: #1f3a5e;
+    --ic-ink-line-strong: #335580;
+    --ic-ink-mute: #6a8ab0;
+    --ic-ink-soft: #7a9ac0;
+    --ic-ink-fg: #dce5f2;
+    --ic-ink-hi: #ffffff;
+    /* Splash accents --------------------------------------------------------- */
+    --ic-splash-cyan: #4fe3d4;
+    --ic-splash-cyan-rgb: 79, 227, 212;
+    --ic-splash-magenta: #ff3d8e;
+    --ic-splash-magenta-rgb: 255, 61, 142;
+    --ic-splash-lemon: #f8e16c;
+    --ic-splash-lemon-rgb: 248, 225, 108;
+    --ic-ok: #4ade80;
+    --ic-ok-rgb: 74, 222, 128;
+    --ic-danger: #ff5577;
+    --ic-danger-rgb: 255, 85, 119;
+    /* Logo colours: only ever inside the mark, never as UI colours ------------ */
+    --ic-logo-blue: #2563eb;
+    --ic-logo-pink: #ec4899;
+    --ic-logo-steel: #8b94a7;
+    /* Glows replace drop-shadows on dark surfaces ----------------------------- */
+    --ic-glow-sm:
+        0 0 24px -2px rgba(var(--ic-splash-cyan-rgb), 0.55),
+        0 0 48px -8px rgba(var(--ic-splash-cyan-rgb), 0.3);
+    --ic-glow-md:
+        0 0 40px -4px rgba(var(--ic-splash-cyan-rgb), 0.65),
+        0 0 80px -16px rgba(var(--ic-splash-cyan-rgb), 0.35),
+        0 0 0 1px rgba(var(--ic-splash-cyan-rgb), 0.15);
+    --ic-glow-lg:
+        0 24px 70px -12px rgba(var(--ic-splash-cyan-rgb), 0.45),
+        0 0 120px -24px rgba(var(--ic-splash-cyan-rgb), 0.35),
+        0 0 0 1px rgba(var(--ic-splash-cyan-rgb), 0.18);
+    --ic-elevation:
+        0 0 0 1px var(--ic-ink-line), 0 24px 60px -24px rgba(var(--ic-splash-cyan-rgb), 0.25);
+    --ic-scrim: rgba(2, 6, 15, 0.72);
+    /* Type: no webfonts, no third-party requests ----------------------------- */
+    --ic-font-display:
+        "Space Grotesk", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --ic-font-mono:
+        "JetBrains Mono", ui-monospace, "Cascadia Mono", "SF Mono", Menlo, Consolas, monospace;
+    --ic-tracking-mono: 0.16em;
+    --ic-tracking-tight: -0.02em;
+    /* Motion: Trumpf curves, InkCurity ease ---------------------------------- */
+    --tr-ease-ios: cubic-bezier(0.32, 0.72, 0, 1);
+    --tr-ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+    --ic-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+    --tr-dur-press: 180ms;
+    --tr-dur-fade: 200ms;
+    --tr-dur-control: 300ms;
+    --tr-dur-push: 420ms;
+    --tr-press-scale: 0.97;
+    /* Nextcloud: surfaces ---------------------------------------------------- */
+    --color-main-background: var(--ic-ink-deep) !important;
+    --color-main-background-rgb: 8, 21, 43 !important;
+    --color-main-background-translucent: rgba(var(--color-main-background-rgb), 0.97) !important;
+    --color-main-background-blur: rgba(var(--color-main-background-rgb), 0.85) !important;
+    --gradient-main-background:
+        var(--color-main-background) 0%, var(--color-main-background-translucent) 85%,
+        transparent 100% !important;
+    --color-background-hover: var(--ic-ink-hover) !important;
+    --color-background-dark: var(--ic-ink-raised) !important;
+    --color-background-darker: var(--ic-ink-line) !important;
+    --color-background-translucent: rgba(var(--color-main-background-rgb), 0.85) !important;
+    --color-placeholder-light: var(--ic-ink-raised) !important;
+    --color-placeholder-dark: var(--ic-ink-line) !important;
+    --color-background-plain: var(--ic-ink-void) !important;
+    --color-background-plain-text: var(--ic-ink-fg) !important;
+    --image-background: none !important;
+    --background-image-invert-if-bright: no !important;
     --background-invert-if-dark: invert(100%) !important;
     --background-invert-if-bright: no !important;
-    --color-success-rgb: 70, 186, 97 !important;
-    --color-success-hover: #6ac780 !important;
-    --color-warning-rgb: 236, 167, 0 !important;
-    --color-warning-hover: #efb832 !important;
-    --color-error-rgb: 233, 50, 45 !important;
-    --color-error-hover: #ed5a56 !important;
-    --color-scrollbar: #6b6b6b #31363b !important;
-    --color-text-maxcontrast-background-blur: #919191 !important;
-    --color-text-maxcontrast-default: #8c8c8c !important;
-    --color-placeholder-light: #313131 !important;
-    --color-placeholder-dark: #4a4a4a !important;
-    --color-primary-default: #0082c9 !important;
-    --color-primary-hover: #04537f !important;
-    --color-primary-light-text: #99c0d6 !important;
-    --color-primary-light-hover: #1d272d !important;
-    --color-primary-element-default-hover: #046ca5 !important;
-    --color-primary-element-text: #fff !important;
-    --color-primary-element-hover: #04537f !important;
-    --color-primary-element-light-text: #99c0d6 !important;
-    --color-primary-element-light-hover: #1d272d !important;
-    --color-primary-element-text-dark: #ededed !important;
+    /* Nextcloud: text -------------------------------------------------------- */
+    --color-main-text: var(--ic-ink-fg) !important;
+    --color-text-maxcontrast: var(--ic-ink-soft) !important;
+    --color-text-maxcontrast-default: var(--ic-ink-soft) !important;
+    --color-text-maxcontrast-background-blur: #86a4c8 !important;
+    --color-text-light: var(--ic-ink-fg) !important;
+    --color-text-lighter: var(--ic-ink-soft) !important;
+    --color-text-dark: var(--ic-ink-void) !important;
+    --color-text-error: #ff6f8c !important;
+    --color-text-success: #6ae698 !important;
+    --color-background-selection: var(--ic-splash-cyan) !important;
+    --color-text-selection: var(--ic-ink-void) !important;
+    /* Nextcloud: borders ----------------------------------------------------- */
+    --color-border: var(--ic-ink-line) !important;
+    --color-border-dark: var(--ic-ink-line-strong) !important;
+    --color-border-maxcontrast: #5579a6 !important;
+    --color-border-error: var(--ic-danger) !important;
+    --color-border-success: var(--ic-ok) !important;
+    --border-width-input: 1px !important;
+    --border-width-input-focused: 1px !important;
+    /* Nextcloud: primary is cyan, text on it is the void --------------------- */
+    --color-primary: var(--ic-splash-cyan) !important;
+    --color-primary-default: var(--ic-splash-cyan) !important;
+    --color-primary-text: var(--ic-ink-void) !important;
+    --color-primary-hover: #339190 !important;
+    --color-primary-light: #0f2a3c !important;
+    --color-primary-light-hover: #133646 !important;
+    --color-primary-light-text: var(--ic-splash-cyan) !important;
+    --color-primary-element: var(--ic-splash-cyan) !important;
+    --color-primary-element-default-hover: #5ae5d7 !important;
+    --color-primary-element-hover: #5ae5d7 !important;
+    --color-primary-element-text: var(--ic-ink-void) !important;
+    --color-primary-element-text-dark: #000000 !important;
+    --color-primary-element-light: var(--color-primary-light) !important;
+    --color-primary-element-light-hover: var(--color-primary-light-hover) !important;
+    --color-primary-element-light-text: var(--color-primary-light-text) !important;
+    --primary-invert-if-bright: invert(100%) !important;
+    --primary-invert-if-dark: no !important;
+    --gradient-primary-background: linear-gradient(
+        40deg,
+        var(--ic-splash-cyan) 0%,
+        var(--color-primary-hover) 100%
+    ) !important;
+    /* Nextcloud: feedback. The element colour carries the meaning, the wash is
+       the tone at 18% over ink-deep, the text passes 9:1 on the wash. --------- */
+    --color-error: #342139 !important;
+    --color-error-hover: #48263f !important;
+    --color-error-text: #ffc9d3 !important;
+    --color-error-rgb: 52, 33, 57 !important;
+    --color-element-error: var(--ic-danger) !important;
+    --color-warning: #333a37 !important;
+    --color-warning-hover: #464a3c !important;
+    --color-warning-text: #fbeeb0 !important;
+    --color-warning-rgb: 51, 58, 55 !important;
+    --color-element-warning: var(--ic-splash-lemon) !important;
+    --color-success: #14393a !important;
+    --color-success-hover: #194941 !important;
+    --color-success-text: #c6f5d6 !important;
+    --color-success-rgb: 20, 57, 58 !important;
+    --color-element-success: var(--ic-ok) !important;
+    --color-info: #153a49 !important;
+    --color-info-hover: #1a4b57 !important;
+    --color-info-text: #bdf4ee !important;
+    --color-info-rgb: 21, 58, 73 !important;
+    --color-element-info: var(--ic-splash-cyan) !important;
+    --color-neutral: var(--ic-splash-lemon) !important;
+    --color-favorite: var(--ic-splash-lemon) !important;
+    --color-mark: #50523e !important;
+    /* Nextcloud: assistant (AI generated content) stays inside the palette -- */
+    --color-background-assistant: #0d1a36 !important;
+    --color-border-assistant: linear-gradient(
+        125deg,
+        var(--ic-splash-cyan) 50%,
+        var(--ic-splash-magenta) 125%
+    ) !important;
+    --color-element-assistant: linear-gradient(
+        214deg,
+        var(--ic-splash-cyan) 12%,
+        var(--ic-logo-blue) 39%,
+        var(--ic-splash-magenta) 86%
+    ) !important;
+    --color-element-assistant-icon: linear-gradient(
+        214deg,
+        var(--ic-splash-cyan) 15%,
+        var(--ic-logo-blue) 40%,
+        var(--ic-splash-magenta) 80%
+    ) !important;
+    /* Nextcloud: loading, scrollbar, shadow ---------------------------------- */
+    --color-loading-light: var(--ic-ink-line-strong) !important;
+    --color-loading-dark: var(--ic-ink-fg) !important;
+    --color-scrollbar: var(--ic-ink-line-strong) transparent !important;
+    --color-box-shadow-rgb: 2, 6, 15 !important;
+    --color-box-shadow: rgba(var(--color-box-shadow-rgb), 0.6) !important;
+    /* Nextcloud: shape. Keys, not lozenges. ---------------------------------- */
+    --border-radius-small: 6px !important;
+    --border-radius-element: 10px !important;
+    --border-radius-container: 14px !important;
+    --border-radius-container-large: 20px !important;
+    --border-radius: 6px !important;
+    --border-radius-large: 10px !important;
+    --border-radius-rounded: 20px !important;
+    --border-radius-pill: 999px !important;
+    --body-container-radius: 20px !important;
+    --body-container-margin: 12px !important;
+    /* Nextcloud: motion ------------------------------------------------------ */
+    --animation-quick: var(--tr-dur-press) !important;
+    --animation-slow: 320ms !important;
+    /* Aliases kept for the per-app partials ---------------------------------- */
+    --color-text-link: var(--ic-splash-cyan) !important;
+    --color-text-inactive: var(--ic-ink-soft) !important;
+    --color-icon: var(--ic-ink-fg) !important;
+    --color-icon-yellow: var(--ic-splash-lemon) !important;
+    --color-selected-blue: rgba(var(--ic-splash-cyan-rgb), 0.18) !important;
+    --color-dashboard-grey: rgba(var(--color-main-background-rgb), 0.85) !important;
+    --color-border-grey: var(--ic-ink-line) !important;
+    --color-hover-blue: var(--ic-ink-hover) !important;
+    --table-color-border: var(--ic-ink-line) !important;
+    --table-color-heading: var(--ic-ink-hi) !important;
+    --table-color-heading-border: var(--ic-ink-line-strong) !important;
+    --table-color-background: var(--ic-ink-deep) !important;
+    --table-color-background-hover: var(--ic-ink-hover) !important;
+    --table-border-radius: var(--border-radius-element) !important;
   }
   /***
+   * InkCurity Dark — base elements
+   *
+   * Buttons are keys, not lozenges: 10px corners, one filled key per view,
+   * press feedback at 0.97. Inputs sit in a sunk well with a hairline that turns
+   * cyan on focus. Glows do the work of shadows.
+   *
    * @copyright Copyright (c) 2020, Magnus Walbeck <mw@mwalbeck.org>
+   * @copyright Copyright (c) 2026 inkcurity.net
    *
    * @license GNU AGPL version 3 or any later version, see COPYING file for more.
    */
   /* Buttons ------------------------------------------------------------------- */
-  button:not(.color-picker__simple-color-circle):not(.property-color__color-preview).primary,
-  .button.primary,
-  input[type=button].primary,
-  input[type=submit].primary {
-    background-color: var(--color-main-background) !important;
-    border-color: var(--color-border) !important;
-    color: var(--color-main-text) !important;
+  .button-vue {
+    border-radius: var(--border-radius-element) !important;
+    font-weight: 600 !important;
+    transition: background-color var(--tr-dur-fade) var(--tr-ease-soft), color var(--tr-dur-fade) var(--tr-ease-soft), box-shadow var(--tr-dur-fade) var(--tr-ease-soft), transform var(--tr-dur-press) var(--tr-ease-soft) !important;
   }
-  button:not(.color-picker__simple-color-circle):not(.property-color__color-preview).primary:hover,
-  .button.primary:hover,
-  input[type=button].primary:hover,
-  input[type=submit].primary:hover {
-    border-color: var(--color-primary-element) !important;
+  .button-vue:active:not(:disabled) {
+    transform: scale(var(--tr-press-scale));
   }
-  button:not(.color-picker__simple-color-circle):not(.property-color__color-preview):focus, button:not(.color-picker__simple-color-circle):not(.property-color__color-preview):active, button:not(.color-picker__simple-color-circle):not(.property-color__color-preview).primary:focus, button:not(.color-picker__simple-color-circle):not(.property-color__color-preview).primary:active,
-  .button:focus,
-  .button:active,
-  .button.primary:focus,
-  .button.primary:active,
-  input[type=button]:focus,
-  input[type=button]:active,
-  input[type=button].primary:focus,
-  input[type=button].primary:active,
-  input[type=submit]:focus,
-  input[type=submit]:active,
-  input[type=submit].primary:focus,
-  input[type=submit].primary:active {
-    background-color: var(--color-primary) !important;
-    border-color: var(--color-primary-element) !important;
+  .button-vue--vue-primary:not(:disabled):hover, .button-vue--vue-primary:not(:disabled):focus-visible {
+    box-shadow: var(--ic-glow-sm);
   }
-  .button-vue.button-vue--vue-secondary:not(.property-color__color-preview):not(.unified-search__button) {
-    background-color: var(--color-main-background) !important;
-    border: 1px solid var(--color-border) !important;
-    color: var(--color-main-text) !important;
+  .button-vue--vue-primary:not(:disabled):active {
+    background-color: #4cdacc !important;
+    box-shadow: none;
   }
-  .button-vue.button-vue--vue-secondary:not(.property-color__color-preview):not(.unified-search__button):hover {
-    border-color: var(--color-primary-element) !important;
+  .button-vue--vue-secondary:not(.unified-search__button):not(.property-color__color-preview) {
+    background-color: var(--ic-ink-raised) !important;
+    color: var(--ic-ink-fg) !important;
+    box-shadow: inset 0 0 0 1px var(--ic-ink-line);
   }
-  .button-vue.button-vue--vue-secondary:not(.property-color__color-preview):not(.unified-search__button):focus, .button-vue.button-vue--vue-secondary:not(.property-color__color-preview):not(.unified-search__button):active {
-    background-color: var(--color-primary) !important;
-    border-color: var(--color-primary-element) !important;
+  .button-vue--vue-secondary:not(.unified-search__button):not(.property-color__color-preview):hover:not(:disabled), .button-vue--vue-secondary:not(.unified-search__button):not(.property-color__color-preview):focus-visible:not(:disabled) {
+    color: var(--ic-splash-cyan) !important;
+    box-shadow: inset 0 0 0 1px var(--ic-splash-cyan);
   }
-  .button-vue.button-vue--vue-secondary:not(.property-color__color-preview):not(.unified-search__button).close-button {
-    border: none !important;
+  .button-vue--vue-tertiary:not(:disabled):hover, .button-vue--vue-tertiary:not(:disabled):focus-visible, .button-vue--vue-tertiary-no-background:not(:disabled):hover, .button-vue--vue-tertiary-no-background:not(:disabled):focus-visible {
+    background-color: rgba(255, 255, 255, 0.06) !important;
   }
-  .button-vue.unified-search__button:hover {
-    opacity: 1 !important;
+  .button-vue--vue-error:not(:disabled) {
+    background-color: transparent !important;
+    color: var(--ic-danger) !important;
+    box-shadow: inset 0 0 0 1px rgba(var(--ic-danger-rgb), 0.35);
+  }
+  .button-vue--vue-error:not(:disabled):hover, .button-vue--vue-error:not(:disabled):focus-visible {
+    background-color: rgba(var(--ic-danger-rgb), 0.1) !important;
+    box-shadow: inset 0 0 0 1px rgba(var(--ic-danger-rgb), 0.6);
+  }
+  .button-vue--vue-success:not(:disabled) {
+    background-color: transparent !important;
+    color: var(--ic-ok) !important;
+    box-shadow: inset 0 0 0 1px rgba(var(--ic-ok-rgb), 0.35);
+  }
+  .button-vue--vue-success:not(:disabled):hover, .button-vue--vue-success:not(:disabled):focus-visible {
+    background-color: rgba(var(--ic-ok-rgb), 0.1) !important;
+  }
+  .button-vue.close-button, .button-vue.unified-search__button {
+    box-shadow: none;
+  }
+  button:not(.button-vue):not(.color-picker__simple-color-circle):not(.property-color__color-preview):not(.action-button),
+  .button:not(.button-vue),
+  input[type=button],
+  input[type=submit] {
+    border-radius: var(--border-radius-element) !important;
+    font-weight: 600;
+    transition: background-color var(--tr-dur-fade) var(--tr-ease-soft), color var(--tr-dur-fade) var(--tr-ease-soft), border-color var(--tr-dur-fade) var(--tr-ease-soft), box-shadow var(--tr-dur-fade) var(--tr-ease-soft);
+  }
+  button:not(.button-vue):not(.color-picker__simple-color-circle):not(.property-color__color-preview):not(.action-button):not(.primary):not(:disabled),
+  .button:not(.button-vue):not(.primary):not(:disabled),
+  input[type=button]:not(.primary):not(:disabled),
+  input[type=submit]:not(.primary):not(:disabled) {
+    background-color: var(--ic-ink-raised) !important;
+    border: 1px solid var(--ic-ink-line) !important;
+    color: var(--ic-ink-fg) !important;
+  }
+  button:not(.button-vue):not(.color-picker__simple-color-circle):not(.property-color__color-preview):not(.action-button):not(.primary):not(:disabled):hover, button:not(.button-vue):not(.color-picker__simple-color-circle):not(.property-color__color-preview):not(.action-button):not(.primary):not(:disabled):focus-visible,
+  .button:not(.button-vue):not(.primary):not(:disabled):hover,
+  .button:not(.button-vue):not(.primary):not(:disabled):focus-visible,
+  input[type=button]:not(.primary):not(:disabled):hover,
+  input[type=button]:not(.primary):not(:disabled):focus-visible,
+  input[type=submit]:not(.primary):not(:disabled):hover,
+  input[type=submit]:not(.primary):not(:disabled):focus-visible {
+    border-color: var(--ic-splash-cyan) !important;
+    color: var(--ic-splash-cyan) !important;
+  }
+  button:not(.button-vue):not(.color-picker__simple-color-circle):not(.property-color__color-preview):not(.action-button).primary:not(:disabled),
+  .button:not(.button-vue).primary:not(:disabled),
+  input[type=button].primary:not(:disabled),
+  input[type=submit].primary:not(:disabled) {
+    background-color: var(--ic-splash-cyan) !important;
+    border: 1px solid transparent !important;
+    color: var(--ic-ink-void) !important;
+  }
+  button:not(.button-vue):not(.color-picker__simple-color-circle):not(.property-color__color-preview):not(.action-button).primary:not(:disabled):hover, button:not(.button-vue):not(.color-picker__simple-color-circle):not(.property-color__color-preview):not(.action-button).primary:not(:disabled):focus-visible,
+  .button:not(.button-vue).primary:not(:disabled):hover,
+  .button:not(.button-vue).primary:not(:disabled):focus-visible,
+  input[type=button].primary:not(:disabled):hover,
+  input[type=button].primary:not(:disabled):focus-visible,
+  input[type=submit].primary:not(:disabled):hover,
+  input[type=submit].primary:not(:disabled):focus-visible {
+    background-color: var(--color-primary-element-hover) !important;
+    box-shadow: var(--ic-glow-sm);
   }
   input[type=text] + .icon-confirm,
   input[type=password] + .icon-confirm,
   input[type=email] + .icon-confirm {
-    background-color: var(--color-background-darker) !important;
+    background-color: var(--ic-ink-raised) !important;
+    border-color: var(--ic-ink-line-strong) !important;
   }
-  /* Input Fields -------------------------------------------------------------- */
-  input:not([type=range]):not([type=button]):not([type=submit]) {
-    background-color: var(--color-background-darker);
+  /* Input fields -------------------------------------------------------------- */
+  input:not([type=range]):not([type=button]):not([type=submit]):not([type=checkbox]):not([type=radio]):not([type=color]):not([type=file]),
+  textarea,
+  .input-field__input,
+  select:not(.vs__dropdown-toggle) {
+    background-color: var(--ic-ink-well) !important;
+    border: 1px solid var(--ic-ink-line-strong) !important;
+    border-radius: var(--border-radius-element);
+    color: var(--ic-ink-fg);
+    transition: border-color var(--tr-dur-fade) var(--tr-ease-soft), box-shadow var(--tr-dur-fade) var(--tr-ease-soft);
   }
-  input:not([type=range]):not([type=button]):not([type=submit]):active {
-    background-color: var(--color-background-darker);
+  input:not([type=range]):not([type=button]):not([type=submit]):not([type=checkbox]):not([type=radio]):not([type=color]):not([type=file])::placeholder,
+  textarea::placeholder,
+  .input-field__input::placeholder,
+  select:not(.vs__dropdown-toggle)::placeholder {
+    color: var(--ic-ink-mute);
+    opacity: 1;
   }
-  div[contenteditable=true]:not(:disabled):hover, div[contenteditable=true]:not(:disabled):focus, div[contenteditable=true]:not(:disabled):active,
-  textarea:not(:disabled):hover,
-  textarea:not(:disabled):focus,
-  textarea:not(:disabled):active {
-    border-color: var(--color-primary-element) !important;
+  input:not([type=range]):not([type=button]):not([type=submit]):not([type=checkbox]):not([type=radio]):not([type=color]):not([type=file]):hover:not(:disabled):not(:focus),
+  textarea:hover:not(:disabled):not(:focus),
+  .input-field__input:hover:not(:disabled):not(:focus),
+  select:not(.vs__dropdown-toggle):hover:not(:disabled):not(:focus) {
+    border-color: var(--ic-ink-soft) !important;
+  }
+  input:not([type=range]):not([type=button]):not([type=submit]):not([type=checkbox]):not([type=radio]):not([type=color]):not([type=file]):focus, input:not([type=range]):not([type=button]):not([type=submit]):not([type=checkbox]):not([type=radio]):not([type=color]):not([type=file]):focus-visible, input:not([type=range]):not([type=button]):not([type=submit]):not([type=checkbox]):not([type=radio]):not([type=color]):not([type=file]):active,
+  textarea:focus,
+  textarea:focus-visible,
+  textarea:active,
+  .input-field__input:focus,
+  .input-field__input:focus-visible,
+  .input-field__input:active,
+  select:not(.vs__dropdown-toggle):focus,
+  select:not(.vs__dropdown-toggle):focus-visible,
+  select:not(.vs__dropdown-toggle):active {
+    border-color: var(--ic-splash-cyan) !important;
+    box-shadow: 0 0 0 3px rgba(var(--ic-splash-cyan-rgb), 0.18) !important;
+    outline: none;
+  }
+  .input-field__input:focus,
+  .input-field__input:focus-visible {
+    border-width: 1px !important;
+    padding-inline: calc(var(--default-grid-baseline) * 3 - 1px) !important;
+  }
+  .input-field__label {
+    color: var(--ic-ink-mute) !important;
+  }
+  div[contenteditable=true]:not(:disabled):hover, div[contenteditable=true]:not(:disabled):focus, div[contenteditable=true]:not(:disabled):active {
+    border-color: var(--ic-splash-cyan) !important;
   }
   .multiselect .multiselect__input {
     background-color: inherit !important;
+    border: unset !important;
   }
+  /* Checkboxes, radios, switches ---------------------------------------------- */
+  .checkbox-radio-switch:not(.checkbox-radio-switch--disabled) .checkbox-radio-switch__input:hover + .checkbox-radio-switch__content,
+  .checkbox-radio-switch:not(.checkbox-radio-switch--disabled) .checkbox-radio-switch__input:focus + .checkbox-radio-switch__content,
+  .checkbox-radio-switch:not(.checkbox-radio-switch--disabled) .checkbox-radio-switch__content:hover,
+  .checkbox-radio-switch:not(.checkbox-radio-switch--disabled) .checkbox-radio-switch__content:focus-within,
   .checkbox-radio-switch:not(.checkbox-radio-switch--disabled) .checkbox-radio-switch__input:hover + .checkbox-radio-switch__label,
   .checkbox-radio-switch:not(.checkbox-radio-switch--disabled) .checkbox-radio-switch__input:focus + .checkbox-radio-switch__label,
   .checkbox-radio-switch:not(.checkbox-radio-switch--disabled) .checkbox-radio-switch__label:hover,
   .checkbox-radio-switch:not(.checkbox-radio-switch--disabled) .checkbox-radio-switch__label:focus-within {
-    background-color: var(--color-background-hover) !important;
+    background-color: rgba(255, 255, 255, 0.05) !important;
   }
   .checkbox-radio-switch:not(.checkbox-radio-switch--disabled) .checkbox-radio-switch__input:focus + .checkbox-radio-switch__label {
     box-shadow: unset !important;
   }
+  .checkbox-radio-switch:not(.checkbox-radio-switch--disabled) .checkbox-radio-switch__input:focus-visible + .checkbox-radio-switch__content {
+    outline: 2px solid var(--ic-splash-cyan);
+    outline-offset: 2px;
+  }
+  .checkbox-radio-switch--button-variant .checkbox-radio-switch__content {
+    border-color: var(--ic-ink-line) !important;
+  }
+  .checkbox-radio-switch--button-variant.checkbox-radio-switch--checked .checkbox-radio-switch__content {
+    border-color: var(--ic-splash-cyan) !important;
+    background-color: var(--color-primary-element-light) !important;
+    color: var(--ic-splash-cyan) !important;
+  }
   /* Action items -------------------------------------------------------------- */
   .action-input .action-input__label,
   .action-text-editable .action-text-editable__label {
-    background-color: var(--color-background-darker);
+    background-color: var(--ic-ink-well);
   }
-  /* select -------------------------------------------------------------------- */
+  /* Selects ------------------------------------------------------------------- */
   select option {
-    background-color: var(--color-main-background);
-    color: var(--color-main-text);
+    background-color: var(--ic-ink-deep);
+    color: var(--ic-ink-fg);
+  }
+  .select .vs__dropdown-toggle,
+  .v-select .vs__dropdown-toggle {
+    background-color: var(--ic-ink-well) !important;
+    border: 1px solid var(--ic-ink-line-strong) !important;
+    border-radius: var(--border-radius-element) !important;
+    transition: border-color var(--tr-dur-fade) var(--tr-ease-soft);
+  }
+  .select .vs__dropdown-toggle:hover,
+  .v-select .vs__dropdown-toggle:hover {
+    border-color: var(--ic-ink-soft) !important;
+  }
+  .select.vs--open .vs__dropdown-toggle,
+  .v-select.vs--open .vs__dropdown-toggle {
+    border-color: var(--ic-splash-cyan) !important;
+    box-shadow: 0 0 0 3px rgba(var(--ic-splash-cyan-rgb), 0.18) !important;
+  }
+  .vs__dropdown-menu {
+    background-color: var(--ic-ink-raised) !important;
+    border: 1px solid var(--ic-ink-line) !important;
+    border-radius: var(--border-radius-container) !important;
+    box-shadow: var(--ic-elevation) !important;
+  }
+  .vs__dropdown-menu .vs__dropdown-option--highlight {
+    background-color: rgba(255, 255, 255, 0.06) !important;
+    color: var(--ic-splash-cyan) !important;
+  }
+  .vs__dropdown-menu .vs__dropdown-option--selected {
+    color: var(--ic-splash-cyan) !important;
+  }
+  .vs__search {
+    background-color: unset !important;
+    border: unset !important;
+    box-shadow: none !important;
   }
   .select2-choices .select2-search-choice {
     box-shadow: unset;
   }
   .select2-dropdown-open .select2-choice,
   .select2-dropdown-open .select2-choices {
-    background: var(--color-main-background) !important;
-    border-color: var(--color-border) !important;
+    background: var(--ic-ink-well) !important;
+    border-color: var(--ic-splash-cyan) !important;
   }
   .select2-drop .select2-drop-active {
-    border-top-color: var(--color-border) !important;
+    border-top-color: var(--ic-ink-line) !important;
   }
   .multiselect .multiselect__content-wrapper .multiselect__option--highlight {
-    background-color: var(--color-background-hover) !important;
+    background-color: rgba(255, 255, 255, 0.06) !important;
+    color: var(--ic-splash-cyan) !important;
   }
-  /* vs__search ---------------------------------------------------------------- */
-  .vs__search {
-    background-color: unset !important;
+  /* Code and keys -------------------------------------------------------------- */
+  code,
+  kbd,
+  samp {
+    font-family: var(--ic-font-mono);
+    font-variant-numeric: tabular-nums;
   }
-  /* Table --------------------------------------------------------------------- */
+  :not(pre) > code {
+    padding: 0.1em 0.35em;
+    border: 1px solid rgba(var(--ic-splash-cyan-rgb), 0.18);
+    border-radius: 4px;
+    background: rgba(var(--ic-splash-cyan-rgb), 0.08);
+    color: var(--ic-splash-cyan);
+  }
+  kbd {
+    padding: 0.1em 0.45em;
+    border: 1px solid var(--ic-ink-line-strong);
+    border-bottom-width: 2px;
+    border-radius: var(--border-radius-small);
+    background: var(--ic-ink-raised);
+    color: var(--ic-ink-fg);
+  }
+  /* Tables -------------------------------------------------------------------- */
   tbody tr:hover,
   tbody tr:focus,
   tbody tr:active {
@@ -279,14 +570,177 @@
   }
   /* Progress ------------------------------------------------------------------ */
   progress:not(.vue) {
-    background-color: var(--color-border);
+    background-color: var(--ic-ink-line);
+    border-radius: var(--border-radius-pill);
+    overflow: hidden;
+  }
+  progress:not(.vue)::-webkit-progress-bar {
+    background-color: var(--ic-ink-line);
+  }
+  progress:not(.vue)::-webkit-progress-value {
+    background-color: var(--ic-splash-cyan);
+    box-shadow: 0 0 10px rgba(var(--ic-splash-cyan-rgb), 0.6);
+  }
+  progress:not(.vue)::-moz-progress-bar {
+    background-color: var(--ic-splash-cyan);
   }
   /***
+   * InkCurity Dark — the signature flourishes
+   *
+   * The backdrop (void, one cyan bloom, a guest magenta bloom, film grain), the
+   * scan-line under the header, the cyan caret and focus ring, mono labels,
+   * display headings and the blinking cursor on the dashboard greeting.
+   * One signature moment per screen; everything else stays calm.
+   *
+   * @copyright Copyright (c) 2026 inkcurity.net
+   *
+   * @license GNU AGPL version 3 or any later version, see COPYING file for more.
+   */
+  /* Backdrop ----------------------------------------------------------------- */
+  #body-user,
+  #body-settings,
+  #body-public {
+    background-color: var(--ic-ink-void) !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"), radial-gradient(900px 620px at 12% -10%, rgba(var(--ic-splash-cyan-rgb), 0.14), transparent 62%), radial-gradient(720px 520px at 100% 0%, rgba(var(--ic-splash-magenta-rgb), 0.07), transparent 62%) !important;
+    background-size: 200px 200px, auto, auto !important;
+    background-repeat: repeat, no-repeat, no-repeat !important;
+    background-position: 0 0, 0 0, 0 0 !important;
+    background-attachment: fixed !important;
+  }
+  /* Header scan-line: the radar sweep, one tile of 720px looping seamlessly --- */
+  #header:not(.header-guest)::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    inset-block-end: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, rgba(var(--ic-splash-cyan-rgb), 0) 15%, rgba(var(--ic-splash-cyan-rgb), 0.85) 40%, rgba(var(--ic-splash-magenta-rgb), 0.78) 50%, rgba(var(--ic-splash-cyan-rgb), 0.85) 60%, rgba(var(--ic-splash-cyan-rgb), 0) 85%, transparent 100%);
+    background-size: 720px 100%;
+    background-repeat: repeat-x;
+    box-shadow: 0 0 14px rgba(var(--ic-splash-cyan-rgb), 0.3);
+    animation: ic-scan 11s linear infinite;
+    pointer-events: none;
+  }
+  @keyframes ic-scan {
+    from {
+      background-position: 0 0;
+    }
+    to {
+      background-position: -720px 0;
+    }
+  }
+  /* Caret, selection, focus ---------------------------------------------------- */
+  input,
+  textarea,
+  [contenteditable=true] {
+    caret-color: var(--ic-splash-cyan);
+  }
+  :focus-visible {
+    outline-color: var(--ic-splash-cyan) !important;
+  }
+  * {
+    scrollbar-width: thin;
+  }
+  /* Mono labels: uppercase, tracked wide, like terminal tags ------------------- */
+  .app-navigation-caption__title,
+  .app-navigation-caption__name,
+  #app-navigation:not(.vue) .app-navigation-caption {
+    font-family: var(--ic-font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: var(--ic-tracking-mono);
+    text-transform: uppercase;
+    color: var(--ic-ink-mute);
+  }
+  .app-navigation-caption__title,
+  .app-navigation-caption__name,
+  #app-navigation:not(.vue) .app-navigation-caption {
+    opacity: 1 !important;
+  }
+  .app-menu-entry__label,
+  .app-sidebar-header__subname,
+  .counter-bubble__counter,
+  .app-navigation-entry__counter,
+  .files-list__row-size,
+  .files-list__row-mtime,
+  .v-popper--theme-tooltip .v-popper__inner {
+    font-family: var(--ic-font-mono);
+    font-variant-numeric: tabular-nums;
+  }
+  /* Display headings: set tight, in the display face when it is installed ----- */
+  .settings-section__name,
+  .settings-section__title,
+  .section > h2,
+  #app-dashboard h2,
+  .app-sidebar-header__mainname,
+  .modal-header .modal-name,
+  .dialog__name,
+  .empty-content__name,
+  .panel--header h2 {
+    font-family: var(--ic-font-display);
+    letter-spacing: var(--ic-tracking-tight);
+    text-wrap: balance;
+  }
+  /* The dashboard greeting gets the cursor ------------------------------------- */
+  #app-dashboard > h2::after {
+    content: "▌"/"";
+    display: inline-block;
+    margin-inline-start: 0.12em;
+    color: var(--ic-splash-cyan);
+    animation: ic-blink 1s steps(1, end) infinite;
+  }
+  @keyframes ic-blink {
+    50% {
+      opacity: 0;
+    }
+  }
+  /* Reduced motion: the sweep and the cursor stand still ------------------------ */
+}
+@media (prefers-color-scheme: dark) and (prefers-reduced-motion: reduce) {
+  #header:not(.header-guest)::after,
+  #app-dashboard > h2::after {
+    animation: none;
+  }
+}
+@media (prefers-color-scheme: dark) {
+  [data-themes*=reduced-motion] #header:not(.header-guest)::after,
+  [data-themes*=reduced-motion] #app-dashboard > h2::after {
+    animation: none;
+  }
+}
+@media (prefers-color-scheme: dark) {
+  /***
+   * InkCurity Dark — server chrome
+   *
+   * Header, navigation column, content container, sidebar, menus, modals,
+   * toasts, tooltips, search and settings. Grouped lists on the well, cells on
+   * the deep surface, hairlines instead of frames, glows instead of shadows.
+   *
    * @copyright Copyright (c) 2017, Magnus Walbeck <mw@mwalbeck.org>
+   * @copyright Copyright (c) 2026 inkcurity.net
    *
    * @license GNU AGPL version 3 or any later version, see COPYING file for more.
    */
   /* Header -------------------------------------------------------------------- */
+  #header:not(.header-guest) .app-menu-entry__label {
+    font-size: 10px !important;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  #header:not(.header-guest) .app-menu-entry__link:hover .app-menu-entry__icon, #header:not(.header-guest) .app-menu-entry__link:focus-visible .app-menu-entry__icon {
+    filter: drop-shadow(0 0 6px rgba(var(--ic-splash-cyan-rgb), 0.55));
+  }
+  #header:not(.header-guest) .app-menu-entry--active::before {
+    background-color: var(--ic-splash-cyan) !important;
+    box-shadow: 0 0 10px rgba(var(--ic-splash-cyan-rgb), 0.7);
+  }
+  #header:not(.header-guest) .app-menu-entry--active .app-menu-entry__label {
+    color: var(--ic-splash-cyan) !important;
+  }
+  #header:not(.header-guest) #nextcloud:hover .logo,
+  #header:not(.header-guest) #nextcloud:focus-visible .logo {
+    filter: drop-shadow(0 0 8px rgba(var(--ic-splash-cyan-rgb), 0.45));
+  }
   #settings #expand:hover #expandDisplayName,
   #settings #expand:focus #expandDisplayName,
   #settings #expand:active #expandDisplayName,
@@ -298,14 +752,166 @@
   #body-login #header {
     background-color: unset !important;
   }
-  /* Menues -------------------------------------------------------------------- */
+  .header-menu__wrapper {
+    background-color: var(--ic-ink-raised) !important;
+    border: 1px solid var(--ic-ink-line);
+    border-radius: var(--border-radius-container) !important;
+    box-shadow: var(--ic-elevation) !important;
+  }
+  .header-menu__carret {
+    border-bottom-color: var(--ic-ink-raised) !important;
+  }
+  .header-menu__wrapper .action-button,
+  .header-menu__wrapper .action-link,
+  .header-menu__wrapper .action-router {
+    border-radius: var(--border-radius-element) !important;
+  }
+  /* Content container ----------------------------------------------------------- */
+  #content,
+  #content-vue {
+    box-shadow: var(--ic-elevation);
+  }
+  /* Navigation column: grouped list on the well ----------------------------------- */
+  .app-navigation,
+  #app-navigation:not(.vue) {
+    background-color: var(--ic-ink-well) !important;
+    border-inline-end: 1px solid var(--ic-ink-line);
+  }
+  .app-navigation-entry {
+    border-radius: var(--border-radius-element) !important;
+    transition: background-color var(--tr-dur-fade) var(--tr-ease-soft);
+  }
+  .app-navigation-entry.active {
+    background-color: var(--color-primary-element-light) !important;
+  }
+  .app-navigation-entry.active .app-navigation-entry-link,
+  .app-navigation-entry.active .app-navigation-entry__title,
+  .app-navigation-entry.active .app-navigation-entry__name,
+  .app-navigation-entry.active .app-navigation-entry-button {
+    color: var(--ic-ink-hi) !important;
+  }
+  .app-navigation-entry.active .app-navigation-entry-icon,
+  .app-navigation-entry.active .app-navigation-entry__icon {
+    color: var(--ic-splash-cyan) !important;
+  }
+  .app-navigation-entry.active .app-navigation-entry-icon[class*=icon-],
+  .app-navigation-entry.active .app-navigation-entry-icon [class*=icon-] {
+    filter: var(--background-invert-if-dark) !important;
+  }
+  .app-navigation-entry.active::before {
+    content: "";
+    position: absolute;
+    inset-inline-start: 4px;
+    top: 25%;
+    width: 3px;
+    height: 50%;
+    border-radius: 2px;
+    background-color: var(--ic-splash-cyan);
+    box-shadow: 0 0 10px rgba(var(--ic-splash-cyan-rgb), 0.65);
+    pointer-events: none;
+  }
+  .app-navigation-entry__counter,
+  .counter-bubble__counter {
+    border-radius: var(--border-radius-pill) !important;
+    font-size: 11px !important;
+  }
+  .counter-bubble__counter {
+    color: var(--color-primary-element-light-text) !important;
+  }
+  .app-navigation-entry__children .app-navigation-entry::before {
+    display: none;
+  }
+  #app-navigation:not(.vue) > ul > li > a,
+  #app-navigation:not(.vue) > ul > li > ul > li > a {
+    opacity: 1;
+  }
+  #app-navigation:not(.vue) > ul > li > ul > li:hover > a,
+  #app-navigation:not(.vue) > ul > li > ul > li:focus > a {
+    background-color: unset;
+  }
+  #app-navigation:not(.vue) > ul > li.active > a {
+    background-color: var(--color-primary-element-light) !important;
+    color: var(--ic-ink-hi) !important;
+  }
+  #app-navigation:not(.vue) .collapsible::before {
+    background-color: unset;
+  }
+  #app-navigation:not(.vue) .collapsible:hover > .svg {
+    background-color: var(--color-background-hover);
+    background-image: none !important;
+  }
+  #app-settings-header .settings-button,
+  #app-settings__header .settings-button,
+  .app-settings__header .settings-button,
+  .contacts-settings .contacts-settings-button {
+    background-color: transparent !important;
+    border: unset !important;
+    opacity: 1;
+  }
+  /* Sidebar ------------------------------------------------------------------- */
+  .app-sidebar,
+  #app-sidebar {
+    border-inline-start: 1px solid var(--ic-ink-line) !important;
+  }
+  .app-sidebar-header__figure {
+    border-bottom: 1px solid var(--ic-ink-line);
+  }
+  .app-sidebar-tabs__nav {
+    border-bottom: 1px solid var(--ic-ink-line);
+  }
+  .app-sidebar-tabs__tab a:not(.active):hover, .app-sidebar-tabs__tab a:not(.active):focus {
+    border-bottom-color: var(--ic-ink-line-strong) !important;
+    box-shadow: inset 0 -1px 0 var(--ic-ink-line-strong) !important;
+  }
+  .app-sidebar-tabs__tab a.active, .app-sidebar-tabs__tab a.active:focus, .app-sidebar-tabs__tab a.active:active {
+    border-bottom-color: var(--ic-splash-cyan) !important;
+    box-shadow: inset 0 -1px 0 var(--ic-splash-cyan) !important;
+  }
+  .app-sidebar-tabs__content section {
+    box-shadow: none !important;
+  }
+  .versionsTabView li {
+    border-color: var(--ic-ink-line);
+  }
+  .versionsTabView li:hover {
+    background: var(--color-background-hover);
+  }
+  #tab-comments .comment-form form input[type=submit] {
+    opacity: 0.7;
+  }
+  #tab-comments .comment-form form input[type=submit]:hover {
+    opacity: 1;
+  }
+  #app-sidebar-vue.app-sidebar .app-sidebar-header__desc .app-sidebar-header__star .star--star,
+  #app-sidebar.app-sidebar .app-sidebar-header__desc .app-sidebar-header__star .star--star {
+    color: var(--ic-ink-soft);
+  }
+  #app-sidebar-vue.app-sidebar .app-sidebar-header__desc .app-sidebar-header__star .star--star:hover,
+  #app-sidebar.app-sidebar .app-sidebar-header__desc .app-sidebar-header__star .star--star:hover {
+    color: var(--ic-splash-lemon);
+  }
+  #app-sidebar-vue.app-sidebar .app-sidebar-header__desc .app-sidebar-header__star .star--starred,
+  #app-sidebar.app-sidebar .app-sidebar-header__desc .app-sidebar-header__star .star--starred {
+    color: var(--ic-splash-lemon);
+    filter: drop-shadow(0 0 6px rgba(var(--ic-splash-lemon-rgb), 0.5));
+  }
+  #app-sidebar-vue.app-sidebar .app-sidebar-header__desc .app-sidebar-header__star .star--starred:hover,
+  #app-sidebar.app-sidebar .app-sidebar-header__desc .app-sidebar-header__star .star--starred:hover {
+    color: var(--ic-ink-fg);
+    filter: none;
+  }
+  /* Menus and popovers ------------------------------------------------------------- */
   .menu,
   .popovermenu,
   .bubble,
   .popover,
   .app-navigation-entry-menu,
-  .v-popper__popper .v-popper__inner {
-    border: 1px solid var(--color-border);
+  .v-popper__popper .v-popper__inner,
+  .action-item__menu {
+    background-color: var(--ic-ink-raised) !important;
+    border: 1px solid var(--ic-ink-line) !important;
+    border-radius: var(--border-radius-container) !important;
+    box-shadow: var(--ic-elevation) !important;
   }
   .menu.notification-container {
     border: unset;
@@ -314,77 +920,268 @@
   .app-navigation-entry-menu::after,
   .menu::after,
   .popovermenu::after,
+  .action-item__menu .action-item__menu_arrow,
   .v-popper--theme-dropdown.v-popper__popper[data-popper-placement^=bottom] .v-popper__arrow-container {
-    border-bottom-color: var(--color-border) !important;
+    border-bottom-color: var(--ic-ink-raised) !important;
+  }
+  .v-popper__popper .v-popper__arrow-outer {
+    border-color: var(--ic-ink-line) !important;
+  }
+  .v-popper__popper .v-popper__arrow-inner {
+    border-color: var(--ic-ink-raised) !important;
   }
   .popover__arrow {
-    border-color: var(--color-border) !important;
+    border-color: var(--ic-ink-line) !important;
   }
-  .action-item__menu {
-    border: 1px solid var(--color-border);
+  .v-popper__popper .v-popper__inner .action-button,
+  .v-popper__popper .v-popper__inner .action-link,
+  .v-popper__popper .v-popper__inner .action-router,
+  .v-popper__popper .v-popper__inner .action-checkbox__label,
+  .v-popper__popper .v-popper__inner .action-radio__label,
+  .v-popper__popper .v-popper__inner .action-input__label,
+  .v-popper__popper .v-popper__inner .action-text-editable__label,
+  .popovermenu .action-button,
+  .popovermenu .action-link,
+  .popovermenu .action-router,
+  .popovermenu .action-checkbox__label,
+  .popovermenu .action-radio__label,
+  .popovermenu .action-input__label,
+  .popovermenu .action-text-editable__label,
+  .header-menu__wrapper .action-button,
+  .header-menu__wrapper .action-link,
+  .header-menu__wrapper .action-router,
+  .header-menu__wrapper .action-checkbox__label,
+  .header-menu__wrapper .action-radio__label,
+  .header-menu__wrapper .action-input__label,
+  .header-menu__wrapper .action-text-editable__label,
+  .action-item__menu .action-button,
+  .action-item__menu .action-link,
+  .action-item__menu .action-router,
+  .action-item__menu .action-checkbox__label,
+  .action-item__menu .action-radio__label,
+  .action-item__menu .action-input__label,
+  .action-item__menu .action-text-editable__label {
+    border-radius: var(--border-radius-element) !important;
+    transition: background-color var(--tr-dur-fade) var(--tr-ease-soft), color var(--tr-dur-fade) var(--tr-ease-soft);
   }
-  .action-item__menu .action-item__menu_arrow {
-    border-bottom-color: var(--color-border) !important;
+  .v-popper__popper .v-popper__inner .action-button:hover,
+  .v-popper__popper .v-popper__inner .action-button:focus-visible,
+  .v-popper__popper .v-popper__inner .action-link:hover,
+  .v-popper__popper .v-popper__inner .action-link:focus-visible,
+  .v-popper__popper .v-popper__inner .action-router:hover,
+  .v-popper__popper .v-popper__inner .action-router:focus-visible,
+  .v-popper__popper .v-popper__inner .action-checkbox__label:hover,
+  .v-popper__popper .v-popper__inner .action-radio__label:hover,
+  .v-popper__popper .v-popper__inner li:hover > .action-button,
+  .popovermenu .action-button:hover,
+  .popovermenu .action-button:focus-visible,
+  .popovermenu .action-link:hover,
+  .popovermenu .action-link:focus-visible,
+  .popovermenu .action-router:hover,
+  .popovermenu .action-router:focus-visible,
+  .popovermenu .action-checkbox__label:hover,
+  .popovermenu .action-radio__label:hover,
+  .popovermenu li:hover > .action-button,
+  .header-menu__wrapper .action-button:hover,
+  .header-menu__wrapper .action-button:focus-visible,
+  .header-menu__wrapper .action-link:hover,
+  .header-menu__wrapper .action-link:focus-visible,
+  .header-menu__wrapper .action-router:hover,
+  .header-menu__wrapper .action-router:focus-visible,
+  .header-menu__wrapper .action-checkbox__label:hover,
+  .header-menu__wrapper .action-radio__label:hover,
+  .header-menu__wrapper li:hover > .action-button,
+  .action-item__menu .action-button:hover,
+  .action-item__menu .action-button:focus-visible,
+  .action-item__menu .action-link:hover,
+  .action-item__menu .action-link:focus-visible,
+  .action-item__menu .action-router:hover,
+  .action-item__menu .action-router:focus-visible,
+  .action-item__menu .action-checkbox__label:hover,
+  .action-item__menu .action-radio__label:hover,
+  .action-item__menu li:hover > .action-button {
+    background-color: rgba(255, 255, 255, 0.06) !important;
+    color: var(--ic-splash-cyan) !important;
   }
-  .v-popper__popper button.action-button {
-    border-radius: 6px !important;
-  }
-  /* Search ------------------------------------------------------------------- */
-  .header-menu__wrapper {
-    border: 1px solid var(--color-border);
-  }
-  .header-menu__carret {
-    border-bottom-color: var(--color-border) !important;
-  }
-  .unified-search__form-reset {
+  .v-popper__popper .v-popper__inner .action--disabled:hover,
+  .popovermenu .action--disabled:hover,
+  .header-menu__wrapper .action--disabled:hover,
+  .action-item__menu .action--disabled:hover {
     background-color: transparent !important;
+    color: inherit !important;
   }
-  .unified-search__result-icon img[src$="integration_discourse/img/app-dark.svg"] {
-    filter: invert(95%);
+  .v-popper__popper .v-popper__inner .action-separator,
+  .v-popper__popper .v-popper__inner .action-separator__hr,
+  .popovermenu .action-separator,
+  .popovermenu .action-separator__hr,
+  .header-menu__wrapper .action-separator,
+  .header-menu__wrapper .action-separator__hr,
+  .action-item__menu .action-separator,
+  .action-item__menu .action-separator__hr {
+    background-color: var(--ic-ink-line) !important;
   }
-  /* File picker --------------------------------------------------------------- */
-  .oc-dialog {
-    border: 1px solid var(--color-border);
+  /* Tooltips: terminal tags ----------------------------------------------------- */
+  .v-popper--theme-tooltip .v-popper__inner {
+    background-color: var(--ic-ink-raised) !important;
+    border: 1px solid var(--ic-ink-line) !important;
+    border-radius: var(--border-radius-element) !important;
+    box-shadow: none !important;
+    color: var(--ic-ink-fg) !important;
+    font-size: 12px;
   }
-  .oc-dialog .filepicker_element_selected,
-  .oc-dialog #oc-dialog-filepicker-content .filepicker_element_selected {
-    background-color: var(--color-primary);
-    color: var(--color-primary-text);
+  .v-popper--theme-tooltip .v-popper__arrow-outer {
+    border-color: var(--ic-ink-line) !important;
   }
-  .oc-dialog .fileexists label,
-  .oc-dialog .fileexists .conflict .filename {
-    color: var(--color-main-text) !important;
+  .v-popper--theme-tooltip .v-popper__arrow-inner {
+    border-color: var(--ic-ink-raised) !important;
+  }
+  .tooltip,
+  .vue-tooltip {
+    filter: none !important;
+  }
+  .tooltip .tooltip-inner,
+  .vue-tooltip .tooltip-inner {
+    background-color: var(--ic-ink-raised) !important;
+    border: 1px solid var(--ic-ink-line);
+    color: var(--ic-ink-fg) !important;
+  }
+  .tooltip[x-placement^=right], .tooltip.right .tooltip-arrow,
+  .vue-tooltip[x-placement^=right],
+  .vue-tooltip.right .tooltip-arrow {
+    border-right-color: var(--ic-ink-line) !important;
+  }
+  .tooltip[x-placement^=left], .tooltip.left .tooltip-arrow,
+  .vue-tooltip[x-placement^=left],
+  .vue-tooltip.left .tooltip-arrow {
+    border-left-color: var(--ic-ink-line) !important;
+  }
+  .tooltip[x-placement^=bottom] .tooltip-arrow, .tooltip.bottom .tooltip-arrow, .tooltip.bottom-left .tooltip-arrow, .tooltip.bottom-right .tooltip-arrow,
+  .vue-tooltip[x-placement^=bottom] .tooltip-arrow,
+  .vue-tooltip.bottom .tooltip-arrow,
+  .vue-tooltip.bottom-left .tooltip-arrow,
+  .vue-tooltip.bottom-right .tooltip-arrow {
+    border-bottom-color: var(--ic-ink-line) !important;
+  }
+  .tooltip[x-placement^=top] .arrow, .tooltip[x-placement^=top] .tooltip-arrow, .tooltip.top .arrow, .tooltip.top .tooltip-arrow, .tooltip.top-left .arrow, .tooltip.top-left .tooltip-arrow, .tooltip.top-right .arrow, .tooltip.top-right .tooltip-arrow,
+  .vue-tooltip[x-placement^=top] .arrow,
+  .vue-tooltip[x-placement^=top] .tooltip-arrow,
+  .vue-tooltip.top .arrow,
+  .vue-tooltip.top .tooltip-arrow,
+  .vue-tooltip.top-left .arrow,
+  .vue-tooltip.top-left .tooltip-arrow,
+  .vue-tooltip.top-right .arrow,
+  .vue-tooltip.top-right .tooltip-arrow {
+    border-top-color: var(--ic-ink-line) !important;
+  }
+  /* Modals and dialogs --------------------------------------------------------- */
+  .modal-mask,
+  .oc-dialog-dim {
+    background-color: var(--ic-scrim) !important;
+    backdrop-filter: none !important;
+  }
+  .modal-container,
+  .dialog,
+  .oc-dialog,
+  .reference-picker-modal .modal-container {
+    background-color: var(--ic-ink-deep) !important;
+    border: 1px solid var(--ic-ink-line);
+    border-radius: var(--border-radius-container-large) !important;
+    box-shadow: var(--ic-glow-lg) !important;
   }
   .reference-picker .oc-dialog {
     border: none;
   }
+  .modal-header .modal-name,
+  .modal-header .modal-title {
+    color: var(--ic-ink-hi) !important;
+  }
+  .dialog__actions,
+  .oc-dialog-buttonrow {
+    border-top: 1px solid var(--ic-ink-line);
+  }
+  .oc-dialog .filepicker_element_selected,
+  .oc-dialog #oc-dialog-filepicker-content .filepicker_element_selected {
+    background-color: var(--color-primary-element-light);
+    color: var(--ic-splash-cyan);
+  }
+  .oc-dialog .fileexists label,
+  .oc-dialog .fileexists .conflict .filename {
+    color: var(--ic-ink-fg) !important;
+  }
+  .file-picker__side .button-vue--vue-primary,
+  .file-picker__breadcrumbs {
+    border-radius: var(--border-radius-element) !important;
+  }
+  /* Toasts ---------------------------------------------------------------------- */
+  .toastify.dialogs {
+    background-color: var(--ic-ink-raised) !important;
+    border: 1px solid var(--ic-ink-line);
+    border-radius: var(--border-radius-container) !important;
+    box-shadow: var(--ic-elevation) !important;
+    color: var(--ic-ink-fg) !important;
+  }
+  .toastify.dialogs.toast-success {
+    border-inline-start: 3px solid var(--ic-ok) !important;
+  }
+  .toastify.dialogs.toast-error {
+    border-inline-start: 3px solid var(--ic-danger) !important;
+  }
+  .toastify.dialogs.toast-warning {
+    border-inline-start: 3px solid var(--ic-splash-lemon) !important;
+  }
+  .toastify.dialogs.toast-info {
+    border-inline-start: 3px solid var(--ic-splash-cyan) !important;
+  }
+  .toastify.dialogs .toast-undo-button {
+    border-radius: var(--border-radius-element) !important;
+  }
+  /* Search ------------------------------------------------------------------- */
+  .unified-search__form-reset {
+    background-color: transparent !important;
+  }
+  .unified-search-modal .unified-search-modal__filters .button-vue {
+    box-shadow: none;
+  }
+  .unified-search-modal .result-items__item:hover,
+  .unified-search-modal .result-items__item:focus-within {
+    background-color: var(--color-background-hover) !important;
+    border-radius: var(--border-radius-element);
+  }
+  .unified-search__result-icon img[src$="integration_discourse/img/app-dark.svg"] {
+    filter: invert(95%);
+  }
   /* Settings ------------------------------------------------------------------ */
+  .settings-section,
+  .section {
+    border-color: var(--ic-ink-line) !important;
+  }
+  .settings-section__desc,
+  .settings-hint,
+  .section .hint {
+    color: var(--ic-ink-soft) !important;
+  }
   #cropper .inner-container {
-    background-color: var(--color-main-background) !important;
-    border: 1px solid var(--color-border);
-    color: var(--color-main-text) !important;
+    background-color: var(--ic-ink-deep) !important;
+    border: 1px solid var(--ic-ink-line);
+    color: var(--ic-ink-fg) !important;
   }
   .followupsection {
-    color: var(--color-main-text) !important;
+    color: var(--ic-ink-fg) !important;
   }
   .link-button {
-    background-color: var(--color-main-background) !important;
-    border: 1px solid var(--color-border) !important;
-    color: var(--color-main-text) !important;
+    background-color: var(--ic-ink-raised) !important;
+    border: 1px solid var(--ic-ink-line) !important;
+    border-radius: var(--border-radius-element) !important;
+    color: var(--ic-ink-fg) !important;
   }
-  .link-button:hover, .link-button.button:hover {
-    border-color: var(--color-primary-element) !important;
-    color: var(--color-main-text) !important;
-  }
-  .link-button:active, .link-button:focus {
-    background-color: var(--color-primary) !important;
-    border-color: var(--color-primary-element) !important;
-    color: var(--color-main-text) !important;
+  .link-button:hover, .link-button.button:hover, .link-button:focus-visible {
+    border-color: var(--ic-splash-cyan) !important;
+    color: var(--ic-splash-cyan) !important;
   }
   .preview-card .preview-card__footer {
-    border: 1px solid var(--color-border);
-    border-bottom-left-radius: var(--border-radius);
-    border-bottom-right-radius: var(--border-radius);
+    border: 1px solid var(--ic-ink-line);
+    border-bottom-left-radius: var(--border-radius-container);
+    border-bottom-right-radius: var(--border-radius-container);
     border-top: unset;
   }
   .profile .user-actions .profile__primary-action-button img[src$="spreed/img/app-dark.svg"],
@@ -398,134 +1195,34 @@
   .breezedark-admin p {
     margin-top: 1em;
   }
-  /* Tooltips ----------------------------------------------------------------- */
-  .tooltip,
-  .vue-tooltip {
-    filter: none !important;
+  .breezedark-admin textarea {
+    font-family: var(--ic-font-mono);
+    font-size: 13px;
   }
-  .tooltip .tooltip-inner,
-  .vue-tooltip .tooltip-inner {
-    border: 1px solid var(--color-border);
-  }
-  .tooltip[x-placement^=right], .tooltip.right .tooltip-arrow,
-  .vue-tooltip[x-placement^=right],
-  .vue-tooltip.right .tooltip-arrow {
-    border-right-color: var(--color-border) !important;
-  }
-  .tooltip[x-placement^=left], .tooltip.left .tooltip-arrow,
-  .vue-tooltip[x-placement^=left],
-  .vue-tooltip.left .tooltip-arrow {
-    border-left-color: var(--color-border) !important;
-  }
-  .tooltip[x-placement^=bottom] .tooltip-arrow, .tooltip.bottom .tooltip-arrow, .tooltip.bottom-left .tooltip-arrow, .tooltip.bottom-right .tooltip-arrow,
-  .vue-tooltip[x-placement^=bottom] .tooltip-arrow,
-  .vue-tooltip.bottom .tooltip-arrow,
-  .vue-tooltip.bottom-left .tooltip-arrow,
-  .vue-tooltip.bottom-right .tooltip-arrow {
-    border-bottom-color: var(--color-border) !important;
-  }
-  .tooltip[x-placement^=top] .arrow, .tooltip[x-placement^=top] .tooltip-arrow, .tooltip.top .arrow, .tooltip.top .tooltip-arrow, .tooltip.top-left .arrow, .tooltip.top-left .tooltip-arrow, .tooltip.top-right .arrow, .tooltip.top-right .tooltip-arrow,
-  .vue-tooltip[x-placement^=top] .arrow,
-  .vue-tooltip[x-placement^=top] .tooltip-arrow,
-  .vue-tooltip.top .arrow,
-  .vue-tooltip.top .tooltip-arrow,
-  .vue-tooltip.top-left .arrow,
-  .vue-tooltip.top-left .tooltip-arrow,
-  .vue-tooltip.top-right .arrow,
-  .vue-tooltip.top-right .tooltip-arrow {
-    border-top-color: var(--color-border) !important;
-  }
-  /* Toasts ------------------------------------------------------------------- */
-  .toastify.dialogs {
-    border: 1px solid var(--color-border);
-  }
-  /* App Store ---------------------------------------------------------------- */
+  /* App store ------------------------------------------------------------------- */
   .app-level .official {
-    border-color: var(--color-success);
+    border-color: var(--ic-ok);
+  }
+  .app-settings #app-sidebar-vue .app-sidebar-header__figure {
+    filter: invert(5%);
   }
   /* Smart picker ------------------------------------------------------------- */
   .tribute-container-link {
-    border: 1px solid var(--color-border);
-    border-radius: 6px !important;
+    border: 1px solid var(--ic-ink-line);
+    border-radius: var(--border-radius-element) !important;
+  }
+  /* Empty states ---------------------------------------------------------------- */
+  .empty-content__icon {
+    opacity: 0.7;
+  }
+  .empty-content__description {
+    color: var(--ic-ink-soft);
   }
   /***
    * @copyright Copyright (c) 2017, Magnus Walbeck <mw@mwalbeck.org>
    *
    * @license GNU AGPL version 3 or any later version, see COPYING file for more.
    */
-  /* App navigation ----------------------------------------------------------- */
-  #app-navigation:not(.vue) > ul > li > a,
-  #app-navigation:not(.vue) > ul > li > ul > li > a {
-    opacity: 1;
-  }
-  #app-navigation:not(.vue) > ul > li > ul > li:hover > a,
-  #app-navigation:not(.vue) > ul > li > ul > li:focus > a {
-    background-color: unset;
-  }
-  #app-navigation:not(.vue) .collapsible::before {
-    background-color: unset;
-  }
-  #app-navigation:not(.vue) .collapsible:hover > .svg {
-    background-color: var(--color-background-hover);
-    background-image: none !important;
-  }
-  .app-navigation .app-navigation-caption__title {
-    opacity: 1 !important;
-  }
-  #app-settings-header .settings-button,
-  #app-settings__header .settings-button,
-  .contacts-settings .contacts-settings-button {
-    background-color: transparent !important;
-    border: unset !important;
-    opacity: 1;
-  }
-  .counter-bubble__counter {
-    color: var(--color-primary-text) !important;
-  }
-  /* App Sidebar -------------------------------------------------------------- */
-  .app-sidebar-tabs__tab a:not(.active):hover, .app-sidebar-tabs__tab a:not(.active):focus {
-    border-bottom-color: var(--color-background-hover) !important;
-    box-shadow: inset 0 -1px 0 var(--color-background-hover) !important;
-  }
-  .app-sidebar-tabs__tab a.active, .app-sidebar-tabs__tab a.active:focus, .app-sidebar-tabs__tab a.active:active {
-    border-bottom-color: var(--color-primary-element) !important;
-    box-shadow: inset 0 -1px 0 var(--color-primary-element) !important;
-  }
-  .versionsTabView li {
-    border-color: var(--color-border);
-  }
-  .versionsTabView li:hover {
-    background: var(--color-background-hover);
-  }
-  .app-sidebar-tabs__content section {
-    box-shadow: none !important;
-  }
-  #tab-comments .comment-form form input[type=submit] {
-    opacity: 0.7;
-  }
-  #tab-comments .comment-form form input[type=submit]:hover {
-    opacity: 1;
-  }
-  #app-sidebar-vue.app-sidebar .app-sidebar-header__desc .app-sidebar-header__star .star--star,
-  #app-sidebar.app-sidebar .app-sidebar-header__desc .app-sidebar-header__star .star--star {
-    color: var(--color-main-text);
-  }
-  #app-sidebar-vue.app-sidebar .app-sidebar-header__desc .app-sidebar-header__star .star--star:hover,
-  #app-sidebar.app-sidebar .app-sidebar-header__desc .app-sidebar-header__star .star--star:hover {
-    color: var(--color-icon-yellow);
-  }
-  #app-sidebar-vue.app-sidebar .app-sidebar-header__desc .app-sidebar-header__star .star--starred,
-  #app-sidebar.app-sidebar .app-sidebar-header__desc .app-sidebar-header__star .star--starred {
-    color: var(--color-icon-yellow);
-  }
-  #app-sidebar-vue.app-sidebar .app-sidebar-header__desc .app-sidebar-header__star .star--starred:hover,
-  #app-sidebar.app-sidebar .app-sidebar-header__desc .app-sidebar-header__star .star--starred:hover {
-    color: var(--color-main-text);
-  }
-  /* App Store ---------------------------------------------------------------- */
-  .app-settings #app-sidebar-vue .app-sidebar-header__figure {
-    filter: invert(5%);
-  }
   /* CodeMirror --------------------------------------------------------------- */
   .EasyMDEContainer .CodeMirror {
     background-color: var(--color-main-background);
@@ -597,11 +1294,6 @@
   .vue-treeselect--single .vue-treeselect__option--selected {
     background-color: var(--color-primary) !important;
   }
-  /* vue-checkboxes ----------------------------------------------------------- */
-  .checkbox-radio-switch:not(.checkbox-radio-switch--disabled) .checkbox-radio-switch__input:hover + .checkbox-radio-switch__label[data-v-5cec6b50],
-  .checkbox-radio-switch:not(.checkbox-radio-switch--disabled) .checkbox-radio-switch__input:focus + .checkbox-radio-switch__label[data-v-5cec6b50] {
-    background-color: var(--color-background-hover) !important;
-  }
   /* Template picker ---------------------------------------------------------- */
   .templates-picker__buttons {
     background-image: unset !important;
@@ -669,32 +1361,56 @@
   }
   /***
    * @copyright Copyright (c) 2020, Magnus Walbeck <mw@mwalbeck.org>
+   * @copyright Copyright (c) 2026 inkcurity.net
    *
    * @license GNU AGPL version 3 or any later version, see COPYING file for more.
    */
   /* Dashboard ---------------------------------------------------------------- */
   #app-dashboard {
     --color-background-translucent: var(--color-dashboard-grey) !important;
-    --color-main-background: var(--color-background-darker) !important;
   }
-  .background-selector .background.color {
-    background-color: var(--color-background-darker) !important;
+  #app-dashboard > h2 {
+    color: var(--ic-ink-hi);
+    font-weight: 500;
+    text-shadow: 0 0 40px rgba(var(--ic-splash-cyan-rgb), 0.25);
   }
-  .modal__content li label {
-    background-color: var(--color-main-background) !important;
-    border-color: var(--color-border) !important;
+  #app-dashboard .panel,
+  #app-dashboard .panels > div {
+    background-color: var(--ic-ink-deep) !important;
+    border: 1px solid var(--ic-ink-line) !important;
+    border-radius: var(--border-radius-container) !important;
+    backdrop-filter: none !important;
+    box-shadow: none !important;
+    transition: border-color var(--tr-dur-fade) var(--tr-ease-soft), box-shadow var(--tr-dur-fade) var(--tr-ease-soft);
   }
-  .modal__content li label:hover {
-    border-color: var(--color-primary-element) !important;
+  #app-dashboard .panel:hover, #app-dashboard .panel:focus-within,
+  #app-dashboard .panels > div:hover,
+  #app-dashboard .panels > div:focus-within {
+    border-color: rgba(var(--ic-splash-cyan-rgb), 0.3) !important;
+    box-shadow: 0 0 32px -8px rgba(var(--ic-splash-cyan-rgb), 0.4) !important;
   }
+  #app-dashboard .panel--header h2 {
+    color: var(--ic-ink-fg);
+  }
+  #app-dashboard .statuses .button-vue,
   #app-dashboard .footer .button-vue {
     border: unset !important;
   }
   #app-dashboard .user-status-menu-item__toggle--inline {
     box-shadow: none !important;
   }
+  .background-selector .background.color {
+    background-color: var(--ic-ink-raised) !important;
+  }
+  .modal__content li label {
+    background-color: var(--ic-ink-deep) !important;
+    border-color: var(--ic-ink-line) !important;
+  }
+  .modal__content li label:hover {
+    border-color: var(--ic-splash-cyan) !important;
+  }
   #status-weather .button-vue {
-    background-color: var(--color-main-background-blur) !important;
+    background-color: var(--ic-ink-raised) !important;
     border: unset !important;
   }
   #status-weather .button-vue:hover {
@@ -710,15 +1426,11 @@
   }
   /* Tasks */
   .center-button .button-vue--vue-secondary {
-    background-color: var(--color-background-darker) !important;
-    color: var(--color-main-text) !important;
+    background-color: var(--ic-ink-raised) !important;
+    color: var(--ic-ink-fg) !important;
   }
   .center-button .button-vue--vue-secondary:hover {
-    background-color: var(--color-background-hover) !important;
-  }
-  .center-button .button-vue--vue-secondary:active, .center-button .button-vue--vue-secondary:focus {
-    background-color: var(--color-primary-element) !important;
-    color: var(--color-primary-text) !important;
+    color: var(--ic-splash-cyan) !important;
   }
   /***
    * @copyright Copyright (c) 2017, Magnus Walbeck <mw@mwalbeck.org>
@@ -772,6 +1484,55 @@
   #filestable tbody tr:hover .filename form,
   table tr.mouseOver td {
     background-color: unset !important;
+  }
+  /* Files list (Nextcloud 28+) ------------------------------------------------ */
+  .files-list__thead {
+    background-color: var(--ic-ink-deep) !important;
+    border-bottom: 1px solid var(--ic-ink-line);
+  }
+  .files-list__thead .files-list__column,
+  .files-list__thead .files-list__column-sort-button,
+  .files-list__thead .files-list__column-sort-button .button-vue__text,
+  .files-list__thead .files-list__row-head {
+    font-family: var(--ic-font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: var(--ic-tracking-mono);
+    text-transform: uppercase;
+    color: var(--ic-ink-mute);
+  }
+  .files-list__thead .files-list__column-sort-button:hover .button-vue__text,
+  .files-list__thead .files-list__column-sort-button--active .button-vue__text {
+    color: var(--ic-splash-cyan) !important;
+  }
+  .files-list__row {
+    transition: background-color var(--tr-dur-fade) var(--tr-ease-soft);
+  }
+  .files-list__row:hover, .files-list__row:focus-within {
+    background-color: var(--color-background-hover) !important;
+  }
+  .files-list__row--active, .files-list__row--dragover, .files-list__row[aria-selected=true] {
+    background-color: var(--color-selected-blue) !important;
+  }
+  .files-list__row-size,
+  .files-list__row-mtime {
+    color: var(--ic-ink-mute) !important;
+    font-size: 13px;
+  }
+  .files-list__row-icon-favorite {
+    color: var(--ic-splash-lemon);
+    filter: drop-shadow(0 0 5px rgba(var(--ic-splash-lemon-rgb), 0.55));
+  }
+  .files-list__tfoot td {
+    color: var(--ic-ink-mute);
+    font-family: var(--ic-font-mono);
+    font-size: 12px;
+  }
+  .files-list__filters .button-vue {
+    box-shadow: none;
+  }
+  .breadcrumb__crumbs .button-vue {
+    font-weight: 500 !important;
   }
   /***
    * @copyright Copyright (c) 2021, Magnus Walbeck <mw@mwalbeck.org>
@@ -2782,5 +3543,3 @@
     background-color: unset;
   }
 }
-
-/*# sourceMappingURL=server-automatic.css.map */

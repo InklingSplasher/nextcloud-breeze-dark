@@ -18,9 +18,10 @@ Before production activation, test at least:
 - desktop and mobile layouts in current Firefox, Chromium and Safari/WebKit;
 - `occ integrity:check-core`, `occ setupchecks` and the Nextcloud log.
 
-This compatibility branch intentionally keeps the existing theme design and
-selector set. A broader CSS and implementation redesign belongs in a separate
-follow-up branch so compatibility fixes remain reviewable on their own.
+The Nextcloud 33/34 port kept the Breeze Dark design and selector set. The
+InkCurity Dark redesign builds on that port: the PHP integration is unchanged,
+the stylesheets were rewritten around `css/variables/_tokens.scss`. The visual
+regression matrix above applies to it as well.
 
 Nextcloud 34 compatibility is declared after updating the development API to
 OCP 34. Repeat the visual regression matrix after the core upgrade because core

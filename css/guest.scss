@@ -1,0 +1,331 @@
+/**
+ * =============================================================================
+ * InkCurity Dark for Nextcloud — guest and login pages
+ * Source code: https://github.com/InklingSplasher/nextcloud-breeze-dark
+ * Based on Breeze Dark by Magnus Walbeck. See AUTHORS.md
+ * =============================================================================
+ *
+ * @copyright Copyright (c) 2019, Magnus Walbeck <mw@mwalbeck.org>
+ * @copyright Copyright (c) 2026 inkcurity.net
+ *
+ * @license GNU AGPL version 3 or any later version
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
+@import "variables/tokens";
+
+// Guest pages never carry the theme attribute, so the tokens go on :root.
+:root {
+    @include ic-tokens;
+}
+
+/* Login screen: the signature moment ---------------------------------------- */
+
+#body-login {
+    color: var(--ic-ink-fg) !important;
+    background-color: var(--ic-ink-void) !important;
+    background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+        radial-gradient(
+            900px 620px at 18% 8%,
+            rgba(var(--ic-splash-cyan-rgb), 0.14),
+            transparent 62%
+        ),
+        radial-gradient(
+            720px 520px at 92% 96%,
+            rgba(var(--ic-splash-magenta-rgb), 0.07),
+            transparent 62%
+        ) !important;
+    background-size:
+        200px 200px,
+        auto,
+        auto !important;
+    background-repeat: repeat, no-repeat, no-repeat !important;
+    background-attachment: fixed !important;
+    caret-color: var(--ic-splash-cyan);
+
+    #header {
+        background-color: unset !important;
+
+        // The mark glows under the terminal lamp.
+        .logo {
+            filter: drop-shadow(0 0 28px rgba(var(--ic-splash-cyan-rgb), 0.35));
+        }
+    }
+
+    a,
+    p.info {
+        color: var(--ic-ink-fg) !important;
+    }
+
+    a:not(.button):not(.button-vue):hover,
+    a:not(.button):not(.button-vue):focus-visible {
+        color: var(--ic-splash-cyan) !important;
+        text-decoration-color: currentcolor;
+    }
+
+    :focus-visible {
+        outline-color: var(--ic-splash-cyan) !important;
+    }
+
+    /* The card ----------------------------------------------------------------- */
+
+    .login-box,
+    .guest-box,
+    .body-login-container {
+        --color-text-maxcontrast: var(--ic-ink-soft) !important;
+
+        color: var(--ic-ink-fg) !important;
+        background-color: var(--ic-ink-deep) !important;
+        border: 1px solid var(--ic-ink-line);
+        border-radius: var(--border-radius-container-large) !important;
+        box-shadow: var(--ic-glow-lg) !important;
+        -webkit-backdrop-filter: none !important;
+        backdrop-filter: none !important;
+    }
+
+    footer.guest-box {
+        background-color: transparent !important;
+        border: none;
+        box-shadow: none !important;
+    }
+
+    h2,
+    h3 {
+        color: var(--ic-ink-hi);
+        font-family: var(--ic-font-display);
+        letter-spacing: var(--ic-tracking-tight);
+    }
+
+    // The headline ends in the brand's blinking cursor.
+    .login-form__headline::after,
+    .login-box h2::after {
+        content: "▌" / "";
+        display: inline-block;
+        margin-inline-start: 0.12em;
+        color: var(--ic-splash-cyan);
+        animation: ic-blink 1s steps(1, end) infinite;
+    }
+
+    /* Fields ------------------------------------------------------------------ */
+
+    input[type="text"],
+    input[type="tel"],
+    input[type="password"],
+    input[type="email"],
+    .input-field__input {
+        background: var(--ic-ink-well) !important;
+        border: 1px solid var(--ic-ink-line-strong) !important;
+        border-radius: var(--border-radius-element) !important;
+        color: var(--ic-ink-fg) !important;
+        transition:
+            border-color var(--tr-dur-fade) var(--tr-ease-soft),
+            box-shadow var(--tr-dur-fade) var(--tr-ease-soft);
+
+        &::placeholder {
+            color: var(--ic-ink-mute);
+            opacity: 1;
+        }
+
+        &:hover:not(:focus) {
+            border-color: var(--ic-ink-soft) !important;
+        }
+
+        &:focus,
+        &:focus-visible {
+            border-color: var(--ic-splash-cyan) !important;
+            box-shadow: 0 0 0 3px rgba(var(--ic-splash-cyan-rgb), 0.18) !important;
+            outline: none;
+        }
+    }
+
+    .input-field__input:focus,
+    .input-field__input:focus-visible {
+        border-width: 1px !important;
+        padding-inline: calc(var(--default-grid-baseline) * 3 - 1px) !important;
+    }
+
+    .input-field__label {
+        color: var(--ic-ink-mute) !important;
+    }
+
+    .groupbottom input {
+        box-shadow: unset !important;
+    }
+
+    .toggle-password,
+    #email-icon {
+        filter: invert(95%);
+    }
+
+    .warning input[type="password"] {
+        border: 1px solid var(--ic-ink-line-strong);
+    }
+
+    .warning input[type="submit"] {
+        background-color: inherit !important;
+        border: unset !important;
+    }
+
+    /* Keys ------------------------------------------------------------------- */
+
+    input[type="submit"],
+    input[type="submit"].primary,
+    input[type="button"],
+    button.primary,
+    .button,
+    .button-vue {
+        border-radius: var(--border-radius-element) !important;
+        font-weight: 600;
+        transition:
+            background-color var(--tr-dur-fade) var(--tr-ease-soft),
+            color var(--tr-dur-fade) var(--tr-ease-soft),
+            border-color var(--tr-dur-fade) var(--tr-ease-soft),
+            box-shadow var(--tr-dur-fade) var(--tr-ease-soft),
+            transform var(--tr-dur-press) var(--tr-ease-soft);
+    }
+
+    // One cyan key: log in.
+    input[type="submit"].primary,
+    button.primary,
+    .button-vue--vue-primary {
+        background-color: var(--ic-splash-cyan) !important;
+        border: 1px solid transparent !important;
+        color: var(--ic-ink-void) !important;
+
+        &:hover:not(:disabled),
+        &:focus-visible:not(:disabled) {
+            background-color: var(--color-primary-element-hover) !important;
+            box-shadow: var(--ic-glow-sm) !important;
+        }
+
+        &:active:not(:disabled) {
+            background-color: #4cdacc !important;
+            box-shadow: none !important;
+            transform: scale(var(--tr-press-scale));
+        }
+    }
+
+    input[type="submit"]:not(.primary),
+    input[type="button"],
+    .button:not(.button-vue),
+    .button-vue--vue-secondary {
+        background-color: var(--ic-ink-raised) !important;
+        border: 1px solid var(--ic-ink-line) !important;
+        color: var(--ic-ink-fg) !important;
+
+        &:hover:not(:disabled),
+        &:focus-visible:not(:disabled) {
+            border-color: var(--ic-splash-cyan) !important;
+            color: var(--ic-splash-cyan) !important;
+        }
+    }
+
+    .button-vue--vue-tertiary:hover:not(:disabled) {
+        background-color: rgba(255, 255, 255, 0.06) !important;
+    }
+
+    input[type="submit"]:focus {
+        box-shadow: 0 0 0 3px rgba(var(--ic-splash-cyan-rgb), 0.18) !important;
+    }
+
+    .two-factor-provider {
+        background-color: var(--ic-ink-raised);
+        border: 1px solid var(--ic-ink-line);
+        border-radius: var(--border-radius-element);
+
+        &:hover,
+        &:focus,
+        &:active {
+            background-color: var(--ic-ink-raised);
+            border-color: var(--ic-splash-cyan) !important;
+        }
+    }
+
+    /* Footer: intentionally boring, with one redacted line ------------------- */
+
+    footer,
+    footer a,
+    footer p.info {
+        color: var(--ic-ink-mute) !important;
+        font-family: var(--ic-font-mono);
+        font-size: 12px;
+    }
+
+    footer .info .entity-name {
+        color: var(--ic-ink-fg) !important;
+    }
+
+    footer::before {
+        content: "███ █ ████ ██ ███████ █ ██" / "";
+        display: block;
+        margin-bottom: 8px;
+        color: var(--ic-ink-line-strong);
+        font-family: var(--ic-font-mono);
+        font-size: 11px;
+        letter-spacing: 0.06em;
+    }
+}
+
+@keyframes ic-blink {
+    50% {
+        opacity: 0;
+    }
+}
+
+/* SAML login ------------------------------------------------------------------- */
+
+#saml-select-user-back-end {
+    box-sizing: border-box;
+    margin: 0 auto;
+    width: 260px;
+
+    .login-option {
+        background-color: var(--ic-ink-raised);
+        border: 1px solid var(--ic-ink-line);
+        border-radius: var(--border-radius-element);
+        box-sizing: border-box;
+        height: 50px;
+        min-width: 260px;
+
+        &:hover {
+            border-color: var(--ic-splash-cyan);
+        }
+
+        a {
+            line-height: 50px;
+        }
+
+        a:hover {
+            color: var(--ic-splash-cyan);
+            text-decoration: none;
+        }
+    }
+}
+
+/* Reduced motion ----------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+    #body-login .login-form__headline::after,
+    #body-login .login-box h2::after {
+        animation: none;
+    }
+
+    #body-login .button-vue--vue-primary:active:not(:disabled),
+    #body-login button.primary:active:not(:disabled) {
+        transform: none;
+    }
+}

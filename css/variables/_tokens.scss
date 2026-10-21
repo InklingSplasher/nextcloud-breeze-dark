@@ -1,0 +1,256 @@
+/***
+ * InkCurity Dark — design tokens
+ *
+ * Ink scale, splash accents, glows and radii come from the InkCurity design
+ * system ("wet ink on a CRT"). Motion curves, press feedback and the hairline
+ * rules come from Trumpf ("Ruhe zuerst"). Everything is mapped onto the
+ * Nextcloud theming variables so core and every app follow along.
+ *
+ * The mixin is included once for logged-in pages ([data-themes*="breezedark"])
+ * and once on :root for the guest/login pages, which never carry the theme
+ * attribute.
+ *
+ * @copyright Copyright (c) 2019, Magnus Walbeck <mw@mwalbeck.org>
+ * @copyright Copyright (c) 2026 inkcurity.net
+ *
+ * @license GNU AGPL version 3 or any later version, see COPYING file for more.
+ */
+
+@mixin ic-tokens {
+    /* Ink scale ------------------------------------------------------------- */
+
+    --ic-ink-void: #02060f; // page: deep ocean black, never flat #000
+    --ic-ink-well: #050e1d; // sunk surface: inputs, navigation column
+    --ic-ink-deep: #08152b; // primary surface: content, cards, modals
+    --ic-ink-hover: #11213a; // hover fill on deep
+    --ic-ink-raised: #12253f; // raised: popovers, secondary buttons, pills
+    --ic-ink-line: #1f3a5e; // hairline border, 1px, never thicker
+    --ic-ink-line-strong: #335580; // emphasised border: inputs, checkbox edge
+    --ic-ink-mute: #6a8ab0; // mono labels and meta, 5.10:1 on deep
+    --ic-ink-soft: #7a9ac0; // secondary text, 6.26:1 on deep, 5.29:1 on raised
+    --ic-ink-fg: #dce5f2; // primary text, 14.35:1 on deep
+    --ic-ink-hi: #ffffff; // headlines
+
+    /* Splash accents --------------------------------------------------------- */
+
+    --ic-splash-cyan: #4fe3d4; // the accent: links, focus, primary key, glow
+    --ic-splash-cyan-rgb: 79, 227, 212;
+    --ic-splash-magenta: #ff3d8e; // guest star: one magenta thing per screen
+    --ic-splash-magenta-rgb: 255, 61, 142;
+    --ic-splash-lemon: #f8e16c; // punctuation mark: favourites, warnings
+    --ic-splash-lemon-rgb: 248, 225, 108;
+    --ic-ok: #4ade80;
+    --ic-ok-rgb: 74, 222, 128;
+    --ic-danger: #ff5577;
+    --ic-danger-rgb: 255, 85, 119;
+
+    /* Logo colours: only ever inside the mark, never as UI colours ------------ */
+
+    --ic-logo-blue: #2563eb;
+    --ic-logo-pink: #ec4899;
+    --ic-logo-steel: #8b94a7;
+
+    /* Glows replace drop-shadows on dark surfaces ----------------------------- */
+
+    --ic-glow-sm:
+        0 0 24px -2px rgba(var(--ic-splash-cyan-rgb), 0.55),
+        0 0 48px -8px rgba(var(--ic-splash-cyan-rgb), 0.3);
+    --ic-glow-md:
+        0 0 40px -4px rgba(var(--ic-splash-cyan-rgb), 0.65),
+        0 0 80px -16px rgba(var(--ic-splash-cyan-rgb), 0.35),
+        0 0 0 1px rgba(var(--ic-splash-cyan-rgb), 0.15);
+    --ic-glow-lg:
+        0 24px 70px -12px rgba(var(--ic-splash-cyan-rgb), 0.45),
+        0 0 120px -24px rgba(var(--ic-splash-cyan-rgb), 0.35),
+        0 0 0 1px rgba(var(--ic-splash-cyan-rgb), 0.18);
+    --ic-elevation:
+        0 0 0 1px var(--ic-ink-line), 0 24px 60px -24px rgba(var(--ic-splash-cyan-rgb), 0.25);
+    --ic-scrim: rgba(2, 6, 15, 0.72); // modal scrim, no blur: the page feels removed
+
+    /* Type: no webfonts, no third-party requests ----------------------------- */
+
+    --ic-font-display:
+        "Space Grotesk", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --ic-font-mono:
+        "JetBrains Mono", ui-monospace, "Cascadia Mono", "SF Mono", Menlo, Consolas, monospace;
+    --ic-tracking-mono: 0.16em;
+    --ic-tracking-tight: -0.02em;
+
+    /* Motion: Trumpf curves, InkCurity ease ---------------------------------- */
+
+    --tr-ease-ios: cubic-bezier(0.32, 0.72, 0, 1); // space: anything that moves place
+    --tr-ease-soft: cubic-bezier(0.22, 1, 0.36, 1); // feedback: press, fade, colour
+    --ic-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+    --tr-dur-press: 180ms;
+    --tr-dur-fade: 200ms;
+    --tr-dur-control: 300ms;
+    --tr-dur-push: 420ms;
+    --tr-press-scale: 0.97;
+
+    /* Nextcloud: surfaces ---------------------------------------------------- */
+
+    --color-main-background: var(--ic-ink-deep) !important;
+    --color-main-background-rgb: 8, 21, 43 !important;
+    --color-main-background-translucent: rgba(var(--color-main-background-rgb), 0.97) !important;
+    --color-main-background-blur: rgba(var(--color-main-background-rgb), 0.85) !important;
+    --gradient-main-background:
+        var(--color-main-background) 0%, var(--color-main-background-translucent) 85%,
+        transparent 100% !important;
+    --color-background-hover: var(--ic-ink-hover) !important;
+    --color-background-dark: var(--ic-ink-raised) !important;
+    --color-background-darker: var(--ic-ink-line) !important;
+    --color-background-translucent: rgba(var(--color-main-background-rgb), 0.85) !important;
+    --color-placeholder-light: var(--ic-ink-raised) !important;
+    --color-placeholder-dark: var(--ic-ink-line) !important;
+
+    // The void behind the content container. The theme owns the backdrop: the
+    // bloom and the grain are drawn in server/_signature.scss and guest.scss.
+    --color-background-plain: var(--ic-ink-void) !important;
+    --color-background-plain-text: var(--ic-ink-fg) !important;
+    --image-background: none !important;
+    --background-image-invert-if-bright: no !important;
+    --background-invert-if-dark: invert(100%) !important;
+    --background-invert-if-bright: no !important;
+
+    /* Nextcloud: text -------------------------------------------------------- */
+
+    --color-main-text: var(--ic-ink-fg) !important;
+    --color-text-maxcontrast: var(--ic-ink-soft) !important;
+    --color-text-maxcontrast-default: var(--ic-ink-soft) !important;
+    --color-text-maxcontrast-background-blur: #86a4c8 !important;
+    --color-text-light: var(--ic-ink-fg) !important;
+    --color-text-lighter: var(--ic-ink-soft) !important;
+    --color-text-dark: var(--ic-ink-void) !important;
+    --color-text-error: #ff6f8c !important;
+    --color-text-success: #6ae698 !important;
+    --color-background-selection: var(--ic-splash-cyan) !important;
+    --color-text-selection: var(--ic-ink-void) !important;
+
+    /* Nextcloud: borders ----------------------------------------------------- */
+
+    --color-border: var(--ic-ink-line) !important;
+    --color-border-dark: var(--ic-ink-line-strong) !important;
+    --color-border-maxcontrast: #5579a6 !important;
+    --color-border-error: var(--ic-danger) !important;
+    --color-border-success: var(--ic-ok) !important;
+    --border-width-input: 1px !important;
+    --border-width-input-focused: 1px !important;
+
+    /* Nextcloud: primary is cyan, text on it is the void --------------------- */
+
+    --color-primary: var(--ic-splash-cyan) !important;
+    --color-primary-default: var(--ic-splash-cyan) !important;
+    --color-primary-text: var(--ic-ink-void) !important;
+    --color-primary-hover: #339190 !important;
+    --color-primary-light: #0f2a3c !important;
+    --color-primary-light-hover: #133646 !important;
+    --color-primary-light-text: var(--ic-splash-cyan) !important;
+    --color-primary-element: var(--ic-splash-cyan) !important;
+    --color-primary-element-default-hover: #5ae5d7 !important;
+    --color-primary-element-hover: #5ae5d7 !important;
+    --color-primary-element-text: var(--ic-ink-void) !important;
+    --color-primary-element-text-dark: #000000 !important;
+    --color-primary-element-light: var(--color-primary-light) !important;
+    --color-primary-element-light-hover: var(--color-primary-light-hover) !important;
+    --color-primary-element-light-text: var(--color-primary-light-text) !important;
+    --primary-invert-if-bright: invert(100%) !important;
+    --primary-invert-if-dark: no !important;
+    --gradient-primary-background: linear-gradient(
+        40deg,
+        var(--ic-splash-cyan) 0%,
+        var(--color-primary-hover) 100%
+    ) !important;
+
+    /* Nextcloud: feedback. The element colour carries the meaning, the wash is
+       the tone at 18% over ink-deep, the text passes 9:1 on the wash. --------- */
+
+    --color-error: #342139 !important;
+    --color-error-hover: #48263f !important;
+    --color-error-text: #ffc9d3 !important;
+    --color-error-rgb: 52, 33, 57 !important;
+    --color-element-error: var(--ic-danger) !important;
+    --color-warning: #333a37 !important;
+    --color-warning-hover: #464a3c !important;
+    --color-warning-text: #fbeeb0 !important;
+    --color-warning-rgb: 51, 58, 55 !important;
+    --color-element-warning: var(--ic-splash-lemon) !important;
+    --color-success: #14393a !important;
+    --color-success-hover: #194941 !important;
+    --color-success-text: #c6f5d6 !important;
+    --color-success-rgb: 20, 57, 58 !important;
+    --color-element-success: var(--ic-ok) !important;
+    --color-info: #153a49 !important;
+    --color-info-hover: #1a4b57 !important;
+    --color-info-text: #bdf4ee !important;
+    --color-info-rgb: 21, 58, 73 !important;
+    --color-element-info: var(--ic-splash-cyan) !important;
+    --color-neutral: var(--ic-splash-lemon) !important;
+    --color-favorite: var(--ic-splash-lemon) !important;
+    --color-mark: #50523e !important;
+
+    /* Nextcloud: assistant (AI generated content) stays inside the palette -- */
+
+    --color-background-assistant: #0d1a36 !important;
+    --color-border-assistant: linear-gradient(
+        125deg,
+        var(--ic-splash-cyan) 50%,
+        var(--ic-splash-magenta) 125%
+    ) !important;
+    --color-element-assistant: linear-gradient(
+        214deg,
+        var(--ic-splash-cyan) 12%,
+        var(--ic-logo-blue) 39%,
+        var(--ic-splash-magenta) 86%
+    ) !important;
+    --color-element-assistant-icon: linear-gradient(
+        214deg,
+        var(--ic-splash-cyan) 15%,
+        var(--ic-logo-blue) 40%,
+        var(--ic-splash-magenta) 80%
+    ) !important;
+
+    /* Nextcloud: loading, scrollbar, shadow ---------------------------------- */
+
+    --color-loading-light: var(--ic-ink-line-strong) !important;
+    --color-loading-dark: var(--ic-ink-fg) !important;
+    --color-scrollbar: var(--ic-ink-line-strong) transparent !important;
+    --color-box-shadow-rgb: 2, 6, 15 !important;
+    --color-box-shadow: rgba(var(--color-box-shadow-rgb), 0.6) !important;
+
+    /* Nextcloud: shape. Keys, not lozenges. ---------------------------------- */
+
+    --border-radius-small: 6px !important; // chips, tags, inline code
+    --border-radius-element: 10px !important; // buttons, inputs, list entries
+    --border-radius-container: 14px !important; // cards, menus, toasts
+    --border-radius-container-large: 20px !important; // body, modals, login card
+    --border-radius: 6px !important;
+    --border-radius-large: 10px !important;
+    --border-radius-rounded: 20px !important;
+    --border-radius-pill: 999px !important; // meta pills only
+    --body-container-radius: 20px !important;
+    --body-container-margin: 12px !important; // tight outside, calm inside
+
+    /* Nextcloud: motion ------------------------------------------------------ */
+
+    --animation-quick: var(--tr-dur-press) !important;
+    --animation-slow: 320ms !important;
+
+    /* Aliases kept for the per-app partials ---------------------------------- */
+
+    --color-text-link: var(--ic-splash-cyan) !important;
+    --color-text-inactive: var(--ic-ink-soft) !important;
+    --color-icon: var(--ic-ink-fg) !important;
+    --color-icon-yellow: var(--ic-splash-lemon) !important;
+    --color-selected-blue: rgba(var(--ic-splash-cyan-rgb), 0.18) !important;
+    --color-dashboard-grey: rgba(var(--color-main-background-rgb), 0.85) !important;
+    --color-border-grey: var(--ic-ink-line) !important;
+    --color-hover-blue: var(--ic-ink-hover) !important;
+
+    // Markdown tables
+    --table-color-border: var(--ic-ink-line) !important;
+    --table-color-heading: var(--ic-ink-hi) !important;
+    --table-color-heading-border: var(--ic-ink-line-strong) !important;
+    --table-color-background: var(--ic-ink-deep) !important;
+    --table-color-background-hover: var(--ic-ink-hover) !important;
+    --table-border-radius: var(--border-radius-element) !important;
+}

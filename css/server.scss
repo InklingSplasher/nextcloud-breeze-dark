@@ -1,11 +1,13 @@
 /**
  * =============================================================================
- * Breeze Dark for Nextcloud
- * Source code: https://github.com/mwalbeck/nextcloud-breeze-dark
- * Made with the help of contributors! See AUTHORS.md
+ * InkCurity Dark for Nextcloud
+ * Source code: https://github.com/InklingSplasher/nextcloud-breeze-dark
+ * Based on Breeze Dark by Magnus Walbeck, made with the help of contributors.
+ * See AUTHORS.md
  * =============================================================================
- * 
+ *
  * @copyright Copyright (C) 2017  Magnus Walbeck <mw@mwalbeck.org>
+ * @copyright Copyright (C) 2026 inkcurity.net
  *
  * @author Magnus Walbeck <mw@mwalbeck.org>
  * 
@@ -26,9 +28,16 @@
  * 
  */
 
+// Tokens: included on the theme root. Guest pages include them on :root instead.
+@import "variables/tokens";
+
+[data-themes*="breezedark"] {
+    @include ic-tokens;
+}
+
 // General and Nextcloud Core
-@import "variables/color-variables";
 @import "base/elements";
+@import "server/signature";
 @import "server/server";
 @import "apps/apps";
 @import "server/icons";

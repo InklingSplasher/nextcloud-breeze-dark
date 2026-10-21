@@ -89,3 +89,68 @@ table tr.mouseOver {
 table tr.mouseOver td {
     background-color: unset !important;
 }
+
+/* Files list (Nextcloud 28+) ------------------------------------------------ */
+
+// Column headers read like terminal tags, dates and sizes sit in tabular mono.
+.files-list__thead {
+    background-color: var(--ic-ink-deep) !important;
+    border-bottom: 1px solid var(--ic-ink-line);
+
+    .files-list__column,
+    .files-list__column-sort-button,
+    .files-list__column-sort-button .button-vue__text,
+    .files-list__row-head {
+        font-family: var(--ic-font-mono);
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: var(--ic-tracking-mono);
+        text-transform: uppercase;
+        color: var(--ic-ink-mute);
+    }
+
+    .files-list__column-sort-button:hover .button-vue__text,
+    .files-list__column-sort-button--active .button-vue__text {
+        color: var(--ic-splash-cyan) !important;
+    }
+}
+
+.files-list__row {
+    transition: background-color var(--tr-dur-fade) var(--tr-ease-soft);
+
+    &:hover,
+    &:focus-within {
+        background-color: var(--color-background-hover) !important;
+    }
+
+    &--active,
+    &--dragover,
+    &[aria-selected="true"] {
+        background-color: var(--color-selected-blue) !important;
+    }
+}
+
+.files-list__row-size,
+.files-list__row-mtime {
+    color: var(--ic-ink-mute) !important;
+    font-size: 13px;
+}
+
+.files-list__row-icon-favorite {
+    color: var(--ic-splash-lemon);
+    filter: drop-shadow(0 0 5px rgba(var(--ic-splash-lemon-rgb), 0.55));
+}
+
+.files-list__tfoot td {
+    color: var(--ic-ink-mute);
+    font-family: var(--ic-font-mono);
+    font-size: 12px;
+}
+
+.files-list__filters .button-vue {
+    box-shadow: none;
+}
+
+.breadcrumb__crumbs .button-vue {
+    font-weight: 500 !important;
+}
