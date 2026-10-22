@@ -89,3 +89,74 @@ table tr.mouseOver {
 table tr.mouseOver td {
     background-color: unset !important;
 }
+
+/* Files list (Nextcloud 28+): a Trumpf list ------------------------------------ */
+
+// Column heads read like section headers: sentence case, 13 px medium, soft.
+.files-list__thead {
+    background-color: var(--tr-surface) !important;
+
+    .files-list__column,
+    .files-list__column-sort-button,
+    .files-list__column-sort-button-text,
+    .files-list__row-head {
+        color: var(--tr-ink-soft);
+        font-size: 13px;
+        font-weight: 500;
+    }
+
+    .files-list__column-sort-button--active,
+    .files-list__column-sort-button--active .files-list__column-sort-button-text {
+        color: var(--tr-accent-text) !important;
+        font-weight: 600;
+    }
+}
+
+.files-list__row {
+    transition: background-color var(--tr-dur-release) var(--tr-ease-soft);
+
+    &:hover,
+    &:focus-within {
+        background-color: rgba(255, 255, 255, 0.05) !important;
+    }
+
+    &:active {
+        background-color: rgba(255, 255, 255, 0.1) !important;
+        transition-duration: 0ms;
+    }
+
+    &--active,
+    &--dragover,
+    &[data-cy-files-list-row-selected="true"] {
+        background-color: color-mix(in srgb, var(--tr-accent) 18%, transparent) !important;
+    }
+}
+
+.files-list__row td,
+.files-list__row-head {
+    border-color: color-mix(in srgb, var(--tr-border) 60%, transparent) !important;
+}
+
+.files-list__row-size,
+.files-list__row-mtime {
+    color: var(--tr-ink-soft) !important;
+}
+
+// Favourites in gold: the medal colour, not a warning.
+.files-list__row-icon-favorite {
+    color: var(--tr-gold) !important;
+}
+
+.files-list__row-icon-preview {
+    border-radius: var(--tr-radius-tile);
+}
+
+.files-list__tfoot td {
+    color: var(--tr-ink-soft);
+}
+
+// The "new" button and the filter strip read like Trumpf chips.
+.files-list__filters .button-vue,
+.files-list__header .button-vue--secondary {
+    font-size: 13px;
+}

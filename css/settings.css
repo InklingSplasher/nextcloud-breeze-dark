@@ -1,27 +1,443 @@
-.preview-list {
-    display: flex;
-    flex-direction: column;
-    max-width: 800px;
+/**
+ * InkCurity Dark — the theme's own settings pages as a Trumpf hub
+ *
+ * Self-contained: these pages are often opened while the theme is still off,
+ * so neutral surfaces come from Nextcloud's own variables and only the brand
+ * colours are fixed. Hero card, grouped toggle rows with tinted tiles, a
+ * tilted preview card and the signature line.
+ *
+ * @copyright Copyright (c) 2020, Magnus Walbeck <mw@mwalbeck.org>
+ * @copyright Copyright (c) 2026 inkcurity.net
+ *
+ * @license GNU AGPL version 3 or any later version, see COPYING file for more.
+ */
+
+#breezedark.tr-hub {
+    --hub-accent: #336deb;
+    --hub-accent-text: var(--tr-accent-text, #336deb);
+    --hub-success: #30d158;
+    --hub-pink: #ec4899;
+    --hub-ease-ios: cubic-bezier(0.32, 0.72, 0, 1);
+    --hub-ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+    --hub-ease-spring: cubic-bezier(0.34, 1.45, 0.64, 1);
+    --hub-group: var(--color-background-dark);
+    --hub-hairline: color-mix(in srgb, var(--color-border-dark, #888) 70%, transparent);
+
+    max-width: 640px;
 }
 
-.preview {
-    display: flex;
-    justify-content: flex-start;
-    margin-top: 3em;
+/* Hero card --------------------------------------------------------------- */
+
+#breezedark .tr-hero {
     position: relative;
+    overflow: hidden;
+    padding: 16px;
+    border-radius: 18px;
+    background: linear-gradient(
+        to bottom right,
+        var(--hub-accent),
+        color-mix(in srgb, var(--hub-accent) 72%, #121935)
+    );
+    box-shadow: 0 12px 32px rgba(3, 6, 20, 0.35);
+    color: #ffffff;
 }
 
-.preview .preview-image {
-    background-position: top left;
-    background-repeat: no-repeat;
-    background-size: cover;
-    border-radius: var(--border-radius);
-    flex-basis: 200px;
-    flex-shrink: 0;
-    margin-right: 1em;
+#breezedark .tr-hero__mark {
+    position: absolute;
+    color: rgba(255, 255, 255, 0.12);
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-weight: 700;
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
 }
 
-.preview .preview-description {
+#breezedark .tr-hero__mark--a {
+    top: -18px;
+    right: -6px;
+    font-size: 96px;
+    letter-spacing: -0.05em;
+}
+
+#breezedark .tr-hero__mark--b {
+    right: 96px;
+    bottom: -30px;
+    color: rgba(255, 255, 255, 0.08);
+    font-size: 72px;
+}
+
+#breezedark .tr-hero__head {
+    position: relative;
     display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+#breezedark .tr-hero__icon {
+    display: block;
+    flex-shrink: 0;
+    width: 52px;
+    height: 52px;
+    border-radius: 13px;
+    box-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.25),
+        0 0 0 1px rgba(255, 255, 255, 0.3);
+    transform: rotate(-6deg);
+}
+
+#breezedark .tr-hero__title {
+    margin: 0;
+    padding: 0;
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 25px;
+    letter-spacing: -0.01em;
+}
+
+#breezedark .tr-hero__subtitle {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 13px;
+    line-height: 18px;
+    font-variant-numeric: tabular-nums;
+}
+
+/* The most important row sits in the card as frosted glass. */
+#breezedark .tr-hero__row {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 16px;
+    padding: 10px 12px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.16);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+    cursor: pointer;
+    transition: background-color 220ms var(--hub-ease-soft);
+}
+
+#breezedark .tr-hero__row:active {
+    background: rgba(255, 255, 255, 0.25);
+    transition-duration: 0ms;
+}
+
+#breezedark .tr-hero__disc {
+    display: grid;
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    place-items: center;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.25);
+}
+
+#breezedark .tr-hero__who {
+    display: flex;
+    flex: 1;
+    min-width: 0;
     flex-direction: column;
+}
+
+#breezedark .tr-hero__name {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 21px;
+}
+
+#breezedark .tr-hero__handle {
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 13px;
+    line-height: 18px;
+}
+
+/* Grouped list ------------------------------------------------------------ */
+
+#breezedark .tr-section__title {
+    margin: 28px 16px 6px;
+    padding: 0;
+    color: var(--color-text-maxcontrast);
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 18px;
+}
+
+#breezedark .tr-section__group {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    list-style: none;
+    border-radius: 14px;
+    background: var(--hub-group);
+}
+
+#breezedark .tr-section__group--padded {
+    padding: 14px 16px 16px;
+}
+
+#breezedark .tr-section__group > li + li .tr-row::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 60px;
+    height: 1px;
+    background: var(--hub-hairline);
+    transform: scaleY(0.5);
+    transform-origin: top;
+}
+
+#breezedark .tr-section__foot {
+    margin: 6px 16px 0;
+    color: var(--color-text-maxcontrast);
+    font-size: 13px;
+    line-height: 18px;
+}
+
+#breezedark .tr-row {
+    position: relative;
+    display: flex;
+    min-height: 44px;
+    box-sizing: border-box;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 16px;
+    cursor: pointer;
+    transition: background-color 220ms var(--hub-ease-soft);
+}
+
+#breezedark .tr-row:hover {
+    background: color-mix(in srgb, var(--color-main-text) 6%, transparent);
+}
+
+#breezedark .tr-row:active {
+    background: color-mix(in srgb, var(--color-main-text) 12%, transparent);
+    transition-duration: 0ms;
+}
+
+#breezedark .tr-row:has(.tr-switch:disabled) {
+    cursor: default;
+}
+
+#breezedark .tr-row:has(.tr-switch:disabled) .tr-row__title {
+    opacity: 0.55;
+}
+
+#breezedark .tr-row__text {
+    display: flex;
+    flex: 1;
+    min-width: 0;
+    flex-direction: column;
+}
+
+#breezedark .tr-row__title {
+    color: var(--color-main-text);
+    font-size: 15px;
+    line-height: 20px;
+}
+
+#breezedark .tr-row__subtitle {
+    margin-top: 2px;
+    color: var(--color-text-maxcontrast);
+    font-size: 13px;
+    line-height: 18px;
+}
+
+/* Tinted tiles: the accent at a wash, the symbol in the accent. */
+#breezedark .tr-tile {
+    display: grid;
+    flex-shrink: 0;
+    width: 30px;
+    height: 30px;
+    place-items: center;
+    border-radius: 7px;
+    background: color-mix(in srgb, var(--hub-accent) 18%, transparent);
+    color: var(--hub-accent-text);
+}
+
+#breezedark .tr-field-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+    color: var(--color-text-maxcontrast);
+    font-size: 13px;
+}
+
+/* Switch: iOS geometry, success green when on ----------------------------- */
+
+#breezedark input.tr-switch {
+    position: relative;
+    flex-shrink: 0;
+    width: 51px;
+    min-width: 51px;
+    height: 31px;
+    min-height: 31px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--color-main-text) 22%, transparent);
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    transition: background-color 300ms var(--hub-ease-soft);
+}
+
+#breezedark input.tr-switch::before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 27px;
+    height: 27px;
+    border-radius: 999px;
+    background: #ffffff;
+    box-shadow:
+        0 3px 8px rgba(0, 0, 0, 0.15),
+        0 3px 1px rgba(0, 0, 0, 0.06);
+    transition:
+        transform 300ms var(--hub-ease-soft),
+        width 300ms var(--hub-ease-soft);
+}
+
+#breezedark input.tr-switch:active:not(:disabled)::before {
+    width: 34px;
+}
+
+#breezedark input.tr-switch:checked {
+    background: var(--hub-success);
+}
+
+#breezedark input.tr-switch:checked::before {
+    transform: translateX(20px);
+}
+
+#breezedark input.tr-switch:checked:active:not(:disabled)::before {
+    transform: translateX(13px);
+}
+
+#breezedark input.tr-switch:disabled {
+    cursor: default;
+    opacity: 0.5;
+}
+
+#breezedark input.tr-switch:focus-visible {
+    outline: 2px solid var(--hub-accent-text);
+    outline-offset: 2px;
+}
+
+#breezedark .tr-hero input.tr-switch:not(:checked) {
+    background: rgba(255, 255, 255, 0.28);
+}
+
+#breezedark .tr-hero input.tr-switch:focus-visible {
+    outline-color: #ffffff;
+}
+
+/* Custom CSS field and the one filled button ------------------------------ */
+
+#breezedark .breezedark-custom-styling {
+    display: block;
+    width: 100%;
+    min-height: 180px;
+    box-sizing: border-box;
+    padding: 12px;
+    border-radius: 12px;
+    font-family: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+    font-size: 13px;
+    line-height: 1.5;
+    resize: vertical;
+}
+
+#breezedark .tr-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 12px;
+}
+
+#breezedark .tr-button {
+    min-height: 34px;
+    padding: 0 18px;
+    border: 0;
+    border-radius: 999px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition:
+        transform 180ms var(--hub-ease-soft),
+        filter 200ms var(--hub-ease-soft);
+}
+
+#breezedark .tr-button--filled {
+    background: var(--hub-accent) !important;
+    color: #ffffff !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+#breezedark .tr-button--filled:hover {
+    filter: brightness(1.08);
+}
+
+#breezedark .tr-button:active {
+    opacity: 0.85;
+    transform: scale(0.97);
+}
+
+/* Preview: the theme as an identity card, leaning -6° -------------------- */
+
+#breezedark .tr-preview {
+    display: flex;
+    justify-content: center;
+    padding: 28px 16px 20px;
+    border-radius: 14px;
+    background: radial-gradient(
+        120% 120% at 20% 0%,
+        color-mix(in srgb, var(--hub-accent) 28%, transparent),
+        transparent 70%
+    );
+}
+
+#breezedark .tr-preview__card {
+    display: block;
+    width: min(100%, 420px);
+    height: auto;
+    border-radius: 14px;
+    box-shadow:
+        0 18px 40px color-mix(in srgb, var(--hub-accent) 40%, transparent),
+        0 4px 12px color-mix(in srgb, var(--hub-pink) 22%, transparent),
+        0 0 0 1px rgba(255, 255, 255, 0.12);
+    transform: rotate(-6deg);
+    transition: transform 460ms var(--hub-ease-spring);
+}
+
+#breezedark .tr-preview:hover .tr-preview__card {
+    transform: rotate(-3deg) scale(1.01);
+}
+
+/* Signature line ------------------------------------------------------------ */
+
+#breezedark .tr-signature {
+    margin: 0;
+    padding-top: 32px;
+    color: var(--color-text-maxcontrast);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-align: center;
+    text-transform: uppercase;
+    opacity: 0.8;
+}
+
+#breezedark .tr-icon {
+    display: block;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #breezedark *,
+    #breezedark *::before {
+        transition: none !important;
+    }
 }

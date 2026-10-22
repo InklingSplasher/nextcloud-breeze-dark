@@ -1,11 +1,14 @@
+@charset "UTF-8";
 /**
  * =============================================================================
- * Breeze Dark for Nextcloud
- * Source code: https://github.com/mwalbeck/nextcloud-breeze-dark
- * Made with the help of contributors! See AUTHORS.md
+ * InkCurity Dark for Nextcloud
+ * Source code: https://github.com/InklingSplasher/nextcloud-breeze-dark
+ * Based on Breeze Dark by Magnus Walbeck, made with the help of contributors.
+ * See AUTHORS.md
  * =============================================================================
- * 
+ *
  * @copyright Copyright (C) 2017  Magnus Walbeck <mw@mwalbeck.org>
+ * @copyright Copyright (C) 2026 inkcurity.net
  *
  * @author Magnus Walbeck <mw@mwalbeck.org>
  * 
@@ -32,12 +35,14 @@
 @media (prefers-color-scheme: dark) {
   /**
    * =============================================================================
-   * Breeze Dark for Nextcloud
-   * Source code: https://github.com/mwalbeck/nextcloud-breeze-dark
-   * Made with the help of contributors! See AUTHORS.md
+   * InkCurity Dark for Nextcloud
+   * Source code: https://github.com/InklingSplasher/nextcloud-breeze-dark
+   * Based on Breeze Dark by Magnus Walbeck, made with the help of contributors.
+   * See AUTHORS.md
    * =============================================================================
-   * 
+   *
    * @copyright Copyright (C) 2017  Magnus Walbeck <mw@mwalbeck.org>
+   * @copyright Copyright (C) 2026 inkcurity.net
    *
    * @author Magnus Walbeck <mw@mwalbeck.org>
    * 
@@ -58,474 +63,1841 @@
    * 
    */
   /***
+   * InkCurity Dark — design tokens, Trumpf edition
+   *
+   * Structure and manners come from Trumpf: page, bg, surface and inset as the
+   * four surfaces, one accent that tints buttons, selection and tiles, success
+   * green for switches, identity colours, two motion curves. The palette is a
+   * lifted dusk blue instead of black, and the accent changes with the app:
+   * Files and the hub pages wear the logo blue, Photos coral, Talk mint,
+   * Calendar red, Contacts orchid, Mail sky, Deck and Notes gold.
+   *
+   * Every pairing below was checked for contrast (see the PR): text on fills
+   * and on tinted washes reaches 4.5:1, the default blue fill reaches 3:1
+   * against the surface.
+   *
    * @copyright Copyright (c) 2019, Magnus Walbeck <mw@mwalbeck.org>
+   * @copyright Copyright (c) 2026 inkcurity.net
    *
    * @license GNU AGPL version 3 or any later version, see COPYING file for more.
    */
+  /* Accents --------------------------------------------------------------------
+   * fill, text on fill, filled hover, tinted wash, wash on hover, text on the
+   * wash, accent text on dark surfaces, icon flip on the fill. */
+  /* Everything else -------------------------------------------------------------- */
   [data-themes*=breezedark] {
-    --color-paper-white: rgba(252, 252, 252, 1);
-    --color-cardboard-gray: rgba(239, 240, 241, 1);
-    --color-icon-gray: rgba(77, 77, 77, 1);
-    --color-charcoal-gray: rgba(49, 54, 59, 1);
-    --color-shade-black: rgba(35, 38, 41, 1);
-    --color-plasma-blue: rgba(61, 174, 233, 1);
-    --color-icon-red: rgba(218, 68, 83, 1);
-    --color-danger-red: rgba(237, 21, 21, 1);
-    --color-beware-orange: rgba(246, 116, 0, 1);
-    --color-icon-yellow: rgba(253, 188, 75, 1);
-    --color-sunbeam-yellow: rgba(201, 206, 59, 1);
-    --color-verdant-green: rgba(17, 209, 22, 1);
-    --color-icon-blue: rgba(29, 153, 243, 1);
-    --color-noble-fir: rgba(39, 174, 96, 1);
-    --color-abyss-blue: rgba(41, 128, 185, 1);
-    --color-coastal-fog: rgba(127, 140, 141, 1);
-    --color-alternate-gray: rgba(189, 195, 199, 1);
-    --color-hover-blue: rgba(61, 174, 233, 0.3);
-    --color-border-grey: rgba(103, 107, 110, 1);
-    --color-dashboard-grey: rgba(49, 54, 59, 0.8);
-    --color-selected-blue: rgba(61, 174, 233, 0.4);
-    --color-main-text: var(--color-cardboard-gray) !important;
-    --color-main-background: var(--color-charcoal-gray) !important;
-    --color-main-background-translucent: var(--color-main-background) !important;
-    --color-background-hover: var(--color-hover-blue) !important;
-    --color-background-dark: var(--color-main-background) !important;
-    --color-background-darker: var(--color-shade-black) !important;
-    --color-background-translucent: var(--color-dashboard-grey) !important;
-    --color-background-plain: var(--color-shade-black) !important;
-    --color-primary: var(--color-plasma-blue) !important;
-    --color-primary-light: var(--color-primary) !important;
-    --color-primary-text: var(--color-paper-white) !important;
-    --color-primary-text-dark: var(--color-main-text) !important;
-    --color-primary-element: var(--color-primary) !important;
-    --color-primary-element-light: var(--color-primary) !important;
-    --color-error: var(--color-icon-red) !important;
-    --color-warning: var(--color-beware-orange) !important;
-    --color-neutral: var(--color-sunbeam-yellow) !important;
-    --color-success: var(--color-noble-fir) !important;
-    --color-text-maxcontrast: var(--color-alternate-gray) !important;
-    --color-text-light: var(--color-main-text) !important;
-    --color-text-lighter: var(--color-text-maxcontrast) !important;
-    --color-text-dark: rgba(0, 0, 0, 1) !important;
-    --color-text-selection: var(--color-hover-blue) !important;
-    --color-text-link: rgba(30, 168, 226, 1) !important;
-    --color-loading-light: var(--color-alternate-gray) !important;
-    --color-loading-dark: var(--color-coastal-fog) !important;
-    --color-box-shadow: rgba(0, 0, 0, 0) !important;
-    --color-box-shadow-rgb: 0, 0, 0 !important;
-    --color-border: var(--color-border-grey) !important;
-    --color-border-dark: var(--color-border) !important;
-    --color-border-maxcontrast: var(--color-border) !important;
-    --color-icon: rgba(242, 242, 242, 1);
-    --table-color-border: var(--color-border) !important;
-    --table-color-heading: var(--color-primary-text) !important;
-    --table-color-heading-border: var(--color-border) !important;
-    --table-color-background: var(--color-main-background) !important;
-    --table-color-background-hover: var(--color-background-hover) !important;
-    --table-border-radius: var(--border-radius) !important;
-    --color-main-background-rgb: 49, 54, 59 !important;
-    --color-main-background-blur: rgba(var(--color-main-background-rgb), 0.8) !important;
+    /* Surfaces, outside in: page, bg, surface, inset (Trumpf) in a soft dusk blue. */
+    --tr-page: #1b213c;
+    --tr-bg: #212845;
+    --tr-surface: #283152;
+    --tr-surface-rgb: 40, 49, 82;
+    --tr-inset: #343d60;
+    --tr-field: #30385a;
+    --tr-hover: #394265;
+    --tr-border: #4b5681;
+    --tr-border-strong: #7a87b8;
+    --tr-material: rgba(52, 61, 96, 0.8);
+    --tr-material-filter: saturate(180%) blur(20px);
+    --tr-scrim: rgba(10, 13, 32, 0.5);
+    /* Text: ink 11.8:1 on surface, soft 7.7:1 on surface and 5.9:1 on hover. */
+    --tr-ink: #f5f6fb;
+    --tr-ink-soft: #c0c8e6;
+    --tr-ink-faint: #8a94bf;
+    /* Status, identity, rank. Status always comes with a word or a glyph. */
+    --tr-success: #30d158;
+    --tr-danger: #ff6961;
+    --tr-warn: #ff9f0a;
+    --tr-info: #64d2ff;
+    --tr-gold: #f0c454;
+    --tr-pink: #ec4899;
+    --tr-pink-strong: #db2777;
+    --tr-identity-1: #ff7158;
+    --tr-identity-2: #3d6fb5;
+    --tr-identity-3: #5bd49a;
+    --tr-identity-4: #f0c25e;
+    --tr-identity-5: #b85fbf;
+    --tr-identity-6: #7bd6eb;
+    --tr-identity-7: #a8423a;
+    --tr-identity-8: #2d5a3a;
+    /* Shape: groups 14, cards 18, live card and toast 22, body 24, sheets 28. */
+    --tr-radius-tile: 7px;
+    --tr-radius-lg: 10px;
+    --tr-radius-xl: 14px;
+    --tr-radius-2xl: 18px;
+    --tr-radius-card: 22px;
+    --tr-radius-frame: 24px;
+    --tr-radius-float: 28px;
+    --tr-radius-full: 999px;
+    /* Depth: layered shadows, a top highlight on every raised surface, and a
+       glow in the accent for the things you can press. */
+    --tr-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    --tr-sheen: linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0) 46%);
+    --tr-shadow-button: 0 1px 2px rgba(6, 9, 28, 0.3);
+    --tr-shadow-card:
+        0 1px 2px rgba(6, 9, 28, 0.25), 0 10px 28px -8px rgba(6, 9, 28, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.07);
+    --tr-shadow-float:
+        0 2px 6px rgba(6, 9, 28, 0.3), 0 20px 48px -10px rgba(6, 9, 28, 0.6),
+        0 0 0 1px rgba(255, 255, 255, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.09);
+    --tr-shadow-sheet:
+        0 4px 12px rgba(6, 9, 28, 0.3), 0 32px 80px -16px rgba(6, 9, 28, 0.7),
+        0 0 0 1px rgba(255, 255, 255, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    --tr-shadow-frame: 0 16px 40px -20px rgba(6, 9, 28, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.07);
+    --tr-shadow-cta: 0 8px 24px rgba(0, 0, 0, 0.25);
+    --tr-glow: 0 8px 20px -6px color-mix(in srgb, var(--tr-accent) 65%, transparent);
+    --tr-glow-strong: 0 12px 28px -6px color-mix(in srgb, var(--tr-accent) 75%, transparent);
+    /* Motion: two curves carry everything, feedback stays under 200 ms. */
+    --tr-ease-ios: cubic-bezier(0.32, 0.72, 0, 1);
+    --tr-ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+    --tr-ease-spring: cubic-bezier(0.34, 1.45, 0.64, 1);
+    --tr-dur-press: 180ms;
+    --tr-dur-fade: 200ms;
+    --tr-dur-release: 220ms;
+    --tr-dur-rise: 260ms;
+    --tr-dur-control: 300ms;
+    --tr-dur-push: 420ms;
+    --tr-dur-toast: 480ms;
+    --tr-dur-sheet: 500ms;
+    --tr-dur-settle: 640ms;
+    --tr-press-scale: 0.97;
+    /* Type: the system face only; mono stays for code. */
+    --tr-font-mono:
+        ui-monospace, "SF Mono", "Cascadia Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+    /* Default accent: the logo blue. Apps override it, see tr-app-accents. */
+    --tr-accent: #336deb;
+    --tr-accent-on: #ffffff;
+    --tr-accent-text: #99b6f5;
+    --tr-accent-wash: #2a3e74;
+    --tr-accent-flip: no;
+    --color-primary: #336deb !important;
+    --color-primary-default: #336deb !important;
+    --color-primary-text: #ffffff !important;
+    --color-primary-hover: #2f64d8 !important;
+    --color-primary-light: #2a3e74 !important;
+    --color-primary-light-hover: #2b4380 !important;
+    --color-primary-light-text: #99b6f5 !important;
+    --color-primary-element: #336deb !important;
+    --color-primary-element-hover: #2f64d8 !important;
+    --color-primary-element-default-hover: #2f64d8 !important;
+    --color-primary-element-text: #ffffff !important;
+    --color-primary-element-text-dark: #ffffff !important;
+    --color-primary-element-light: #2a3e74 !important;
+    --color-primary-element-light-hover: #2b4380 !important;
+    --color-primary-element-light-text: #99b6f5 !important;
+    --primary-invert-if-bright: no !important;
+    --primary-invert-if-dark: invert(100%) !important;
+    --gradient-primary-background: linear-gradient(40deg, #336deb 0%, #2f64d8 100%) !important;
+    --color-text-link: #99b6f5 !important;
+    --tr-app: #336deb;
+    --tr-app-on: #ffffff;
+    --tr-app-flip: no;
+    /* Nextcloud: surfaces --------------------------------------------------- */
+    --color-main-background: var(--tr-surface) !important;
+    --color-main-background-rgb: 40, 49, 82 !important;
+    --color-main-background-translucent: rgba(var(--tr-surface-rgb), 0.97) !important;
+    --color-main-background-blur: rgba(var(--tr-surface-rgb), 0.86) !important;
+    --gradient-main-background:
+        var(--color-main-background) 0%, var(--color-main-background-translucent) 85%,
+        transparent 100% !important;
+    --color-background-hover: var(--tr-hover) !important;
+    --color-background-dark: var(--tr-inset) !important;
+    --color-background-darker: #40496a !important;
+    --color-background-translucent: rgba(var(--tr-surface-rgb), 0.86) !important;
+    --color-placeholder-light: var(--tr-inset) !important;
+    --color-placeholder-dark: #40496a !important;
+    --color-background-plain: var(--tr-page) !important;
+    --color-background-plain-text: var(--tr-ink) !important;
+    --image-background: none !important;
+    --background-image-invert-if-bright: no !important;
     --background-invert-if-dark: invert(100%) !important;
     --background-invert-if-bright: no !important;
-    --color-success-rgb: 70, 186, 97 !important;
-    --color-success-hover: #6ac780 !important;
-    --color-warning-rgb: 236, 167, 0 !important;
-    --color-warning-hover: #efb832 !important;
-    --color-error-rgb: 233, 50, 45 !important;
-    --color-error-hover: #ed5a56 !important;
-    --color-scrollbar: #6b6b6b #31363b !important;
-    --color-text-maxcontrast-background-blur: #919191 !important;
-    --color-text-maxcontrast-default: #8c8c8c !important;
-    --color-placeholder-light: #313131 !important;
-    --color-placeholder-dark: #4a4a4a !important;
-    --color-primary-default: #0082c9 !important;
-    --color-primary-hover: #04537f !important;
-    --color-primary-light-text: #99c0d6 !important;
-    --color-primary-light-hover: #1d272d !important;
-    --color-primary-element-default-hover: #046ca5 !important;
-    --color-primary-element-text: #fff !important;
-    --color-primary-element-hover: #04537f !important;
-    --color-primary-element-light-text: #99c0d6 !important;
-    --color-primary-element-light-hover: #1d272d !important;
-    --color-primary-element-text-dark: #ededed !important;
+    /* Nextcloud: text ------------------------------------------------------- */
+    --color-main-text: var(--tr-ink) !important;
+    --color-text-maxcontrast: var(--tr-ink-soft) !important;
+    --color-text-maxcontrast-default: var(--tr-ink-soft) !important;
+    --color-text-maxcontrast-background-blur: #c6cdea !important;
+    --color-text-light: var(--tr-ink) !important;
+    --color-text-lighter: var(--tr-ink-soft) !important;
+    --color-text-dark: #0b1020 !important;
+    --color-text-error: var(--tr-danger) !important;
+    --color-text-success: var(--tr-success) !important;
+    --color-background-selection: color-mix(in srgb, var(--tr-accent) 40%, transparent) !important;
+    --color-text-selection: var(--tr-ink) !important;
+    /* Nextcloud: borders ---------------------------------------------------- */
+    --color-border: var(--tr-border) !important;
+    --color-border-dark: #56628f !important;
+    --color-border-maxcontrast: var(--tr-border-strong) !important;
+    --color-border-error: var(--tr-danger) !important;
+    --color-border-success: var(--tr-success) !important;
+    /* Nextcloud: feedback. Element colour = meaning, wash = tone at 18 % over
+       the surface, text on the wash passes 7.7:1 or better. ---------------- */
+    --color-error: #533c55 !important;
+    --color-error-hover: #644156 !important;
+    --color-error-text: #ffd6d2 !important;
+    --color-error-rgb: 83, 60, 85 !important;
+    --color-element-error: var(--tr-danger) !important;
+    --color-warning: #534744 !important;
+    --color-warning-hover: #64503e !important;
+    --color-warning-text: #ffe6c2 !important;
+    --color-warning-rgb: 83, 71, 68 !important;
+    --color-element-warning: var(--tr-warn) !important;
+    --color-success: #2a5153 !important;
+    --color-success-hover: #2a5e54 !important;
+    --color-success-text: #cff7da !important;
+    --color-success-rgb: 42, 81, 83 !important;
+    --color-element-success: var(--tr-success) !important;
+    --color-info: #345175 !important;
+    --color-info-hover: #395e82 !important;
+    --color-info-text: #d3f1ff !important;
+    --color-info-rgb: 52, 81, 117 !important;
+    --color-element-info: var(--tr-info) !important;
+    --color-favorite: var(--tr-gold) !important;
+    --color-mark: #645d53 !important;
+    /* Nextcloud: assistant, inside the palette ------------------------------ */
+    --color-background-assistant: #2e3664 !important;
+    --color-border-assistant: linear-gradient(125deg, #336deb 50%, #ec4899 125%) !important;
+    --color-element-assistant: linear-gradient(
+        214deg,
+        #7bd6eb 12%,
+        #336deb 45%,
+        #ec4899 92%
+    ) !important;
+    --color-element-assistant-icon: linear-gradient(
+        214deg,
+        #7bd6eb 15%,
+        #336deb 45%,
+        #ec4899 85%
+    ) !important;
+    /* Nextcloud: loading, scrollbar, shadow --------------------------------- */
+    --color-loading-light: var(--tr-border) !important;
+    --color-loading-dark: var(--tr-ink) !important;
+    --color-scrollbar: var(--tr-border-strong) transparent !important;
+    --color-box-shadow-rgb: 3, 6, 20 !important;
+    --color-box-shadow: rgba(3, 6, 20, 0.5) !important;
+    /* Nextcloud: shape ------------------------------------------------------ */
+    --border-radius-small: 6px !important;
+    --border-radius-element: var(--tr-radius-lg) !important;
+    --border-radius-container: var(--tr-radius-xl) !important;
+    --border-radius-container-large: var(--tr-radius-frame) !important;
+    --border-radius: 6px !important;
+    --border-radius-large: var(--tr-radius-lg) !important;
+    --border-radius-rounded: var(--tr-radius-card) !important;
+    --border-radius-pill: var(--tr-radius-full) !important;
+    --body-container-radius: var(--tr-radius-frame) !important;
+    --body-container-margin: 12px !important;
+    /* Nextcloud: motion ----------------------------------------------------- */
+    --animation-quick: var(--tr-dur-press) !important;
+    --animation-slow: var(--tr-dur-control) !important;
+    /* Aliases for the per-app partials -------------------------------------- */
+    --color-text-inactive: var(--tr-ink-soft) !important;
+    --color-icon: var(--tr-ink) !important;
+    --color-icon-yellow: var(--tr-gold) !important;
+    --color-selected-blue: color-mix(in srgb, var(--tr-accent) 22%, transparent) !important;
+    --color-dashboard-grey: rgba(var(--tr-surface-rgb), 0.86) !important;
+    --color-border-grey: var(--tr-border) !important;
+    --color-hover-blue: var(--tr-hover) !important;
+    --table-color-border: var(--tr-border) !important;
+    --table-color-heading: var(--tr-ink) !important;
+    --table-color-heading-border: var(--tr-border-strong) !important;
+    --table-color-background: var(--tr-surface) !important;
+    --table-color-background-hover: var(--tr-hover) !important;
+    --table-border-radius: var(--tr-radius-lg) !important;
+  }
+  [data-themes*=breezedark]:has(> :is(#content, #content-vue).app-photos) {
+    --tr-accent: #ff7158;
+    --tr-accent-on: #1e120c;
+    --tr-accent-text: #ffad9e;
+    --tr-accent-wash: #573f53;
+    --tr-accent-flip: invert(100%);
+    --color-primary: #ff7158 !important;
+    --color-primary-default: #ff7158 !important;
+    --color-primary-text: #1e120c !important;
+    --color-primary-hover: #ff7f69 !important;
+    --color-primary-light: #573f53 !important;
+    --color-primary-light-hover: #684454 !important;
+    --color-primary-light-text: #ffad9e !important;
+    --color-primary-element: #ff7158 !important;
+    --color-primary-element-hover: #ff7f69 !important;
+    --color-primary-element-default-hover: #ff7f69 !important;
+    --color-primary-element-text: #1e120c !important;
+    --color-primary-element-text-dark: #1e120c !important;
+    --color-primary-element-light: #573f53 !important;
+    --color-primary-element-light-hover: #684454 !important;
+    --color-primary-element-light-text: #ffad9e !important;
+    --primary-invert-if-bright: invert(100%) !important;
+    --primary-invert-if-dark: no !important;
+    --gradient-primary-background: linear-gradient(40deg, #ff7158 0%, #ff7f69 100%) !important;
+    --color-text-link: #ffad9e !important;
+  }
+  [data-themes*=breezedark]:has(> :is(#content, #content-vue).app-memories) {
+    --tr-accent: #ff7158;
+    --tr-accent-on: #1e120c;
+    --tr-accent-text: #ffad9e;
+    --tr-accent-wash: #573f53;
+    --tr-accent-flip: invert(100%);
+    --color-primary: #ff7158 !important;
+    --color-primary-default: #ff7158 !important;
+    --color-primary-text: #1e120c !important;
+    --color-primary-hover: #ff7f69 !important;
+    --color-primary-light: #573f53 !important;
+    --color-primary-light-hover: #684454 !important;
+    --color-primary-light-text: #ffad9e !important;
+    --color-primary-element: #ff7158 !important;
+    --color-primary-element-hover: #ff7f69 !important;
+    --color-primary-element-default-hover: #ff7f69 !important;
+    --color-primary-element-text: #1e120c !important;
+    --color-primary-element-text-dark: #1e120c !important;
+    --color-primary-element-light: #573f53 !important;
+    --color-primary-element-light-hover: #684454 !important;
+    --color-primary-element-light-text: #ffad9e !important;
+    --primary-invert-if-bright: invert(100%) !important;
+    --primary-invert-if-dark: no !important;
+    --gradient-primary-background: linear-gradient(40deg, #ff7158 0%, #ff7f69 100%) !important;
+    --color-text-link: #ffad9e !important;
+  }
+  [data-themes*=breezedark]:has(> :is(#content, #content-vue).app-music) {
+    --tr-accent: #ff7158;
+    --tr-accent-on: #1e120c;
+    --tr-accent-text: #ffad9e;
+    --tr-accent-wash: #573f53;
+    --tr-accent-flip: invert(100%);
+    --color-primary: #ff7158 !important;
+    --color-primary-default: #ff7158 !important;
+    --color-primary-text: #1e120c !important;
+    --color-primary-hover: #ff7f69 !important;
+    --color-primary-light: #573f53 !important;
+    --color-primary-light-hover: #684454 !important;
+    --color-primary-light-text: #ffad9e !important;
+    --color-primary-element: #ff7158 !important;
+    --color-primary-element-hover: #ff7f69 !important;
+    --color-primary-element-default-hover: #ff7f69 !important;
+    --color-primary-element-text: #1e120c !important;
+    --color-primary-element-text-dark: #1e120c !important;
+    --color-primary-element-light: #573f53 !important;
+    --color-primary-element-light-hover: #684454 !important;
+    --color-primary-element-light-text: #ffad9e !important;
+    --primary-invert-if-bright: invert(100%) !important;
+    --primary-invert-if-dark: no !important;
+    --gradient-primary-background: linear-gradient(40deg, #ff7158 0%, #ff7f69 100%) !important;
+    --color-text-link: #ffad9e !important;
+  }
+  [data-themes*=breezedark]:has(> :is(#content, #content-vue).app-cookbook) {
+    --tr-accent: #ff7158;
+    --tr-accent-on: #1e120c;
+    --tr-accent-text: #ffad9e;
+    --tr-accent-wash: #573f53;
+    --tr-accent-flip: invert(100%);
+    --color-primary: #ff7158 !important;
+    --color-primary-default: #ff7158 !important;
+    --color-primary-text: #1e120c !important;
+    --color-primary-hover: #ff7f69 !important;
+    --color-primary-light: #573f53 !important;
+    --color-primary-light-hover: #684454 !important;
+    --color-primary-light-text: #ffad9e !important;
+    --color-primary-element: #ff7158 !important;
+    --color-primary-element-hover: #ff7f69 !important;
+    --color-primary-element-default-hover: #ff7f69 !important;
+    --color-primary-element-text: #1e120c !important;
+    --color-primary-element-text-dark: #1e120c !important;
+    --color-primary-element-light: #573f53 !important;
+    --color-primary-element-light-hover: #684454 !important;
+    --color-primary-element-light-text: #ffad9e !important;
+    --primary-invert-if-bright: invert(100%) !important;
+    --primary-invert-if-dark: no !important;
+    --gradient-primary-background: linear-gradient(40deg, #ff7158 0%, #ff7f69 100%) !important;
+    --color-text-link: #ffad9e !important;
+  }
+  [data-themes*=breezedark]:has(> :is(#content, #content-vue).app-spreed) {
+    --tr-accent: #5bd49a;
+    --tr-accent-on: #0f2419;
+    --tr-accent-text: #9de5c2;
+    --tr-accent-wash: #335562;
+    --tr-accent-flip: invert(100%);
+    --color-primary: #5bd49a !important;
+    --color-primary-default: #5bd49a !important;
+    --color-primary-text: #0f2419 !important;
+    --color-primary-hover: #6bd8a4 !important;
+    --color-primary-light: #335562 !important;
+    --color-primary-light-hover: #376268 !important;
+    --color-primary-light-text: #9de5c2 !important;
+    --color-primary-element: #5bd49a !important;
+    --color-primary-element-hover: #6bd8a4 !important;
+    --color-primary-element-default-hover: #6bd8a4 !important;
+    --color-primary-element-text: #0f2419 !important;
+    --color-primary-element-text-dark: #0f2419 !important;
+    --color-primary-element-light: #335562 !important;
+    --color-primary-element-light-hover: #376268 !important;
+    --color-primary-element-light-text: #9de5c2 !important;
+    --primary-invert-if-bright: invert(100%) !important;
+    --primary-invert-if-dark: no !important;
+    --gradient-primary-background: linear-gradient(40deg, #5bd49a 0%, #6bd8a4 100%) !important;
+    --color-text-link: #9de5c2 !important;
+  }
+  [data-themes*=breezedark]:has(> :is(#content, #content-vue).app-tasks) {
+    --tr-accent: #5bd49a;
+    --tr-accent-on: #0f2419;
+    --tr-accent-text: #9de5c2;
+    --tr-accent-wash: #335562;
+    --tr-accent-flip: invert(100%);
+    --color-primary: #5bd49a !important;
+    --color-primary-default: #5bd49a !important;
+    --color-primary-text: #0f2419 !important;
+    --color-primary-hover: #6bd8a4 !important;
+    --color-primary-light: #335562 !important;
+    --color-primary-light-hover: #376268 !important;
+    --color-primary-light-text: #9de5c2 !important;
+    --color-primary-element: #5bd49a !important;
+    --color-primary-element-hover: #6bd8a4 !important;
+    --color-primary-element-default-hover: #6bd8a4 !important;
+    --color-primary-element-text: #0f2419 !important;
+    --color-primary-element-text-dark: #0f2419 !important;
+    --color-primary-element-light: #335562 !important;
+    --color-primary-element-light-hover: #376268 !important;
+    --color-primary-element-light-text: #9de5c2 !important;
+    --primary-invert-if-bright: invert(100%) !important;
+    --primary-invert-if-dark: no !important;
+    --gradient-primary-background: linear-gradient(40deg, #5bd49a 0%, #6bd8a4 100%) !important;
+    --color-text-link: #9de5c2 !important;
+  }
+  [data-themes*=breezedark]:has(> :is(#content, #content-vue).app-maps) {
+    --tr-accent: #5bd49a;
+    --tr-accent-on: #0f2419;
+    --tr-accent-text: #9de5c2;
+    --tr-accent-wash: #335562;
+    --tr-accent-flip: invert(100%);
+    --color-primary: #5bd49a !important;
+    --color-primary-default: #5bd49a !important;
+    --color-primary-text: #0f2419 !important;
+    --color-primary-hover: #6bd8a4 !important;
+    --color-primary-light: #335562 !important;
+    --color-primary-light-hover: #376268 !important;
+    --color-primary-light-text: #9de5c2 !important;
+    --color-primary-element: #5bd49a !important;
+    --color-primary-element-hover: #6bd8a4 !important;
+    --color-primary-element-default-hover: #6bd8a4 !important;
+    --color-primary-element-text: #0f2419 !important;
+    --color-primary-element-text-dark: #0f2419 !important;
+    --color-primary-element-light: #335562 !important;
+    --color-primary-element-light-hover: #376268 !important;
+    --color-primary-element-light-text: #9de5c2 !important;
+    --primary-invert-if-bright: invert(100%) !important;
+    --primary-invert-if-dark: no !important;
+    --gradient-primary-background: linear-gradient(40deg, #5bd49a 0%, #6bd8a4 100%) !important;
+    --color-text-link: #9de5c2 !important;
+  }
+  [data-themes*=breezedark]:has(> :is(#content, #content-vue).app-calendar) {
+    --tr-accent: #ff6b6b;
+    --tr-accent-on: #2a0a0a;
+    --tr-accent-text: #ffacac;
+    --tr-accent-wash: #573e58;
+    --tr-accent-flip: invert(100%);
+    --color-primary: #ff6b6b !important;
+    --color-primary-default: #ff6b6b !important;
+    --color-primary-text: #2a0a0a !important;
+    --color-primary-hover: #ff7a7a !important;
+    --color-primary-light: #573e58 !important;
+    --color-primary-light-hover: #68425a !important;
+    --color-primary-light-text: #ffacac !important;
+    --color-primary-element: #ff6b6b !important;
+    --color-primary-element-hover: #ff7a7a !important;
+    --color-primary-element-default-hover: #ff7a7a !important;
+    --color-primary-element-text: #2a0a0a !important;
+    --color-primary-element-text-dark: #2a0a0a !important;
+    --color-primary-element-light: #573e58 !important;
+    --color-primary-element-light-hover: #68425a !important;
+    --color-primary-element-light-text: #ffacac !important;
+    --primary-invert-if-bright: invert(100%) !important;
+    --primary-invert-if-dark: no !important;
+    --gradient-primary-background: linear-gradient(40deg, #ff6b6b 0%, #ff7a7a 100%) !important;
+    --color-text-link: #ffacac !important;
+  }
+  [data-themes*=breezedark]:has(> :is(#content, #content-vue).app-contacts) {
+    --tr-accent: #d48ad9;
+    --tr-accent-on: #260c29;
+    --tr-accent-text: #e7bdea;
+    --tr-accent-wash: #4e4570;
+    --tr-accent-flip: invert(100%);
+    --color-primary: #d48ad9 !important;
+    --color-primary-default: #d48ad9 !important;
+    --color-primary-text: #260c29 !important;
+    --color-primary-hover: #d896dd !important;
+    --color-primary-light: #4e4570 !important;
+    --color-primary-light-hover: #5c4c7a !important;
+    --color-primary-light-text: #e7bdea !important;
+    --color-primary-element: #d48ad9 !important;
+    --color-primary-element-hover: #d896dd !important;
+    --color-primary-element-default-hover: #d896dd !important;
+    --color-primary-element-text: #260c29 !important;
+    --color-primary-element-text-dark: #260c29 !important;
+    --color-primary-element-light: #4e4570 !important;
+    --color-primary-element-light-hover: #5c4c7a !important;
+    --color-primary-element-light-text: #e7bdea !important;
+    --primary-invert-if-bright: invert(100%) !important;
+    --primary-invert-if-dark: no !important;
+    --gradient-primary-background: linear-gradient(40deg, #d48ad9 0%, #d896dd 100%) !important;
+    --color-text-link: #e7bdea !important;
+  }
+  [data-themes*=breezedark]:has(> :is(#content, #content-vue).app-forms) {
+    --tr-accent: #d48ad9;
+    --tr-accent-on: #260c29;
+    --tr-accent-text: #e7bdea;
+    --tr-accent-wash: #4e4570;
+    --tr-accent-flip: invert(100%);
+    --color-primary: #d48ad9 !important;
+    --color-primary-default: #d48ad9 !important;
+    --color-primary-text: #260c29 !important;
+    --color-primary-hover: #d896dd !important;
+    --color-primary-light: #4e4570 !important;
+    --color-primary-light-hover: #5c4c7a !important;
+    --color-primary-light-text: #e7bdea !important;
+    --color-primary-element: #d48ad9 !important;
+    --color-primary-element-hover: #d896dd !important;
+    --color-primary-element-default-hover: #d896dd !important;
+    --color-primary-element-text: #260c29 !important;
+    --color-primary-element-text-dark: #260c29 !important;
+    --color-primary-element-light: #4e4570 !important;
+    --color-primary-element-light-hover: #5c4c7a !important;
+    --color-primary-element-light-text: #e7bdea !important;
+    --primary-invert-if-bright: invert(100%) !important;
+    --primary-invert-if-dark: no !important;
+    --gradient-primary-background: linear-gradient(40deg, #d48ad9 0%, #d896dd 100%) !important;
+    --color-text-link: #e7bdea !important;
+  }
+  [data-themes*=breezedark]:has(> :is(#content, #content-vue).app-polls) {
+    --tr-accent: #d48ad9;
+    --tr-accent-on: #260c29;
+    --tr-accent-text: #e7bdea;
+    --tr-accent-wash: #4e4570;
+    --tr-accent-flip: invert(100%);
+    --color-primary: #d48ad9 !important;
+    --color-primary-default: #d48ad9 !important;
+    --color-primary-text: #260c29 !important;
+    --color-primary-hover: #d896dd !important;
+    --color-primary-light: #4e4570 !important;
+    --color-primary-light-hover: #5c4c7a !important;
+    --color-primary-light-text: #e7bdea !important;
+    --color-primary-element: #d48ad9 !important;
+    --color-primary-element-hover: #d896dd !important;
+    --color-primary-element-default-hover: #d896dd !important;
+    --color-primary-element-text: #260c29 !important;
+    --color-primary-element-text-dark: #260c29 !important;
+    --color-primary-element-light: #4e4570 !important;
+    --color-primary-element-light-hover: #5c4c7a !important;
+    --color-primary-element-light-text: #e7bdea !important;
+    --primary-invert-if-bright: invert(100%) !important;
+    --primary-invert-if-dark: no !important;
+    --gradient-primary-background: linear-gradient(40deg, #d48ad9 0%, #d896dd 100%) !important;
+    --color-text-link: #e7bdea !important;
+  }
+  [data-themes*=breezedark]:has(> :is(#content, #content-vue).app-mail) {
+    --tr-accent: #7bd6eb;
+    --tr-accent-on: #0f2536;
+    --tr-accent-text: #abe5f2;
+    --tr-accent-wash: #3a5574;
+    --tr-accent-flip: invert(100%);
+    --color-primary: #7bd6eb !important;
+    --color-primary-default: #7bd6eb !important;
+    --color-primary-text: #0f2536 !important;
+    --color-primary-hover: #88daed !important;
+    --color-primary-light: #3a5574 !important;
+    --color-primary-light-hover: #416280 !important;
+    --color-primary-light-text: #abe5f2 !important;
+    --color-primary-element: #7bd6eb !important;
+    --color-primary-element-hover: #88daed !important;
+    --color-primary-element-default-hover: #88daed !important;
+    --color-primary-element-text: #0f2536 !important;
+    --color-primary-element-text-dark: #0f2536 !important;
+    --color-primary-element-light: #3a5574 !important;
+    --color-primary-element-light-hover: #416280 !important;
+    --color-primary-element-light-text: #abe5f2 !important;
+    --primary-invert-if-bright: invert(100%) !important;
+    --primary-invert-if-dark: no !important;
+    --gradient-primary-background: linear-gradient(40deg, #7bd6eb 0%, #88daed 100%) !important;
+    --color-text-link: #abe5f2 !important;
+  }
+  [data-themes*=breezedark]:has(> :is(#content, #content-vue).app-news) {
+    --tr-accent: #7bd6eb;
+    --tr-accent-on: #0f2536;
+    --tr-accent-text: #abe5f2;
+    --tr-accent-wash: #3a5574;
+    --tr-accent-flip: invert(100%);
+    --color-primary: #7bd6eb !important;
+    --color-primary-default: #7bd6eb !important;
+    --color-primary-text: #0f2536 !important;
+    --color-primary-hover: #88daed !important;
+    --color-primary-light: #3a5574 !important;
+    --color-primary-light-hover: #416280 !important;
+    --color-primary-light-text: #abe5f2 !important;
+    --color-primary-element: #7bd6eb !important;
+    --color-primary-element-hover: #88daed !important;
+    --color-primary-element-default-hover: #88daed !important;
+    --color-primary-element-text: #0f2536 !important;
+    --color-primary-element-text-dark: #0f2536 !important;
+    --color-primary-element-light: #3a5574 !important;
+    --color-primary-element-light-hover: #416280 !important;
+    --color-primary-element-light-text: #abe5f2 !important;
+    --primary-invert-if-bright: invert(100%) !important;
+    --primary-invert-if-dark: no !important;
+    --gradient-primary-background: linear-gradient(40deg, #7bd6eb 0%, #88daed 100%) !important;
+    --color-text-link: #abe5f2 !important;
+  }
+  [data-themes*=breezedark]:has(> :is(#content, #content-vue).app-bookmarks) {
+    --tr-accent: #7bd6eb;
+    --tr-accent-on: #0f2536;
+    --tr-accent-text: #abe5f2;
+    --tr-accent-wash: #3a5574;
+    --tr-accent-flip: invert(100%);
+    --color-primary: #7bd6eb !important;
+    --color-primary-default: #7bd6eb !important;
+    --color-primary-text: #0f2536 !important;
+    --color-primary-hover: #88daed !important;
+    --color-primary-light: #3a5574 !important;
+    --color-primary-light-hover: #416280 !important;
+    --color-primary-light-text: #abe5f2 !important;
+    --color-primary-element: #7bd6eb !important;
+    --color-primary-element-hover: #88daed !important;
+    --color-primary-element-default-hover: #88daed !important;
+    --color-primary-element-text: #0f2536 !important;
+    --color-primary-element-text-dark: #0f2536 !important;
+    --color-primary-element-light: #3a5574 !important;
+    --color-primary-element-light-hover: #416280 !important;
+    --color-primary-element-light-text: #abe5f2 !important;
+    --primary-invert-if-bright: invert(100%) !important;
+    --primary-invert-if-dark: no !important;
+    --gradient-primary-background: linear-gradient(40deg, #7bd6eb 0%, #88daed 100%) !important;
+    --color-text-link: #abe5f2 !important;
+  }
+  [data-themes*=breezedark]:has(> :is(#content, #content-vue).app-deck) {
+    --tr-accent: #f0c25e;
+    --tr-accent-on: #2a1f0a;
+    --tr-accent-text: #f5d692;
+    --tr-accent-wash: #545155;
+    --tr-accent-flip: invert(100%);
+    --color-primary: #f0c25e !important;
+    --color-primary-default: #f0c25e !important;
+    --color-primary-text: #2a1f0a !important;
+    --color-primary-hover: #f2c86e !important;
+    --color-primary-light: #545155 !important;
+    --color-primary-light-hover: #645c56 !important;
+    --color-primary-light-text: #f5d692 !important;
+    --color-primary-element: #f0c25e !important;
+    --color-primary-element-hover: #f2c86e !important;
+    --color-primary-element-default-hover: #f2c86e !important;
+    --color-primary-element-text: #2a1f0a !important;
+    --color-primary-element-text-dark: #2a1f0a !important;
+    --color-primary-element-light: #545155 !important;
+    --color-primary-element-light-hover: #645c56 !important;
+    --color-primary-element-light-text: #f5d692 !important;
+    --primary-invert-if-bright: invert(100%) !important;
+    --primary-invert-if-dark: no !important;
+    --gradient-primary-background: linear-gradient(40deg, #f0c25e 0%, #f2c86e 100%) !important;
+    --color-text-link: #f5d692 !important;
+  }
+  [data-themes*=breezedark]:has(> :is(#content, #content-vue).app-notes) {
+    --tr-accent: #f0c25e;
+    --tr-accent-on: #2a1f0a;
+    --tr-accent-text: #f5d692;
+    --tr-accent-wash: #545155;
+    --tr-accent-flip: invert(100%);
+    --color-primary: #f0c25e !important;
+    --color-primary-default: #f0c25e !important;
+    --color-primary-text: #2a1f0a !important;
+    --color-primary-hover: #f2c86e !important;
+    --color-primary-light: #545155 !important;
+    --color-primary-light-hover: #645c56 !important;
+    --color-primary-light-text: #f5d692 !important;
+    --color-primary-element: #f0c25e !important;
+    --color-primary-element-hover: #f2c86e !important;
+    --color-primary-element-default-hover: #f2c86e !important;
+    --color-primary-element-text: #2a1f0a !important;
+    --color-primary-element-text-dark: #2a1f0a !important;
+    --color-primary-element-light: #545155 !important;
+    --color-primary-element-light-hover: #645c56 !important;
+    --color-primary-element-light-text: #f5d692 !important;
+    --primary-invert-if-bright: invert(100%) !important;
+    --primary-invert-if-dark: no !important;
+    --gradient-primary-background: linear-gradient(40deg, #f0c25e 0%, #f2c86e 100%) !important;
+    --color-text-link: #f5d692 !important;
+  }
+  [data-themes*=breezedark]:has(> :is(#content, #content-vue).app-collectives) {
+    --tr-accent: #f0c25e;
+    --tr-accent-on: #2a1f0a;
+    --tr-accent-text: #f5d692;
+    --tr-accent-wash: #545155;
+    --tr-accent-flip: invert(100%);
+    --color-primary: #f0c25e !important;
+    --color-primary-default: #f0c25e !important;
+    --color-primary-text: #2a1f0a !important;
+    --color-primary-hover: #f2c86e !important;
+    --color-primary-light: #545155 !important;
+    --color-primary-light-hover: #645c56 !important;
+    --color-primary-light-text: #f5d692 !important;
+    --color-primary-element: #f0c25e !important;
+    --color-primary-element-hover: #f2c86e !important;
+    --color-primary-element-default-hover: #f2c86e !important;
+    --color-primary-element-text: #2a1f0a !important;
+    --color-primary-element-text-dark: #2a1f0a !important;
+    --color-primary-element-light: #545155 !important;
+    --color-primary-element-light-hover: #645c56 !important;
+    --color-primary-element-light-text: #f5d692 !important;
+    --primary-invert-if-bright: invert(100%) !important;
+    --primary-invert-if-dark: no !important;
+    --gradient-primary-background: linear-gradient(40deg, #f0c25e 0%, #f2c86e 100%) !important;
+    --color-text-link: #f5d692 !important;
+  }
+  :is(.app-menu-entry__link, .app-item)[href*="/apps/photos/"],
+  :is(.app-menu-entry__link, .app-item)[href$="/apps/photos"] {
+    --tr-app: #ff7158;
+    --tr-app-on: #1e120c;
+    --tr-app-flip: invert(100%);
+  }
+  :is(.app-menu-entry__link, .app-item)[href*="/apps/memories/"],
+  :is(.app-menu-entry__link, .app-item)[href$="/apps/memories"] {
+    --tr-app: #ff7158;
+    --tr-app-on: #1e120c;
+    --tr-app-flip: invert(100%);
+  }
+  :is(.app-menu-entry__link, .app-item)[href*="/apps/music/"],
+  :is(.app-menu-entry__link, .app-item)[href$="/apps/music"] {
+    --tr-app: #ff7158;
+    --tr-app-on: #1e120c;
+    --tr-app-flip: invert(100%);
+  }
+  :is(.app-menu-entry__link, .app-item)[href*="/apps/cookbook/"],
+  :is(.app-menu-entry__link, .app-item)[href$="/apps/cookbook"] {
+    --tr-app: #ff7158;
+    --tr-app-on: #1e120c;
+    --tr-app-flip: invert(100%);
+  }
+  :is(.app-menu-entry__link, .app-item)[href*="/apps/spreed/"],
+  :is(.app-menu-entry__link, .app-item)[href$="/apps/spreed"] {
+    --tr-app: #5bd49a;
+    --tr-app-on: #0f2419;
+    --tr-app-flip: invert(100%);
+  }
+  :is(.app-menu-entry__link, .app-item)[href*="/apps/tasks/"],
+  :is(.app-menu-entry__link, .app-item)[href$="/apps/tasks"] {
+    --tr-app: #5bd49a;
+    --tr-app-on: #0f2419;
+    --tr-app-flip: invert(100%);
+  }
+  :is(.app-menu-entry__link, .app-item)[href*="/apps/maps/"],
+  :is(.app-menu-entry__link, .app-item)[href$="/apps/maps"] {
+    --tr-app: #5bd49a;
+    --tr-app-on: #0f2419;
+    --tr-app-flip: invert(100%);
+  }
+  :is(.app-menu-entry__link, .app-item)[href*="/apps/calendar/"],
+  :is(.app-menu-entry__link, .app-item)[href$="/apps/calendar"] {
+    --tr-app: #ff6b6b;
+    --tr-app-on: #2a0a0a;
+    --tr-app-flip: invert(100%);
+  }
+  :is(.app-menu-entry__link, .app-item)[href*="/apps/contacts/"],
+  :is(.app-menu-entry__link, .app-item)[href$="/apps/contacts"] {
+    --tr-app: #d48ad9;
+    --tr-app-on: #260c29;
+    --tr-app-flip: invert(100%);
+  }
+  :is(.app-menu-entry__link, .app-item)[href*="/apps/forms/"],
+  :is(.app-menu-entry__link, .app-item)[href$="/apps/forms"] {
+    --tr-app: #d48ad9;
+    --tr-app-on: #260c29;
+    --tr-app-flip: invert(100%);
+  }
+  :is(.app-menu-entry__link, .app-item)[href*="/apps/polls/"],
+  :is(.app-menu-entry__link, .app-item)[href$="/apps/polls"] {
+    --tr-app: #d48ad9;
+    --tr-app-on: #260c29;
+    --tr-app-flip: invert(100%);
+  }
+  :is(.app-menu-entry__link, .app-item)[href*="/apps/mail/"],
+  :is(.app-menu-entry__link, .app-item)[href$="/apps/mail"] {
+    --tr-app: #7bd6eb;
+    --tr-app-on: #0f2536;
+    --tr-app-flip: invert(100%);
+  }
+  :is(.app-menu-entry__link, .app-item)[href*="/apps/news/"],
+  :is(.app-menu-entry__link, .app-item)[href$="/apps/news"] {
+    --tr-app: #7bd6eb;
+    --tr-app-on: #0f2536;
+    --tr-app-flip: invert(100%);
+  }
+  :is(.app-menu-entry__link, .app-item)[href*="/apps/bookmarks/"],
+  :is(.app-menu-entry__link, .app-item)[href$="/apps/bookmarks"] {
+    --tr-app: #7bd6eb;
+    --tr-app-on: #0f2536;
+    --tr-app-flip: invert(100%);
+  }
+  :is(.app-menu-entry__link, .app-item)[href*="/apps/deck/"],
+  :is(.app-menu-entry__link, .app-item)[href$="/apps/deck"] {
+    --tr-app: #f0c25e;
+    --tr-app-on: #2a1f0a;
+    --tr-app-flip: invert(100%);
+  }
+  :is(.app-menu-entry__link, .app-item)[href*="/apps/notes/"],
+  :is(.app-menu-entry__link, .app-item)[href$="/apps/notes"] {
+    --tr-app: #f0c25e;
+    --tr-app-on: #2a1f0a;
+    --tr-app-flip: invert(100%);
+  }
+  :is(.app-menu-entry__link, .app-item)[href*="/apps/collectives/"],
+  :is(.app-menu-entry__link, .app-item)[href$="/apps/collectives"] {
+    --tr-app: #f0c25e;
+    --tr-app-on: #2a1f0a;
+    --tr-app-flip: invert(100%);
   }
   /***
+   * InkCurity Dark — controls, Trumpf edition
+   *
+   * Buttons: filled for the one main action, tinted for actions with weight,
+   * plain for quiet ones, a red wash for the way into something destructive.
+   * Small buttons are pills, large ones 14 px keys. Every press shrinks to 0.97.
+   * Switches turn success green. Fields sit in a light well with a 2 px ring in
+   * the accent while focused.
+   *
+   * Selectors cover @nextcloud/vue 9 (Nextcloud 33/34: .button-vue--primary) and
+   * the v8 bundles some apps still ship (.button-vue--vue-primary).
+   *
    * @copyright Copyright (c) 2020, Magnus Walbeck <mw@mwalbeck.org>
+   * @copyright Copyright (c) 2026 inkcurity.net
    *
    * @license GNU AGPL version 3 or any later version, see COPYING file for more.
    */
   /* Buttons ------------------------------------------------------------------- */
-  button:not(.color-picker__simple-color-circle):not(.property-color__color-preview).primary,
-  .button.primary,
-  input[type=button].primary,
-  input[type=submit].primary {
-    background-color: var(--color-main-background) !important;
-    border-color: var(--color-border) !important;
-    color: var(--color-main-text) !important;
+  .button-vue {
+    border-radius: var(--tr-radius-full) !important;
+    transition: background-color var(--tr-dur-fade) var(--tr-ease-soft), color var(--tr-dur-fade) var(--tr-ease-soft), opacity var(--tr-dur-fade) var(--tr-ease-soft), filter var(--tr-dur-fade) var(--tr-ease-soft), transform var(--tr-dur-press) var(--tr-ease-soft) !important;
   }
-  button:not(.color-picker__simple-color-circle):not(.property-color__color-preview).primary:hover,
-  .button.primary:hover,
-  input[type=button].primary:hover,
-  input[type=submit].primary:hover {
-    border-color: var(--color-primary-element) !important;
+  .button-vue .button-vue__text {
+    font-weight: 600 !important;
+    letter-spacing: -0.005em;
   }
-  button:not(.color-picker__simple-color-circle):not(.property-color__color-preview):focus, button:not(.color-picker__simple-color-circle):not(.property-color__color-preview):active, button:not(.color-picker__simple-color-circle):not(.property-color__color-preview).primary:focus, button:not(.color-picker__simple-color-circle):not(.property-color__color-preview).primary:active,
-  .button:focus,
-  .button:active,
-  .button.primary:focus,
-  .button.primary:active,
-  input[type=button]:focus,
-  input[type=button]:active,
-  input[type=button].primary:focus,
-  input[type=button].primary:active,
-  input[type=submit]:focus,
-  input[type=submit]:active,
-  input[type=submit].primary:focus,
-  input[type=submit].primary:active {
-    background-color: var(--color-primary) !important;
-    border-color: var(--color-primary-element) !important;
+  .button-vue:active:not(:disabled) {
+    transform: scale(var(--tr-press-scale)) !important;
   }
-  .button-vue.button-vue--vue-secondary:not(.property-color__color-preview):not(.unified-search__button) {
-    background-color: var(--color-main-background) !important;
-    border: 1px solid var(--color-border) !important;
-    color: var(--color-main-text) !important;
+  .button-vue--size-large {
+    border-radius: var(--tr-radius-xl) !important;
   }
-  .button-vue.button-vue--vue-secondary:not(.property-color__color-preview):not(.unified-search__button):hover {
-    border-color: var(--color-primary-element) !important;
+  :is(.button-vue--primary, .button-vue--vue-primary):not(:disabled) {
+    position: relative;
+    overflow: hidden;
+    background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0) 62%) !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28), var(--tr-glow);
   }
-  .button-vue.button-vue--vue-secondary:not(.property-color__color-preview):not(.unified-search__button):focus, .button-vue.button-vue--vue-secondary:not(.property-color__color-preview):not(.unified-search__button):active {
-    background-color: var(--color-primary) !important;
-    border-color: var(--color-primary-element) !important;
+  :is(.button-vue--primary, .button-vue--vue-primary):not(:disabled)::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(105deg, transparent 30%, rgba(255, 255, 255, 0.32) 50%, transparent 70%);
+    transform: translateX(-120%);
+    pointer-events: none;
   }
-  .button-vue.button-vue--vue-secondary:not(.property-color__color-preview):not(.unified-search__button).close-button {
-    border: none !important;
+  :is(.button-vue--primary, .button-vue--vue-primary):not(:disabled):hover {
+    background-color: var(--color-primary-element) !important;
+    filter: brightness(1.06);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28), var(--tr-glow-strong);
   }
-  .button-vue.unified-search__button:hover {
-    opacity: 1 !important;
+  :is(.button-vue--primary, .button-vue--vue-primary):not(:disabled):hover::after {
+    animation: tr-sheen 700ms var(--tr-ease-soft) both;
   }
-  input[type=text] + .icon-confirm,
-  input[type=password] + .icon-confirm,
-  input[type=email] + .icon-confirm {
-    background-color: var(--color-background-darker) !important;
+  :is(.button-vue--primary, .button-vue--vue-primary):not(:disabled):active {
+    opacity: 0.88;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
   }
-  /* Input Fields -------------------------------------------------------------- */
-  input:not([type=range]):not([type=button]):not([type=submit]) {
-    background-color: var(--color-background-darker);
+  @keyframes tr-sheen {
+    to {
+      transform: translateX(120%);
+    }
   }
-  input:not([type=range]):not([type=button]):not([type=submit]):active {
-    background-color: var(--color-background-darker);
+  :is(.button-vue--secondary, .button-vue--vue-secondary):not(.unified-search__button):not(.property-color__color-preview) {
+    background-color: var(--color-primary-element-light) !important;
+    background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0)) !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    color: var(--color-primary-element-light-text) !important;
   }
-  div[contenteditable=true]:not(:disabled):hover, div[contenteditable=true]:not(:disabled):focus, div[contenteditable=true]:not(:disabled):active,
-  textarea:not(:disabled):hover,
-  textarea:not(:disabled):focus,
-  textarea:not(:disabled):active {
-    border-color: var(--color-primary-element) !important;
+  :is(.button-vue--secondary, .button-vue--vue-secondary):not(.unified-search__button):not(.property-color__color-preview):hover:not(:disabled) {
+    background-color: var(--color-primary-element-light-hover) !important;
   }
-  .multiselect .multiselect__input {
-    background-color: inherit !important;
+  :is(.button-vue--tertiary, .button-vue--vue-tertiary):hover:not(:disabled) {
+    background-color: rgba(255, 255, 255, 0.08) !important;
   }
-  .checkbox-radio-switch:not(.checkbox-radio-switch--disabled) .checkbox-radio-switch__input:hover + .checkbox-radio-switch__label,
-  .checkbox-radio-switch:not(.checkbox-radio-switch--disabled) .checkbox-radio-switch__input:focus + .checkbox-radio-switch__label,
-  .checkbox-radio-switch:not(.checkbox-radio-switch--disabled) .checkbox-radio-switch__label:hover,
-  .checkbox-radio-switch:not(.checkbox-radio-switch--disabled) .checkbox-radio-switch__label:focus-within {
-    background-color: var(--color-background-hover) !important;
+  :is(.button-vue--error, .button-vue--vue-error):not(:disabled) {
+    background-color: var(--color-error) !important;
+    color: var(--color-error-text) !important;
   }
-  .checkbox-radio-switch:not(.checkbox-radio-switch--disabled) .checkbox-radio-switch__input:focus + .checkbox-radio-switch__label {
-    box-shadow: unset !important;
+  :is(.button-vue--error, .button-vue--vue-error):not(:disabled):hover {
+    background-color: var(--color-error-hover) !important;
   }
-  /* Action items -------------------------------------------------------------- */
-  .action-input .action-input__label,
-  .action-text-editable .action-text-editable__label {
-    background-color: var(--color-background-darker);
+  :is(.button-vue--success, .button-vue--vue-success):not(:disabled) {
+    background-color: var(--color-success) !important;
+    color: var(--color-success-text) !important;
   }
-  /* select -------------------------------------------------------------------- */
+  .button-vue:focus-visible {
+    outline: 2px solid var(--tr-accent-text) !important;
+    outline-offset: 2px !important;
+    box-shadow: none !important;
+  }
+  :is(#content, #content-vue, .oc-dialog, .modal-container) :is(button:not(.button-vue):not([class*=color-picker]):not(.action-button):not([class^=vs__]):not(.files-list__row-name-link),
+  .button:not(.button-vue),
+  input[type=button],
+  input[type=submit],
+  input[type=reset]) {
+    border-radius: var(--tr-radius-full);
+    font-weight: 600;
+    transition: background-color var(--tr-dur-fade) var(--tr-ease-soft), transform var(--tr-dur-press) var(--tr-ease-soft);
+  }
+  :is(#content, #content-vue, .oc-dialog, .modal-container) :is(button:not(.button-vue):not([class*=color-picker]):not(.action-button):not([class^=vs__]):not(.files-list__row-name-link),
+  .button:not(.button-vue),
+  input[type=button],
+  input[type=submit],
+  input[type=reset]):not(.primary):not(:disabled):not(.icon-confirm):not([class*=icon-]) {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: var(--tr-ink);
+  }
+  :is(#content, #content-vue, .oc-dialog, .modal-container) :is(button:not(.button-vue):not([class*=color-picker]):not(.action-button):not([class^=vs__]):not(.files-list__row-name-link),
+  .button:not(.button-vue),
+  input[type=button],
+  input[type=submit],
+  input[type=reset]):not(.primary):not(:disabled):not(.icon-confirm):not([class*=icon-]):hover {
+    background-color: rgba(255, 255, 255, 0.16);
+  }
+  :is(#content, #content-vue, .oc-dialog, .modal-container) :is(button:not(.button-vue):not([class*=color-picker]):not(.action-button):not([class^=vs__]):not(.files-list__row-name-link),
+  .button:not(.button-vue),
+  input[type=button],
+  input[type=submit],
+  input[type=reset]).primary:not(:disabled) {
+    background-color: var(--color-primary-element);
+    border: none;
+    color: var(--color-primary-element-text);
+    box-shadow: var(--tr-shadow-button);
+  }
+  :is(#content, #content-vue, .oc-dialog, .modal-container) :is(button:not(.button-vue):not([class*=color-picker]):not(.action-button):not([class^=vs__]):not(.files-list__row-name-link),
+  .button:not(.button-vue),
+  input[type=button],
+  input[type=submit],
+  input[type=reset]).primary:not(:disabled):hover {
+    background-color: var(--color-primary-element-hover);
+  }
+  :is(#content, #content-vue, .oc-dialog, .modal-container) :is(button:not(.button-vue):not([class*=color-picker]):not(.action-button):not([class^=vs__]):not(.files-list__row-name-link),
+  .button:not(.button-vue),
+  input[type=button],
+  input[type=submit],
+  input[type=reset]):active:not(:disabled) {
+    transform: scale(var(--tr-press-scale));
+  }
+  /* Fields -------------------------------------------------------------------- */
+  .input-field {
+    --input-border-color: var(--tr-border-strong) !important;
+  }
+  .input-field:not(.input-field--pill) {
+    --input-border-radius: 12px !important;
+  }
+  .input-field__input {
+    background-color: var(--tr-field) !important;
+  }
+  .input-field__input:focus, .input-field__input:focus-within, .input-field__input:active {
+    --input-border-color: var(--tr-accent-text) !important;
+  }
+  .input-field__label {
+    color: var(--tr-ink-soft) !important;
+  }
+  input:not([type=range]):not([type=button]):not([type=submit]):not([type=reset]):not([type=checkbox]):not([type=radio]):not([type=color]):not([type=file]):not(.input-field__input):not(.vs__search):not(.app-navigation-search__input),
+  textarea:not(.input-field__input),
+  select {
+    background-color: var(--tr-field) !important;
+    border: 1px solid var(--tr-border-strong) !important;
+    border-radius: 12px;
+    color: var(--tr-ink);
+    transition: border-color var(--tr-dur-fade) var(--tr-ease-soft), box-shadow var(--tr-dur-fade) var(--tr-ease-soft);
+  }
+  input:not([type=range]):not([type=button]):not([type=submit]):not([type=reset]):not([type=checkbox]):not([type=radio]):not([type=color]):not([type=file]):not(.input-field__input):not(.vs__search):not(.app-navigation-search__input)::placeholder,
+  textarea:not(.input-field__input)::placeholder,
+  select::placeholder {
+    color: var(--tr-ink-soft);
+    opacity: 1;
+  }
+  input:not([type=range]):not([type=button]):not([type=submit]):not([type=reset]):not([type=checkbox]):not([type=radio]):not([type=color]):not([type=file]):not(.input-field__input):not(.vs__search):not(.app-navigation-search__input):hover:not(:disabled):not(:focus),
+  textarea:not(.input-field__input):hover:not(:disabled):not(:focus),
+  select:hover:not(:disabled):not(:focus) {
+    border-color: var(--tr-ink-soft) !important;
+  }
+  input:not([type=range]):not([type=button]):not([type=submit]):not([type=reset]):not([type=checkbox]):not([type=radio]):not([type=color]):not([type=file]):not(.input-field__input):not(.vs__search):not(.app-navigation-search__input):focus, input:not([type=range]):not([type=button]):not([type=submit]):not([type=reset]):not([type=checkbox]):not([type=radio]):not([type=color]):not([type=file]):not(.input-field__input):not(.vs__search):not(.app-navigation-search__input):focus-visible,
+  textarea:not(.input-field__input):focus,
+  textarea:not(.input-field__input):focus-visible,
+  select:focus,
+  select:focus-visible {
+    border-color: var(--tr-accent-text) !important;
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--tr-accent) 35%, transparent) !important;
+    outline: none;
+  }
   select option {
-    background-color: var(--color-main-background);
-    color: var(--color-main-text);
+    background-color: var(--tr-inset);
+    color: var(--tr-ink);
   }
-  .select2-choices .select2-search-choice {
-    box-shadow: unset;
+  /* Switches, checkboxes, radios --------------------------------------------------- */
+  .checkbox-radio-switch-switch.checkbox-radio-switch--checked:not(.checkbox-radio-switch--disabled) .checkbox-radio-switch__icon > * {
+    color: var(--tr-success) !important;
   }
-  .select2-dropdown-open .select2-choice,
-  .select2-dropdown-open .select2-choices {
-    background: var(--color-main-background) !important;
-    border-color: var(--color-border) !important;
+  .checkbox-radio-switch-switch:not(.checkbox-radio-switch--checked) .checkbox-radio-switch__icon > * {
+    color: var(--tr-ink-faint) !important;
   }
-  .select2-drop .select2-drop-active {
-    border-top-color: var(--color-border) !important;
+  .checkbox-radio-switch-checkbox .checkbox-radio-switch__icon > *,
+  .checkbox-radio-switch-radio .checkbox-radio-switch__icon > * {
+    color: var(--tr-accent-text) !important;
   }
-  .multiselect .multiselect__content-wrapper .multiselect__option--highlight {
-    background-color: var(--color-background-hover) !important;
+  .checkbox-radio-switch-checkbox:not(.checkbox-radio-switch--checked) .checkbox-radio-switch__icon > *,
+  .checkbox-radio-switch-radio:not(.checkbox-radio-switch--checked) .checkbox-radio-switch__icon > * {
+    color: var(--tr-ink-soft) !important;
   }
-  /* vs__search ---------------------------------------------------------------- */
+  .checkbox-radio-switch__input:focus-visible + .checkbox-radio-switch__content {
+    outline: 2px solid var(--tr-accent-text) !important;
+    outline-offset: -2px;
+  }
+  .checkbox-radio-switch:not(.checkbox-radio-switch--disabled):not(.checkbox-radio-switch--button-variant) .checkbox-radio-switch__content:hover {
+    background-color: rgba(255, 255, 255, 0.06) !important;
+  }
+  .checkbox-radio-switch--button-variant.checkbox-radio-switch {
+    border-color: var(--tr-border) !important;
+    background-color: var(--tr-field) !important;
+  }
+  .checkbox-radio-switch--button-variant.checkbox-radio-switch.checkbox-radio-switch--checked .checkbox-radio-switch__content {
+    background-color: var(--color-primary-element-light) !important;
+    color: var(--color-primary-element-light-text) !important;
+  }
+  .checkbox-radio-switch--button-variant.checkbox-radio-switch.checkbox-radio-switch--checked .checkbox-radio-switch__icon > * {
+    color: var(--color-primary-element-light-text) !important;
+  }
+  /* Selects (NcSelect / vue-select) ----------------------------------------------- */
+  .v-select.select .vs__dropdown-toggle,
+  .select .vs__dropdown-toggle {
+    background-color: var(--tr-field) !important;
+    border-radius: 12px !important;
+  }
+  .vs__dropdown-menu {
+    background-color: var(--tr-inset) !important;
+    border-color: var(--tr-border) !important;
+    border-radius: var(--tr-radius-xl) !important;
+    box-shadow: var(--tr-shadow-float) !important;
+  }
+  .vs__dropdown-menu .vs__dropdown-option--highlight {
+    background-color: rgba(255, 255, 255, 0.08) !important;
+    color: var(--tr-ink) !important;
+  }
+  .vs__dropdown-menu .vs__dropdown-option--selected {
+    color: var(--tr-accent-text) !important;
+  }
   .vs__search {
-    background-color: unset !important;
+    background-color: transparent !important;
   }
-  /* Table --------------------------------------------------------------------- */
+  /* Tables -------------------------------------------------------------------- */
   tbody tr:hover,
-  tbody tr:focus,
-  tbody tr:active {
-    background-color: var(--color-background-hover) !important;
-  }
-  tbody tr:hover thead tr:hover,
-  tbody tr:hover thead tr:focus,
-  tbody tr:hover thead tr:active,
-  tbody tr:focus thead tr:hover,
-  tbody tr:focus thead tr:focus,
-  tbody tr:focus thead tr:active,
-  tbody tr:active thead tr:hover,
-  tbody tr:active thead tr:focus,
-  tbody tr:active thead tr:active {
-    background-color: var(--color-main-background) !important;
+  tbody tr:focus-within {
+    background-color: var(--color-background-hover);
   }
   /* Progress ------------------------------------------------------------------ */
   progress:not(.vue) {
-    background-color: var(--color-border);
+    background-color: var(--tr-inset);
+    border-radius: var(--tr-radius-full);
+    overflow: hidden;
   }
+  progress:not(.vue)::-webkit-progress-bar {
+    background-color: var(--tr-inset);
+  }
+  progress:not(.vue)::-webkit-progress-value {
+    background-color: var(--tr-accent);
+  }
+  progress:not(.vue)::-moz-progress-bar {
+    background-color: var(--tr-accent);
+  }
+}
+@media (prefers-color-scheme: dark) and (prefers-reduced-motion: reduce) {
+  :is(.button-vue--primary, .button-vue--vue-primary)::after {
+    animation: none !important;
+  }
+  .button-vue:active:not(:disabled),
+  button:active,
+  .button:active {
+    transform: none !important;
+  }
+}
+@media (prefers-color-scheme: dark) {
   /***
+   * InkCurity Dark — signatures, Trumpf edition
+   *
+   * The page carries a bloom in the colour of the open app, the content
+   * container stands on it like the app column of a device, and every app
+   * switch fades the new page in while it rises 8 px. The dashboard greeting is
+   * a large title with the date as eyebrow. Nothing moves just for decoration.
+   *
+   * @copyright Copyright (c) 2026 inkcurity.net
+   *
+   * @license GNU AGPL version 3 or any later version, see COPYING file for more.
+   */
+  /* Backdrop: dusk with the app's bloom ----------------------------------------- */
+  #body-user,
+  #body-settings,
+  #body-public {
+    background-color: var(--tr-page) !important;
+    background-image: radial-gradient(1100px 720px at 8% -12%, color-mix(in srgb, var(--tr-accent) 34%, transparent), transparent 64%), radial-gradient(760px 560px at 104% 108%, color-mix(in srgb, var(--tr-pink) 16%, transparent), transparent 62%), radial-gradient(600px 420px at 70% -20%, color-mix(in srgb, var(--tr-accent) 14%, transparent), transparent 60%) !important;
+    background-repeat: no-repeat !important;
+    background-attachment: fixed !important;
+    background-size: auto !important;
+  }
+  /* The content container: the app column standing on the page ----------------- */
+  body > #content,
+  body > #content-vue {
+    box-shadow: var(--tr-shadow-frame);
+  }
+  #app-content,
+  #app-content-vue,
+  #app-dashboard {
+    animation: tr-page-in var(--tr-dur-rise) var(--tr-ease-soft) backwards;
+  }
+  @keyframes tr-page-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+  }
+  /* Caret, selection, focus ------------------------------------------------------- */
+  input,
+  textarea,
+  [contenteditable=true] {
+    caret-color: var(--tr-accent-text);
+  }
+  :focus-visible {
+    outline-color: var(--tr-accent-text) !important;
+  }
+  * {
+    scrollbar-width: thin;
+  }
+  /* Type: large titles, eyebrow, overline, signature line ------------------------ */
+  #app-dashboard > h2, .settings-section__name,
+  .settings-section__title,
+  .section > h2,
+  .app-sidebar-header__mainname,
+  .modal-header .modal-name,
+  .modal-header__name,
+  .dialog__name,
+  .empty-content__name,
+  .panel--header h2 {
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+    hyphens: auto;
+  }
+  #app-dashboard > h2[data-tr-eyebrow]::before {
+    display: block;
+    color: var(--tr-accent-text);
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 18px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .files-list__row-size,
+  .files-list__row-mtime,
+  .counter-bubble__counter,
+  .app-navigation-entry__counter-wrapper,
+  .app-sidebar-header__subname,
+  progress + p,
+  .quota,
+  time {
+    font-variant-numeric: tabular-nums;
+  }
+  #app-dashboard > h2 {
+    background-image: linear-gradient(100deg, #ffffff 0%, #ffffff 38%, var(--tr-accent-text) 72%, #f9a8d4 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-size: 34px !important;
+    line-height: 41px !important;
+  }
+  #app-dashboard > h2[data-tr-eyebrow]::before {
+    content: attr(data-tr-eyebrow);
+    margin-bottom: 4px;
+  }
+  /* Code: mono chips in the accent ---------------------------------------------- */
+  code,
+  kbd,
+  samp,
+  pre {
+    font-family: var(--tr-font-mono);
+    font-variant-numeric: tabular-nums;
+  }
+  :not(pre) > code {
+    padding: 0.1em 0.4em;
+    border-radius: 6px;
+    background: color-mix(in srgb, var(--tr-accent) 16%, transparent);
+    color: var(--tr-accent-text);
+  }
+  kbd {
+    padding: 0.1em 0.45em;
+    border: 1px solid var(--tr-border-strong);
+    border-bottom-width: 2px;
+    border-radius: 6px;
+    background: var(--tr-inset);
+    color: var(--tr-ink);
+  }
+  /* Reduced motion: system setting and Nextcloud's own switch ------------------ */
+}
+@media (prefers-color-scheme: dark) and (prefers-reduced-motion: reduce) {
+  #app-content,
+  #app-content-vue,
+  #app-dashboard {
+    animation: none !important;
+  }
+}
+@media (prefers-color-scheme: dark) {
+  [data-themes*=reduced-motion] #app-content,
+  [data-themes*=reduced-motion] #app-content-vue,
+  [data-themes*=reduced-motion] #app-dashboard {
+    animation: none !important;
+  }
+}
+@media (prefers-color-scheme: dark) {
+  /***
+   * InkCurity Dark — app menus as tiles, Trumpf edition
+   *
+   * Every app wears its colour: the open app sits on a tile in its accent, and
+   * in the Nextcloud 34 app grid every app is a tile in its own colour. Colour
+   * means something here (which app), so this is the one place where the menu
+   * is not monochrome.
+   *
+   * Nextcloud 33: a bar of .app-menu-entry items in the header.
+   * Nextcloud 34: a waffle button, the current app as a button, a popover grid
+   *               of .app-item entries with an .app-item__circle.
+   * Nextcloud 35: the same waffle, but grid entries draw an .app-icon with a
+   *               masked glyph, plus a row of quick-create actions.
+   *
+   * @copyright Copyright (c) 2026 inkcurity.net
+   *
+   * @license GNU AGPL version 3 or any later version, see COPYING file for more.
+   */
+  /* Nextcloud 33: the header bar ------------------------------------------------ */
+  .app-menu-entry .app-menu-icon {
+    isolation: isolate;
+  }
+  .app-menu-entry .app-menu-icon::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: -7px;
+    border-radius: 10px;
+    background-color: var(--tr-app, var(--tr-accent));
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity var(--tr-dur-fade) var(--tr-ease-soft), transform var(--tr-dur-control) var(--tr-ease-soft);
+  }
+  .app-menu-entry:hover .app-menu-icon::before, .app-menu-entry:focus-within .app-menu-icon::before {
+    opacity: 0.35;
+    transform: none;
+  }
+  .app-menu-entry--active::before {
+    display: none !important;
+  }
+  .app-menu-entry--active .app-menu-icon::before {
+    background-color: var(--tr-accent);
+    box-shadow: 0 6px 16px color-mix(in srgb, var(--tr-accent) 45%, transparent);
+    opacity: 1 !important;
+    transform: none;
+  }
+  .app-menu-entry--active .app-menu-icon__icon {
+    filter: var(--tr-accent-flip) !important;
+  }
+  .app-menu-entry--active .app-menu-entry__label {
+    font-weight: 700 !important;
+  }
+  .app-menu-entry:active .app-menu-icon {
+    transform: scale(var(--tr-press-scale));
+    transition: transform var(--tr-dur-press) var(--tr-ease-soft);
+  }
+  .app-menu-icon__unread {
+    color: var(--tr-pink) !important;
+  }
+  /* Nextcloud 34: waffle, current app, grid ------------------------------------- */
+  .app-menu__waffle,
+  .app-menu__current-app {
+    border-radius: var(--tr-radius-full) !important;
+  }
+  .app-menu__waffle:hover:not(:disabled), .app-menu__waffle:focus-visible,
+  .app-menu__current-app:hover:not(:disabled),
+  .app-menu__current-app:focus-visible {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+  }
+  .app-menu__waffle:active:not(:disabled),
+  .app-menu__current-app:active:not(:disabled) {
+    background-color: rgba(255, 255, 255, 0.16) !important;
+  }
+  .app-menu__trigger::before {
+    border-radius: var(--tr-radius-full) !important;
+  }
+  .app-menu__trigger:hover::before, .app-menu__trigger--open::before {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+  }
+  .app-menu__current-app .button-vue__icon {
+    position: relative;
+    isolation: isolate;
+  }
+  .app-menu__current-app .button-vue__icon::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: 3px;
+    border-radius: 9px;
+    background-color: var(--tr-accent);
+    background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.26), rgba(255, 255, 255, 0) 60%);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 6px 16px -4px color-mix(in srgb, var(--tr-accent) 70%, transparent);
+  }
+  .app-menu__current-app .app-menu__current-app-icon {
+    width: 18px !important;
+    height: 18px !important;
+    mask: none !important;
+  }
+  .app-menu__current-app .app-menu__current-app-glyph {
+    background-color: var(--tr-accent-on) !important;
+  }
+  .app-menu__current-app .app-menu__current-app-icon {
+    width: 18px !important;
+    height: 18px !important;
+    filter: var(--tr-accent-flip) !important;
+    mask: none !important;
+  }
+  .app-menu__current-app .app-menu__current-app-cog {
+    color: var(--tr-accent-on);
+    mask: none !important;
+  }
+  .app-menu__current-app .app-menu__current-app-name {
+    font-weight: 600 !important;
+    letter-spacing: -0.01em !important;
+  }
+  .app-menu__popover-base {
+    --border-radius-large: var(--tr-radius-card);
+    --border-radius-element: var(--tr-radius-card);
+  }
+  .app-menu__popover-base .v-popper__inner {
+    background-color: var(--tr-material) !important;
+    background-image: var(--tr-sheen) !important;
+    -webkit-backdrop-filter: var(--tr-material-filter);
+    backdrop-filter: var(--tr-material-filter);
+  }
+  .app-menu__popover {
+    background-color: transparent !important;
+  }
+  .app-item {
+    border-radius: var(--tr-radius-xl) !important;
+    transition: background-color var(--tr-dur-fade) var(--tr-ease-soft);
+  }
+  .app-item:hover, .app-item:focus-visible {
+    background-color: rgba(255, 255, 255, 0.08) !important;
+  }
+  .app-item__circle {
+    border-radius: 12px !important;
+    background-color: var(--tr-app, var(--tr-accent)) !important;
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0) 50%) !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 4px 10px color-mix(in srgb, var(--tr-app, var(--tr-accent)) 35%, transparent) !important;
+    transition: transform var(--tr-dur-control) var(--tr-ease-soft);
+  }
+  .app-item:hover .app-item__circle, .app-item:focus-visible .app-item__circle {
+    transform: translateY(-2px);
+  }
+  .app-item:active .app-item__circle {
+    transform: scale(var(--tr-press-scale));
+    transition-duration: var(--tr-dur-press);
+  }
+  .app-item__icon {
+    filter: var(--tr-app-flip, var(--tr-accent-flip)) !important;
+    mask: none !important;
+  }
+  .app-item--active .app-item__circle {
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 0 0 2px var(--tr-surface), 0 0 0 4px var(--tr-app, var(--tr-accent)) !important;
+  }
+  .app-item--outlined .app-item__circle {
+    background: transparent !important;
+    box-shadow: inset 0 0 0 1.5px var(--tr-border-strong) !important;
+  }
+  .app-item--outlined .app-item__icon {
+    filter: none !important;
+  }
+  .app-item__unread {
+    background-color: var(--tr-pink) !important;
+    border-color: var(--tr-surface) !important;
+  }
+  .app-item__label {
+    color: var(--tr-ink) !important;
+  }
+  /* Nextcloud 35: app icons and quick-create actions ------------------------------ */
+  .app-item .app-icon:not(.app-icon--outlined) {
+    border-radius: 30% !important;
+    background-color: var(--tr-app, var(--tr-accent)) !important;
+    background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.26) 0%, rgba(255, 255, 255, 0) 55%), linear-gradient(0deg, rgba(0, 0, 0, 0.12) 0%, rgba(0, 0, 0, 0) 45%) !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.32), 0 8px 18px -6px color-mix(in srgb, var(--tr-app, var(--tr-accent)) 70%, transparent) !important;
+    transform: translateY(var(--tr-lift, 0)) scale(var(--app-icon-scale, 1)) !important;
+    transition: transform var(--tr-dur-control) var(--tr-ease-soft) !important;
+  }
+  .app-item .app-icon:not(.app-icon--outlined) .app-icon__img {
+    background-color: var(--tr-app-on, #ffffff) !important;
+    background-image: none !important;
+  }
+  .app-item:hover,
+  .app-item:focus-visible {
+    --tr-lift: -3px;
+  }
+  .app-item--active .app-icon:not(.app-icon--outlined) {
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.32), 0 0 0 2px var(--tr-inset), 0 0 0 4px var(--tr-app, var(--tr-accent)), 0 10px 22px -6px color-mix(in srgb, var(--tr-app, var(--tr-accent)) 75%, transparent) !important;
+  }
+  .app-item .app-icon--outlined {
+    border-radius: 30% !important;
+    box-shadow: inset 0 0 0 1.5px var(--tr-border-strong) !important;
+  }
+  .app-item .app-icon--outlined .app-icon__img {
+    background-color: var(--tr-ink-soft) !important;
+  }
+  .app-item--compact:hover,
+  .app-item--compact:focus-visible {
+    background-color: rgba(255, 255, 255, 0.08) !important;
+  }
+  .app-menu-actions {
+    border-top: 1px solid color-mix(in srgb, var(--tr-border) 70%, transparent) !important;
+  }
+  .app-action-icon {
+    transform: translateY(var(--tr-lift, 0)) scale(var(--app-icon-scale, 1)) !important;
+    transition: transform var(--tr-dur-control) var(--tr-ease-soft) !important;
+    filter: drop-shadow(0 4px 8px rgba(6, 9, 28, 0.35));
+  }
+  .app-action-icon__indicator {
+    border-color: var(--tr-inset) !important;
+  }
+}
+@media (prefers-color-scheme: dark) and (prefers-reduced-motion: reduce) {
+  .app-menu-entry .app-menu-icon::before,
+  .app-item__circle,
+  .app-item .app-icon,
+  .app-action-icon {
+    transition: none !important;
+  }
+}
+@media (prefers-color-scheme: dark) {
+  /***
+   * InkCurity Dark — chrome, Trumpf edition
+   *
+   * Navigation like the Trumpf sidebar (on bg, tinted selection, icons in the
+   * accent), grouped settings sections as cards, raised menus with a float
+   * shadow, sheets that rise from below, material toasts, empty states with a
+   * tinted glyph. Hairlines stay quiet, nothing glows.
+   *
    * @copyright Copyright (c) 2017, Magnus Walbeck <mw@mwalbeck.org>
+   * @copyright Copyright (c) 2026 inkcurity.net
    *
    * @license GNU AGPL version 3 or any later version, see COPYING file for more.
    */
   /* Header -------------------------------------------------------------------- */
-  #settings #expand:hover #expandDisplayName,
-  #settings #expand:focus #expandDisplayName,
-  #settings #expand:active #expandDisplayName,
-  #settings #expand:hover .avatardiv,
-  #settings #expand:focus .avatardiv,
-  #settings #expand:active .avatardiv {
-    border: unset;
-  }
   #body-login #header {
     background-color: unset !important;
   }
-  /* Menues -------------------------------------------------------------------- */
-  .menu,
+  #header:not(.header-guest) .avatardiv,
+  .header-end .account-menu__avatar,
+  #user-menu .avatardiv {
+    box-shadow: 0 0 0 2px var(--tr-page), 0 0 0 3.5px color-mix(in srgb, var(--tr-accent) 80%, transparent);
+  }
+  .header-menu__wrapper,
+  .header-menu__content {
+    border-radius: var(--tr-radius-card) !important;
+  }
+  .header-menu__wrapper {
+    background-color: var(--tr-inset) !important;
+    border: none !important;
+    box-shadow: var(--tr-shadow-float) !important;
+  }
+  .header-menu__carret {
+    display: none !important;
+  }
+  /* Navigation: the Trumpf sidebar ------------------------------------------------ */
+  .app-navigation,
+  #app-navigation:not(.vue) {
+    background-color: var(--tr-bg) !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    border-inline-end: 1px solid color-mix(in srgb, var(--tr-border) 70%, transparent) !important;
+  }
+  .app-navigation-entry {
+    border-radius: var(--tr-radius-lg) !important;
+  }
+  .app-navigation-entry .app-navigation-entry-icon {
+    color: var(--tr-accent-text);
+  }
+  .app-navigation-entry:not(.app-navigation-entry--legacy):hover:not(.active), .app-navigation-entry:not(.app-navigation-entry--legacy):focus-within:not(.active) {
+    background-color: rgba(255, 255, 255, 0.06) !important;
+  }
+  .app-navigation-entry:active:not(.active) {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    transition-duration: 0ms !important;
+  }
+  .app-navigation-entry.active {
+    background-color: var(--color-primary-element-light) !important;
+    background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0)) !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 6px 16px -10px color-mix(in srgb, var(--tr-accent) 80%, transparent);
+  }
+  .app-navigation-entry.active::before {
+    display: none !important;
+  }
+  .app-navigation-entry.active .app-navigation-entry__name,
+  .app-navigation-entry.active .app-navigation-entry-link,
+  .app-navigation-entry.active .app-navigation-entry-button {
+    color: var(--tr-ink) !important;
+    font-weight: 600 !important;
+  }
+  .app-navigation-entry.app-navigation-entry--legacy.active {
+    background-color: var(--color-primary-element-light) !important;
+  }
+  .app-navigation-entry.app-navigation-entry--legacy.active .app-navigation-entry-link,
+  .app-navigation-entry.app-navigation-entry--legacy.active .app-navigation-entry-button {
+    color: var(--tr-ink) !important;
+  }
+  .app-navigation-entry:not(.app-navigation-entry__children *) > :is(.app-navigation-entry-link, .app-navigation-entry-button) > .app-navigation-entry-icon:not([class*=icon-]) {
+    position: relative;
+    isolation: isolate;
+  }
+  .app-navigation-entry:not(.app-navigation-entry__children *) > :is(.app-navigation-entry-link, .app-navigation-entry-button) > .app-navigation-entry-icon:not([class*=icon-])::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: calc(50% - 14px);
+    border-radius: 8px;
+    background-color: color-mix(in srgb, var(--tr-accent) 20%, transparent);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07);
+    transition: background-color var(--tr-dur-fade) var(--tr-ease-soft), box-shadow var(--tr-dur-fade) var(--tr-ease-soft);
+  }
+  .app-navigation-entry:not(.app-navigation-entry__children *) > :is(.app-navigation-entry-link, .app-navigation-entry-button) > .app-navigation-entry-icon:not([class*=icon-]) svg,
+  .app-navigation-entry:not(.app-navigation-entry__children *) > :is(.app-navigation-entry-link, .app-navigation-entry-button) > .app-navigation-entry-icon:not([class*=icon-]) img {
+    width: 18px !important;
+    height: 18px !important;
+  }
+  #body-settings .app-navigation-entry:not(.app-navigation-entry__children *) > :is(.app-navigation-entry-link, .app-navigation-entry-button) > .app-navigation-entry-icon:not([class*=icon-]), .app-navigation-entry.active:not(.app-navigation-entry__children *) > :is(.app-navigation-entry-link, .app-navigation-entry-button) > .app-navigation-entry-icon:not([class*=icon-]) {
+    color: var(--tr-accent-on) !important;
+  }
+  #body-settings .app-navigation-entry:not(.app-navigation-entry__children *) > :is(.app-navigation-entry-link, .app-navigation-entry-button) > .app-navigation-entry-icon:not([class*=icon-])::before, .app-navigation-entry.active:not(.app-navigation-entry__children *) > :is(.app-navigation-entry-link, .app-navigation-entry-button) > .app-navigation-entry-icon:not([class*=icon-])::before {
+    background-color: var(--tr-accent);
+    background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0) 60%);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.32), 0 6px 14px -4px color-mix(in srgb, var(--tr-accent) 75%, transparent);
+  }
+  #body-settings .app-navigation-entry:not(.app-navigation-entry__children *) > :is(.app-navigation-entry-link, .app-navigation-entry-button) > .app-navigation-entry-icon:not([class*=icon-]) img, .app-navigation-entry.active:not(.app-navigation-entry__children *) > :is(.app-navigation-entry-link, .app-navigation-entry-button) > .app-navigation-entry-icon:not([class*=icon-]) img {
+    filter: var(--tr-accent-flip);
+  }
+  .app-navigation-caption__name,
+  #app-navigation:not(.vue) .app-navigation-caption {
+    color: var(--tr-ink-soft) !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+    box-shadow: none !important;
+  }
+  .counter-bubble__counter {
+    background-color: transparent !important;
+    color: var(--tr-ink-soft) !important;
+    font-weight: 600;
+  }
+  .counter-bubble__counter--highlighted {
+    background-color: var(--tr-pink-strong) !important;
+    color: #ffffff !important;
+  }
+  .counter-bubble__counter--outlined {
+    background-color: transparent !important;
+    color: var(--tr-accent-text) !important;
+  }
+  #app-navigation:not(.vue) > ul > li > a {
+    opacity: 1;
+  }
+  #app-navigation:not(.vue) > ul > li.active > a,
+  #app-navigation:not(.vue) > ul > li > a.active {
+    background-color: var(--color-primary-element-light) !important;
+    color: var(--tr-ink) !important;
+    font-weight: 600;
+  }
+  .app-navigation-new .button-vue {
+    border-radius: var(--tr-radius-full) !important;
+  }
+  .app-settings__header .settings-button,
+  #app-settings-header .settings-button,
+  #app-settings__header .settings-button {
+    background-color: transparent !important;
+    border: none !important;
+    opacity: 1;
+  }
+  /* Settings: a hub of grouped cards ------------------------------------------------ */
+  #body-settings .app-navigation-entry.active {
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 8px 18px -10px color-mix(in srgb, var(--tr-accent) 90%, transparent);
+  }
+  #body-settings #app-content,
+  #body-settings #app-content-vue {
+    background-color: var(--tr-bg) !important;
+  }
+  #body-settings #app-content :is(.section, .settings-section),
+  #body-settings #app-content-vue :is(.section, .settings-section) {
+    margin: 12px 16px !important;
+    padding: 20px 24px !important;
+    border: none !important;
+    border-radius: var(--tr-radius-2xl) !important;
+    background-color: var(--tr-surface);
+    background-image: var(--tr-sheen);
+    box-shadow: var(--tr-shadow-card);
+  }
+  .settings-section__name,
+  .section > h2 {
+    font-size: 20px !important;
+    line-height: 25px !important;
+  }
+  .settings-section__desc,
+  .settings-hint,
+  .section .hint,
+  .section em {
+    color: var(--tr-ink-soft) !important;
+  }
+  /* Sidebar ------------------------------------------------------------------- */
+  .app-sidebar,
+  #app-sidebar {
+    background-color: var(--tr-surface) !important;
+    border-inline-start: 1px solid color-mix(in srgb, var(--tr-border) 70%, transparent) !important;
+  }
+  .app-sidebar-header__figure {
+    background-color: var(--tr-accent-wash) !important;
+    background-image: radial-gradient(120% 120% at 0% 0%, color-mix(in srgb, var(--tr-accent) 35%, transparent), transparent 70%) !important;
+  }
+  .app-sidebar-header__mainname {
+    font-size: 20px !important;
+  }
+  #app-sidebar-vue .star--starred,
+  #app-sidebar .star--starred {
+    color: var(--tr-gold) !important;
+  }
+  /* Menus and popovers --------------------------------------------------------------- */
+  .v-popper__popper:not(.v-popper--theme-tooltip) .v-popper__wrapper {
+    border-radius: var(--tr-radius-xl) !important;
+    box-shadow: var(--tr-shadow-float) !important;
+  }
+  .v-popper__popper:not(.v-popper--theme-tooltip) .v-popper__inner,
   .popovermenu,
+  .menu,
   .bubble,
   .popover,
   .app-navigation-entry-menu,
-  .v-popper__popper .v-popper__inner {
-    border: 1px solid var(--color-border);
+  .action-item__menu {
+    --color-background-hover: rgba(255, 255, 255, 0.08);
+    --color-main-background: var(--tr-inset);
+    background-color: var(--tr-inset) !important;
+    background-image: var(--tr-sheen);
+    border: none !important;
+    border-radius: var(--tr-radius-xl) !important;
   }
-  .menu.notification-container {
-    border: unset;
+  .popovermenu,
+  .menu,
+  .bubble,
+  .popover,
+  .action-item__menu {
+    box-shadow: var(--tr-shadow-float) !important;
   }
   .bubble::after,
   .app-navigation-entry-menu::after,
   .menu::after,
   .popovermenu::after,
-  .v-popper--theme-dropdown.v-popper__popper[data-popper-placement^=bottom] .v-popper__arrow-container {
-    border-bottom-color: var(--color-border) !important;
-  }
-  .popover__arrow {
-    border-color: var(--color-border) !important;
-  }
-  .action-item__menu {
-    border: 1px solid var(--color-border);
-  }
   .action-item__menu .action-item__menu_arrow {
-    border-bottom-color: var(--color-border) !important;
+    display: none !important;
   }
-  .v-popper__popper button.action-button {
-    border-radius: 6px !important;
+  .action-button,
+  .action-link,
+  .action-router,
+  .action-checkbox__label,
+  .action-radio__label {
+    border-radius: var(--tr-radius-lg) !important;
+    transition: background-color var(--tr-dur-fade) var(--tr-ease-soft);
   }
-  /* Search ------------------------------------------------------------------- */
-  .header-menu__wrapper {
-    border: 1px solid var(--color-border);
+  .action-button:active,
+  .action-link:active,
+  .action-router:active,
+  .action-checkbox__label:active,
+  .action-radio__label:active {
+    background-color: rgba(255, 255, 255, 0.12) !important;
+    transition-duration: 0ms;
   }
-  .header-menu__carret {
-    border-bottom-color: var(--color-border) !important;
+  .action-separator {
+    border-color: color-mix(in srgb, var(--tr-border) 80%, transparent) !important;
   }
+  /* Tooltips ----------------------------------------------------------------------- */
+  .v-popper--theme-tooltip .v-popper__inner {
+    background-color: var(--tr-inset) !important;
+    border-radius: var(--tr-radius-lg) !important;
+    box-shadow: var(--tr-shadow-float) !important;
+    color: var(--tr-ink) !important;
+    font-size: 13px;
+  }
+  .v-popper--theme-tooltip .v-popper__arrow-outer,
+  .v-popper--theme-tooltip .v-popper__arrow-inner {
+    border-color: var(--tr-inset) !important;
+  }
+  /* Sheets: modals and dialogs rise from below ----------------------------------- */
+  .modal-mask {
+    background-color: var(--tr-scrim) !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+  .modal-wrapper:not(.modal-wrapper--full) .modal-container {
+    background-color: var(--tr-surface) !important;
+    background-image: var(--tr-sheen);
+    border-radius: var(--tr-radius-float) !important;
+    box-shadow: var(--tr-shadow-sheet) !important;
+    animation: tr-sheet-in var(--tr-dur-sheet) var(--tr-ease-ios) both;
+  }
+  .dialog__modal .modal-wrapper.modal-wrapper--small .modal-container {
+    border-radius: var(--tr-radius-card) !important;
+  }
+  @keyframes tr-sheet-in {
+    from {
+      opacity: 0;
+      transform: translateY(32px) scale(0.98);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  .dialog__name,
+  .modal-header .modal-name {
+    font-size: 20px !important;
+    line-height: 25px !important;
+  }
+  .oc-dialog {
+    border: none !important;
+    border-radius: var(--tr-radius-float) !important;
+    box-shadow: var(--tr-shadow-sheet) !important;
+  }
+  .oc-dialog-dim {
+    background-color: var(--tr-scrim) !important;
+  }
+  /* Toasts: material from above ------------------------------------------------------ */
+  .toastify.dialogs {
+    min-height: 48px;
+    padding: 10px 12px 10px 16px !important;
+    border: none !important;
+    border-radius: var(--tr-radius-card) !important;
+    background-color: var(--tr-material) !important;
+    -webkit-backdrop-filter: var(--tr-material-filter);
+    backdrop-filter: var(--tr-material-filter);
+    box-shadow: var(--tr-shadow-float) !important;
+    color: var(--tr-ink) !important;
+    font-weight: 500;
+    transition-duration: var(--tr-dur-toast) !important;
+    transition-timing-function: var(--tr-ease-ios) !important;
+  }
+  .toastify.dialogs.toast-success, .toastify.dialogs.toast-error, .toastify.dialogs.toast-warning, .toastify.dialogs.toast-info {
+    border-inline-start: none !important;
+  }
+  .toastify.dialogs::before {
+    content: "";
+    flex-shrink: 0;
+    align-self: center;
+    width: 8px;
+    height: 8px;
+    margin-inline-end: 10px;
+    border-radius: 50%;
+    background-color: var(--tr-accent-text);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--tr-accent-text) 22%, transparent);
+  }
+  .toastify.dialogs.toast-success::before {
+    background-color: var(--tr-success);
+  }
+  .toastify.dialogs.toast-error::before {
+    background-color: var(--tr-danger);
+  }
+  .toastify.dialogs.toast-warning::before {
+    background-color: var(--tr-warn);
+  }
+  .toastify.dialogs .toast-undo-button,
+  .toastify.dialogs .toast-close {
+    border-radius: var(--tr-radius-full) !important;
+  }
+  .toastify.dialogs .toast-undo-button {
+    background-color: var(--color-primary-element-light) !important;
+    color: var(--color-primary-element-light-text) !important;
+  }
+  /* Empty states: a tinted glyph, a statement, a sentence ---------------------------- */
+  .empty-content__icon {
+    width: 64px !important;
+    height: 64px !important;
+    border-radius: 50%;
+    background-color: color-mix(in srgb, var(--tr-accent) 18%, transparent);
+    background-size: 30px !important;
+    color: var(--tr-accent-text);
+    opacity: 1 !important;
+  }
+  .empty-content__icon svg {
+    width: 30px !important;
+    height: 30px !important;
+  }
+  .empty-content__name {
+    font-size: 20px !important;
+    line-height: 25px !important;
+  }
+  .empty-content__description {
+    max-width: 22rem;
+    color: var(--tr-ink-soft) !important;
+  }
+  /* Note cards and badges ----------------------------------------------------------- */
+  .notecard {
+    border-radius: var(--tr-radius-xl) !important;
+    border-inline-start-width: 0 !important;
+  }
+  .app-level .official,
+  .app-level .supported {
+    border-color: var(--tr-success) !important;
+    border-radius: var(--tr-radius-full);
+  }
+  /* Search ---------------------------------------------------------------------- */
   .unified-search__form-reset {
     background-color: transparent !important;
   }
-  .unified-search__result-icon img[src$="integration_discourse/img/app-dark.svg"] {
-    filter: invert(95%);
+  .unified-search-modal .result-items__item:hover,
+  .unified-search-modal .result-items__item:focus-within {
+    background-color: rgba(255, 255, 255, 0.06) !important;
+    border-radius: var(--tr-radius-lg);
   }
-  /* File picker --------------------------------------------------------------- */
-  .oc-dialog {
-    border: 1px solid var(--color-border);
-  }
-  .oc-dialog .filepicker_element_selected,
-  .oc-dialog #oc-dialog-filepicker-content .filepicker_element_selected {
-    background-color: var(--color-primary);
-    color: var(--color-primary-text);
-  }
-  .oc-dialog .fileexists label,
-  .oc-dialog .fileexists .conflict .filename {
-    color: var(--color-main-text) !important;
-  }
-  .reference-picker .oc-dialog {
-    border: none;
-  }
-  /* Settings ------------------------------------------------------------------ */
-  #cropper .inner-container {
-    background-color: var(--color-main-background) !important;
-    border: 1px solid var(--color-border);
-    color: var(--color-main-text) !important;
-  }
-  .followupsection {
-    color: var(--color-main-text) !important;
-  }
-  .link-button {
-    background-color: var(--color-main-background) !important;
-    border: 1px solid var(--color-border) !important;
-    color: var(--color-main-text) !important;
-  }
-  .link-button:hover, .link-button.button:hover {
-    border-color: var(--color-primary-element) !important;
-    color: var(--color-main-text) !important;
-  }
-  .link-button:active, .link-button:focus {
-    background-color: var(--color-primary) !important;
-    border-color: var(--color-primary-element) !important;
-    color: var(--color-main-text) !important;
-  }
+  /* Profile, user management, image cropper ---------------------------------------- */
   .preview-card .preview-card__footer {
-    border: 1px solid var(--color-border);
-    border-bottom-left-radius: var(--border-radius);
-    border-bottom-right-radius: var(--border-radius);
-    border-top: unset;
+    border-bottom-left-radius: var(--tr-radius-xl);
+    border-bottom-right-radius: var(--tr-radius-xl);
   }
-  .profile .user-actions .profile__primary-action-button img[src$="spreed/img/app-dark.svg"],
-  .profile .user-actions .user-actions__other a {
-    filter: invert(95%);
+  #cropper .inner-container {
+    background-color: var(--tr-surface) !important;
+    border-radius: var(--tr-radius-2xl);
+    color: var(--tr-ink) !important;
   }
   #addgroup button.icon-confirm,
   #addgroup button.icon-close {
     background-image: none !important;
   }
-  .breezedark-admin p {
-    margin-top: 1em;
+  .followupsection {
+    color: var(--tr-ink) !important;
   }
-  /* Tooltips ----------------------------------------------------------------- */
-  .tooltip,
-  .vue-tooltip {
-    filter: none !important;
+  /* Reduced motion ------------------------------------------------------------------ */
+}
+@media (prefers-color-scheme: dark) and (prefers-reduced-motion: reduce) {
+  .modal-wrapper .modal-container {
+    animation: none !important;
   }
-  .tooltip .tooltip-inner,
-  .vue-tooltip .tooltip-inner {
-    border: 1px solid var(--color-border);
+}
+@media (prefers-color-scheme: dark) {
+  [data-themes*=reduced-motion] .modal-wrapper .modal-container {
+    animation: none !important;
   }
-  .tooltip[x-placement^=right], .tooltip.right .tooltip-arrow,
-  .vue-tooltip[x-placement^=right],
-  .vue-tooltip.right .tooltip-arrow {
-    border-right-color: var(--color-border) !important;
-  }
-  .tooltip[x-placement^=left], .tooltip.left .tooltip-arrow,
-  .vue-tooltip[x-placement^=left],
-  .vue-tooltip.left .tooltip-arrow {
-    border-left-color: var(--color-border) !important;
-  }
-  .tooltip[x-placement^=bottom] .tooltip-arrow, .tooltip.bottom .tooltip-arrow, .tooltip.bottom-left .tooltip-arrow, .tooltip.bottom-right .tooltip-arrow,
-  .vue-tooltip[x-placement^=bottom] .tooltip-arrow,
-  .vue-tooltip.bottom .tooltip-arrow,
-  .vue-tooltip.bottom-left .tooltip-arrow,
-  .vue-tooltip.bottom-right .tooltip-arrow {
-    border-bottom-color: var(--color-border) !important;
-  }
-  .tooltip[x-placement^=top] .arrow, .tooltip[x-placement^=top] .tooltip-arrow, .tooltip.top .arrow, .tooltip.top .tooltip-arrow, .tooltip.top-left .arrow, .tooltip.top-left .tooltip-arrow, .tooltip.top-right .arrow, .tooltip.top-right .tooltip-arrow,
-  .vue-tooltip[x-placement^=top] .arrow,
-  .vue-tooltip[x-placement^=top] .tooltip-arrow,
-  .vue-tooltip.top .arrow,
-  .vue-tooltip.top .tooltip-arrow,
-  .vue-tooltip.top-left .arrow,
-  .vue-tooltip.top-left .tooltip-arrow,
-  .vue-tooltip.top-right .arrow,
-  .vue-tooltip.top-right .tooltip-arrow {
-    border-top-color: var(--color-border) !important;
-  }
-  /* Toasts ------------------------------------------------------------------- */
-  .toastify.dialogs {
-    border: 1px solid var(--color-border);
-  }
-  /* App Store ---------------------------------------------------------------- */
-  .app-level .official {
-    border-color: var(--color-success);
-  }
-  /* Smart picker ------------------------------------------------------------- */
-  .tribute-container-link {
-    border: 1px solid var(--color-border);
-    border-radius: 6px !important;
-  }
+}
+@media (prefers-color-scheme: dark) {
   /***
    * @copyright Copyright (c) 2017, Magnus Walbeck <mw@mwalbeck.org>
    *
    * @license GNU AGPL version 3 or any later version, see COPYING file for more.
    */
-  /* App navigation ----------------------------------------------------------- */
-  #app-navigation:not(.vue) > ul > li > a,
-  #app-navigation:not(.vue) > ul > li > ul > li > a {
-    opacity: 1;
-  }
-  #app-navigation:not(.vue) > ul > li > ul > li:hover > a,
-  #app-navigation:not(.vue) > ul > li > ul > li:focus > a {
-    background-color: unset;
-  }
-  #app-navigation:not(.vue) .collapsible::before {
-    background-color: unset;
-  }
-  #app-navigation:not(.vue) .collapsible:hover > .svg {
-    background-color: var(--color-background-hover);
-    background-image: none !important;
-  }
-  .app-navigation .app-navigation-caption__title {
-    opacity: 1 !important;
-  }
-  #app-settings-header .settings-button,
-  #app-settings__header .settings-button,
-  .contacts-settings .contacts-settings-button {
-    background-color: transparent !important;
-    border: unset !important;
-    opacity: 1;
-  }
-  .counter-bubble__counter {
-    color: var(--color-primary-text) !important;
-  }
-  /* App Sidebar -------------------------------------------------------------- */
-  .app-sidebar-tabs__tab a:not(.active):hover, .app-sidebar-tabs__tab a:not(.active):focus {
-    border-bottom-color: var(--color-background-hover) !important;
-    box-shadow: inset 0 -1px 0 var(--color-background-hover) !important;
-  }
-  .app-sidebar-tabs__tab a.active, .app-sidebar-tabs__tab a.active:focus, .app-sidebar-tabs__tab a.active:active {
-    border-bottom-color: var(--color-primary-element) !important;
-    box-shadow: inset 0 -1px 0 var(--color-primary-element) !important;
-  }
-  .versionsTabView li {
-    border-color: var(--color-border);
-  }
-  .versionsTabView li:hover {
-    background: var(--color-background-hover);
-  }
-  .app-sidebar-tabs__content section {
-    box-shadow: none !important;
-  }
-  #tab-comments .comment-form form input[type=submit] {
-    opacity: 0.7;
-  }
-  #tab-comments .comment-form form input[type=submit]:hover {
-    opacity: 1;
-  }
-  #app-sidebar-vue.app-sidebar .app-sidebar-header__desc .app-sidebar-header__star .star--star,
-  #app-sidebar.app-sidebar .app-sidebar-header__desc .app-sidebar-header__star .star--star {
-    color: var(--color-main-text);
-  }
-  #app-sidebar-vue.app-sidebar .app-sidebar-header__desc .app-sidebar-header__star .star--star:hover,
-  #app-sidebar.app-sidebar .app-sidebar-header__desc .app-sidebar-header__star .star--star:hover {
-    color: var(--color-icon-yellow);
-  }
-  #app-sidebar-vue.app-sidebar .app-sidebar-header__desc .app-sidebar-header__star .star--starred,
-  #app-sidebar.app-sidebar .app-sidebar-header__desc .app-sidebar-header__star .star--starred {
-    color: var(--color-icon-yellow);
-  }
-  #app-sidebar-vue.app-sidebar .app-sidebar-header__desc .app-sidebar-header__star .star--starred:hover,
-  #app-sidebar.app-sidebar .app-sidebar-header__desc .app-sidebar-header__star .star--starred:hover {
-    color: var(--color-main-text);
-  }
-  /* App Store ---------------------------------------------------------------- */
-  .app-settings #app-sidebar-vue .app-sidebar-header__figure {
-    filter: invert(5%);
-  }
   /* CodeMirror --------------------------------------------------------------- */
   .EasyMDEContainer .CodeMirror {
     background-color: var(--color-main-background);
@@ -597,11 +1969,6 @@
   .vue-treeselect--single .vue-treeselect__option--selected {
     background-color: var(--color-primary) !important;
   }
-  /* vue-checkboxes ----------------------------------------------------------- */
-  .checkbox-radio-switch:not(.checkbox-radio-switch--disabled) .checkbox-radio-switch__input:hover + .checkbox-radio-switch__label[data-v-5cec6b50],
-  .checkbox-radio-switch:not(.checkbox-radio-switch--disabled) .checkbox-radio-switch__input:focus + .checkbox-radio-switch__label[data-v-5cec6b50] {
-    background-color: var(--color-background-hover) !important;
-  }
   /* Template picker ---------------------------------------------------------- */
   .templates-picker__buttons {
     background-image: unset !important;
@@ -669,36 +2036,92 @@
   }
   /***
    * @copyright Copyright (c) 2020, Magnus Walbeck <mw@mwalbeck.org>
+   * @copyright Copyright (c) 2026 inkcurity.net
    *
    * @license GNU AGPL version 3 or any later version, see COPYING file for more.
    */
-  /* Dashboard ---------------------------------------------------------------- */
+  /* Dashboard: the start page ------------------------------------------------------ */
   #app-dashboard {
-    --color-background-translucent: var(--color-dashboard-grey) !important;
-    --color-main-background: var(--color-background-darker) !important;
+    --color-background-translucent: var(--tr-surface) !important;
+  }
+  #app-dashboard .statuses .button-vue,
+  #app-dashboard .statuses .action-item__menutoggle {
+    background-color: var(--tr-surface) !important;
+    box-shadow: none !important;
+    color: var(--tr-ink) !important;
+  }
+  #app-dashboard .statuses .button-vue:hover,
+  #app-dashboard .statuses .action-item__menutoggle:hover {
+    background-color: var(--tr-inset) !important;
+  }
+  #app-dashboard .panel,
+  #app-dashboard .panels > div {
+    background-color: var(--tr-surface) !important;
+    background-image: var(--tr-sheen) !important;
+    border: none !important;
+    border-radius: var(--tr-radius-2xl) !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    box-shadow: var(--tr-shadow-card) !important;
+    transition: transform var(--tr-dur-control) var(--tr-ease-soft), box-shadow var(--tr-dur-control) var(--tr-ease-soft);
+  }
+  #app-dashboard .panel:hover:not(.sortable-chosen):not(.sortable-ghost),
+  #app-dashboard .panels > div:hover:not(.sortable-chosen):not(.sortable-ghost) {
+    transform: translateY(-3px);
+    box-shadow: var(--tr-shadow-float) !important;
+  }
+  #app-dashboard .panel--header h2 {
+    font-size: 17px;
+    font-weight: 600;
+  }
+  #app-dashboard .panels > :first-child {
+    --color-main-text: #ffffff;
+    --color-text-maxcontrast: rgba(255, 255, 255, 0.8);
+    --color-text-maxcontrast-background-blur: rgba(255, 255, 255, 0.8);
+    --color-background-hover: rgba(255, 255, 255, 0.12);
+    --color-background-dark: rgba(255, 255, 255, 0.16);
+    --color-border: rgba(255, 255, 255, 0.18);
+    --color-primary-element: #ffffff;
+    --color-primary-element-text: #1e2850;
+    --color-primary-element-hover: rgba(255, 255, 255, 0.9);
+    --color-primary-element-light: rgba(255, 255, 255, 0.16);
+    --color-primary-element-light-hover: rgba(255, 255, 255, 0.25);
+    --color-primary-element-light-text: #ffffff;
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(6, 9, 28, 0.3), 0 22px 48px -14px color-mix(in srgb, #336deb 80%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
+    background-color: #2f64d8 !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"), radial-gradient(130% 110% at 0% 0%, color-mix(in srgb, #2f64d8 82%, white) 0%, color-mix(in srgb, #2f64d8 86%, black) 46%, color-mix(in srgb, #2f64d8 48%, black) 100%) !important;
+    color: #ffffff;
+  }
+  #app-dashboard .panels > :first-child .panel--header h2 {
+    font-size: 20px;
+    font-weight: 700;
+  }
+  #app-dashboard .panels > :first-child .panel--header h2 img,
+  #app-dashboard .panels > :first-child .panel--header h2 span[class*=icon-] {
+    filter: brightness(0) invert(1);
+  }
+  #app-dashboard .panels > :first-child::after {
+    content: "▌//"/"";
+    position: absolute;
+    z-index: -1;
+    top: -22px;
+    right: -10px;
+    color: rgba(255, 255, 255, 0.1);
+    font-family: var(--tr-font-mono);
+    font-size: 96px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.05em;
+    pointer-events: none;
   }
   .background-selector .background.color {
-    background-color: var(--color-background-darker) !important;
-  }
-  .modal__content li label {
-    background-color: var(--color-main-background) !important;
-    border-color: var(--color-border) !important;
-  }
-  .modal__content li label:hover {
-    border-color: var(--color-primary-element) !important;
-  }
-  #app-dashboard .footer .button-vue {
-    border: unset !important;
-  }
-  #app-dashboard .user-status-menu-item__toggle--inline {
-    box-shadow: none !important;
+    background-color: var(--tr-inset) !important;
   }
   #status-weather .button-vue {
-    background-color: var(--color-main-background-blur) !important;
-    border: unset !important;
-  }
-  #status-weather .button-vue:hover {
-    background-color: var(--color-background-hover) !important;
+    border: none !important;
   }
   /* Deck */
   .app-dashboard .card {
@@ -708,18 +2131,18 @@
   .app-dashboard .card:hover {
     background-color: var(--color-background-hover) !important;
   }
-  /* Tasks */
-  .center-button .button-vue--vue-secondary {
-    background-color: var(--color-background-darker) !important;
-    color: var(--color-main-text) !important;
+}
+@media (prefers-color-scheme: dark) and (prefers-reduced-motion: reduce) {
+  #app-dashboard .panel,
+  #app-dashboard .panels > div {
+    transition: none !important;
   }
-  .center-button .button-vue--vue-secondary:hover {
-    background-color: var(--color-background-hover) !important;
+  #app-dashboard .panel:hover,
+  #app-dashboard .panels > div:hover {
+    transform: none;
   }
-  .center-button .button-vue--vue-secondary:active, .center-button .button-vue--vue-secondary:focus {
-    background-color: var(--color-primary-element) !important;
-    color: var(--color-primary-text) !important;
-  }
+}
+@media (prefers-color-scheme: dark) {
   /***
    * @copyright Copyright (c) 2017, Magnus Walbeck <mw@mwalbeck.org>
    *
@@ -772,6 +2195,57 @@
   #filestable tbody tr:hover .filename form,
   table tr.mouseOver td {
     background-color: unset !important;
+  }
+  /* Files list (Nextcloud 28+): a Trumpf list ------------------------------------ */
+  .files-list__thead {
+    background-color: var(--tr-surface) !important;
+  }
+  .files-list__thead .files-list__column,
+  .files-list__thead .files-list__column-sort-button,
+  .files-list__thead .files-list__column-sort-button-text,
+  .files-list__thead .files-list__row-head {
+    color: var(--tr-ink-soft);
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .files-list__thead .files-list__column-sort-button--active,
+  .files-list__thead .files-list__column-sort-button--active .files-list__column-sort-button-text {
+    color: var(--tr-accent-text) !important;
+    font-weight: 600;
+  }
+  .files-list__row {
+    transition: background-color var(--tr-dur-release) var(--tr-ease-soft);
+  }
+  .files-list__row:hover, .files-list__row:focus-within {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+  }
+  .files-list__row:active {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    transition-duration: 0ms;
+  }
+  .files-list__row--active, .files-list__row--dragover, .files-list__row[data-cy-files-list-row-selected=true] {
+    background-color: color-mix(in srgb, var(--tr-accent) 18%, transparent) !important;
+  }
+  .files-list__row td,
+  .files-list__row-head {
+    border-color: color-mix(in srgb, var(--tr-border) 60%, transparent) !important;
+  }
+  .files-list__row-size,
+  .files-list__row-mtime {
+    color: var(--tr-ink-soft) !important;
+  }
+  .files-list__row-icon-favorite {
+    color: var(--tr-gold) !important;
+  }
+  .files-list__row-icon-preview {
+    border-radius: var(--tr-radius-tile);
+  }
+  .files-list__tfoot td {
+    color: var(--tr-ink-soft);
+  }
+  .files-list__filters .button-vue,
+  .files-list__header .button-vue--secondary {
+    font-size: 13px;
   }
   /***
    * @copyright Copyright (c) 2021, Magnus Walbeck <mw@mwalbeck.org>
@@ -2782,5 +4256,3 @@
     background-color: unset;
   }
 }
-
-/*# sourceMappingURL=server-automatic.css.map */

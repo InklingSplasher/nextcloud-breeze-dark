@@ -1,44 +1,120 @@
 /***
  * @copyright Copyright (c) 2020, Magnus Walbeck <mw@mwalbeck.org>
+ * @copyright Copyright (c) 2026 inkcurity.net
  *
  * @license GNU AGPL version 3 or any later version, see COPYING file for more.
  */
 
-/* Dashboard ---------------------------------------------------------------- */
+/* Dashboard: the start page ------------------------------------------------------ */
 
+// The dashboard lives on the page, its cards lift when you point at them. Its first widget is the live card: the one
+// saturated block of the start page, in the accent, with a fine grain. Drag
+// the widget you need most into first place and it becomes the live card.
 #app-dashboard {
-    --color-background-translucent: var(--color-dashboard-grey) !important;
-    --color-main-background: var(--color-background-darker) !important;
+    --color-background-translucent: var(--tr-surface) !important;
+
+    .statuses .button-vue,
+    .statuses .action-item__menutoggle {
+        background-color: var(--tr-surface) !important;
+        box-shadow: none !important;
+        color: var(--tr-ink) !important;
+
+        &:hover {
+            background-color: var(--tr-inset) !important;
+        }
+    }
+
+    .panel,
+    .panels > div {
+        background-color: var(--tr-surface) !important;
+        background-image: var(--tr-sheen) !important;
+        border: none !important;
+        border-radius: var(--tr-radius-2xl) !important;
+        -webkit-backdrop-filter: none !important;
+        backdrop-filter: none !important;
+        box-shadow: var(--tr-shadow-card) !important;
+        transition:
+            transform var(--tr-dur-control) var(--tr-ease-soft),
+            box-shadow var(--tr-dur-control) var(--tr-ease-soft);
+
+        // A card you point at lifts a little and its shadow grows.
+        &:hover:not(.sortable-chosen):not(.sortable-ghost) {
+            transform: translateY(-3px);
+            box-shadow: var(--tr-shadow-float) !important;
+        }
+    }
+
+    .panel--header h2 {
+        font-size: 17px;
+        font-weight: 600;
+    }
+
+    .panels > :first-child {
+        --color-main-text: #ffffff;
+        --color-text-maxcontrast: rgba(255, 255, 255, 0.8);
+        --color-text-maxcontrast-background-blur: rgba(255, 255, 255, 0.8);
+        --color-background-hover: rgba(255, 255, 255, 0.12);
+        --color-background-dark: rgba(255, 255, 255, 0.16);
+        --color-border: rgba(255, 255, 255, 0.18);
+        --color-primary-element: #ffffff;
+        --color-primary-element-text: #1e2850;
+        --color-primary-element-hover: rgba(255, 255, 255, 0.9);
+        --color-primary-element-light: rgba(255, 255, 255, 0.16);
+        --color-primary-element-light-hover: rgba(255, 255, 255, 0.25);
+        --color-primary-element-light-text: #ffffff;
+
+        position: relative;
+        isolation: isolate;
+        overflow: hidden;
+        box-shadow:
+            0 2px 6px rgba(6, 9, 28, 0.3),
+            0 22px 48px -14px color-mix(in srgb, #336deb 80%, transparent),
+            inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
+        background-color: #2f64d8 !important;
+        background-image:
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+            radial-gradient(
+                130% 110% at 0% 0%,
+                color-mix(in srgb, #2f64d8 82%, white) 0%,
+                color-mix(in srgb, #2f64d8 86%, black) 46%,
+                color-mix(in srgb, #2f64d8 48%, black) 100%
+            ) !important;
+        color: #ffffff;
+
+        .panel--header h2 {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .panel--header h2 img,
+        .panel--header h2 span[class*="icon-"] {
+            filter: brightness(0) invert(1);
+        }
+
+        // The InkCurity glyphs as a quiet watermark, like the hero card.
+        &::after {
+            content: "▌//" / "";
+            position: absolute;
+            z-index: -1;
+            top: -22px;
+            right: -10px;
+            color: rgba(255, 255, 255, 0.1);
+            font-family: var(--tr-font-mono);
+            font-size: 96px;
+            font-weight: 700;
+            line-height: 1;
+            letter-spacing: -0.05em;
+            pointer-events: none;
+        }
+    }
 }
 
 .background-selector .background.color {
-    background-color: var(--color-background-darker) !important;
-}
-
-.modal__content li label {
-    background-color: var(--color-main-background) !important;
-    border-color: var(--color-border) !important;
-
-    &:hover {
-        border-color: var(--color-primary-element) !important;
-    }
-}
-
-#app-dashboard .footer .button-vue {
-    border: unset !important;
-}
-
-#app-dashboard .user-status-menu-item__toggle--inline {
-    box-shadow: none !important;
+    background-color: var(--tr-inset) !important;
 }
 
 #status-weather .button-vue {
-    background-color: var(--color-main-background-blur) !important;
-    border: unset !important;
-
-    &:hover {
-        background-color: var(--color-background-hover) !important;
-    }
+    border: none !important;
 }
 
 /* Deck */
@@ -51,18 +127,13 @@
     }
 }
 
-/* Tasks */
-.center-button .button-vue--vue-secondary {
-    background-color: var(--color-background-darker) !important;
-    color: var(--color-main-text) !important;
+@media (prefers-reduced-motion: reduce) {
+    #app-dashboard .panel,
+    #app-dashboard .panels > div {
+        transition: none !important;
 
-    &:hover {
-        background-color: var(--color-background-hover) !important;
-    }
-
-    &:active,
-    &:focus {
-        background-color: var(--color-primary-element) !important;
-        color: var(--color-primary-text) !important;
+        &:hover {
+            transform: none;
+        }
     }
 }

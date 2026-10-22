@@ -2,11 +2,18 @@
 <info xmlns:xsi= "http://www.w3.org/2001/XMLSchema-instance"
       xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
     <id>breezedark</id>
-    <name>Breeze Dark</name>
-    <summary><![CDATA[Breeze Dark theme for Nextcloud, based on the theme by KDE]]></summary>
+    <name>InkCurity Dark</name>
+    <summary><![CDATA[InkCurity Dark: dusk blue, every app in its own colour, calm surfaces and a few playful moments.]]></summary>
     <description><![CDATA[
-# Breeze Dark
-This is a breeze dark theme for Nextcloud, based on the Breeze Dark theme made by the KDE Project.
+# InkCurity Dark
+A one-of-a-kind theme for Nextcloud in the Trumpf design language with the InkCurity identity: calm like iOS, playful where it counts. Built on the Breeze Dark theme by Magnus Walbeck.
+
+- Dusk blue instead of black, text contrast of 4.5:1 or more everywhere.
+- Every app in its own colour: Files blue, Photos coral, Talk mint, Calendar red, Contacts orchid, Mail sky, Deck and Notes gold.
+- A large greeting with today's date and a live card on the dashboard.
+- Pill buttons, tinted selection, success-green switches, sheets that rise from below.
+- A hub page for the theme settings, with confetti when you switch it on.
+- Reduced motion turns every animation off. No webfonts, no third-party requests.
 
 ## Usage
 
@@ -23,7 +30,7 @@ You can also choose whether the login page should be themed. Though this only ha
 You can find the global options here:
 
 ```
-Settings > Administration > Theming > Breeze Dark
+Settings > Administration > Theming > InkCurity Dark
 ```
 
 ### Personal
@@ -31,24 +38,28 @@ Settings > Administration > Theming > Breeze Dark
 The personal option allows each user to enable / disable the theme unless it's being enforced by the global options. They can though choose whether the theme should follow the theming choice reported by the browser. This option is also available when the theme is being enforced globally. If the user hasn't set a preference they will follow the global default. You can find the personal option here:
 
 ```
-Settings > Personal > Appearance and accessibility > Breeze Dark
+Settings > Personal > Appearance and accessibility > InkCurity Dark
 ```
 
 ### Custom styling
 
-Under the Theming section in the admin settings you can add your own custom styling to the theme. Only standard CSS can be used. This custom styling will be applied whenever the theme is enabled and only affects the Breeze Dark theme.
+Under the Theming section in the admin settings you can add your own custom styling to the theme. Only standard CSS can be used. This custom styling will be applied whenever the theme is enabled and only affects the InkCurity Dark theme.
     ]]></description>
-    <version>34.0.0</version>
+    <version>34.1.0</version>
     <licence>AGPL-3.0-or-later</licence>
     <author mail="mw@mwalbeck.org" homepage="https://github.com/mwalbeck/nextcloud-breeze-dark">Magnus Walbeck</author>
+    <author homepage="https://inkcurity.net">Jan (InkCurity)</author>
     <namespace>BreezeDark</namespace>
     <category>customization</category>
-    <website>https://github.com/mwalbeck/nextcloud-breeze-dark</website>
-    <bugs>https://github.com/mwalbeck/nextcloud-breeze-dark/issues</bugs>
-    <screenshot>https://raw.githubusercontent.com/mwalbeck/nextcloud-breeze-dark/master/screenshot.png</screenshot>
+    <website>https://github.com/InklingSplasher/nextcloud-breeze-dark</website>
+    <bugs>https://github.com/InklingSplasher/nextcloud-breeze-dark/issues</bugs>
+    <screenshot>https://raw.githubusercontent.com/InklingSplasher/nextcloud-breeze-dark/master/screenshot-dashboard.jpg</screenshot>
+    <screenshot>https://raw.githubusercontent.com/InklingSplasher/nextcloud-breeze-dark/master/screenshot-files.jpg</screenshot>
+    <screenshot>https://raw.githubusercontent.com/InklingSplasher/nextcloud-breeze-dark/master/screenshot-apps.jpg</screenshot>
+    <screenshot>https://raw.githubusercontent.com/InklingSplasher/nextcloud-breeze-dark/master/screenshot-login.jpg</screenshot>
     <dependencies>
         <php min-version="8.2" max-version="8.5"/>
-        <nextcloud min-version="33" max-version="34"/>
+        <nextcloud min-version="33" max-version="35"/>
     </dependencies>
     <repair-steps>
 		<post-migration>

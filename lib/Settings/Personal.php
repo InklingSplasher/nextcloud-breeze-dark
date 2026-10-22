@@ -56,6 +56,7 @@ class Personal implements ISettings {
 				$defaultAutomaticActivation,
 			) === '1',
 			'appWebPath' => $this->appManager->getAppWebPath($this->appName),
+			'appVersion' => $this->appManager->getAppVersion($this->appName),
 			'settingsUrl' => $this->urlGenerator->linkToRoute('breezedark.Settings.personal'),
 		]);
 	}

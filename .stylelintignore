@@ -1,5 +1,7 @@
 css/apps/thirdparty/_files-markdown-syntax.scss
 css/server-automatic.css
 css/server.css
+css/guest-automatic.css
+css/guest.css
 css/server-automatic.css.map
 css/server.css.map

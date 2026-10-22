@@ -1,222 +1,552 @@
 /***
+ * InkCurity Dark — chrome, Trumpf edition
+ *
+ * Navigation like the Trumpf sidebar (on bg, tinted selection, icons in the
+ * accent), grouped settings sections as cards, raised menus with a float
+ * shadow, sheets that rise from below, material toasts, empty states with a
+ * tinted glyph. Hairlines stay quiet, nothing glows.
+ *
  * @copyright Copyright (c) 2017, Magnus Walbeck <mw@mwalbeck.org>
+ * @copyright Copyright (c) 2026 inkcurity.net
  *
  * @license GNU AGPL version 3 or any later version, see COPYING file for more.
  */
 
 /* Header -------------------------------------------------------------------- */
 
-#settings #expand:hover #expandDisplayName,
-#settings #expand:focus #expandDisplayName,
-#settings #expand:active #expandDisplayName,
-#settings #expand:hover .avatardiv,
-#settings #expand:focus .avatardiv,
-#settings #expand:active .avatardiv {
-    border: unset;
-}
-
 #body-login #header {
     background-color: unset !important;
 }
 
-/* Menues -------------------------------------------------------------------- */
+#header:not(.header-guest) .avatardiv,
+.header-end .account-menu__avatar,
+#user-menu .avatardiv {
+    box-shadow:
+        0 0 0 2px var(--tr-page),
+        0 0 0 3.5px color-mix(in srgb, var(--tr-accent) 80%, transparent);
+}
 
-.menu,
+.header-menu__wrapper,
+.header-menu__content {
+    border-radius: var(--tr-radius-card) !important;
+}
+
+.header-menu__wrapper {
+    background-color: var(--tr-inset) !important;
+    border: none !important;
+    box-shadow: var(--tr-shadow-float) !important;
+}
+
+.header-menu__carret {
+    display: none !important;
+}
+
+/* Navigation: the Trumpf sidebar ------------------------------------------------ */
+
+.app-navigation,
+#app-navigation:not(.vue) {
+    background-color: var(--tr-bg) !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    border-inline-end: 1px solid color-mix(in srgb, var(--tr-border) 70%, transparent) !important;
+}
+
+.app-navigation-entry {
+    border-radius: var(--tr-radius-lg) !important;
+
+    // Icons in the accent, like the sidebar of a Trumpf app.
+    .app-navigation-entry-icon {
+        color: var(--tr-accent-text);
+    }
+
+    &:not(.app-navigation-entry--legacy):hover:not(.active),
+    &:not(.app-navigation-entry--legacy):focus-within:not(.active) {
+        background-color: rgba(255, 255, 255, 0.06) !important;
+    }
+
+    &:active:not(.active) {
+        background-color: rgba(255, 255, 255, 0.1) !important;
+        transition-duration: 0ms !important;
+    }
+
+    // Selected: a tinted pill with a soft top light, semibold, no stripe.
+    &.active {
+        background-color: var(--color-primary-element-light) !important;
+        background-image: linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.07),
+            rgba(255, 255, 255, 0)
+        ) !important;
+        box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.08),
+            0 6px 16px -10px color-mix(in srgb, var(--tr-accent) 80%, transparent);
+
+        &::before {
+            display: none !important;
+        }
+
+        .app-navigation-entry__name,
+        .app-navigation-entry-link,
+        .app-navigation-entry-button {
+            color: var(--tr-ink) !important;
+            font-weight: 600 !important;
+        }
+    }
+
+    // Legacy entries (filled selection in nextcloud-vue 8) become tinted too.
+    &.app-navigation-entry--legacy.active {
+        background-color: var(--color-primary-element-light) !important;
+
+        .app-navigation-entry-link,
+        .app-navigation-entry-button {
+            color: var(--tr-ink) !important;
+        }
+    }
+}
+
+// Icon tiles for top-level entries: tinted at rest, filled in the accent with
+// a glow when selected. Legacy background-image icons keep their own look.
+.app-navigation-entry:not(.app-navigation-entry__children *)
+    > :is(.app-navigation-entry-link, .app-navigation-entry-button)
+    > .app-navigation-entry-icon:not([class*="icon-"]) {
+    position: relative;
+    isolation: isolate;
+
+    &::before {
+        content: "";
+        position: absolute;
+        z-index: -1;
+        inset: calc(50% - 14px);
+        border-radius: 8px;
+        background-color: color-mix(in srgb, var(--tr-accent) 20%, transparent);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07);
+        transition:
+            background-color var(--tr-dur-fade) var(--tr-ease-soft),
+            box-shadow var(--tr-dur-fade) var(--tr-ease-soft);
+    }
+
+    // The glyph sits inside the 28 px tile at 18 px.
+    svg,
+    img {
+        width: 18px !important;
+        height: 18px !important;
+    }
+}
+
+%tr-tile-filled {
+    color: var(--tr-accent-on) !important;
+
+    &::before {
+        background-color: var(--tr-accent);
+        background-image: linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.28),
+            rgba(255, 255, 255, 0) 60%
+        );
+        box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.32),
+            0 6px 14px -4px color-mix(in srgb, var(--tr-accent) 75%, transparent);
+    }
+
+    img {
+        filter: var(--tr-accent-flip);
+    }
+}
+
+.app-navigation-entry.active:not(.app-navigation-entry__children *)
+    > :is(.app-navigation-entry-link, .app-navigation-entry-button)
+    > .app-navigation-entry-icon:not([class*="icon-"]) {
+    @extend %tr-tile-filled;
+}
+
+// Section headers: sentence case, 13 px medium, soft (Trumpf section-header).
+.app-navigation-caption__name,
+#app-navigation:not(.vue) .app-navigation-caption {
+    color: var(--tr-ink-soft) !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+    box-shadow: none !important;
+}
+
+// Counters: quiet numbers; the highlighted ones (unread) in the logo pink.
+.counter-bubble__counter {
+    background-color: transparent !important;
+    color: var(--tr-ink-soft) !important;
+    font-weight: 600;
+
+    &--highlighted {
+        background-color: var(--tr-pink-strong) !important;
+        color: #ffffff !important;
+    }
+
+    &--outlined {
+        background-color: transparent !important;
+        color: var(--tr-accent-text) !important;
+    }
+}
+
+#app-navigation:not(.vue) {
+    > ul > li > a {
+        opacity: 1;
+    }
+
+    > ul > li.active > a,
+    > ul > li > a.active {
+        background-color: var(--color-primary-element-light) !important;
+        color: var(--tr-ink) !important;
+        font-weight: 600;
+    }
+}
+
+.app-navigation-new .button-vue {
+    border-radius: var(--tr-radius-full) !important;
+}
+
+.app-settings__header .settings-button,
+#app-settings-header .settings-button,
+#app-settings__header .settings-button {
+    background-color: transparent !important;
+    border: none !important;
+    opacity: 1;
+}
+
+/* Settings: a hub of grouped cards ------------------------------------------------ */
+
+// The settings navigation is a hub list: every icon sits on a filled tile,
+// like the rows of a settings app. White icons read 4.6:1 on the blue.
+#body-settings
+    .app-navigation-entry:not(.app-navigation-entry__children *)
+    > :is(.app-navigation-entry-link, .app-navigation-entry-button)
+    > .app-navigation-entry-icon:not([class*="icon-"]) {
+    @extend %tr-tile-filled;
+}
+
+#body-settings .app-navigation-entry.active {
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.08),
+        0 8px 18px -10px color-mix(in srgb, var(--tr-accent) 90%, transparent);
+}
+
+#body-settings #app-content,
+#body-settings #app-content-vue {
+    background-color: var(--tr-bg) !important;
+}
+
+#body-settings #app-content :is(.section, .settings-section),
+#body-settings #app-content-vue :is(.section, .settings-section) {
+    margin: 12px 16px !important;
+    padding: 20px 24px !important;
+    border: none !important;
+    border-radius: var(--tr-radius-2xl) !important;
+    background-color: var(--tr-surface);
+    background-image: var(--tr-sheen);
+    box-shadow: var(--tr-shadow-card);
+}
+
+.settings-section__name,
+.section > h2 {
+    font-size: 20px !important;
+    line-height: 25px !important;
+}
+
+.settings-section__desc,
+.settings-hint,
+.section .hint,
+.section em {
+    color: var(--tr-ink-soft) !important;
+}
+
+/* Sidebar ------------------------------------------------------------------- */
+
+.app-sidebar,
+#app-sidebar {
+    background-color: var(--tr-surface) !important;
+    border-inline-start: 1px solid color-mix(in srgb, var(--tr-border) 70%, transparent) !important;
+}
+
+.app-sidebar-header__figure {
+    background-color: var(--tr-accent-wash) !important;
+    background-image: radial-gradient(
+        120% 120% at 0% 0%,
+        color-mix(in srgb, var(--tr-accent) 35%, transparent),
+        transparent 70%
+    ) !important;
+}
+
+.app-sidebar-header__mainname {
+    font-size: 20px !important;
+}
+
+#app-sidebar-vue .star--starred,
+#app-sidebar .star--starred {
+    color: var(--tr-gold) !important;
+}
+
+/* Menus and popovers --------------------------------------------------------------- */
+
+.v-popper__popper:not(.v-popper--theme-tooltip) .v-popper__wrapper {
+    border-radius: var(--tr-radius-xl) !important;
+    box-shadow: var(--tr-shadow-float) !important;
+}
+
+.v-popper__popper:not(.v-popper--theme-tooltip) .v-popper__inner,
 .popovermenu,
+.menu,
 .bubble,
 .popover,
 .app-navigation-entry-menu,
-.v-popper__popper .v-popper__inner {
-    border: 1px solid var(--color-border);
+.action-item__menu {
+    --color-background-hover: rgba(255, 255, 255, 0.08);
+    --color-main-background: var(--tr-inset);
+
+    background-color: var(--tr-inset) !important;
+    background-image: var(--tr-sheen);
+    border: none !important;
+    border-radius: var(--tr-radius-xl) !important;
 }
 
-.menu.notification-container {
-    border: unset;
+.popovermenu,
+.menu,
+.bubble,
+.popover,
+.action-item__menu {
+    box-shadow: var(--tr-shadow-float) !important;
 }
 
 .bubble::after,
 .app-navigation-entry-menu::after,
 .menu::after,
 .popovermenu::after,
-.v-popper--theme-dropdown.v-popper__popper[data-popper-placement^="bottom"]
-    .v-popper__arrow-container {
-    border-bottom-color: var(--color-border) !important;
+.action-item__menu .action-item__menu_arrow {
+    display: none !important;
 }
 
-.popover__arrow {
-    border-color: var(--color-border) !important;
-}
+.action-button,
+.action-link,
+.action-router,
+.action-checkbox__label,
+.action-radio__label {
+    border-radius: var(--tr-radius-lg) !important;
+    transition: background-color var(--tr-dur-fade) var(--tr-ease-soft);
 
-// Menu used for devices & sessions under Settings > Personal > Security
-.action-item__menu {
-    border: 1px solid var(--color-border);
-
-    .action-item__menu_arrow {
-        border-bottom-color: var(--color-border) !important;
+    &:active {
+        background-color: rgba(255, 255, 255, 0.12) !important;
+        transition-duration: 0ms;
     }
 }
 
-.v-popper__popper button.action-button {
-    border-radius: 6px !important;
+.action-separator {
+    border-color: color-mix(in srgb, var(--tr-border) 80%, transparent) !important;
 }
 
-/* Search ------------------------------------------------------------------- */
+/* Tooltips ----------------------------------------------------------------------- */
 
-.header-menu__wrapper {
-    border: 1px solid var(--color-border);
+.v-popper--theme-tooltip .v-popper__inner {
+    background-color: var(--tr-inset) !important;
+    border-radius: var(--tr-radius-lg) !important;
+    box-shadow: var(--tr-shadow-float) !important;
+    color: var(--tr-ink) !important;
+    font-size: 13px;
 }
 
-.header-menu__carret {
-    border-bottom-color: var(--color-border) !important;
+.v-popper--theme-tooltip .v-popper__arrow-outer,
+.v-popper--theme-tooltip .v-popper__arrow-inner {
+    border-color: var(--tr-inset) !important;
 }
+
+/* Sheets: modals and dialogs rise from below ----------------------------------- */
+
+.modal-mask {
+    background-color: var(--tr-scrim) !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+.modal-wrapper:not(.modal-wrapper--full) .modal-container {
+    background-color: var(--tr-surface) !important;
+    background-image: var(--tr-sheen);
+    border-radius: var(--tr-radius-float) !important;
+    box-shadow: var(--tr-shadow-sheet) !important;
+    animation: tr-sheet-in var(--tr-dur-sheet) var(--tr-ease-ios) both;
+}
+
+.dialog__modal .modal-wrapper.modal-wrapper--small .modal-container {
+    border-radius: var(--tr-radius-card) !important;
+}
+
+@keyframes tr-sheet-in {
+    from {
+        opacity: 0;
+        transform: translateY(32px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+.dialog__name,
+.modal-header .modal-name {
+    font-size: 20px !important;
+    line-height: 25px !important;
+}
+
+.oc-dialog {
+    border: none !important;
+    border-radius: var(--tr-radius-float) !important;
+    box-shadow: var(--tr-shadow-sheet) !important;
+}
+
+.oc-dialog-dim {
+    background-color: var(--tr-scrim) !important;
+}
+
+/* Toasts: material from above ------------------------------------------------------ */
+
+.toastify.dialogs {
+    min-height: 48px;
+    padding: 10px 12px 10px 16px !important;
+    border: none !important;
+    border-radius: var(--tr-radius-card) !important;
+    background-color: var(--tr-material) !important;
+    -webkit-backdrop-filter: var(--tr-material-filter);
+    backdrop-filter: var(--tr-material-filter);
+    box-shadow: var(--tr-shadow-float) !important;
+    color: var(--tr-ink) !important;
+    font-weight: 500;
+    transition-duration: var(--tr-dur-toast) !important;
+    transition-timing-function: var(--tr-ease-ios) !important;
+
+    &.toast-success,
+    &.toast-error,
+    &.toast-warning,
+    &.toast-info {
+        border-inline-start: none !important;
+    }
+
+    // A status dot carries the meaning next to the words.
+    &::before {
+        content: "";
+        flex-shrink: 0;
+        align-self: center;
+        width: 8px;
+        height: 8px;
+        margin-inline-end: 10px;
+        border-radius: 50%;
+        background-color: var(--tr-accent-text);
+        box-shadow: 0 0 0 3px color-mix(in srgb, var(--tr-accent-text) 22%, transparent);
+    }
+
+    &.toast-success::before {
+        background-color: var(--tr-success);
+    }
+
+    &.toast-error::before {
+        background-color: var(--tr-danger);
+    }
+
+    &.toast-warning::before {
+        background-color: var(--tr-warn);
+    }
+
+    .toast-undo-button,
+    .toast-close {
+        border-radius: var(--tr-radius-full) !important;
+    }
+
+    .toast-undo-button {
+        background-color: var(--color-primary-element-light) !important;
+        color: var(--color-primary-element-light-text) !important;
+    }
+}
+
+/* Empty states: a tinted glyph, a statement, a sentence ---------------------------- */
+
+.empty-content__icon {
+    width: 64px !important;
+    height: 64px !important;
+    border-radius: 50%;
+    background-color: color-mix(in srgb, var(--tr-accent) 18%, transparent);
+    background-size: 30px !important;
+    color: var(--tr-accent-text);
+    opacity: 1 !important;
+
+    svg {
+        width: 30px !important;
+        height: 30px !important;
+    }
+}
+
+.empty-content__name {
+    font-size: 20px !important;
+    line-height: 25px !important;
+}
+
+.empty-content__description {
+    max-width: 22rem;
+    color: var(--tr-ink-soft) !important;
+}
+
+/* Note cards and badges ----------------------------------------------------------- */
+
+.notecard {
+    border-radius: var(--tr-radius-xl) !important;
+    border-inline-start-width: 0 !important;
+}
+
+.app-level .official,
+.app-level .supported {
+    border-color: var(--tr-success) !important;
+    border-radius: var(--tr-radius-full);
+}
+
+/* Search ---------------------------------------------------------------------- */
 
 .unified-search__form-reset {
     background-color: transparent !important;
 }
 
-.unified-search__result-icon img[src$="integration_discourse/img/app-dark.svg"] {
-    filter: invert(95%);
+.unified-search-modal .result-items__item:hover,
+.unified-search-modal .result-items__item:focus-within {
+    background-color: rgba(255, 255, 255, 0.06) !important;
+    border-radius: var(--tr-radius-lg);
 }
 
-/* File picker --------------------------------------------------------------- */
+/* Profile, user management, image cropper ---------------------------------------- */
 
-.oc-dialog {
-    border: 1px solid var(--color-border);
-
-    .filepicker_element_selected,
-    #oc-dialog-filepicker-content .filepicker_element_selected {
-        background-color: var(--color-primary);
-        color: var(--color-primary-text);
-    }
-
-    .fileexists label,
-    .fileexists .conflict .filename {
-        color: var(--color-main-text) !important;
-    }
-}
-
-.reference-picker .oc-dialog {
-    border: none;
-}
-
-/* Settings ------------------------------------------------------------------ */
-
-// Image cropper
-// For cropping images, found under personal settings for adding avatar
-#cropper .inner-container {
-    background-color: var(--color-main-background) !important;
-    border: 1px solid var(--color-border);
-    color: var(--color-main-text) !important;
-}
-
-// Section Container
-// Primarily seems to be used under settings
-.followupsection {
-    color: var(--color-main-text) !important;
-}
-
-// Link Buttons
-// Settings > Administration > Support
-.link-button {
-    background-color: var(--color-main-background) !important;
-    border: 1px solid var(--color-border) !important;
-    color: var(--color-main-text) !important;
-
-    &:hover,
-    &.button:hover {
-        border-color: var(--color-primary-element) !important;
-        color: var(--color-main-text) !important;
-    }
-
-    &:active,
-    &:focus {
-        background-color: var(--color-primary) !important;
-        border-color: var(--color-primary-element) !important;
-        color: var(--color-main-text) !important;
-    }
-}
-
-// Profile
 .preview-card .preview-card__footer {
-    border: 1px solid var(--color-border);
-    border-bottom-left-radius: var(--border-radius);
-    border-bottom-right-radius: var(--border-radius);
-    border-top: unset;
+    border-bottom-left-radius: var(--tr-radius-xl);
+    border-bottom-right-radius: var(--tr-radius-xl);
 }
 
-.profile .user-actions .profile__primary-action-button img[src$="spreed/img/app-dark.svg"],
-.profile .user-actions .user-actions__other a {
-    filter: invert(95%);
+#cropper .inner-container {
+    background-color: var(--tr-surface) !important;
+    border-radius: var(--tr-radius-2xl);
+    color: var(--tr-ink) !important;
 }
 
-// User administration
 #addgroup {
-    // Remove icon spam in addgroup form under user section
     button.icon-confirm,
     button.icon-close {
         background-image: none !important;
     }
 }
 
-// Breeze Dark settings
-.breezedark-admin p {
-    margin-top: 1em;
+.followupsection {
+    color: var(--tr-ink) !important;
 }
 
-/* Tooltips ----------------------------------------------------------------- */
+/* Reduced motion ------------------------------------------------------------------ */
 
-.tooltip,
-.vue-tooltip {
-    filter: none !important;
-
-    .tooltip-inner {
-        border: 1px solid var(--color-border);
-    }
-
-    &[x-placement^="right"],
-    &.right .tooltip-arrow {
-        border-right-color: var(--color-border) !important;
-    }
-
-    &[x-placement^="left"],
-    &.left .tooltip-arrow {
-        border-left-color: var(--color-border) !important;
-    }
-
-    &[x-placement^="bottom"] .tooltip-arrow,
-    &.bottom .tooltip-arrow,
-    &.bottom-left .tooltip-arrow,
-    &.bottom-right .tooltip-arrow {
-        border-bottom-color: var(--color-border) !important;
-    }
-
-    &[x-placement^="top"] .arrow,
-    &[x-placement^="top"] .tooltip-arrow,
-    &.top .arrow,
-    &.top .tooltip-arrow,
-    &.top-left .arrow,
-    &.top-left .tooltip-arrow,
-    &.top-right .arrow,
-    &.top-right .tooltip-arrow {
-        border-top-color: var(--color-border) !important;
+@media (prefers-reduced-motion: reduce) {
+    .modal-wrapper .modal-container {
+        animation: none !important;
     }
 }
 
-/* Toasts ------------------------------------------------------------------- */
-
-.toastify.dialogs {
-    border: 1px solid var(--color-border);
-}
-
-/* App Store ---------------------------------------------------------------- */
-
-.app-level .official {
-    border-color: var(--color-success);
-}
-
-/* Smart picker ------------------------------------------------------------- */
-
-.tribute-container-link {
-    border: 1px solid var(--color-border);
-    border-radius: 6px !important;
+[data-themes*="reduced-motion"] .modal-wrapper .modal-container {
+    animation: none !important;
 }

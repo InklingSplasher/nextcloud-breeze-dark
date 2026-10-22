@@ -1,8 +1,8 @@
 {
     "name": "breezedark",
-    "version": "34.0.0",
-    "description": "Breeze Dark theme for Nextcloud",
-    "author": "Magnus Walbeck",
+    "version": "34.1.0",
+    "description": "InkCurity Dark theme for Nextcloud",
+    "author": "Magnus Walbeck, inkcurity.net",
     "devDependencies": {
         "postcss-scss": "^4.0.9",
         "prettier": "^3.9.5",
@@ -11,8 +11,8 @@
         "stylelint-prettier": "^5.0.3"
     },
     "scripts": {
-        "watch": "sass --poll --watch css/server.scss:css/server.css css/server-automatic.scss:css/server-automatic.css",
-        "build": "sass css/server.scss:css/server.css css/server-automatic.scss:css/server-automatic.css",
+        "watch": "sass --silence-deprecation=import --poll --watch css/server.scss:css/server.css css/server-automatic.scss:css/server-automatic.css css/guest.scss:css/guest.css css/guest-automatic.scss:css/guest-automatic.css",
+        "build": "sass --silence-deprecation=import --no-source-map css/server.scss:css/server.css css/server-automatic.scss:css/server-automatic.css css/guest.scss:css/guest.css css/guest-automatic.scss:css/guest-automatic.css",
         "prettier": "prettier --check css js",
         "prettier:fix": "prettier --write css js",
         "stylelint": "stylelint css",

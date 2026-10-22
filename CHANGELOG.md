@@ -4,10 +4,56 @@
 
 ### Added
 
+-   InkCurity Dark, Trumpf edition: a lifted dusk-blue palette (`#121935` page, `#1e2850`
+    surface) instead of near-black, with every text pairing at 4.5:1 or more.
+-   An accent per app: Files and the hub pages wear the logo blue, Photos coral, Talk mint,
+    Calendar red, Contacts orchid, Mail sky, Deck and Notes gold. Buttons, selection, focus and
+    the page bloom follow the open app; the colours sit in `$tr-app-accents`.
+-   App tiles: the open app sits on a tile in its colour in the Nextcloud 33 header bar, and the
+    Nextcloud 34 app grid shows every app as a coloured tile.
+-   Dashboard as a start page: today's date as eyebrow above a large greeting (set by
+    `js/breezedark.js` in the user's language), status chips, and the first widget as the live
+    card with the accent gradient and a fine grain.
+-   The theme's settings pages as a Trumpf hub: hero card with the logo, the main switch as a
+    frosted row, grouped iOS switches with tinted tiles, a tilted preview, the signature line, a
+    material toast with a reload action and confetti when the theme is switched on.
+-   Login: the logo leans −6° and lands once, the headline ends in a cursor that blinks three
+    times, one filled key, the footer as a signature line with one redacted wink.
+-   The login page as SCSS sources (`css/guest.scss`, `css/guest-automatic.scss`) built by
+    `npm run build`; the `appstore` make target builds first.
+-   The InkCurity logo as `img/inkcurity-logo.svg`, and five screenshots.
+-   Nextcloud 35: the new app menu is covered. App icons become squircle tiles in the app's
+    colour with the glyph in a colour that reads on it; the quick-create row gets a hairline and
+    a lift. `info.xml` declares Nextcloud 35.
+-   Depth: layered shadows with a top highlight on cards, menus, dialogs and the login card; a
+    glossy primary key with a glow in the accent and a sheen on hover; tinted keys with a soft
+    highlight; dashboard cards that lift when you point at them; a gradient greeting.
+-   Icon tiles in every app navigation (tinted at rest, filled with a glow when selected) and
+    filled tiles in the settings navigation.
+-   An easter egg: the Konami code throws confetti in the app colours.
 -   Add local Nextcloud 33 and 34 compatibility and document the production test gate.
+
+### Fixed
+
+-   Bars at the right and bottom of some apps: the page-entry animation held a transform on the
+    outer container, which shifted a nested `#content-vue`. Only the main pane animates now, and
+    nothing stays on the element afterwards; only the outermost container carries the frame.
+-   Login: "Forgot password?" and "Log in with a device" read as links again, single sign-on keys
+    sit below a hairline with space, the footer no longer draws a box, the cursor blinks.
+-   Checkboxes and radios use the accent text colour, which reads on every surface.
 
 ### Changed
 
+-   The palette is a little lighter and softer (`#1b213c` page, `#283152` surface).
+-   Selectors target `@nextcloud/vue` 9 (`.button-vue--primary` and friends) as used by
+    Nextcloud 33 and 34; the v8 names stay for apps that still ship the old bundle.
+-   Pill buttons, tinted secondary buttons, success-green switches, sheets that rise from below,
+    material toasts, empty states with a tinted glyph, the Trumpf sidebar for app navigation and
+    settings sections as cards.
+-   The theme owns its backdrop: the body background image is replaced by dusk blue with a bloom
+    in the colour of the open app. A custom background can be restored with custom CSS, see README.
+-   The theme is named InkCurity Dark in the settings and the app store listing; the app id stays
+    `breezedark` so existing preferences remain valid.
 -   Replace jQuery settings requests with native Fetch requests and explicit CSRF headers.
 -   Move app and user preferences to the supported `IAppConfig` and `IUserConfig` APIs.
 -   Return structured responses from settings endpoints and validate custom CSS size and type.
