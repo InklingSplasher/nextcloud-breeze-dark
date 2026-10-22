@@ -3,15 +3,17 @@
       xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
     <id>breezedark</id>
     <name>InkCurity Dark</name>
-    <summary><![CDATA[InkCurity Dark: wet ink, one cyan accent, calm surfaces. A one-of-a-kind dark theme for Nextcloud.]]></summary>
+    <summary><![CDATA[InkCurity Dark: dusk blue, every app in its own colour, calm surfaces and a few playful moments.]]></summary>
     <description><![CDATA[
 # InkCurity Dark
-A dark theme for Nextcloud in the InkCurity design language: a deep ocean-black page, ink-blue surfaces, one cyan accent, a magenta guest star and a blinking cursor. Calm like iOS, built on the Breeze Dark theme by Magnus Walbeck.
+A one-of-a-kind theme for Nextcloud in the Trumpf design language with the InkCurity identity: calm like iOS, playful where it counts. Built on the Breeze Dark theme by Magnus Walbeck.
 
-- Keys, not lozenges: 10px buttons, 14px cards, 20px body container.
-- Hairlines instead of frames, glows instead of drop-shadows.
-- A radar scan-line under the header, a cursor in every field, a redacted line in the login footer.
-- No webfonts, no third-party requests: everything ships inside the app.
+- Dusk blue instead of black, text contrast of 4.5:1 or more everywhere.
+- Every app in its own colour: Files blue, Photos coral, Talk mint, Calendar red, Contacts orchid, Mail sky, Deck and Notes gold.
+- A large greeting with today's date and a live card on the dashboard.
+- Pill buttons, tinted selection, success-green switches, sheets that rise from below.
+- A hub page for the theme settings, with confetti when you switch it on.
+- Reduced motion turns every animation off. No webfonts, no third-party requests.
 
 ## Usage
 
@@ -51,7 +53,9 @@ Under the Theming section in the admin settings you can add your own custom styl
     <category>customization</category>
     <website>https://github.com/InklingSplasher/nextcloud-breeze-dark</website>
     <bugs>https://github.com/InklingSplasher/nextcloud-breeze-dark/issues</bugs>
-    <screenshot>https://raw.githubusercontent.com/InklingSplasher/nextcloud-breeze-dark/master/screenshot.png</screenshot>
+    <screenshot>https://raw.githubusercontent.com/InklingSplasher/nextcloud-breeze-dark/master/screenshot-dashboard.jpg</screenshot>
+    <screenshot>https://raw.githubusercontent.com/InklingSplasher/nextcloud-breeze-dark/master/screenshot-files.jpg</screenshot>
+    <screenshot>https://raw.githubusercontent.com/InklingSplasher/nextcloud-breeze-dark/master/screenshot-apps.jpg</screenshot>
     <screenshot>https://raw.githubusercontent.com/InklingSplasher/nextcloud-breeze-dark/master/screenshot-login.jpg</screenshot>
     <dependencies>
         <php min-version="8.2" max-version="8.5"/>

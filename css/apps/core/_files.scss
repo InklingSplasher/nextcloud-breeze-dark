@@ -90,67 +90,73 @@ table tr.mouseOver td {
     background-color: unset !important;
 }
 
-/* Files list (Nextcloud 28+) ------------------------------------------------ */
+/* Files list (Nextcloud 28+): a Trumpf list ------------------------------------ */
 
-// Column headers read like terminal tags, dates and sizes sit in tabular mono.
+// Column heads read like section headers: sentence case, 13 px medium, soft.
 .files-list__thead {
-    background-color: var(--ic-ink-deep) !important;
-    border-bottom: 1px solid var(--ic-ink-line);
+    background-color: var(--tr-surface) !important;
 
     .files-list__column,
     .files-list__column-sort-button,
-    .files-list__column-sort-button .button-vue__text,
+    .files-list__column-sort-button-text,
     .files-list__row-head {
-        font-family: var(--ic-font-mono);
-        font-size: 11px;
+        color: var(--tr-ink-soft);
+        font-size: 13px;
         font-weight: 500;
-        letter-spacing: var(--ic-tracking-mono);
-        text-transform: uppercase;
-        color: var(--ic-ink-mute);
     }
 
-    .files-list__column-sort-button:hover .button-vue__text,
-    .files-list__column-sort-button--active .button-vue__text {
-        color: var(--ic-splash-cyan) !important;
+    .files-list__column-sort-button--active,
+    .files-list__column-sort-button--active .files-list__column-sort-button-text {
+        color: var(--tr-accent-text) !important;
+        font-weight: 600;
     }
 }
 
 .files-list__row {
-    transition: background-color var(--tr-dur-fade) var(--tr-ease-soft);
+    transition: background-color var(--tr-dur-release) var(--tr-ease-soft);
 
     &:hover,
     &:focus-within {
-        background-color: var(--color-background-hover) !important;
+        background-color: rgba(255, 255, 255, 0.05) !important;
+    }
+
+    &:active {
+        background-color: rgba(255, 255, 255, 0.1) !important;
+        transition-duration: 0ms;
     }
 
     &--active,
     &--dragover,
-    &[aria-selected="true"] {
-        background-color: var(--color-selected-blue) !important;
+    &[data-cy-files-list-row-selected="true"] {
+        background-color: color-mix(in srgb, var(--tr-accent) 18%, transparent) !important;
     }
+}
+
+.files-list__row td,
+.files-list__row-head {
+    border-color: color-mix(in srgb, var(--tr-border) 60%, transparent) !important;
 }
 
 .files-list__row-size,
 .files-list__row-mtime {
-    color: var(--ic-ink-mute) !important;
-    font-size: 13px;
+    color: var(--tr-ink-soft) !important;
 }
 
+// Favourites in gold: the medal colour, not a warning.
 .files-list__row-icon-favorite {
-    color: var(--ic-splash-lemon);
-    filter: drop-shadow(0 0 5px rgba(var(--ic-splash-lemon-rgb), 0.55));
+    color: var(--tr-gold) !important;
+}
+
+.files-list__row-icon-preview {
+    border-radius: var(--tr-radius-tile);
 }
 
 .files-list__tfoot td {
-    color: var(--ic-ink-mute);
-    font-family: var(--ic-font-mono);
-    font-size: 12px;
+    color: var(--tr-ink-soft);
 }
 
-.files-list__filters .button-vue {
-    box-shadow: none;
-}
-
-.breadcrumb__crumbs .button-vue {
-    font-weight: 500 !important;
+// The "new" button and the filter strip read like Trumpf chips.
+.files-list__filters .button-vue,
+.files-list__header .button-vue--secondary {
+    font-size: 13px;
 }

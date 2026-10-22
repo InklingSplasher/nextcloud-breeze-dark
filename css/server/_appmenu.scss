@@ -1,0 +1,226 @@
+/***
+ * InkCurity Dark — app menus as tiles, Trumpf edition
+ *
+ * Every app wears its colour: the open app sits on a tile in its accent, and
+ * in the Nextcloud 34 app grid every app is a tile in its own colour. Colour
+ * means something here (which app), so this is the one place where the menu
+ * is not monochrome.
+ *
+ * Nextcloud 33: a bar of .app-menu-entry items in the header.
+ * Nextcloud 34: a waffle button, the current app as a button, a popover grid.
+ *
+ * @copyright Copyright (c) 2026 inkcurity.net
+ *
+ * @license GNU AGPL version 3 or any later version, see COPYING file for more.
+ */
+
+/* Nextcloud 33: the header bar ------------------------------------------------ */
+
+.app-menu-entry {
+    .app-menu-icon {
+        isolation: isolate;
+
+        // The tile: hidden at rest, a hint on hover, solid on the open app.
+        &::before {
+            content: "";
+            position: absolute;
+            z-index: -1;
+            inset: -7px;
+            border-radius: 10px;
+            background-color: var(--tr-app, var(--tr-accent));
+            opacity: 0;
+            transform: scale(0.8);
+            transition:
+                opacity var(--tr-dur-fade) var(--tr-ease-soft),
+                transform var(--tr-dur-control) var(--tr-ease-soft);
+        }
+    }
+
+    &:hover .app-menu-icon::before,
+    &:focus-within .app-menu-icon::before {
+        opacity: 0.35;
+        transform: none;
+    }
+
+    &--active {
+        // The open app's tile replaces the white indicator line.
+        &::before {
+            display: none !important;
+        }
+
+        .app-menu-icon::before {
+            background-color: var(--tr-accent);
+            box-shadow: 0 6px 16px color-mix(in srgb, var(--tr-accent) 45%, transparent);
+            opacity: 1 !important;
+            transform: none;
+        }
+
+        .app-menu-icon__icon {
+            filter: var(--tr-accent-flip) !important;
+        }
+
+        .app-menu-entry__label {
+            font-weight: 700 !important;
+        }
+    }
+
+    &:active .app-menu-icon {
+        transform: scale(var(--tr-press-scale));
+        transition: transform var(--tr-dur-press) var(--tr-ease-soft);
+    }
+}
+
+// Unread dot: the pink of the logo shield.
+.app-menu-icon__unread {
+    color: var(--tr-pink) !important;
+}
+
+/* Nextcloud 34: waffle, current app, grid ------------------------------------- */
+
+.app-menu__waffle,
+.app-menu__current-app {
+    border-radius: var(--tr-radius-full) !important;
+
+    &:hover:not(:disabled),
+    &:focus-visible {
+        background-color: rgba(255, 255, 255, 0.1) !important;
+    }
+
+    &:active:not(:disabled) {
+        background-color: rgba(255, 255, 255, 0.16) !important;
+    }
+}
+
+.app-menu__trigger {
+    &::before {
+        border-radius: var(--tr-radius-full) !important;
+    }
+
+    &:hover::before,
+    &--open::before {
+        background-color: rgba(255, 255, 255, 0.1) !important;
+    }
+}
+
+// The current app sits on a tile in its accent, like the grid below.
+.app-menu__current-app {
+    .button-vue__icon {
+        position: relative;
+        isolation: isolate;
+
+        &::before {
+            content: "";
+            position: absolute;
+            z-index: -1;
+            inset: 4px;
+            border-radius: 9px;
+            background-color: var(--tr-accent);
+            box-shadow: 0 4px 12px color-mix(in srgb, var(--tr-accent) 40%, transparent);
+        }
+    }
+
+    .app-menu__current-app-icon {
+        width: 18px !important;
+        height: 18px !important;
+        filter: var(--tr-accent-flip) !important;
+        mask: none !important;
+    }
+
+    .app-menu__current-app-cog {
+        color: var(--tr-accent-on);
+        mask: none !important;
+    }
+
+    .app-menu__current-app-name {
+        font-weight: 600 !important;
+        letter-spacing: -0.01em !important;
+    }
+}
+
+.app-menu__popover-base {
+    --border-radius-large: var(--tr-radius-card);
+    --border-radius-element: var(--tr-radius-card);
+
+    .v-popper__inner {
+        background-color: var(--tr-material) !important;
+        -webkit-backdrop-filter: var(--tr-material-filter);
+        backdrop-filter: var(--tr-material-filter);
+    }
+}
+
+.app-menu__popover {
+    background-color: transparent !important;
+}
+
+// Grid entries: squircle tiles in the app's colour, icon flipped dark on the
+// light colours, a little lift on hover, the press shrinks to 0.97.
+.app-item {
+    border-radius: var(--tr-radius-xl) !important;
+    transition: background-color var(--tr-dur-fade) var(--tr-ease-soft);
+
+    &:hover,
+    &:focus-visible {
+        background-color: rgba(255, 255, 255, 0.08) !important;
+    }
+
+    &__circle {
+        border-radius: 12px !important;
+        background-color: var(--tr-app, var(--tr-accent)) !important;
+        background-image: linear-gradient(
+            to bottom,
+            rgba(255, 255, 255, 0.22) 0%,
+            rgba(255, 255, 255, 0) 50%
+        ) !important;
+        box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.25),
+            0 4px 10px color-mix(in srgb, var(--tr-app, var(--tr-accent)) 35%, transparent) !important;
+        transition: transform var(--tr-dur-control) var(--tr-ease-soft);
+    }
+
+    &:hover &__circle,
+    &:focus-visible &__circle {
+        transform: translateY(-2px);
+    }
+
+    &:active &__circle {
+        transform: scale(var(--tr-press-scale));
+        transition-duration: var(--tr-dur-press);
+    }
+
+    &__icon {
+        filter: var(--tr-app-flip, var(--tr-accent-flip)) !important;
+        mask: none !important;
+    }
+
+    &--active &__circle {
+        box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.25),
+            0 0 0 2px var(--tr-surface),
+            0 0 0 4px var(--tr-app, var(--tr-accent)) !important;
+    }
+
+    &--outlined &__circle {
+        background: transparent !important;
+        box-shadow: inset 0 0 0 1.5px var(--tr-border-strong) !important;
+    }
+
+    &--outlined &__icon {
+        filter: none !important;
+    }
+
+    &__unread {
+        background-color: var(--tr-pink) !important;
+        border-color: var(--tr-surface) !important;
+    }
+
+    &__label {
+        color: var(--tr-ink) !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .app-menu-entry .app-menu-icon::before,
+    .app-item__circle {
+        transition: none !important;
+    }
+}

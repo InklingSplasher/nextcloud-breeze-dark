@@ -35,9 +35,13 @@
     @include ic-tokens;
 }
 
+// Every app wears its accent: Photos coral, Talk mint, Calendar red, …
+@include tr-app-accents('[data-themes*="breezedark"]');
+
 // General and Nextcloud Core
 @import "base/elements";
 @import "server/signature";
+@import "server/appmenu";
 @import "server/server";
 @import "apps/apps";
 @import "server/icons";

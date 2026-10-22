@@ -68,3 +68,52 @@ if (document.readyState === "loading") {
 } else {
     updateColorScheme();
 }
+
+/* Dashboard eyebrow ---------------------------------------------------------
+ * Trumpf puts the context above the large title of a start page: today's
+ * date, in the user's language. The stylesheet shows it from data-tr-eyebrow.
+ */
+function setDashboardEyebrow() {
+    const title = document.querySelector("#app-dashboard > h2");
+    if (!(title instanceof HTMLElement)) {
+        return false;
+    }
+
+    const lang = document.documentElement.lang || undefined;
+    let label = "";
+    try {
+        label = new Intl.DateTimeFormat(lang, {
+            weekday: "long",
+            day: "numeric",
+            month: "long",
+        }).format(new Date());
+    } catch {
+        label = new Date().toDateString();
+    }
+    title.dataset.trEyebrow = label;
+    return true;
+}
+
+function watchDashboardEyebrow() {
+    if (!document.body || document.body.id !== "body-user") {
+        return;
+    }
+    if (setDashboardEyebrow()) {
+        return;
+    }
+
+    // The dashboard renders after load; watch briefly, then let go.
+    const observer = new MutationObserver(() => {
+        if (setDashboardEyebrow()) {
+            observer.disconnect();
+        }
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+    window.setTimeout(() => observer.disconnect(), 10000);
+}
+
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", watchDashboardEyebrow, { once: true });
+} else {
+    watchDashboardEyebrow();
+}

@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace OCA\BreezeDark\Settings;
 
+use OCP\App\IAppManager;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\IAppConfig;
 use OCP\IURLGenerator;
@@ -23,6 +24,7 @@ class Admin implements ISettings {
 		private string $appName,
 		private IAppConfig $appConfig,
 		private IURLGenerator $urlGenerator,
+		private IAppManager $appManager,
 	) {
 	}
 
@@ -34,6 +36,8 @@ class Admin implements ISettings {
 			'themeCustomStyling' => $this->appConfig->getValueString($this->appName, 'theme_custom_styling', ''),
 			'settingsUrl' => $this->urlGenerator->linkToRoute('breezedark.Settings.admin'),
 			'customStylingUrl' => $this->urlGenerator->linkToRoute('breezedark.Settings.customStyling'),
+			'appWebPath' => $this->appManager->getAppWebPath($this->appName),
+			'appVersion' => $this->appManager->getAppVersion($this->appName),
 		]);
 	}
 

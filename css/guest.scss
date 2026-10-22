@@ -1,6 +1,6 @@
 /**
  * =============================================================================
- * InkCurity Dark for Nextcloud — guest and login pages
+ * InkCurity Dark for Nextcloud — guest and login pages, Trumpf edition
  * Source code: https://github.com/InklingSplasher/nextcloud-breeze-dark
  * Based on Breeze Dark by Magnus Walbeck. See AUTHORS.md
  * =============================================================================
@@ -32,138 +32,139 @@
     @include ic-tokens;
 }
 
-/* Login screen: the signature moment ---------------------------------------- */
+/* Login: the signature moment, Trumpf edition ----------------------------------- */
 
 #body-login {
-    color: var(--ic-ink-fg) !important;
-    background-color: var(--ic-ink-void) !important;
+    color: var(--tr-ink) !important;
+    background-color: var(--tr-page) !important;
     background-image:
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
         radial-gradient(
-            900px 620px at 18% 8%,
-            rgba(var(--ic-splash-cyan-rgb), 0.14),
+            1000px 700px at 14% -8%,
+            color-mix(in srgb, var(--tr-accent) 42%, transparent),
+            transparent 64%
+        ),
+        radial-gradient(
+            820px 620px at 96% 104%,
+            color-mix(in srgb, var(--tr-pink) 24%, transparent),
             transparent 62%
         ),
         radial-gradient(
-            720px 520px at 92% 96%,
-            rgba(var(--ic-splash-magenta-rgb), 0.07),
-            transparent 62%
+            520px 380px at 88% 6%,
+            color-mix(in srgb, var(--tr-identity-6) 14%, transparent),
+            transparent 60%
         ) !important;
-    background-size:
-        200px 200px,
-        auto,
-        auto !important;
-    background-repeat: repeat, no-repeat, no-repeat !important;
+    background-repeat: no-repeat !important;
     background-attachment: fixed !important;
-    caret-color: var(--ic-splash-cyan);
+    caret-color: var(--tr-accent-text);
 
     #header {
         background-color: unset !important;
 
-        // The mark glows under the terminal lamp.
+        // The mark is the identity object: it leans -6° like every Trumpf card,
+        // glows in the logo colours and lands once with a soft settle.
         .logo {
-            filter: drop-shadow(0 0 28px rgba(var(--ic-splash-cyan-rgb), 0.35));
+            transform: rotate(-6deg);
+            filter: drop-shadow(0 14px 28px color-mix(in srgb, var(--tr-accent) 55%, transparent))
+                drop-shadow(0 2px 6px color-mix(in srgb, var(--tr-pink) 35%, transparent));
+            animation: tr-mark-land var(--tr-dur-settle) var(--tr-ease-spring) both;
         }
     }
 
     a,
     p.info {
-        color: var(--ic-ink-fg) !important;
+        color: var(--tr-ink) !important;
     }
 
-    a:not(.button):not(.button-vue):hover,
-    a:not(.button):not(.button-vue):focus-visible {
-        color: var(--ic-splash-cyan) !important;
-        text-decoration-color: currentcolor;
+    a:not(.button):not(.button-vue) {
+        color: var(--tr-accent-text) !important;
     }
 
     :focus-visible {
-        outline-color: var(--ic-splash-cyan) !important;
+        outline-color: var(--tr-accent-text) !important;
     }
 
     /* The card ----------------------------------------------------------------- */
 
     .login-box,
-    .guest-box,
+    .guest-box:not(footer),
     .body-login-container {
-        --color-text-maxcontrast: var(--ic-ink-soft) !important;
+        --color-text-maxcontrast: var(--tr-ink-soft) !important;
 
-        color: var(--ic-ink-fg) !important;
-        background-color: var(--ic-ink-deep) !important;
-        border: 1px solid var(--ic-ink-line);
-        border-radius: var(--border-radius-container-large) !important;
-        box-shadow: var(--ic-glow-lg) !important;
+        padding: 24px !important;
+        color: var(--tr-ink) !important;
+        background-color: var(--tr-surface) !important;
+        border: none;
+        border-radius: var(--tr-radius-card) !important;
+        box-shadow: var(--tr-shadow-sheet) !important;
         -webkit-backdrop-filter: none !important;
         backdrop-filter: none !important;
     }
 
-    footer.guest-box {
-        background-color: transparent !important;
-        border: none;
-        box-shadow: none !important;
-    }
-
     h2,
     h3 {
-        color: var(--ic-ink-hi);
-        font-family: var(--ic-font-display);
-        letter-spacing: var(--ic-tracking-tight);
+        color: var(--tr-ink);
+        font-weight: 700;
+        letter-spacing: -0.015em;
     }
 
-    // The headline ends in the brand's blinking cursor.
-    .login-form__headline::after,
-    .login-box h2::after {
-        content: "▌" / "";
-        display: inline-block;
-        margin-inline-start: 0.12em;
-        color: var(--ic-splash-cyan);
-        animation: ic-blink 1s steps(1, end) infinite;
+    // The headline: Trumpf title1, ending in the InkCurity cursor. It blinks
+    // three times when the page opens, then stays.
+    .login-form__headline {
+        font-size: 28px !important;
+        line-height: 34px !important;
+        text-wrap: balance;
+
+        &::after {
+            content: "▌" / "";
+            display: inline-block;
+            margin-inline-start: 0.1em;
+            color: var(--tr-accent-text);
+            animation: ic-blink 1s steps(1, end) 3;
+        }
     }
 
     /* Fields ------------------------------------------------------------------ */
 
+    .input-field {
+        --input-border-color: var(--tr-border-strong) !important;
+        --input-border-radius: var(--tr-radius-xl) !important;
+    }
+
+    .input-field__input,
     input[type="text"],
     input[type="tel"],
     input[type="password"],
-    input[type="email"],
-    .input-field__input {
-        background: var(--ic-ink-well) !important;
-        border: 1px solid var(--ic-ink-line-strong) !important;
-        border-radius: var(--border-radius-element) !important;
-        color: var(--ic-ink-fg) !important;
-        transition:
-            border-color var(--tr-dur-fade) var(--tr-ease-soft),
-            box-shadow var(--tr-dur-fade) var(--tr-ease-soft);
+    input[type="email"] {
+        background-color: var(--tr-field) !important;
+        color: var(--tr-ink) !important;
 
         &::placeholder {
-            color: var(--ic-ink-mute);
+            color: var(--tr-ink-soft);
             opacity: 1;
-        }
-
-        &:hover:not(:focus) {
-            border-color: var(--ic-ink-soft) !important;
         }
 
         &:focus,
         &:focus-visible {
-            border-color: var(--ic-splash-cyan) !important;
-            box-shadow: 0 0 0 3px rgba(var(--ic-splash-cyan-rgb), 0.18) !important;
-            outline: none;
+            --input-border-color: var(--tr-accent-text) !important;
         }
     }
 
-    .input-field__input:focus,
-    .input-field__input:focus-visible {
-        border-width: 1px !important;
-        padding-inline: calc(var(--default-grid-baseline) * 3 - 1px) !important;
+    input[type="text"]:not(.input-field__input),
+    input[type="tel"]:not(.input-field__input),
+    input[type="password"]:not(.input-field__input),
+    input[type="email"]:not(.input-field__input) {
+        border: 1px solid var(--tr-border-strong) !important;
+        border-radius: var(--tr-radius-xl) !important;
+
+        &:focus,
+        &:focus-visible {
+            border-color: var(--tr-accent-text) !important;
+            box-shadow: 0 0 0 3px color-mix(in srgb, var(--tr-accent) 35%, transparent) !important;
+        }
     }
 
     .input-field__label {
-        color: var(--ic-ink-mute) !important;
-    }
-
-    .groupbottom input {
-        box-shadow: unset !important;
+        color: var(--tr-ink-soft) !important;
     }
 
     .toggle-password,
@@ -171,111 +172,102 @@
         filter: invert(95%);
     }
 
-    .warning input[type="password"] {
-        border: 1px solid var(--ic-ink-line-strong);
-    }
+    /* Keys: one filled, the rest grey -------------------------------------------- */
 
-    .warning input[type="submit"] {
-        background-color: inherit !important;
-        border: unset !important;
-    }
-
-    /* Keys ------------------------------------------------------------------- */
-
+    .button-vue,
     input[type="submit"],
-    input[type="submit"].primary,
     input[type="button"],
     button.primary,
-    .button,
-    .button-vue {
-        border-radius: var(--border-radius-element) !important;
-        font-weight: 600;
+    .button {
+        border-radius: var(--tr-radius-xl) !important;
+        font-weight: 600 !important;
         transition:
             background-color var(--tr-dur-fade) var(--tr-ease-soft),
-            color var(--tr-dur-fade) var(--tr-ease-soft),
-            border-color var(--tr-dur-fade) var(--tr-ease-soft),
-            box-shadow var(--tr-dur-fade) var(--tr-ease-soft),
-            transform var(--tr-dur-press) var(--tr-ease-soft);
-    }
-
-    // One cyan key: log in.
-    input[type="submit"].primary,
-    button.primary,
-    .button-vue--vue-primary {
-        background-color: var(--ic-splash-cyan) !important;
-        border: 1px solid transparent !important;
-        color: var(--ic-ink-void) !important;
-
-        &:hover:not(:disabled),
-        &:focus-visible:not(:disabled) {
-            background-color: var(--color-primary-element-hover) !important;
-            box-shadow: var(--ic-glow-sm) !important;
-        }
+            filter var(--tr-dur-fade) var(--tr-ease-soft),
+            opacity var(--tr-dur-fade) var(--tr-ease-soft),
+            transform var(--tr-dur-press) var(--tr-ease-soft) !important;
 
         &:active:not(:disabled) {
-            background-color: #4cdacc !important;
-            box-shadow: none !important;
             transform: scale(var(--tr-press-scale));
         }
     }
 
-    input[type="submit"]:not(.primary),
-    input[type="button"],
-    .button:not(.button-vue),
-    .button-vue--vue-secondary {
-        background-color: var(--ic-ink-raised) !important;
-        border: 1px solid var(--ic-ink-line) !important;
-        color: var(--ic-ink-fg) !important;
+    .button-vue--primary,
+    .button-vue--vue-primary,
+    input[type="submit"].primary,
+    button.primary {
+        min-height: 48px;
+        background-color: var(--tr-accent) !important;
+        border: none !important;
+        color: var(--tr-accent-on) !important;
+        box-shadow: var(--tr-shadow-cta) !important;
 
-        &:hover:not(:disabled),
-        &:focus-visible:not(:disabled) {
-            border-color: var(--ic-splash-cyan) !important;
-            color: var(--ic-splash-cyan) !important;
+        &:hover:not(:disabled) {
+            filter: brightness(1.08);
+        }
+
+        &:active:not(:disabled) {
+            opacity: 0.85;
         }
     }
 
-    .button-vue--vue-tertiary:hover:not(:disabled) {
-        background-color: rgba(255, 255, 255, 0.06) !important;
-    }
+    .button-vue--secondary,
+    .button-vue--vue-secondary,
+    .button-vue--tertiary,
+    .button-vue--vue-tertiary,
+    input[type="submit"]:not(.primary),
+    input[type="button"],
+    .button:not(.button-vue) {
+        background-color: rgba(255, 255, 255, 0.1) !important;
+        border: none !important;
+        color: var(--tr-ink) !important;
 
-    input[type="submit"]:focus {
-        box-shadow: 0 0 0 3px rgba(var(--ic-splash-cyan-rgb), 0.18) !important;
+        &:hover:not(:disabled) {
+            background-color: rgba(255, 255, 255, 0.16) !important;
+        }
     }
 
     .two-factor-provider {
-        background-color: var(--ic-ink-raised);
-        border: 1px solid var(--ic-ink-line);
-        border-radius: var(--border-radius-element);
+        background-color: var(--tr-inset);
+        border: none;
+        border-radius: var(--tr-radius-xl);
 
         &:hover,
-        &:focus,
-        &:active {
-            background-color: var(--ic-ink-raised);
-            border-color: var(--ic-splash-cyan) !important;
+        &:focus-visible {
+            background-color: var(--tr-hover);
         }
     }
 
-    /* Footer: intentionally boring, with one redacted line ------------------- */
+    .checkbox-radio-switch__icon > * {
+        color: var(--tr-accent-text) !important;
+    }
+
+    /* Footer: the signature line, with one redacted wink ------------------------- */
 
     footer,
-    footer a,
     footer p.info {
-        color: var(--ic-ink-mute) !important;
-        font-family: var(--ic-font-mono);
-        font-size: 12px;
+        color: var(--tr-ink-faint) !important;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+    }
+
+    footer a {
+        color: var(--tr-ink-soft) !important;
     }
 
     footer .info .entity-name {
-        color: var(--ic-ink-fg) !important;
+        color: var(--tr-ink-soft) !important;
     }
 
     footer::before {
-        content: "███ █ ████ ██ ███████ █ ██" / "";
+        content: "███ █ ████ ██ ███████" / "";
         display: block;
         margin-bottom: 8px;
-        color: var(--ic-ink-line-strong);
-        font-family: var(--ic-font-mono);
-        font-size: 11px;
+        color: color-mix(in srgb, var(--tr-pink) 45%, transparent);
+        font-family: var(--tr-font-mono);
+        font-size: 10px;
         letter-spacing: 0.06em;
     }
 }
@@ -283,6 +275,18 @@
 @keyframes ic-blink {
     50% {
         opacity: 0;
+    }
+}
+
+@keyframes tr-mark-land {
+    from {
+        opacity: 0;
+        transform: translateY(-10px) rotate(-16deg) scale(0.92);
+    }
+
+    to {
+        opacity: 1;
+        transform: rotate(-6deg);
     }
 }
 
@@ -294,15 +298,15 @@
     width: 260px;
 
     .login-option {
-        background-color: var(--ic-ink-raised);
-        border: 1px solid var(--ic-ink-line);
-        border-radius: var(--border-radius-element);
+        background-color: var(--tr-inset);
+        border: none;
+        border-radius: var(--tr-radius-xl);
         box-sizing: border-box;
         height: 50px;
         min-width: 260px;
 
         &:hover {
-            border-color: var(--ic-splash-cyan);
+            background-color: var(--tr-hover);
         }
 
         a {
@@ -310,7 +314,6 @@
         }
 
         a:hover {
-            color: var(--ic-splash-cyan);
             text-decoration: none;
         }
     }
@@ -319,13 +322,12 @@
 /* Reduced motion ----------------------------------------------------------------- */
 
 @media (prefers-reduced-motion: reduce) {
-    #body-login .login-form__headline::after,
-    #body-login .login-box h2::after {
+    #body-login #header .logo,
+    #body-login .login-form__headline::after {
         animation: none;
     }
 
-    #body-login .button-vue--vue-primary:active:not(:disabled),
-    #body-login button.primary:active:not(:disabled) {
+    #body-login .button-vue:active:not(:disabled) {
         transform: none;
     }
 }

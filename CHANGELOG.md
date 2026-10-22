@@ -4,22 +4,35 @@
 
 ### Added
 
--   InkCurity Dark: a one-of-a-kind design language on top of the Breeze Dark port. Ink scale
-    (`#02060f` void, `#08152b` surfaces), one cyan accent, a magenta guest star, glows instead
-    of shadows, 10px keys, 14px cards and a 20px body container; motion curves and press
-    feedback from Trumpf.
--   Signature flourishes: a radar scan-line under the header, a cyan caret in every field, the
-    blinking cursor on the dashboard greeting and the login headline, mono column headers and
-    captions, a redacted line in the login footer. All of them stand still under reduced motion.
+-   InkCurity Dark, Trumpf edition: a lifted dusk-blue palette (`#121935` page, `#1e2850`
+    surface) instead of near-black, with every text pairing at 4.5:1 or more.
+-   An accent per app: Files and the hub pages wear the logo blue, Photos coral, Talk mint,
+    Calendar red, Contacts orchid, Mail sky, Deck and Notes gold. Buttons, selection, focus and
+    the page bloom follow the open app; the colours sit in `$tr-app-accents`.
+-   App tiles: the open app sits on a tile in its colour in the Nextcloud 33 header bar, and the
+    Nextcloud 34 app grid shows every app as a coloured tile.
+-   Dashboard as a start page: today's date as eyebrow above a large greeting (set by
+    `js/breezedark.js` in the user's language), status chips, and the first widget as the live
+    card with the accent gradient and a fine grain.
+-   The theme's settings pages as a Trumpf hub: hero card with the logo, the main switch as a
+    frosted row, grouped iOS switches with tinted tiles, a tilted preview, the signature line, a
+    material toast with a reload action and confetti when the theme is switched on.
+-   Login: the logo leans −6° and lands once, the headline ends in a cursor that blinks three
+    times, one filled key, the footer as a signature line with one redacted wink.
 -   The login page as SCSS sources (`css/guest.scss`, `css/guest-automatic.scss`) built by
     `npm run build`; the `appstore` make target builds first.
--   A preview of the theme in the personal settings and two screenshots.
+-   The InkCurity logo as `img/inkcurity-logo.svg`, and five screenshots.
 -   Add local Nextcloud 33 and 34 compatibility and document the production test gate.
 
 ### Changed
 
--   The theme owns its backdrop: the body background image is replaced by the ink void with a
-    cyan bloom and film grain. A custom background can be restored with custom CSS, see README.
+-   Selectors target `@nextcloud/vue` 9 (`.button-vue--primary` and friends) as used by
+    Nextcloud 33 and 34; the v8 names stay for apps that still ship the old bundle.
+-   Pill buttons, tinted secondary buttons, success-green switches, sheets that rise from below,
+    material toasts, empty states with a tinted glyph, the Trumpf sidebar for app navigation and
+    settings sections as cards.
+-   The theme owns its backdrop: the body background image is replaced by dusk blue with a bloom
+    in the colour of the open app. A custom background can be restored with custom CSS, see README.
 -   The theme is named InkCurity Dark in the settings and the app store listing; the app id stays
     `breezedark` so existing preferences remain valid.
 -   Replace jQuery settings requests with native Fetch requests and explicit CSRF headers.

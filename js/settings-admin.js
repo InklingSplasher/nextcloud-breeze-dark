@@ -1,24 +1,8 @@
 /**
- * Breeze Dark settings for Nextcloud.
+ * InkCurity Dark admin settings for Nextcloud.
  *
  * @license GNU AGPL version 3 or any later version
  */
-
-function showBreezeDarkMessage(anchor, id, message, success) {
-    if (!(anchor instanceof Element)) {
-        return;
-    }
-
-    document.getElementById(id)?.remove();
-
-    const status = document.createElement("span");
-    status.id = id;
-    status.classList.add("msg", success ? "success" : "error");
-    status.textContent = ` ${message}`;
-    anchor.insertAdjacentElement("afterend", status);
-
-    window.setTimeout(() => status.remove(), 3000);
-}
 
 async function postBreezeDarkForm(url, values) {
     const requestToken = document.head.dataset.requesttoken;
@@ -38,7 +22,7 @@ async function postBreezeDarkForm(url, values) {
     });
 
     if (!response.ok) {
-        throw new Error(`Breeze Dark settings request failed with HTTP ${response.status}`);
+        throw new Error(`InkCurity Dark settings request failed with HTTP ${response.status}`);
     }
 }
 
@@ -64,59 +48,63 @@ window.addEventListener("DOMContentLoaded", () => {
         return;
     }
 
+    const ui = () => window.BreezeDarkUI;
+    const notify = (options) => ui()?.showToast(options);
+    const automaticHint = automaticActivation
+        .closest(".tr-row")
+        ?.querySelector("[data-tr-when-locked]");
+
     let saveQueue = Promise.resolve();
     const settingsValues = () => ({
         theme_enforced: enforceTheme.checked ? "1" : "0",
         theme_automatic_activation_enabled: automaticActivation.checked ? "1" : "0",
         theme_login_page: loginPage.checked ? "1" : "0",
     });
-    const queueSave = (url, values, anchor, messageId) => {
+    const queueSave = (url, values, celebrate = false) => {
         if (typeof url !== "string" || url === "") {
-            showBreezeDarkMessage(anchor, messageId, root.dataset.errorLabel, false);
+            notify({ message: root.dataset.errorLabel, error: true });
             return;
         }
 
         saveQueue = saveQueue.catch(() => undefined).then(() => postBreezeDarkForm(url, values));
         saveQueue.then(
-            () => showBreezeDarkMessage(anchor, messageId, root.dataset.savedLabel, true),
-            () => showBreezeDarkMessage(anchor, messageId, root.dataset.errorLabel, false),
+            () => {
+                if (celebrate) {
+                    ui()?.confetti();
+                    notify({
+                        message: root.dataset.enabledLabel,
+                        actionLabel: root.dataset.reloadLabel,
+                        onAction: () => window.location.reload(),
+                        duration: 7000,
+                    });
+                } else {
+                    notify({ message: root.dataset.savedLabel });
+                }
+            },
+            () => notify({ message: root.dataset.errorLabel, error: true }),
         );
     };
 
     enforceTheme.addEventListener("change", () => {
+        // Grey out, don't hide: the dependent switch stays visible with its reason.
         automaticActivation.disabled = !enforceTheme.checked;
-        queueSave(
-            root.dataset.settingsUrl,
-            settingsValues(),
-            root.querySelector("label[for='breezedark-theme-enabled']"),
-            "breezedark-theme-enabled-msg",
-        );
+        if (automaticHint instanceof HTMLElement) {
+            automaticHint.textContent = enforceTheme.checked
+                ? automaticHint.dataset.trWhenOpen
+                : automaticHint.dataset.trWhenLocked;
+        }
+        queueSave(root.dataset.settingsUrl, settingsValues(), enforceTheme.checked);
     });
 
     automaticActivation.addEventListener("change", () => {
-        queueSave(
-            root.dataset.settingsUrl,
-            settingsValues(),
-            root.querySelector("label[for='breezedark-automatic-activation-enabled']"),
-            "breezedark-theme-automatic-activation-enabled-msg",
-        );
+        queueSave(root.dataset.settingsUrl, settingsValues());
     });
 
     loginPage.addEventListener("change", () => {
-        queueSave(
-            root.dataset.settingsUrl,
-            settingsValues(),
-            root.querySelector("label[for='breezedark-theme-login-page']"),
-            "breezedark-theme-login-page-msg",
-        );
+        queueSave(root.dataset.settingsUrl, settingsValues());
     });
 
     customStylingButton.addEventListener("click", () => {
-        queueSave(
-            root.dataset.customStylingUrl,
-            { theme_custom_styling: customStyling.value },
-            customStylingButton,
-            "breezedark-theme-custom-styling-button-msg",
-        );
+        queueSave(root.dataset.customStylingUrl, { theme_custom_styling: customStyling.value });
     });
 });

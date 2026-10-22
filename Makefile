@@ -55,7 +55,7 @@ appstore: build
 	--exclude="Makefile" \
 	--exclude="package-lock.json" \
 	--exclude="package.json" \
-	--exclude="screenshot.png" \
+	--exclude="screenshot*" \
 	../$(app_name)/ $(sign_directory)/$(app_name)
 	@if [ -f $(cert_directory)/$(app_name).key ]; then \
 		echo "Signing app files…"; \

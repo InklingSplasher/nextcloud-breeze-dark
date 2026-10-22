@@ -28,7 +28,7 @@
 @media (prefers-color-scheme: dark) {
   /**
    * =============================================================================
-   * InkCurity Dark for Nextcloud — guest and login pages
+   * InkCurity Dark for Nextcloud — guest and login pages, Trumpf edition
    * Source code: https://github.com/InklingSplasher/nextcloud-breeze-dark
    * Based on Breeze Dark by Magnus Walbeck. See AUTHORS.md
    * =============================================================================
@@ -53,443 +53,463 @@
    *
    */
   /***
-   * InkCurity Dark — design tokens
+   * InkCurity Dark — design tokens, Trumpf edition
    *
-   * Ink scale, splash accents, glows and radii come from the InkCurity design
-   * system ("wet ink on a CRT"). Motion curves, press feedback and the hairline
-   * rules come from Trumpf ("Ruhe zuerst"). Everything is mapped onto the
-   * Nextcloud theming variables so core and every app follow along.
+   * Structure and manners come from Trumpf: page, bg, surface and inset as the
+   * four surfaces, one accent that tints buttons, selection and tiles, success
+   * green for switches, identity colours, two motion curves. The palette is a
+   * lifted dusk blue instead of black, and the accent changes with the app:
+   * Files and the hub pages wear the logo blue, Photos coral, Talk mint,
+   * Calendar red, Contacts orchid, Mail sky, Deck and Notes gold.
    *
-   * The mixin is included once for logged-in pages ([data-themes*="breezedark"])
-   * and once on :root for the guest/login pages, which never carry the theme
-   * attribute.
+   * Every pairing below was checked for contrast (see the PR): text on fills
+   * and on tinted washes reaches 4.5:1, the default blue fill reaches 3:1
+   * against the surface.
    *
    * @copyright Copyright (c) 2019, Magnus Walbeck <mw@mwalbeck.org>
    * @copyright Copyright (c) 2026 inkcurity.net
    *
    * @license GNU AGPL version 3 or any later version, see COPYING file for more.
    */
+  /* Accents --------------------------------------------------------------------
+   * fill, text on fill, filled hover, tinted wash, wash on hover, text on the
+   * wash, accent text on dark surfaces, icon flip on the fill. */
+  /* Everything else -------------------------------------------------------------- */
   :root {
-    /* Ink scale ------------------------------------------------------------- */
-    --ic-ink-void: #02060f;
-    --ic-ink-well: #050e1d;
-    --ic-ink-deep: #08152b;
-    --ic-ink-hover: #11213a;
-    --ic-ink-raised: #12253f;
-    --ic-ink-line: #1f3a5e;
-    --ic-ink-line-strong: #335580;
-    --ic-ink-mute: #6a8ab0;
-    --ic-ink-soft: #7a9ac0;
-    --ic-ink-fg: #dce5f2;
-    --ic-ink-hi: #ffffff;
-    /* Splash accents --------------------------------------------------------- */
-    --ic-splash-cyan: #4fe3d4;
-    --ic-splash-cyan-rgb: 79, 227, 212;
-    --ic-splash-magenta: #ff3d8e;
-    --ic-splash-magenta-rgb: 255, 61, 142;
-    --ic-splash-lemon: #f8e16c;
-    --ic-splash-lemon-rgb: 248, 225, 108;
-    --ic-ok: #4ade80;
-    --ic-ok-rgb: 74, 222, 128;
-    --ic-danger: #ff5577;
-    --ic-danger-rgb: 255, 85, 119;
-    /* Logo colours: only ever inside the mark, never as UI colours ------------ */
-    --ic-logo-blue: #2563eb;
-    --ic-logo-pink: #ec4899;
-    --ic-logo-steel: #8b94a7;
-    /* Glows replace drop-shadows on dark surfaces ----------------------------- */
-    --ic-glow-sm:
-        0 0 24px -2px rgba(var(--ic-splash-cyan-rgb), 0.55),
-        0 0 48px -8px rgba(var(--ic-splash-cyan-rgb), 0.3);
-    --ic-glow-md:
-        0 0 40px -4px rgba(var(--ic-splash-cyan-rgb), 0.65),
-        0 0 80px -16px rgba(var(--ic-splash-cyan-rgb), 0.35),
-        0 0 0 1px rgba(var(--ic-splash-cyan-rgb), 0.15);
-    --ic-glow-lg:
-        0 24px 70px -12px rgba(var(--ic-splash-cyan-rgb), 0.45),
-        0 0 120px -24px rgba(var(--ic-splash-cyan-rgb), 0.35),
-        0 0 0 1px rgba(var(--ic-splash-cyan-rgb), 0.18);
-    --ic-elevation:
-        0 0 0 1px var(--ic-ink-line), 0 24px 60px -24px rgba(var(--ic-splash-cyan-rgb), 0.25);
-    --ic-scrim: rgba(2, 6, 15, 0.72);
-    /* Type: no webfonts, no third-party requests ----------------------------- */
-    --ic-font-display:
-        "Space Grotesk", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-    --ic-font-mono:
-        "JetBrains Mono", ui-monospace, "Cascadia Mono", "SF Mono", Menlo, Consolas, monospace;
-    --ic-tracking-mono: 0.16em;
-    --ic-tracking-tight: -0.02em;
-    /* Motion: Trumpf curves, InkCurity ease ---------------------------------- */
+    /* Surfaces, outside in: page, bg, surface, inset (Trumpf) in dusk blue. */
+    --tr-page: #121935;
+    --tr-bg: #172042;
+    --tr-surface: #1e2850;
+    --tr-surface-rgb: 30, 40, 80;
+    --tr-inset: #28335f;
+    --tr-field: #262f57;
+    --tr-hover: #2e375c;
+    --tr-border: #36427a;
+    --tr-border-strong: #6371ad;
+    --tr-material: rgba(40, 51, 95, 0.78);
+    --tr-material-filter: saturate(180%) blur(20px);
+    --tr-scrim: rgba(8, 11, 28, 0.55);
+    /* Text: ink 13.2:1 on surface, soft 7.6:1 on surface and 6.2:1 on hover. */
+    --tr-ink: #f5f6fb;
+    --tr-ink-soft: #b3bce0;
+    --tr-ink-faint: #7b86b5;
+    /* Status, identity, rank. Status always comes with a word or a glyph. */
+    --tr-success: #30d158;
+    --tr-danger: #ff6961;
+    --tr-warn: #ff9f0a;
+    --tr-info: #64d2ff;
+    --tr-gold: #f0c454;
+    --tr-pink: #ec4899;
+    --tr-pink-strong: #db2777;
+    --tr-identity-1: #ff7158;
+    --tr-identity-2: #3d6fb5;
+    --tr-identity-3: #5bd49a;
+    --tr-identity-4: #f0c25e;
+    --tr-identity-5: #b85fbf;
+    --tr-identity-6: #7bd6eb;
+    --tr-identity-7: #a8423a;
+    --tr-identity-8: #2d5a3a;
+    /* Shape: groups 14, cards 18, live card and toast 22, body 24, sheets 28. */
+    --tr-radius-tile: 7px;
+    --tr-radius-lg: 10px;
+    --tr-radius-xl: 14px;
+    --tr-radius-2xl: 18px;
+    --tr-radius-card: 22px;
+    --tr-radius-frame: 24px;
+    --tr-radius-float: 28px;
+    --tr-radius-full: 999px;
+    /* Depth: what floats gets a shadow, everything else stays flat. */
+    --tr-shadow-button: 0 1px 2px rgba(0, 0, 0, 0.25);
+    --tr-shadow-float: 0 12px 32px rgba(3, 6, 20, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.06);
+    --tr-shadow-sheet: 0 24px 64px rgba(3, 6, 20, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.07);
+    --tr-shadow-frame: 0 25px 50px -12px rgba(3, 6, 20, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.05);
+    --tr-shadow-cta: 0 8px 24px rgba(0, 0, 0, 0.25);
+    /* Motion: two curves carry everything, feedback stays under 200 ms. */
     --tr-ease-ios: cubic-bezier(0.32, 0.72, 0, 1);
     --tr-ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
-    --ic-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+    --tr-ease-spring: cubic-bezier(0.34, 1.45, 0.64, 1);
     --tr-dur-press: 180ms;
     --tr-dur-fade: 200ms;
+    --tr-dur-release: 220ms;
+    --tr-dur-rise: 260ms;
     --tr-dur-control: 300ms;
     --tr-dur-push: 420ms;
+    --tr-dur-toast: 480ms;
+    --tr-dur-sheet: 500ms;
+    --tr-dur-settle: 640ms;
     --tr-press-scale: 0.97;
-    /* Nextcloud: surfaces ---------------------------------------------------- */
-    --color-main-background: var(--ic-ink-deep) !important;
-    --color-main-background-rgb: 8, 21, 43 !important;
-    --color-main-background-translucent: rgba(var(--color-main-background-rgb), 0.97) !important;
-    --color-main-background-blur: rgba(var(--color-main-background-rgb), 0.85) !important;
+    /* Type: the system face only; mono stays for code. */
+    --tr-font-mono:
+        ui-monospace, "SF Mono", "Cascadia Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+    /* Default accent: the logo blue. Apps override it, see tr-app-accents. */
+    --tr-accent: #336deb;
+    --tr-accent-on: #ffffff;
+    --tr-accent-text: #8dadf4;
+    --tr-accent-wash: #22366f;
+    --tr-accent-flip: no;
+    --color-primary: #336deb !important;
+    --color-primary-default: #336deb !important;
+    --color-primary-text: #ffffff !important;
+    --color-primary-hover: #2f64d8 !important;
+    --color-primary-light: #22366f !important;
+    --color-primary-light-hover: #243b7b !important;
+    --color-primary-light-text: #8dadf4 !important;
+    --color-primary-element: #336deb !important;
+    --color-primary-element-hover: #2f64d8 !important;
+    --color-primary-element-default-hover: #2f64d8 !important;
+    --color-primary-element-text: #ffffff !important;
+    --color-primary-element-text-dark: #ffffff !important;
+    --color-primary-element-light: #22366f !important;
+    --color-primary-element-light-hover: #243b7b !important;
+    --color-primary-element-light-text: #8dadf4 !important;
+    --primary-invert-if-bright: no !important;
+    --primary-invert-if-dark: invert(100%) !important;
+    --gradient-primary-background: linear-gradient(40deg, #336deb 0%, #2f64d8 100%) !important;
+    --color-text-link: #8dadf4 !important;
+    --tr-app: #336deb;
+    --tr-app-flip: no;
+    /* Nextcloud: surfaces --------------------------------------------------- */
+    --color-main-background: var(--tr-surface) !important;
+    --color-main-background-rgb: 30, 40, 80 !important;
+    --color-main-background-translucent: rgba(var(--tr-surface-rgb), 0.97) !important;
+    --color-main-background-blur: rgba(var(--tr-surface-rgb), 0.86) !important;
     --gradient-main-background:
         var(--color-main-background) 0%, var(--color-main-background-translucent) 85%,
         transparent 100% !important;
-    --color-background-hover: var(--ic-ink-hover) !important;
-    --color-background-dark: var(--ic-ink-raised) !important;
-    --color-background-darker: var(--ic-ink-line) !important;
-    --color-background-translucent: rgba(var(--color-main-background-rgb), 0.85) !important;
-    --color-placeholder-light: var(--ic-ink-raised) !important;
-    --color-placeholder-dark: var(--ic-ink-line) !important;
-    --color-background-plain: var(--ic-ink-void) !important;
-    --color-background-plain-text: var(--ic-ink-fg) !important;
+    --color-background-hover: var(--tr-hover) !important;
+    --color-background-dark: var(--tr-inset) !important;
+    --color-background-darker: #323d6d !important;
+    --color-background-translucent: rgba(var(--tr-surface-rgb), 0.86) !important;
+    --color-placeholder-light: var(--tr-inset) !important;
+    --color-placeholder-dark: #323d6d !important;
+    --color-background-plain: var(--tr-page) !important;
+    --color-background-plain-text: var(--tr-ink) !important;
     --image-background: none !important;
     --background-image-invert-if-bright: no !important;
     --background-invert-if-dark: invert(100%) !important;
     --background-invert-if-bright: no !important;
-    /* Nextcloud: text -------------------------------------------------------- */
-    --color-main-text: var(--ic-ink-fg) !important;
-    --color-text-maxcontrast: var(--ic-ink-soft) !important;
-    --color-text-maxcontrast-default: var(--ic-ink-soft) !important;
-    --color-text-maxcontrast-background-blur: #86a4c8 !important;
-    --color-text-light: var(--ic-ink-fg) !important;
-    --color-text-lighter: var(--ic-ink-soft) !important;
-    --color-text-dark: var(--ic-ink-void) !important;
-    --color-text-error: #ff6f8c !important;
-    --color-text-success: #6ae698 !important;
-    --color-background-selection: var(--ic-splash-cyan) !important;
-    --color-text-selection: var(--ic-ink-void) !important;
-    /* Nextcloud: borders ----------------------------------------------------- */
-    --color-border: var(--ic-ink-line) !important;
-    --color-border-dark: var(--ic-ink-line-strong) !important;
-    --color-border-maxcontrast: #5579a6 !important;
-    --color-border-error: var(--ic-danger) !important;
-    --color-border-success: var(--ic-ok) !important;
-    --border-width-input: 1px !important;
-    --border-width-input-focused: 1px !important;
-    /* Nextcloud: primary is cyan, text on it is the void --------------------- */
-    --color-primary: var(--ic-splash-cyan) !important;
-    --color-primary-default: var(--ic-splash-cyan) !important;
-    --color-primary-text: var(--ic-ink-void) !important;
-    --color-primary-hover: #339190 !important;
-    --color-primary-light: #0f2a3c !important;
-    --color-primary-light-hover: #133646 !important;
-    --color-primary-light-text: var(--ic-splash-cyan) !important;
-    --color-primary-element: var(--ic-splash-cyan) !important;
-    --color-primary-element-default-hover: #5ae5d7 !important;
-    --color-primary-element-hover: #5ae5d7 !important;
-    --color-primary-element-text: var(--ic-ink-void) !important;
-    --color-primary-element-text-dark: #000000 !important;
-    --color-primary-element-light: var(--color-primary-light) !important;
-    --color-primary-element-light-hover: var(--color-primary-light-hover) !important;
-    --color-primary-element-light-text: var(--color-primary-light-text) !important;
-    --primary-invert-if-bright: invert(100%) !important;
-    --primary-invert-if-dark: no !important;
-    --gradient-primary-background: linear-gradient(
-        40deg,
-        var(--ic-splash-cyan) 0%,
-        var(--color-primary-hover) 100%
-    ) !important;
-    /* Nextcloud: feedback. The element colour carries the meaning, the wash is
-       the tone at 18% over ink-deep, the text passes 9:1 on the wash. --------- */
-    --color-error: #342139 !important;
-    --color-error-hover: #48263f !important;
-    --color-error-text: #ffc9d3 !important;
-    --color-error-rgb: 52, 33, 57 !important;
-    --color-element-error: var(--ic-danger) !important;
-    --color-warning: #333a37 !important;
-    --color-warning-hover: #464a3c !important;
-    --color-warning-text: #fbeeb0 !important;
-    --color-warning-rgb: 51, 58, 55 !important;
-    --color-element-warning: var(--ic-splash-lemon) !important;
-    --color-success: #14393a !important;
-    --color-success-hover: #194941 !important;
-    --color-success-text: #c6f5d6 !important;
-    --color-success-rgb: 20, 57, 58 !important;
-    --color-element-success: var(--ic-ok) !important;
-    --color-info: #153a49 !important;
-    --color-info-hover: #1a4b57 !important;
-    --color-info-text: #bdf4ee !important;
-    --color-info-rgb: 21, 58, 73 !important;
-    --color-element-info: var(--ic-splash-cyan) !important;
-    --color-neutral: var(--ic-splash-lemon) !important;
-    --color-favorite: var(--ic-splash-lemon) !important;
-    --color-mark: #50523e !important;
-    /* Nextcloud: assistant (AI generated content) stays inside the palette -- */
-    --color-background-assistant: #0d1a36 !important;
-    --color-border-assistant: linear-gradient(
-        125deg,
-        var(--ic-splash-cyan) 50%,
-        var(--ic-splash-magenta) 125%
-    ) !important;
+    /* Nextcloud: text ------------------------------------------------------- */
+    --color-main-text: var(--tr-ink) !important;
+    --color-text-maxcontrast: var(--tr-ink-soft) !important;
+    --color-text-maxcontrast-default: var(--tr-ink-soft) !important;
+    --color-text-maxcontrast-background-blur: #bcc4e6 !important;
+    --color-text-light: var(--tr-ink) !important;
+    --color-text-lighter: var(--tr-ink-soft) !important;
+    --color-text-dark: #0b1020 !important;
+    --color-text-error: var(--tr-danger) !important;
+    --color-text-success: var(--tr-success) !important;
+    --color-background-selection: color-mix(in srgb, var(--tr-accent) 40%, transparent) !important;
+    --color-text-selection: var(--tr-ink) !important;
+    /* Nextcloud: borders ---------------------------------------------------- */
+    --color-border: var(--tr-border) !important;
+    --color-border-dark: #44508a !important;
+    --color-border-maxcontrast: var(--tr-border-strong) !important;
+    --color-border-error: var(--tr-danger) !important;
+    --color-border-success: var(--tr-success) !important;
+    /* Nextcloud: feedback. Element colour = meaning, wash = tone at 18 % over
+       the surface, text on the wash passes 7.7:1 or better. ---------------- */
+    --color-error: #462d4c !important;
+    --color-error-hover: #58304a !important;
+    --color-error-text: #ffd0cc !important;
+    --color-error-rgb: 70, 45, 76 !important;
+    --color-element-error: var(--tr-danger) !important;
+    --color-warning: #463d43 !important;
+    --color-warning-hover: #58473e !important;
+    --color-warning-text: #ffe2b8 !important;
+    --color-warning-rgb: 70, 61, 67 !important;
+    --color-element-warning: var(--tr-warn) !important;
+    --color-success: #214651 !important;
+    --color-success-hover: #235452 !important;
+    --color-success-text: #c8f5d5 !important;
+    --color-success-rgb: 33, 70, 81 !important;
+    --color-element-success: var(--tr-success) !important;
+    --color-info: #2b4770 !important;
+    --color-info-hover: #30547e !important;
+    --color-info-text: #cdefff !important;
+    --color-info-rgb: 43, 71, 112 !important;
+    --color-element-info: var(--tr-info) !important;
+    --color-favorite: var(--tr-gold) !important;
+    --color-mark: #5b5233 !important;
+    /* Nextcloud: assistant, inside the palette ------------------------------ */
+    --color-background-assistant: #252c58 !important;
+    --color-border-assistant: linear-gradient(125deg, #336deb 50%, #ec4899 125%) !important;
     --color-element-assistant: linear-gradient(
         214deg,
-        var(--ic-splash-cyan) 12%,
-        var(--ic-logo-blue) 39%,
-        var(--ic-splash-magenta) 86%
+        #7bd6eb 12%,
+        #336deb 45%,
+        #ec4899 92%
     ) !important;
     --color-element-assistant-icon: linear-gradient(
         214deg,
-        var(--ic-splash-cyan) 15%,
-        var(--ic-logo-blue) 40%,
-        var(--ic-splash-magenta) 80%
+        #7bd6eb 15%,
+        #336deb 45%,
+        #ec4899 85%
     ) !important;
-    /* Nextcloud: loading, scrollbar, shadow ---------------------------------- */
-    --color-loading-light: var(--ic-ink-line-strong) !important;
-    --color-loading-dark: var(--ic-ink-fg) !important;
-    --color-scrollbar: var(--ic-ink-line-strong) transparent !important;
-    --color-box-shadow-rgb: 2, 6, 15 !important;
-    --color-box-shadow: rgba(var(--color-box-shadow-rgb), 0.6) !important;
-    /* Nextcloud: shape. Keys, not lozenges. ---------------------------------- */
+    /* Nextcloud: loading, scrollbar, shadow --------------------------------- */
+    --color-loading-light: var(--tr-border) !important;
+    --color-loading-dark: var(--tr-ink) !important;
+    --color-scrollbar: var(--tr-border-strong) transparent !important;
+    --color-box-shadow-rgb: 3, 6, 20 !important;
+    --color-box-shadow: rgba(3, 6, 20, 0.5) !important;
+    /* Nextcloud: shape ------------------------------------------------------ */
     --border-radius-small: 6px !important;
-    --border-radius-element: 10px !important;
-    --border-radius-container: 14px !important;
-    --border-radius-container-large: 20px !important;
+    --border-radius-element: var(--tr-radius-lg) !important;
+    --border-radius-container: var(--tr-radius-xl) !important;
+    --border-radius-container-large: var(--tr-radius-frame) !important;
     --border-radius: 6px !important;
-    --border-radius-large: 10px !important;
-    --border-radius-rounded: 20px !important;
-    --border-radius-pill: 999px !important;
-    --body-container-radius: 20px !important;
+    --border-radius-large: var(--tr-radius-lg) !important;
+    --border-radius-rounded: var(--tr-radius-card) !important;
+    --border-radius-pill: var(--tr-radius-full) !important;
+    --body-container-radius: var(--tr-radius-frame) !important;
     --body-container-margin: 12px !important;
-    /* Nextcloud: motion ------------------------------------------------------ */
+    /* Nextcloud: motion ----------------------------------------------------- */
     --animation-quick: var(--tr-dur-press) !important;
-    --animation-slow: 320ms !important;
-    /* Aliases kept for the per-app partials ---------------------------------- */
-    --color-text-link: var(--ic-splash-cyan) !important;
-    --color-text-inactive: var(--ic-ink-soft) !important;
-    --color-icon: var(--ic-ink-fg) !important;
-    --color-icon-yellow: var(--ic-splash-lemon) !important;
-    --color-selected-blue: rgba(var(--ic-splash-cyan-rgb), 0.18) !important;
-    --color-dashboard-grey: rgba(var(--color-main-background-rgb), 0.85) !important;
-    --color-border-grey: var(--ic-ink-line) !important;
-    --color-hover-blue: var(--ic-ink-hover) !important;
-    --table-color-border: var(--ic-ink-line) !important;
-    --table-color-heading: var(--ic-ink-hi) !important;
-    --table-color-heading-border: var(--ic-ink-line-strong) !important;
-    --table-color-background: var(--ic-ink-deep) !important;
-    --table-color-background-hover: var(--ic-ink-hover) !important;
-    --table-border-radius: var(--border-radius-element) !important;
+    --animation-slow: var(--tr-dur-control) !important;
+    /* Aliases for the per-app partials -------------------------------------- */
+    --color-text-inactive: var(--tr-ink-soft) !important;
+    --color-icon: var(--tr-ink) !important;
+    --color-icon-yellow: var(--tr-gold) !important;
+    --color-selected-blue: color-mix(in srgb, var(--tr-accent) 22%, transparent) !important;
+    --color-dashboard-grey: rgba(var(--tr-surface-rgb), 0.86) !important;
+    --color-border-grey: var(--tr-border) !important;
+    --color-hover-blue: var(--tr-hover) !important;
+    --table-color-border: var(--tr-border) !important;
+    --table-color-heading: var(--tr-ink) !important;
+    --table-color-heading-border: var(--tr-border-strong) !important;
+    --table-color-background: var(--tr-surface) !important;
+    --table-color-background-hover: var(--tr-hover) !important;
+    --table-border-radius: var(--tr-radius-lg) !important;
   }
-  /* Login screen: the signature moment ---------------------------------------- */
+  /* Login: the signature moment, Trumpf edition ----------------------------------- */
   #body-login {
-    color: var(--ic-ink-fg) !important;
-    background-color: var(--ic-ink-void) !important;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"), radial-gradient(900px 620px at 18% 8%, rgba(var(--ic-splash-cyan-rgb), 0.14), transparent 62%), radial-gradient(720px 520px at 92% 96%, rgba(var(--ic-splash-magenta-rgb), 0.07), transparent 62%) !important;
-    background-size: 200px 200px, auto, auto !important;
-    background-repeat: repeat, no-repeat, no-repeat !important;
+    color: var(--tr-ink) !important;
+    background-color: var(--tr-page) !important;
+    background-image: radial-gradient(1000px 700px at 14% -8%, color-mix(in srgb, var(--tr-accent) 42%, transparent), transparent 64%), radial-gradient(820px 620px at 96% 104%, color-mix(in srgb, var(--tr-pink) 24%, transparent), transparent 62%), radial-gradient(520px 380px at 88% 6%, color-mix(in srgb, var(--tr-identity-6) 14%, transparent), transparent 60%) !important;
+    background-repeat: no-repeat !important;
     background-attachment: fixed !important;
-    caret-color: var(--ic-splash-cyan);
+    caret-color: var(--tr-accent-text);
   }
   #body-login #header {
     background-color: unset !important;
   }
   #body-login #header .logo {
-    filter: drop-shadow(0 0 28px rgba(var(--ic-splash-cyan-rgb), 0.35));
+    transform: rotate(-6deg);
+    filter: drop-shadow(0 14px 28px color-mix(in srgb, var(--tr-accent) 55%, transparent)) drop-shadow(0 2px 6px color-mix(in srgb, var(--tr-pink) 35%, transparent));
+    animation: tr-mark-land var(--tr-dur-settle) var(--tr-ease-spring) both;
   }
   #body-login a,
   #body-login p.info {
-    color: var(--ic-ink-fg) !important;
+    color: var(--tr-ink) !important;
   }
-  #body-login a:not(.button):not(.button-vue):hover,
-  #body-login a:not(.button):not(.button-vue):focus-visible {
-    color: var(--ic-splash-cyan) !important;
-    text-decoration-color: currentcolor;
+  #body-login a:not(.button):not(.button-vue) {
+    color: var(--tr-accent-text) !important;
   }
   #body-login :focus-visible {
-    outline-color: var(--ic-splash-cyan) !important;
+    outline-color: var(--tr-accent-text) !important;
   }
   #body-login {
     /* The card ----------------------------------------------------------------- */
   }
   #body-login .login-box,
-  #body-login .guest-box,
+  #body-login .guest-box:not(footer),
   #body-login .body-login-container {
-    --color-text-maxcontrast: var(--ic-ink-soft) !important;
-    color: var(--ic-ink-fg) !important;
-    background-color: var(--ic-ink-deep) !important;
-    border: 1px solid var(--ic-ink-line);
-    border-radius: var(--border-radius-container-large) !important;
-    box-shadow: var(--ic-glow-lg) !important;
+    --color-text-maxcontrast: var(--tr-ink-soft) !important;
+    padding: 24px !important;
+    color: var(--tr-ink) !important;
+    background-color: var(--tr-surface) !important;
+    border: none;
+    border-radius: var(--tr-radius-card) !important;
+    box-shadow: var(--tr-shadow-sheet) !important;
     -webkit-backdrop-filter: none !important;
     backdrop-filter: none !important;
   }
-  #body-login footer.guest-box {
-    background-color: transparent !important;
-    border: none;
-    box-shadow: none !important;
-  }
   #body-login h2,
   #body-login h3 {
-    color: var(--ic-ink-hi);
-    font-family: var(--ic-font-display);
-    letter-spacing: var(--ic-tracking-tight);
+    color: var(--tr-ink);
+    font-weight: 700;
+    letter-spacing: -0.015em;
   }
-  #body-login .login-form__headline::after,
-  #body-login .login-box h2::after {
+  #body-login .login-form__headline {
+    font-size: 28px !important;
+    line-height: 34px !important;
+    text-wrap: balance;
+  }
+  #body-login .login-form__headline::after {
     content: "▌"/"";
     display: inline-block;
-    margin-inline-start: 0.12em;
-    color: var(--ic-splash-cyan);
-    animation: ic-blink 1s steps(1, end) infinite;
+    margin-inline-start: 0.1em;
+    color: var(--tr-accent-text);
+    animation: ic-blink 1s steps(1, end) 3;
   }
   #body-login {
     /* Fields ------------------------------------------------------------------ */
   }
+  #body-login .input-field {
+    --input-border-color: var(--tr-border-strong) !important;
+    --input-border-radius: var(--tr-radius-xl) !important;
+  }
+  #body-login .input-field__input,
   #body-login input[type=text],
   #body-login input[type=tel],
   #body-login input[type=password],
-  #body-login input[type=email],
-  #body-login .input-field__input {
-    background: var(--ic-ink-well) !important;
-    border: 1px solid var(--ic-ink-line-strong) !important;
-    border-radius: var(--border-radius-element) !important;
-    color: var(--ic-ink-fg) !important;
-    transition: border-color var(--tr-dur-fade) var(--tr-ease-soft), box-shadow var(--tr-dur-fade) var(--tr-ease-soft);
+  #body-login input[type=email] {
+    background-color: var(--tr-field) !important;
+    color: var(--tr-ink) !important;
   }
+  #body-login .input-field__input::placeholder,
   #body-login input[type=text]::placeholder,
   #body-login input[type=tel]::placeholder,
   #body-login input[type=password]::placeholder,
-  #body-login input[type=email]::placeholder,
-  #body-login .input-field__input::placeholder {
-    color: var(--ic-ink-mute);
+  #body-login input[type=email]::placeholder {
+    color: var(--tr-ink-soft);
     opacity: 1;
   }
-  #body-login input[type=text]:hover:not(:focus),
-  #body-login input[type=tel]:hover:not(:focus),
-  #body-login input[type=password]:hover:not(:focus),
-  #body-login input[type=email]:hover:not(:focus),
-  #body-login .input-field__input:hover:not(:focus) {
-    border-color: var(--ic-ink-soft) !important;
-  }
-  #body-login input[type=text]:focus, #body-login input[type=text]:focus-visible,
+  #body-login .input-field__input:focus, #body-login .input-field__input:focus-visible,
+  #body-login input[type=text]:focus,
+  #body-login input[type=text]:focus-visible,
   #body-login input[type=tel]:focus,
   #body-login input[type=tel]:focus-visible,
   #body-login input[type=password]:focus,
   #body-login input[type=password]:focus-visible,
   #body-login input[type=email]:focus,
-  #body-login input[type=email]:focus-visible,
-  #body-login .input-field__input:focus,
-  #body-login .input-field__input:focus-visible {
-    border-color: var(--ic-splash-cyan) !important;
-    box-shadow: 0 0 0 3px rgba(var(--ic-splash-cyan-rgb), 0.18) !important;
-    outline: none;
+  #body-login input[type=email]:focus-visible {
+    --input-border-color: var(--tr-accent-text) !important;
   }
-  #body-login .input-field__input:focus,
-  #body-login .input-field__input:focus-visible {
-    border-width: 1px !important;
-    padding-inline: calc(var(--default-grid-baseline) * 3 - 1px) !important;
+  #body-login input[type=text]:not(.input-field__input),
+  #body-login input[type=tel]:not(.input-field__input),
+  #body-login input[type=password]:not(.input-field__input),
+  #body-login input[type=email]:not(.input-field__input) {
+    border: 1px solid var(--tr-border-strong) !important;
+    border-radius: var(--tr-radius-xl) !important;
+  }
+  #body-login input[type=text]:not(.input-field__input):focus, #body-login input[type=text]:not(.input-field__input):focus-visible,
+  #body-login input[type=tel]:not(.input-field__input):focus,
+  #body-login input[type=tel]:not(.input-field__input):focus-visible,
+  #body-login input[type=password]:not(.input-field__input):focus,
+  #body-login input[type=password]:not(.input-field__input):focus-visible,
+  #body-login input[type=email]:not(.input-field__input):focus,
+  #body-login input[type=email]:not(.input-field__input):focus-visible {
+    border-color: var(--tr-accent-text) !important;
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--tr-accent) 35%, transparent) !important;
   }
   #body-login .input-field__label {
-    color: var(--ic-ink-mute) !important;
-  }
-  #body-login .groupbottom input {
-    box-shadow: unset !important;
+    color: var(--tr-ink-soft) !important;
   }
   #body-login .toggle-password,
   #body-login #email-icon {
     filter: invert(95%);
   }
-  #body-login .warning input[type=password] {
-    border: 1px solid var(--ic-ink-line-strong);
-  }
-  #body-login .warning input[type=submit] {
-    background-color: inherit !important;
-    border: unset !important;
-  }
   #body-login {
-    /* Keys ------------------------------------------------------------------- */
+    /* Keys: one filled, the rest grey -------------------------------------------- */
   }
+  #body-login .button-vue,
   #body-login input[type=submit],
-  #body-login input[type=submit].primary,
   #body-login input[type=button],
   #body-login button.primary,
-  #body-login .button,
-  #body-login .button-vue {
-    border-radius: var(--border-radius-element) !important;
-    font-weight: 600;
-    transition: background-color var(--tr-dur-fade) var(--tr-ease-soft), color var(--tr-dur-fade) var(--tr-ease-soft), border-color var(--tr-dur-fade) var(--tr-ease-soft), box-shadow var(--tr-dur-fade) var(--tr-ease-soft), transform var(--tr-dur-press) var(--tr-ease-soft);
+  #body-login .button {
+    border-radius: var(--tr-radius-xl) !important;
+    font-weight: 600 !important;
+    transition: background-color var(--tr-dur-fade) var(--tr-ease-soft), filter var(--tr-dur-fade) var(--tr-ease-soft), opacity var(--tr-dur-fade) var(--tr-ease-soft), transform var(--tr-dur-press) var(--tr-ease-soft) !important;
   }
-  #body-login input[type=submit].primary,
-  #body-login button.primary,
-  #body-login .button-vue--vue-primary {
-    background-color: var(--ic-splash-cyan) !important;
-    border: 1px solid transparent !important;
-    color: var(--ic-ink-void) !important;
-  }
-  #body-login input[type=submit].primary:hover:not(:disabled), #body-login input[type=submit].primary:focus-visible:not(:disabled),
-  #body-login button.primary:hover:not(:disabled),
-  #body-login button.primary:focus-visible:not(:disabled),
-  #body-login .button-vue--vue-primary:hover:not(:disabled),
-  #body-login .button-vue--vue-primary:focus-visible:not(:disabled) {
-    background-color: var(--color-primary-element-hover) !important;
-    box-shadow: var(--ic-glow-sm) !important;
-  }
-  #body-login input[type=submit].primary:active:not(:disabled),
+  #body-login .button-vue:active:not(:disabled),
+  #body-login input[type=submit]:active:not(:disabled),
+  #body-login input[type=button]:active:not(:disabled),
   #body-login button.primary:active:not(:disabled),
-  #body-login .button-vue--vue-primary:active:not(:disabled) {
-    background-color: #4cdacc !important;
-    box-shadow: none !important;
+  #body-login .button:active:not(:disabled) {
     transform: scale(var(--tr-press-scale));
   }
+  #body-login .button-vue--primary,
+  #body-login .button-vue--vue-primary,
+  #body-login input[type=submit].primary,
+  #body-login button.primary {
+    min-height: 48px;
+    background-color: var(--tr-accent) !important;
+    border: none !important;
+    color: var(--tr-accent-on) !important;
+    box-shadow: var(--tr-shadow-cta) !important;
+  }
+  #body-login .button-vue--primary:hover:not(:disabled),
+  #body-login .button-vue--vue-primary:hover:not(:disabled),
+  #body-login input[type=submit].primary:hover:not(:disabled),
+  #body-login button.primary:hover:not(:disabled) {
+    filter: brightness(1.08);
+  }
+  #body-login .button-vue--primary:active:not(:disabled),
+  #body-login .button-vue--vue-primary:active:not(:disabled),
+  #body-login input[type=submit].primary:active:not(:disabled),
+  #body-login button.primary:active:not(:disabled) {
+    opacity: 0.85;
+  }
+  #body-login .button-vue--secondary,
+  #body-login .button-vue--vue-secondary,
+  #body-login .button-vue--tertiary,
+  #body-login .button-vue--vue-tertiary,
   #body-login input[type=submit]:not(.primary),
   #body-login input[type=button],
-  #body-login .button:not(.button-vue),
-  #body-login .button-vue--vue-secondary {
-    background-color: var(--ic-ink-raised) !important;
-    border: 1px solid var(--ic-ink-line) !important;
-    color: var(--ic-ink-fg) !important;
+  #body-login .button:not(.button-vue) {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    border: none !important;
+    color: var(--tr-ink) !important;
   }
-  #body-login input[type=submit]:not(.primary):hover:not(:disabled), #body-login input[type=submit]:not(.primary):focus-visible:not(:disabled),
-  #body-login input[type=button]:hover:not(:disabled),
-  #body-login input[type=button]:focus-visible:not(:disabled),
-  #body-login .button:not(.button-vue):hover:not(:disabled),
-  #body-login .button:not(.button-vue):focus-visible:not(:disabled),
+  #body-login .button-vue--secondary:hover:not(:disabled),
   #body-login .button-vue--vue-secondary:hover:not(:disabled),
-  #body-login .button-vue--vue-secondary:focus-visible:not(:disabled) {
-    border-color: var(--ic-splash-cyan) !important;
-    color: var(--ic-splash-cyan) !important;
-  }
-  #body-login .button-vue--vue-tertiary:hover:not(:disabled) {
-    background-color: rgba(255, 255, 255, 0.06) !important;
-  }
-  #body-login input[type=submit]:focus {
-    box-shadow: 0 0 0 3px rgba(var(--ic-splash-cyan-rgb), 0.18) !important;
+  #body-login .button-vue--tertiary:hover:not(:disabled),
+  #body-login .button-vue--vue-tertiary:hover:not(:disabled),
+  #body-login input[type=submit]:not(.primary):hover:not(:disabled),
+  #body-login input[type=button]:hover:not(:disabled),
+  #body-login .button:not(.button-vue):hover:not(:disabled) {
+    background-color: rgba(255, 255, 255, 0.16) !important;
   }
   #body-login .two-factor-provider {
-    background-color: var(--ic-ink-raised);
-    border: 1px solid var(--ic-ink-line);
-    border-radius: var(--border-radius-element);
+    background-color: var(--tr-inset);
+    border: none;
+    border-radius: var(--tr-radius-xl);
   }
-  #body-login .two-factor-provider:hover, #body-login .two-factor-provider:focus, #body-login .two-factor-provider:active {
-    background-color: var(--ic-ink-raised);
-    border-color: var(--ic-splash-cyan) !important;
+  #body-login .two-factor-provider:hover, #body-login .two-factor-provider:focus-visible {
+    background-color: var(--tr-hover);
+  }
+  #body-login .checkbox-radio-switch__icon > * {
+    color: var(--tr-accent-text) !important;
   }
   #body-login {
-    /* Footer: intentionally boring, with one redacted line ------------------- */
+    /* Footer: the signature line, with one redacted wink ------------------------- */
   }
   #body-login footer,
-  #body-login footer a,
   #body-login footer p.info {
-    color: var(--ic-ink-mute) !important;
-    font-family: var(--ic-font-mono);
-    font-size: 12px;
+    color: var(--tr-ink-faint) !important;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  #body-login footer a {
+    color: var(--tr-ink-soft) !important;
   }
   #body-login footer .info .entity-name {
-    color: var(--ic-ink-fg) !important;
+    color: var(--tr-ink-soft) !important;
   }
   #body-login footer::before {
-    content: "███ █ ████ ██ ███████ █ ██"/"";
+    content: "███ █ ████ ██ ███████"/"";
     display: block;
     margin-bottom: 8px;
-    color: var(--ic-ink-line-strong);
-    font-family: var(--ic-font-mono);
-    font-size: 11px;
+    color: color-mix(in srgb, var(--tr-pink) 45%, transparent);
+    font-family: var(--tr-font-mono);
+    font-size: 10px;
     letter-spacing: 0.06em;
   }
   @keyframes ic-blink {
     50% {
       opacity: 0;
+    }
+  }
+  @keyframes tr-mark-land {
+    from {
+      opacity: 0;
+      transform: translateY(-10px) rotate(-16deg) scale(0.92);
+    }
+    to {
+      opacity: 1;
+      transform: rotate(-6deg);
     }
   }
   /* SAML login ------------------------------------------------------------------- */
@@ -499,32 +519,30 @@
     width: 260px;
   }
   #saml-select-user-back-end .login-option {
-    background-color: var(--ic-ink-raised);
-    border: 1px solid var(--ic-ink-line);
-    border-radius: var(--border-radius-element);
+    background-color: var(--tr-inset);
+    border: none;
+    border-radius: var(--tr-radius-xl);
     box-sizing: border-box;
     height: 50px;
     min-width: 260px;
   }
   #saml-select-user-back-end .login-option:hover {
-    border-color: var(--ic-splash-cyan);
+    background-color: var(--tr-hover);
   }
   #saml-select-user-back-end .login-option a {
     line-height: 50px;
   }
   #saml-select-user-back-end .login-option a:hover {
-    color: var(--ic-splash-cyan);
     text-decoration: none;
   }
   /* Reduced motion ----------------------------------------------------------------- */
 }
 @media (prefers-color-scheme: dark) and (prefers-reduced-motion: reduce) {
-  #body-login .login-form__headline::after,
-  #body-login .login-box h2::after {
+  #body-login #header .logo,
+  #body-login .login-form__headline::after {
     animation: none;
   }
-  #body-login .button-vue--vue-primary:active:not(:disabled),
-  #body-login button.primary:active:not(:disabled) {
+  #body-login .button-vue:active:not(:disabled) {
     transform: none;
   }
 }

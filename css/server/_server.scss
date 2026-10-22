@@ -1,9 +1,10 @@
 /***
- * InkCurity Dark — server chrome
+ * InkCurity Dark — chrome, Trumpf edition
  *
- * Header, navigation column, content container, sidebar, menus, modals,
- * toasts, tooltips, search and settings. Grouped lists on the well, cells on
- * the deep surface, hairlines instead of frames, glows instead of shadows.
+ * Navigation like the Trumpf sidebar (on bg, tinted selection, icons in the
+ * accent), grouped settings sections as cards, raised menus with a float
+ * shadow, sheets that rise from below, material toasts, empty states with a
+ * tinted glyph. Hairlines stay quiet, nothing glows.
  *
  * @copyright Copyright (c) 2017, Magnus Walbeck <mw@mwalbeck.org>
  * @copyright Copyright (c) 2026 inkcurity.net
@@ -13,546 +14,451 @@
 
 /* Header -------------------------------------------------------------------- */
 
-#header:not(.header-guest) {
-    .app-menu-entry {
-        &__label {
-            font-size: 10px !important;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-        }
-
-        &__link:hover .app-menu-entry__icon,
-        &__link:focus-visible .app-menu-entry__icon {
-            filter: drop-shadow(0 0 6px rgba(var(--ic-splash-cyan-rgb), 0.55));
-        }
-
-        // The active app carries a cyan tick instead of a white one.
-        &--active::before {
-            background-color: var(--ic-splash-cyan) !important;
-            box-shadow: 0 0 10px rgba(var(--ic-splash-cyan-rgb), 0.7);
-        }
-
-        &--active .app-menu-entry__label {
-            color: var(--ic-splash-cyan) !important;
-        }
-    }
-
-    #nextcloud:hover .logo,
-    #nextcloud:focus-visible .logo {
-        filter: drop-shadow(0 0 8px rgba(var(--ic-splash-cyan-rgb), 0.45));
-    }
-}
-
-#settings #expand:hover #expandDisplayName,
-#settings #expand:focus #expandDisplayName,
-#settings #expand:active #expandDisplayName,
-#settings #expand:hover .avatardiv,
-#settings #expand:focus .avatardiv,
-#settings #expand:active .avatardiv {
-    border: unset;
-}
-
 #body-login #header {
     background-color: unset !important;
 }
 
-// Header menus: notifications, contacts, account
+#header:not(.header-guest) .avatardiv,
+.header-end .account-menu__avatar,
+#user-menu .avatardiv {
+    box-shadow:
+        0 0 0 2px var(--tr-page),
+        0 0 0 3.5px color-mix(in srgb, var(--tr-accent) 80%, transparent);
+}
+
+.header-menu__wrapper,
+.header-menu__content {
+    border-radius: var(--tr-radius-card) !important;
+}
+
 .header-menu__wrapper {
-    background-color: var(--ic-ink-raised) !important;
-    border: 1px solid var(--ic-ink-line);
-    border-radius: var(--border-radius-container) !important;
-    box-shadow: var(--ic-elevation) !important;
+    background-color: var(--tr-inset) !important;
+    border: none !important;
+    box-shadow: var(--tr-shadow-float) !important;
 }
 
 .header-menu__carret {
-    border-bottom-color: var(--ic-ink-raised) !important;
+    display: none !important;
 }
 
-.header-menu__wrapper .action-button,
-.header-menu__wrapper .action-link,
-.header-menu__wrapper .action-router {
-    border-radius: var(--border-radius-element) !important;
-}
-
-/* Content container ----------------------------------------------------------- */
-
-// The container floats on the void with a hairline and a soft cyan glow.
-#content,
-#content-vue {
-    box-shadow: var(--ic-elevation);
-}
-
-/* Navigation column: grouped list on the well ----------------------------------- */
+/* Navigation: the Trumpf sidebar ------------------------------------------------ */
 
 .app-navigation,
 #app-navigation:not(.vue) {
-    background-color: var(--ic-ink-well) !important;
-    border-inline-end: 1px solid var(--ic-ink-line);
+    background-color: var(--tr-bg) !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    border-inline-end: 1px solid color-mix(in srgb, var(--tr-border) 70%, transparent) !important;
 }
 
 .app-navigation-entry {
-    border-radius: var(--border-radius-element) !important;
-    transition: background-color var(--tr-dur-fade) var(--tr-ease-soft);
+    border-radius: var(--tr-radius-lg) !important;
 
+    // Icons in the accent, like the sidebar of a Trumpf app.
+    .app-navigation-entry-icon {
+        color: var(--tr-accent-text);
+    }
+
+    &:not(.app-navigation-entry--legacy):hover:not(.active),
+    &:not(.app-navigation-entry--legacy):focus-within:not(.active) {
+        background-color: rgba(255, 255, 255, 0.06) !important;
+    }
+
+    &:active:not(.active) {
+        background-color: rgba(255, 255, 255, 0.1) !important;
+        transition-duration: 0ms !important;
+    }
+
+    // Selected: tinted, semibold, no stripe.
     &.active {
         background-color: var(--color-primary-element-light) !important;
 
-        // nextcloud-vue assumes a filled primary entry; keep icons and text light.
-        .app-navigation-entry-link,
-        .app-navigation-entry__title,
-        .app-navigation-entry__name,
-        .app-navigation-entry-button {
-            color: var(--ic-ink-hi) !important;
-        }
-
-        .app-navigation-entry-icon,
-        .app-navigation-entry__icon {
-            color: var(--ic-splash-cyan) !important;
-        }
-
-        .app-navigation-entry-icon[class*="icon-"],
-        .app-navigation-entry-icon [class*="icon-"] {
-            filter: var(--background-invert-if-dark) !important;
-        }
-
-        // The cursor: a cyan bar with a glow, the brand's ▌.
         &::before {
-            content: "";
-            position: absolute;
-            inset-inline-start: 4px;
-            top: 25%;
-            width: 3px;
-            height: 50%;
-            border-radius: 2px;
-            background-color: var(--ic-splash-cyan);
-            box-shadow: 0 0 10px rgba(var(--ic-splash-cyan-rgb), 0.65);
-            pointer-events: none;
+            display: none !important;
+        }
+
+        .app-navigation-entry__name,
+        .app-navigation-entry-link,
+        .app-navigation-entry-button {
+            color: var(--tr-ink) !important;
+            font-weight: 600 !important;
+        }
+
+        .app-navigation-entry-icon {
+            color: var(--color-primary-element-light-text) !important;
+        }
+    }
+
+    // Legacy entries (filled selection in nextcloud-vue 8) become tinted too.
+    &.app-navigation-entry--legacy.active {
+        background-color: var(--color-primary-element-light) !important;
+
+        .app-navigation-entry-link,
+        .app-navigation-entry-button {
+            color: var(--tr-ink) !important;
         }
     }
 }
 
-.app-navigation-entry__counter,
-.counter-bubble__counter {
-    border-radius: var(--border-radius-pill) !important;
-    font-size: 11px !important;
+// Section headers: sentence case, 13 px medium, soft (Trumpf section-header).
+.app-navigation-caption__name,
+#app-navigation:not(.vue) .app-navigation-caption {
+    color: var(--tr-ink-soft) !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+    box-shadow: none !important;
 }
 
+// Counters: quiet numbers; the highlighted ones (unread) in the logo pink.
 .counter-bubble__counter {
-    color: var(--color-primary-element-light-text) !important;
-}
+    background-color: transparent !important;
+    color: var(--tr-ink-soft) !important;
+    font-weight: 600;
 
-.app-navigation-entry__children .app-navigation-entry {
-    &::before {
-        display: none;
+    &--highlighted {
+        background-color: var(--tr-pink-strong) !important;
+        color: #ffffff !important;
+    }
+
+    &--outlined {
+        background-color: transparent !important;
+        color: var(--tr-accent-text) !important;
     }
 }
 
-// Legacy navigation
 #app-navigation:not(.vue) {
-    > ul > li > a,
-    > ul > li > ul > li > a {
+    > ul > li > a {
         opacity: 1;
     }
 
-    > ul > li > ul > li:hover > a,
-    > ul > li > ul > li:focus > a {
-        background-color: unset;
-    }
-
-    > ul > li.active > a {
+    > ul > li.active > a,
+    > ul > li > a.active {
         background-color: var(--color-primary-element-light) !important;
-        color: var(--ic-ink-hi) !important;
-    }
-
-    .collapsible::before {
-        background-color: unset;
-    }
-
-    .collapsible:hover > .svg {
-        background-color: var(--color-background-hover);
-        background-image: none !important;
+        color: var(--tr-ink) !important;
+        font-weight: 600;
     }
 }
 
-#app-settings-header .settings-button,
-#app-settings__header .settings-button,
+.app-navigation-new .button-vue {
+    border-radius: var(--tr-radius-full) !important;
+}
+
 .app-settings__header .settings-button,
-.contacts-settings .contacts-settings-button {
+#app-settings-header .settings-button,
+#app-settings__header .settings-button {
     background-color: transparent !important;
-    border: unset !important;
+    border: none !important;
     opacity: 1;
+}
+
+/* Settings: a hub of grouped cards ------------------------------------------------ */
+
+// The navigation shows tinted tiles behind its icons (Trumpf hub lists).
+#body-settings .app-navigation-entry-icon {
+    position: relative;
+    isolation: isolate;
+
+    &::before {
+        content: "";
+        position: absolute;
+        z-index: -1;
+        inset: calc(50% - 14px);
+        border-radius: var(--tr-radius-tile);
+        background-color: color-mix(in srgb, var(--tr-accent) 22%, transparent);
+    }
+}
+
+#body-settings #app-content,
+#body-settings #app-content-vue {
+    background-color: var(--tr-bg) !important;
+}
+
+#body-settings #app-content :is(.section, .settings-section),
+#body-settings #app-content-vue :is(.section, .settings-section) {
+    margin: 12px 16px !important;
+    padding: 20px 24px !important;
+    border: none !important;
+    border-radius: var(--tr-radius-2xl) !important;
+    background-color: var(--tr-surface);
+}
+
+.settings-section__name,
+.section > h2 {
+    font-size: 20px !important;
+    line-height: 25px !important;
+}
+
+.settings-section__desc,
+.settings-hint,
+.section .hint,
+.section em {
+    color: var(--tr-ink-soft) !important;
 }
 
 /* Sidebar ------------------------------------------------------------------- */
 
 .app-sidebar,
 #app-sidebar {
-    border-inline-start: 1px solid var(--ic-ink-line) !important;
+    background-color: var(--tr-surface) !important;
+    border-inline-start: 1px solid color-mix(in srgb, var(--tr-border) 70%, transparent) !important;
 }
 
 .app-sidebar-header__figure {
-    border-bottom: 1px solid var(--ic-ink-line);
+    background-color: var(--tr-accent-wash) !important;
 }
 
-.app-sidebar-tabs__nav {
-    border-bottom: 1px solid var(--ic-ink-line);
+.app-sidebar-header__mainname {
+    font-size: 20px !important;
 }
 
-.app-sidebar-tabs__tab a {
-    &:not(.active):hover,
-    &:not(.active):focus {
-        border-bottom-color: var(--ic-ink-line-strong) !important;
-        box-shadow: inset 0 -1px 0 var(--ic-ink-line-strong) !important;
-    }
-
-    &.active,
-    &.active:focus,
-    &.active:active {
-        border-bottom-color: var(--ic-splash-cyan) !important;
-        box-shadow: inset 0 -1px 0 var(--ic-splash-cyan) !important;
-    }
+#app-sidebar-vue .star--starred,
+#app-sidebar .star--starred {
+    color: var(--tr-gold) !important;
 }
 
-.app-sidebar-tabs__content section {
-    box-shadow: none !important;
+/* Menus and popovers --------------------------------------------------------------- */
+
+.v-popper__popper:not(.v-popper--theme-tooltip) .v-popper__wrapper {
+    border-radius: var(--tr-radius-xl) !important;
+    box-shadow: var(--tr-shadow-float) !important;
 }
 
-.versionsTabView li {
-    border-color: var(--ic-ink-line);
-
-    &:hover {
-        background: var(--color-background-hover);
-    }
-}
-
-#tab-comments .comment-form form input[type="submit"] {
-    opacity: 0.7;
-
-    &:hover {
-        opacity: 1;
-    }
-}
-
-#app-sidebar-vue.app-sidebar .app-sidebar-header__desc .app-sidebar-header__star .star--star,
-#app-sidebar.app-sidebar .app-sidebar-header__desc .app-sidebar-header__star .star--star {
-    color: var(--ic-ink-soft);
-
-    &:hover {
-        color: var(--ic-splash-lemon);
-    }
-}
-
-#app-sidebar-vue.app-sidebar .app-sidebar-header__desc .app-sidebar-header__star .star--starred,
-#app-sidebar.app-sidebar .app-sidebar-header__desc .app-sidebar-header__star .star--starred {
-    color: var(--ic-splash-lemon);
-    filter: drop-shadow(0 0 6px rgba(var(--ic-splash-lemon-rgb), 0.5));
-
-    &:hover {
-        color: var(--ic-ink-fg);
-        filter: none;
-    }
-}
-
-/* Menus and popovers ------------------------------------------------------------- */
-
-.menu,
+.v-popper__popper:not(.v-popper--theme-tooltip) .v-popper__inner,
 .popovermenu,
+.menu,
 .bubble,
 .popover,
 .app-navigation-entry-menu,
-.v-popper__popper .v-popper__inner,
 .action-item__menu {
-    background-color: var(--ic-ink-raised) !important;
-    border: 1px solid var(--ic-ink-line) !important;
-    border-radius: var(--border-radius-container) !important;
-    box-shadow: var(--ic-elevation) !important;
+    --color-background-hover: rgba(255, 255, 255, 0.08);
+    --color-main-background: var(--tr-inset);
+
+    background-color: var(--tr-inset) !important;
+    border: none !important;
+    border-radius: var(--tr-radius-xl) !important;
 }
 
-.menu.notification-container {
-    border: unset;
+.popovermenu,
+.menu,
+.bubble,
+.popover,
+.action-item__menu {
+    box-shadow: var(--tr-shadow-float) !important;
 }
 
 .bubble::after,
 .app-navigation-entry-menu::after,
 .menu::after,
 .popovermenu::after,
-.action-item__menu .action-item__menu_arrow,
-.v-popper--theme-dropdown.v-popper__popper[data-popper-placement^="bottom"]
-    .v-popper__arrow-container {
-    border-bottom-color: var(--ic-ink-raised) !important;
+.action-item__menu .action-item__menu_arrow {
+    display: none !important;
 }
 
-.v-popper__popper .v-popper__arrow-outer {
-    border-color: var(--ic-ink-line) !important;
-}
+.action-button,
+.action-link,
+.action-router,
+.action-checkbox__label,
+.action-radio__label {
+    border-radius: var(--tr-radius-lg) !important;
+    transition: background-color var(--tr-dur-fade) var(--tr-ease-soft);
 
-.v-popper__popper .v-popper__arrow-inner {
-    border-color: var(--ic-ink-raised) !important;
-}
-
-.popover__arrow {
-    border-color: var(--ic-ink-line) !important;
-}
-
-// On the raised surface the default hover (deep + 5%) would be darker than the
-// menu itself: fade a faint white fill in instead, and tint the text cyan.
-.v-popper__popper .v-popper__inner,
-.popovermenu,
-.header-menu__wrapper,
-.action-item__menu {
-    .action-button,
-    .action-link,
-    .action-router,
-    .action-checkbox__label,
-    .action-radio__label,
-    .action-input__label,
-    .action-text-editable__label {
-        border-radius: var(--border-radius-element) !important;
-        transition:
-            background-color var(--tr-dur-fade) var(--tr-ease-soft),
-            color var(--tr-dur-fade) var(--tr-ease-soft);
-    }
-
-    .action-button:hover,
-    .action-button:focus-visible,
-    .action-link:hover,
-    .action-link:focus-visible,
-    .action-router:hover,
-    .action-router:focus-visible,
-    .action-checkbox__label:hover,
-    .action-radio__label:hover,
-    li:hover > .action-button {
-        background-color: rgba(255, 255, 255, 0.06) !important;
-        color: var(--ic-splash-cyan) !important;
-    }
-
-    .action--disabled:hover {
-        background-color: transparent !important;
-        color: inherit !important;
-    }
-
-    .action-separator,
-    .action-separator__hr {
-        background-color: var(--ic-ink-line) !important;
+    &:active {
+        background-color: rgba(255, 255, 255, 0.12) !important;
+        transition-duration: 0ms;
     }
 }
 
-/* Tooltips: terminal tags ----------------------------------------------------- */
+.action-separator {
+    border-color: color-mix(in srgb, var(--tr-border) 80%, transparent) !important;
+}
+
+/* Tooltips ----------------------------------------------------------------------- */
 
 .v-popper--theme-tooltip .v-popper__inner {
-    background-color: var(--ic-ink-raised) !important;
-    border: 1px solid var(--ic-ink-line) !important;
-    border-radius: var(--border-radius-element) !important;
-    box-shadow: none !important;
-    color: var(--ic-ink-fg) !important;
-    font-size: 12px;
+    background-color: var(--tr-inset) !important;
+    border-radius: var(--tr-radius-lg) !important;
+    box-shadow: var(--tr-shadow-float) !important;
+    color: var(--tr-ink) !important;
+    font-size: 13px;
 }
 
-.v-popper--theme-tooltip .v-popper__arrow-outer {
-    border-color: var(--ic-ink-line) !important;
-}
-
+.v-popper--theme-tooltip .v-popper__arrow-outer,
 .v-popper--theme-tooltip .v-popper__arrow-inner {
-    border-color: var(--ic-ink-raised) !important;
+    border-color: var(--tr-inset) !important;
 }
 
-.tooltip,
-.vue-tooltip {
-    filter: none !important;
+/* Sheets: modals and dialogs rise from below ----------------------------------- */
 
-    .tooltip-inner {
-        background-color: var(--ic-ink-raised) !important;
-        border: 1px solid var(--ic-ink-line);
-        color: var(--ic-ink-fg) !important;
-    }
-
-    &[x-placement^="right"],
-    &.right .tooltip-arrow {
-        border-right-color: var(--ic-ink-line) !important;
-    }
-
-    &[x-placement^="left"],
-    &.left .tooltip-arrow {
-        border-left-color: var(--ic-ink-line) !important;
-    }
-
-    &[x-placement^="bottom"] .tooltip-arrow,
-    &.bottom .tooltip-arrow,
-    &.bottom-left .tooltip-arrow,
-    &.bottom-right .tooltip-arrow {
-        border-bottom-color: var(--ic-ink-line) !important;
-    }
-
-    &[x-placement^="top"] .arrow,
-    &[x-placement^="top"] .tooltip-arrow,
-    &.top .arrow,
-    &.top .tooltip-arrow,
-    &.top-left .arrow,
-    &.top-left .tooltip-arrow,
-    &.top-right .arrow,
-    &.top-right .tooltip-arrow {
-        border-top-color: var(--ic-ink-line) !important;
-    }
-}
-
-/* Modals and dialogs --------------------------------------------------------- */
-
-// The scrim removes the page, it does not blur it.
-.modal-mask,
-.oc-dialog-dim {
-    background-color: var(--ic-scrim) !important;
+.modal-mask {
+    background-color: var(--tr-scrim) !important;
+    -webkit-backdrop-filter: none !important;
     backdrop-filter: none !important;
 }
 
-.modal-container,
-.dialog,
-.oc-dialog,
-.reference-picker-modal .modal-container {
-    background-color: var(--ic-ink-deep) !important;
-    border: 1px solid var(--ic-ink-line);
-    border-radius: var(--border-radius-container-large) !important;
-    box-shadow: var(--ic-glow-lg) !important;
+.modal-wrapper:not(.modal-wrapper--full) .modal-container {
+    background-color: var(--tr-surface) !important;
+    border-radius: var(--tr-radius-float) !important;
+    box-shadow: var(--tr-shadow-sheet) !important;
+    animation: tr-sheet-in var(--tr-dur-sheet) var(--tr-ease-ios) both;
 }
 
-.reference-picker .oc-dialog {
-    border: none;
+.dialog__modal .modal-wrapper.modal-wrapper--small .modal-container {
+    border-radius: var(--tr-radius-card) !important;
 }
 
-.modal-header {
-    .modal-name,
-    .modal-title {
-        color: var(--ic-ink-hi) !important;
+@keyframes tr-sheet-in {
+    from {
+        opacity: 0;
+        transform: translateY(32px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
     }
 }
 
-.dialog__actions,
-.oc-dialog-buttonrow {
-    border-top: 1px solid var(--ic-ink-line);
+.dialog__name,
+.modal-header .modal-name {
+    font-size: 20px !important;
+    line-height: 25px !important;
 }
 
 .oc-dialog {
-    .filepicker_element_selected,
-    #oc-dialog-filepicker-content .filepicker_element_selected {
-        background-color: var(--color-primary-element-light);
-        color: var(--ic-splash-cyan);
-    }
-
-    .fileexists label,
-    .fileexists .conflict .filename {
-        color: var(--ic-ink-fg) !important;
-    }
+    border: none !important;
+    border-radius: var(--tr-radius-float) !important;
+    box-shadow: var(--tr-shadow-sheet) !important;
 }
 
-.file-picker__side .button-vue--vue-primary,
-.file-picker__breadcrumbs {
-    border-radius: var(--border-radius-element) !important;
+.oc-dialog-dim {
+    background-color: var(--tr-scrim) !important;
 }
 
-/* Toasts ---------------------------------------------------------------------- */
+/* Toasts: material from above ------------------------------------------------------ */
 
 .toastify.dialogs {
-    background-color: var(--ic-ink-raised) !important;
-    border: 1px solid var(--ic-ink-line);
-    border-radius: var(--border-radius-container) !important;
-    box-shadow: var(--ic-elevation) !important;
-    color: var(--ic-ink-fg) !important;
+    min-height: 48px;
+    padding: 10px 12px 10px 16px !important;
+    border: none !important;
+    border-radius: var(--tr-radius-card) !important;
+    background-color: var(--tr-material) !important;
+    -webkit-backdrop-filter: var(--tr-material-filter);
+    backdrop-filter: var(--tr-material-filter);
+    box-shadow: var(--tr-shadow-float) !important;
+    color: var(--tr-ink) !important;
+    font-weight: 500;
+    transition-duration: var(--tr-dur-toast) !important;
+    transition-timing-function: var(--tr-ease-ios) !important;
 
-    &.toast-success {
-        border-inline-start: 3px solid var(--ic-ok) !important;
-    }
-
-    &.toast-error {
-        border-inline-start: 3px solid var(--ic-danger) !important;
-    }
-
-    &.toast-warning {
-        border-inline-start: 3px solid var(--ic-splash-lemon) !important;
-    }
-
+    &.toast-success,
+    &.toast-error,
+    &.toast-warning,
     &.toast-info {
-        border-inline-start: 3px solid var(--ic-splash-cyan) !important;
+        border-inline-start: none !important;
+    }
+
+    // A status dot carries the meaning next to the words.
+    &::before {
+        content: "";
+        flex-shrink: 0;
+        align-self: center;
+        width: 8px;
+        height: 8px;
+        margin-inline-end: 10px;
+        border-radius: 50%;
+        background-color: var(--tr-accent-text);
+    }
+
+    &.toast-success::before {
+        background-color: var(--tr-success);
+    }
+
+    &.toast-error::before {
+        background-color: var(--tr-danger);
+    }
+
+    &.toast-warning::before {
+        background-color: var(--tr-warn);
+    }
+
+    .toast-undo-button,
+    .toast-close {
+        border-radius: var(--tr-radius-full) !important;
     }
 
     .toast-undo-button {
-        border-radius: var(--border-radius-element) !important;
+        background-color: var(--color-primary-element-light) !important;
+        color: var(--color-primary-element-light-text) !important;
     }
 }
 
-/* Search ------------------------------------------------------------------- */
+/* Empty states: a tinted glyph, a statement, a sentence ---------------------------- */
+
+.empty-content__icon {
+    width: 64px !important;
+    height: 64px !important;
+    border-radius: 50%;
+    background-color: color-mix(in srgb, var(--tr-accent) 18%, transparent);
+    background-size: 30px !important;
+    color: var(--tr-accent-text);
+    opacity: 1 !important;
+
+    svg {
+        width: 30px !important;
+        height: 30px !important;
+    }
+}
+
+.empty-content__name {
+    font-size: 20px !important;
+    line-height: 25px !important;
+}
+
+.empty-content__description {
+    max-width: 22rem;
+    color: var(--tr-ink-soft) !important;
+}
+
+/* Note cards and badges ----------------------------------------------------------- */
+
+.notecard {
+    border-radius: var(--tr-radius-xl) !important;
+    border-inline-start-width: 0 !important;
+}
+
+.app-level .official,
+.app-level .supported {
+    border-color: var(--tr-success) !important;
+    border-radius: var(--tr-radius-full);
+}
+
+/* Search ---------------------------------------------------------------------- */
 
 .unified-search__form-reset {
     background-color: transparent !important;
 }
 
-.unified-search-modal {
-    .unified-search-modal__filters .button-vue {
-        box-shadow: none;
-    }
-
-    .result-items__item:hover,
-    .result-items__item:focus-within {
-        background-color: var(--color-background-hover) !important;
-        border-radius: var(--border-radius-element);
-    }
+.unified-search-modal .result-items__item:hover,
+.unified-search-modal .result-items__item:focus-within {
+    background-color: rgba(255, 255, 255, 0.06) !important;
+    border-radius: var(--tr-radius-lg);
 }
 
-.unified-search__result-icon img[src$="integration_discourse/img/app-dark.svg"] {
-    filter: invert(95%);
-}
+/* Profile, user management, image cropper ---------------------------------------- */
 
-/* Settings ------------------------------------------------------------------ */
-
-.settings-section,
-.section {
-    border-color: var(--ic-ink-line) !important;
-}
-
-.settings-section__desc,
-.settings-hint,
-.section .hint {
-    color: var(--ic-ink-soft) !important;
-}
-
-// Image cropper, found under personal settings for adding an avatar
-#cropper .inner-container {
-    background-color: var(--ic-ink-deep) !important;
-    border: 1px solid var(--ic-ink-line);
-    color: var(--ic-ink-fg) !important;
-}
-
-.followupsection {
-    color: var(--ic-ink-fg) !important;
-}
-
-// Link buttons: Settings > Administration > Support
-.link-button {
-    background-color: var(--ic-ink-raised) !important;
-    border: 1px solid var(--ic-ink-line) !important;
-    border-radius: var(--border-radius-element) !important;
-    color: var(--ic-ink-fg) !important;
-
-    &:hover,
-    &.button:hover,
-    &:focus-visible {
-        border-color: var(--ic-splash-cyan) !important;
-        color: var(--ic-splash-cyan) !important;
-    }
-}
-
-// Profile
 .preview-card .preview-card__footer {
-    border: 1px solid var(--ic-ink-line);
-    border-bottom-left-radius: var(--border-radius-container);
-    border-bottom-right-radius: var(--border-radius-container);
-    border-top: unset;
+    border-bottom-left-radius: var(--tr-radius-xl);
+    border-bottom-right-radius: var(--tr-radius-xl);
 }
 
-.profile .user-actions .profile__primary-action-button img[src$="spreed/img/app-dark.svg"],
-.profile .user-actions .user-actions__other a {
-    filter: invert(95%);
+#cropper .inner-container {
+    background-color: var(--tr-surface) !important;
+    border-radius: var(--tr-radius-2xl);
+    color: var(--tr-ink) !important;
 }
 
-// User administration: remove icon spam in the add-group form
 #addgroup {
     button.icon-confirm,
     button.icon-close {
@@ -560,39 +466,18 @@
     }
 }
 
-// Theme settings (this app)
-.breezedark-admin p {
-    margin-top: 1em;
+.followupsection {
+    color: var(--tr-ink) !important;
 }
 
-.breezedark-admin textarea {
-    font-family: var(--ic-font-mono);
-    font-size: 13px;
+/* Reduced motion ------------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+    .modal-wrapper .modal-container {
+        animation: none !important;
+    }
 }
 
-/* App store ------------------------------------------------------------------- */
-
-.app-level .official {
-    border-color: var(--ic-ok);
-}
-
-.app-settings #app-sidebar-vue .app-sidebar-header__figure {
-    filter: invert(5%);
-}
-
-/* Smart picker ------------------------------------------------------------- */
-
-.tribute-container-link {
-    border: 1px solid var(--ic-ink-line);
-    border-radius: var(--border-radius-element) !important;
-}
-
-/* Empty states ---------------------------------------------------------------- */
-
-.empty-content__icon {
-    opacity: 0.7;
-}
-
-.empty-content__description {
-    color: var(--ic-ink-soft);
+[data-themes*="reduced-motion"] .modal-wrapper .modal-container {
+    animation: none !important;
 }
