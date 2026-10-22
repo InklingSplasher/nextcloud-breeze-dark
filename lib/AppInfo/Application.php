@@ -111,6 +111,7 @@ class Application extends App implements IBootstrap {
 		} else {
 			Util::addStyle(self::APP_NAME, 'server');
 		}
+		Util::addScript(self::APP_NAME, 'trumpf-ui');
 		Util::addScript(self::APP_NAME, 'breezedark');
 
 		// If the styling for the login page is wanted, load the stylesheet.

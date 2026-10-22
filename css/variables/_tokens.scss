@@ -30,70 +30,70 @@ $tr-accents: (
         #336deb,
         #ffffff,
         #2f64d8,
-        #22366f,
-        #243b7b,
-        #8dadf4,
-        #8dadf4,
+        #2a3e74,
+        #2b4380,
+        #99b6f5,
+        #99b6f5,
         no,
     ),
     "coral": (
         #ff7158,
         #1e120c,
         #ff7f69,
-        #4b3752,
-        #5d3c52,
-        #ff9c8a,
-        #ff9c8a,
+        #573f53,
+        #684454,
+        #ffad9e,
+        #ffad9e,
         invert(100%),
     ),
     "mint": (
         #5bd49a,
         #0f2419,
         #6bd8a4,
-        #2a4a5f,
-        #2f5865,
-        #75dbaa,
-        #75dbaa,
+        #335562,
+        #376268,
+        #9de5c2,
+        #9de5c2,
         invert(100%),
     ),
     "red": (
         #ff6b6b,
         #2a0a0a,
         #ff7a7a,
-        #4b3555,
-        #5d3b58,
-        #ff9a9a,
-        #ff9a9a,
+        #573e58,
+        #68425a,
+        #ffacac,
+        #ffacac,
         invert(100%),
     ),
     "orchid": (
         #d48ad9,
         #260c29,
         #d896dd,
-        #423c6b,
-        #514376,
-        #e0abe4,
-        #e0abe4,
+        #4e4570,
+        #5c4c7a,
+        #e7bdea,
+        #e7bdea,
         invert(100%),
     ),
     "sky": (
         #7bd6eb,
         #0f2536,
         #88daed,
-        #314b6f,
-        #38597b,
-        #88daed,
-        #88daed,
+        #3a5574,
+        #416280,
+        #abe5f2,
+        #abe5f2,
         invert(100%),
     ),
     "gold": (
         #f0c25e,
         #2a1f0a,
         #f2c86e,
-        #484753,
-        #595354,
-        #f1c668,
-        #f1c668,
+        #545155,
+        #645c56,
+        #f5d692,
+        #f5d692,
         invert(100%),
     ),
 );
@@ -162,7 +162,7 @@ $tr-app-accents: (
 }
 
 // Per app: the accent on the theme root while that app is open, and the
-// app's colour on its tiles in the app menus (NC 33 bar, NC 34 waffle grid).
+// app's colour on its tiles in the app menus (NC 33 bar, NC 34/35 waffle grid).
 @mixin tr-app-accents($root) {
     @each $app, $name in $tr-app-accents {
         #{$root}:has(> :is(#content, #content-vue).app-#{$app}) {
@@ -176,6 +176,7 @@ $tr-app-accents: (
         :is(.app-menu-entry__link, .app-item)[href*="/apps/#{$app}/"],
         :is(.app-menu-entry__link, .app-item)[href$="/apps/#{$app}"] {
             --tr-app: #{list.nth($a, 1)};
+            --tr-app-on: #{list.nth($a, 2)};
             --tr-app-flip: #{list.nth($a, 8)};
         }
     }
@@ -184,26 +185,26 @@ $tr-app-accents: (
 /* Everything else -------------------------------------------------------------- */
 
 @mixin ic-tokens {
-    /* Surfaces, outside in: page, bg, surface, inset (Trumpf) in dusk blue. */
+    /* Surfaces, outside in: page, bg, surface, inset (Trumpf) in a soft dusk blue. */
 
-    --tr-page: #121935;
-    --tr-bg: #172042;
-    --tr-surface: #1e2850;
-    --tr-surface-rgb: 30, 40, 80;
-    --tr-inset: #28335f;
-    --tr-field: #262f57;
-    --tr-hover: #2e375c;
-    --tr-border: #36427a;
-    --tr-border-strong: #6371ad;
-    --tr-material: rgba(40, 51, 95, 0.78);
+    --tr-page: #1b213c;
+    --tr-bg: #212845;
+    --tr-surface: #283152;
+    --tr-surface-rgb: 40, 49, 82;
+    --tr-inset: #343d60;
+    --tr-field: #30385a;
+    --tr-hover: #394265;
+    --tr-border: #4b5681;
+    --tr-border-strong: #7a87b8;
+    --tr-material: rgba(52, 61, 96, 0.8);
     --tr-material-filter: saturate(180%) blur(20px);
-    --tr-scrim: rgba(8, 11, 28, 0.55);
+    --tr-scrim: rgba(10, 13, 32, 0.5);
 
-    /* Text: ink 13.2:1 on surface, soft 7.6:1 on surface and 6.2:1 on hover. */
+    /* Text: ink 11.8:1 on surface, soft 7.7:1 on surface and 5.9:1 on hover. */
 
     --tr-ink: #f5f6fb;
-    --tr-ink-soft: #b3bce0;
-    --tr-ink-faint: #7b86b5;
+    --tr-ink-soft: #c0c8e6;
+    --tr-ink-faint: #8a94bf;
 
     /* Status, identity, rank. Status always comes with a word or a glyph. */
 
@@ -234,13 +235,25 @@ $tr-app-accents: (
     --tr-radius-float: 28px;
     --tr-radius-full: 999px;
 
-    /* Depth: what floats gets a shadow, everything else stays flat. */
+    /* Depth: layered shadows, a top highlight on every raised surface, and a
+       glow in the accent for the things you can press. */
 
-    --tr-shadow-button: 0 1px 2px rgba(0, 0, 0, 0.25);
-    --tr-shadow-float: 0 12px 32px rgba(3, 6, 20, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.06);
-    --tr-shadow-sheet: 0 24px 64px rgba(3, 6, 20, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.07);
-    --tr-shadow-frame: 0 25px 50px -12px rgba(3, 6, 20, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.05);
+    --tr-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    --tr-sheen: linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0) 46%);
+    --tr-shadow-button: 0 1px 2px rgba(6, 9, 28, 0.3);
+    --tr-shadow-card:
+        0 1px 2px rgba(6, 9, 28, 0.25), 0 10px 28px -8px rgba(6, 9, 28, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.07);
+    --tr-shadow-float:
+        0 2px 6px rgba(6, 9, 28, 0.3), 0 20px 48px -10px rgba(6, 9, 28, 0.6),
+        0 0 0 1px rgba(255, 255, 255, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.09);
+    --tr-shadow-sheet:
+        0 4px 12px rgba(6, 9, 28, 0.3), 0 32px 80px -16px rgba(6, 9, 28, 0.7),
+        0 0 0 1px rgba(255, 255, 255, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    --tr-shadow-frame: 0 16px 40px -20px rgba(6, 9, 28, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.07);
     --tr-shadow-cta: 0 8px 24px rgba(0, 0, 0, 0.25);
+    --tr-glow: 0 8px 20px -6px color-mix(in srgb, var(--tr-accent) 65%, transparent);
+    --tr-glow-strong: 0 12px 28px -6px color-mix(in srgb, var(--tr-accent) 75%, transparent);
 
     /* Motion: two curves carry everything, feedback stays under 200 ms. */
 
@@ -269,12 +282,13 @@ $tr-app-accents: (
 
     // An app tile without its own colour wears the default blue, whatever app is open.
     --tr-app: #336deb;
+    --tr-app-on: #ffffff;
     --tr-app-flip: no;
 
     /* Nextcloud: surfaces --------------------------------------------------- */
 
     --color-main-background: var(--tr-surface) !important;
-    --color-main-background-rgb: 30, 40, 80 !important;
+    --color-main-background-rgb: 40, 49, 82 !important;
     --color-main-background-translucent: rgba(var(--tr-surface-rgb), 0.97) !important;
     --color-main-background-blur: rgba(var(--tr-surface-rgb), 0.86) !important;
     --gradient-main-background:
@@ -282,10 +296,10 @@ $tr-app-accents: (
         transparent 100% !important;
     --color-background-hover: var(--tr-hover) !important;
     --color-background-dark: var(--tr-inset) !important;
-    --color-background-darker: #323d6d !important;
+    --color-background-darker: #40496a !important;
     --color-background-translucent: rgba(var(--tr-surface-rgb), 0.86) !important;
     --color-placeholder-light: var(--tr-inset) !important;
-    --color-placeholder-dark: #323d6d !important;
+    --color-placeholder-dark: #40496a !important;
 
     // The page behind the content container. The theme owns this backdrop: the
     // accent bloom is drawn in server/_signature.scss and in guest.scss.
@@ -301,7 +315,7 @@ $tr-app-accents: (
     --color-main-text: var(--tr-ink) !important;
     --color-text-maxcontrast: var(--tr-ink-soft) !important;
     --color-text-maxcontrast-default: var(--tr-ink-soft) !important;
-    --color-text-maxcontrast-background-blur: #bcc4e6 !important;
+    --color-text-maxcontrast-background-blur: #c6cdea !important;
     --color-text-light: var(--tr-ink) !important;
     --color-text-lighter: var(--tr-ink-soft) !important;
     --color-text-dark: #0b1020 !important;
@@ -313,7 +327,7 @@ $tr-app-accents: (
     /* Nextcloud: borders ---------------------------------------------------- */
 
     --color-border: var(--tr-border) !important;
-    --color-border-dark: #44508a !important;
+    --color-border-dark: #56628f !important;
     --color-border-maxcontrast: var(--tr-border-strong) !important;
     --color-border-error: var(--tr-danger) !important;
     --color-border-success: var(--tr-success) !important;
@@ -321,32 +335,32 @@ $tr-app-accents: (
     /* Nextcloud: feedback. Element colour = meaning, wash = tone at 18 % over
        the surface, text on the wash passes 7.7:1 or better. ---------------- */
 
-    --color-error: #462d4c !important;
-    --color-error-hover: #58304a !important;
-    --color-error-text: #ffd0cc !important;
-    --color-error-rgb: 70, 45, 76 !important;
+    --color-error: #533c55 !important;
+    --color-error-hover: #644156 !important;
+    --color-error-text: #ffd6d2 !important;
+    --color-error-rgb: 83, 60, 85 !important;
     --color-element-error: var(--tr-danger) !important;
-    --color-warning: #463d43 !important;
-    --color-warning-hover: #58473e !important;
-    --color-warning-text: #ffe2b8 !important;
-    --color-warning-rgb: 70, 61, 67 !important;
+    --color-warning: #534744 !important;
+    --color-warning-hover: #64503e !important;
+    --color-warning-text: #ffe6c2 !important;
+    --color-warning-rgb: 83, 71, 68 !important;
     --color-element-warning: var(--tr-warn) !important;
-    --color-success: #214651 !important;
-    --color-success-hover: #235452 !important;
-    --color-success-text: #c8f5d5 !important;
-    --color-success-rgb: 33, 70, 81 !important;
+    --color-success: #2a5153 !important;
+    --color-success-hover: #2a5e54 !important;
+    --color-success-text: #cff7da !important;
+    --color-success-rgb: 42, 81, 83 !important;
     --color-element-success: var(--tr-success) !important;
-    --color-info: #2b4770 !important;
-    --color-info-hover: #30547e !important;
-    --color-info-text: #cdefff !important;
-    --color-info-rgb: 43, 71, 112 !important;
+    --color-info: #345175 !important;
+    --color-info-hover: #395e82 !important;
+    --color-info-text: #d3f1ff !important;
+    --color-info-rgb: 52, 81, 117 !important;
     --color-element-info: var(--tr-info) !important;
     --color-favorite: var(--tr-gold) !important;
-    --color-mark: #5b5233 !important;
+    --color-mark: #645d53 !important;
 
     /* Nextcloud: assistant, inside the palette ------------------------------ */
 
-    --color-background-assistant: #252c58 !important;
+    --color-background-assistant: #2e3664 !important;
     --color-border-assistant: linear-gradient(125deg, #336deb 50%, #ec4899 125%) !important;
     --color-element-assistant: linear-gradient(
         214deg,

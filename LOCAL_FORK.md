@@ -24,5 +24,6 @@ the stylesheets were rewritten around `css/variables/_tokens.scss`. The visual
 regression matrix above applies to it as well.
 
 Nextcloud 34 compatibility is declared after updating the development API to
-OCP 34. Repeat the visual regression matrix after the core upgrade because core
+OCP 34. Nextcloud 35 is declared because the theme runs on a 35 instance and its
+stylesheets cover the 35 app menu; repeat the matrix there as well. Repeat the visual regression matrix after the core upgrade because core
 and app markup may change independently of the PHP and JavaScript APIs.

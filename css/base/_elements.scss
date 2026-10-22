@@ -42,17 +42,55 @@
     }
 }
 
-// Filled: the one main action of a view.
+// Filled: the one main action of a view. A glossy top, a glow in the accent,
+// and a sheen that sweeps across once on hover.
 :is(.button-vue--primary, .button-vue--vue-primary):not(:disabled) {
-    box-shadow: var(--tr-shadow-button);
+    position: relative;
+    overflow: hidden;
+    background-image: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.18),
+        rgba(255, 255, 255, 0) 62%
+    ) !important;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.28),
+        var(--tr-glow);
+
+    &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+            105deg,
+            transparent 30%,
+            rgba(255, 255, 255, 0.32) 50%,
+            transparent 70%
+        );
+        transform: translateX(-120%);
+        pointer-events: none;
+    }
 
     &:hover {
         background-color: var(--color-primary-element) !important;
-        filter: brightness(1.08);
+        filter: brightness(1.06);
+        box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.28),
+            var(--tr-glow-strong);
+
+        &::after {
+            animation: tr-sheen 700ms var(--tr-ease-soft) both;
+        }
     }
 
     &:active {
-        opacity: 0.85;
+        opacity: 0.88;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    }
+}
+
+@keyframes tr-sheen {
+    to {
+        transform: translateX(120%);
     }
 }
 
@@ -61,6 +99,12 @@
         .property-color__color-preview
     ) {
     background-color: var(--color-primary-element-light) !important;
+    background-image: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.07),
+        rgba(255, 255, 255, 0)
+    ) !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
     color: var(--color-primary-element-light-text) !important;
 
     &:hover:not(:disabled) {
@@ -215,6 +259,20 @@ select option {
     color: var(--tr-ink-faint) !important;
 }
 
+// Checkboxes and radios: the accent text colour reads 5:1 or better on every
+// surface; the filled accent would sit under 3:1 on the dusk blue.
+.checkbox-radio-switch-checkbox .checkbox-radio-switch__icon > *,
+.checkbox-radio-switch-radio .checkbox-radio-switch__icon > * {
+    color: var(--tr-accent-text) !important;
+}
+
+.checkbox-radio-switch-checkbox:not(.checkbox-radio-switch--checked)
+    .checkbox-radio-switch__icon
+    > *,
+.checkbox-radio-switch-radio:not(.checkbox-radio-switch--checked) .checkbox-radio-switch__icon > * {
+    color: var(--tr-ink-soft) !important;
+}
+
 .checkbox-radio-switch__input:focus-visible + .checkbox-radio-switch__content {
     outline: 2px solid var(--tr-accent-text) !important;
     outline-offset: -2px;
@@ -298,6 +356,10 @@ progress:not(.vue) {
 }
 
 @media (prefers-reduced-motion: reduce) {
+    :is(.button-vue--primary, .button-vue--vue-primary)::after {
+        animation: none !important;
+    }
+
     .button-vue:active:not(:disabled),
     button:active,
     .button:active {

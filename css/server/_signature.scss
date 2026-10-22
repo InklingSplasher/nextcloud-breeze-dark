@@ -44,28 +44,26 @@
 
 /* The content container: the app column standing on the page ----------------- */
 
-#content,
-#content-vue {
+// Only the outermost container gets the frame. Some apps nest #content-vue in
+// #content; framing both drew a second box with bars at the right and bottom.
+body > #content,
+body > #content-vue {
     box-shadow: var(--tr-shadow-frame);
 }
 
-// App switch = tab switch: the new page fades in and rises 8 px.
-#body-user #content,
-#body-user #content-vue,
-#body-settings #content,
-#body-settings #content-vue {
-    animation: tr-page-in var(--tr-dur-rise) var(--tr-ease-soft) both;
+// App switch = tab switch: the main pane fades in and rises 8 px. The
+// animation only fills backwards, so no transform stays on the element and
+// fixed-position children keep their place once it has run.
+#app-content,
+#app-content-vue,
+#app-dashboard {
+    animation: tr-page-in var(--tr-dur-rise) var(--tr-ease-soft) backwards;
 }
 
 @keyframes tr-page-in {
     from {
         opacity: 0;
         transform: translateY(8px);
-    }
-
-    to {
-        opacity: 1;
-        transform: none;
     }
 }
 
@@ -143,7 +141,17 @@ time {
 #app-dashboard > h2 {
     @extend %tr-title;
 
-    color: var(--tr-ink);
+    // A little shine on the greeting: white into the accent into the logo pink.
+    background-image: linear-gradient(
+        100deg,
+        #ffffff 0%,
+        #ffffff 38%,
+        var(--tr-accent-text) 72%,
+        #f9a8d4 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
     font-size: 34px !important;
     line-height: 41px !important;
 
@@ -184,15 +192,17 @@ kbd {
 /* Reduced motion: system setting and Nextcloud's own switch ------------------ */
 
 @media (prefers-reduced-motion: reduce) {
-    #content,
-    #content-vue {
+    #app-content,
+    #app-content-vue,
+    #app-dashboard {
         animation: none !important;
     }
 }
 
 [data-themes*="reduced-motion"] {
-    #content,
-    #content-vue {
+    #app-content,
+    #app-content-vue,
+    #app-dashboard {
         animation: none !important;
     }
 }

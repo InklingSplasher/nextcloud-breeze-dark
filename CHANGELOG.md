@@ -22,10 +22,29 @@
 -   The login page as SCSS sources (`css/guest.scss`, `css/guest-automatic.scss`) built by
     `npm run build`; the `appstore` make target builds first.
 -   The InkCurity logo as `img/inkcurity-logo.svg`, and five screenshots.
+-   Nextcloud 35: the new app menu is covered. App icons become squircle tiles in the app's
+    colour with the glyph in a colour that reads on it; the quick-create row gets a hairline and
+    a lift. `info.xml` declares Nextcloud 35.
+-   Depth: layered shadows with a top highlight on cards, menus, dialogs and the login card; a
+    glossy primary key with a glow in the accent and a sheen on hover; tinted keys with a soft
+    highlight; dashboard cards that lift when you point at them; a gradient greeting.
+-   Icon tiles in every app navigation (tinted at rest, filled with a glow when selected) and
+    filled tiles in the settings navigation.
+-   An easter egg: the Konami code throws confetti in the app colours.
 -   Add local Nextcloud 33 and 34 compatibility and document the production test gate.
+
+### Fixed
+
+-   Bars at the right and bottom of some apps: the page-entry animation held a transform on the
+    outer container, which shifted a nested `#content-vue`. Only the main pane animates now, and
+    nothing stays on the element afterwards; only the outermost container carries the frame.
+-   Login: "Forgot password?" and "Log in with a device" read as links again, single sign-on keys
+    sit below a hairline with space, the footer no longer draws a box, the cursor blinks.
+-   Checkboxes and radios use the accent text colour, which reads on every surface.
 
 ### Changed
 
+-   The palette is a little lighter and softer (`#1b213c` page, `#283152` surface).
 -   Selectors target `@nextcloud/vue` 9 (`.button-vue--primary` and friends) as used by
     Nextcloud 33 and 34; the v8 names stay for apps that still ship the old bundle.
 -   Pill buttons, tinted secondary buttons, success-green switches, sheets that rise from below,

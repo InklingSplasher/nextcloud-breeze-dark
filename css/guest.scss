@@ -64,7 +64,7 @@
         // glows in the logo colours and lands once with a soft settle.
         .logo {
             transform: rotate(-6deg);
-            filter: drop-shadow(0 14px 28px color-mix(in srgb, var(--tr-accent) 55%, transparent))
+            filter: drop-shadow(0 16px 30px color-mix(in srgb, var(--tr-accent) 60%, transparent))
                 drop-shadow(0 2px 6px color-mix(in srgb, var(--tr-pink) 35%, transparent));
             animation: tr-mark-land var(--tr-dur-settle) var(--tr-ease-spring) both;
         }
@@ -93,9 +93,12 @@
         padding: 24px !important;
         color: var(--tr-ink) !important;
         background-color: var(--tr-surface) !important;
+        background-image: var(--tr-sheen) !important;
         border: none;
         border-radius: var(--tr-radius-card) !important;
-        box-shadow: var(--tr-shadow-sheet) !important;
+        box-shadow:
+            var(--tr-shadow-sheet),
+            0 30px 80px -30px color-mix(in srgb, var(--tr-accent) 55%, transparent) !important;
         -webkit-backdrop-filter: none !important;
         backdrop-filter: none !important;
     }
@@ -107,19 +110,20 @@
         letter-spacing: -0.015em;
     }
 
-    // The headline: Trumpf title1, ending in the InkCurity cursor. It blinks
-    // three times when the page opens, then stays.
+    // The headline: Trumpf title1, ending in the blinking InkCurity cursor.
     .login-form__headline {
         font-size: 28px !important;
         line-height: 34px !important;
         text-wrap: balance;
 
+        // Vue leaves a space after the text; pull the cursor back onto it.
         &::after {
             content: "▌" / "";
             display: inline-block;
-            margin-inline-start: 0.1em;
+            margin-inline-start: -0.18em;
             color: var(--tr-accent-text);
-            animation: ic-blink 1s steps(1, end) 3;
+            text-shadow: 0 0 12px color-mix(in srgb, var(--tr-accent) 80%, transparent);
+            animation: ic-blink 1.1s steps(1, end) infinite;
         }
     }
 
@@ -198,9 +202,16 @@
     button.primary {
         min-height: 48px;
         background-color: var(--tr-accent) !important;
+        background-image: linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.2),
+            rgba(255, 255, 255, 0) 62%
+        ) !important;
         border: none !important;
         color: var(--tr-accent-on) !important;
-        box-shadow: var(--tr-shadow-cta) !important;
+        box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.3),
+            var(--tr-glow-strong) !important;
 
         &:hover:not(:disabled) {
             filter: brightness(1.08);
@@ -211,20 +222,51 @@
         }
     }
 
+    a.button-vue {
+        text-decoration: none !important;
+    }
+
+    // Grey keys: secondary actions and the single sign-on providers.
     .button-vue--secondary,
     .button-vue--vue-secondary,
-    .button-vue--tertiary,
-    .button-vue--vue-tertiary,
+    #alternative-logins .button-vue,
     input[type="submit"]:not(.primary),
     input[type="button"],
     .button:not(.button-vue) {
         background-color: rgba(255, 255, 255, 0.1) !important;
+        background-image: linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.06),
+            rgba(255, 255, 255, 0)
+        ) !important;
         border: none !important;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
         color: var(--tr-ink) !important;
 
         &:hover:not(:disabled) {
             background-color: rgba(255, 255, 255, 0.16) !important;
         }
+    }
+
+    // Plain: "Forgot password?" and "Log in with a device" read as links.
+    .login-box__wrapper > :is(.button-vue--tertiary, .button-vue--tertiary-no-background),
+    .login-additional > :is(.button-vue--tertiary, .button-vue--tertiary-no-background),
+    .button-vue--vue-tertiary {
+        min-height: 36px !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        color: var(--tr-accent-text) !important;
+
+        &:hover:not(:disabled) {
+            background-color: rgba(255, 255, 255, 0.06) !important;
+        }
+    }
+
+    // Single sign-on below the form, set apart by a hairline and some air.
+    #alternative-logins:not(:empty) {
+        margin-top: 16px;
+        padding-top: 16px;
+        border-top: 1px solid color-mix(in srgb, var(--tr-border) 80%, transparent);
     }
 
     .two-factor-provider {
@@ -244,6 +286,16 @@
 
     /* Footer: the signature line, with one redacted wink ------------------------- */
 
+    // Nextcloud draws the footer as a guest box; here it is only a line of text.
+    footer.guest-box {
+        margin-top: 8px;
+        padding: 0 12px 16px !important;
+        background: none !important;
+        box-shadow: none !important;
+        -webkit-backdrop-filter: none !important;
+        backdrop-filter: none !important;
+    }
+
     footer,
     footer p.info {
         color: var(--tr-ink-faint) !important;
@@ -254,7 +306,8 @@
     }
 
     footer a {
-        color: var(--tr-ink-soft) !important;
+        color: var(--tr-accent-text) !important;
+        text-decoration: none;
     }
 
     footer .info .entity-name {
