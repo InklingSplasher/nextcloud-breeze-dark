@@ -32,18 +32,19 @@ What that looks like in Nextcloud:
 
 | Where          | What                                                                                     |
 | -------------- | ---------------------------------------------------------------------------------------- |
-| Palette        | Dusk blue (`#121935` page, `#1e2850` surface) instead of black. Text passes 4.5:1 or more. |
+| Palette        | Soft dusk blue (`#1b213c` page, `#283152` surface) instead of black. Text passes 4.5:1 or more. |
 | Accent per app | Files and settings blue, Photos coral, Talk mint, Calendar red, Contacts orchid, Mail sky, Deck and Notes gold. The page bloom, buttons, selection and focus follow the open app. |
-| App menu       | The open app sits on a tile in its colour (Nextcloud 33 bar). The Nextcloud 34 app grid shows every app as a coloured tile. |
+| App menu       | The open app sits on a tile in its colour (Nextcloud 33 bar). The Nextcloud 34 and 35 app grids show every app as a glossy tile in its colour. |
 | Dashboard      | Today's date as eyebrow above a large greeting. The first widget is the live card, the one saturated block of the page: drag the widget you need most into first place. |
-| Navigation     | The Trumpf sidebar: tinted selection, icons in the accent, quiet counters, unread counts in pink. Settings get tinted icon tiles and cards. |
-| Controls       | Pill buttons, 14 px keys for large ones, a light well for fields with a 2 px accent ring, switches in success green. |
-| Overlays       | Menus float with a soft shadow, dialogs rise from below as sheets, toasts are material with a status dot. |
+| Navigation     | The Trumpf sidebar: icon tiles (tinted, filled with a glow when selected), quiet counters, unread counts in pink. Settings get filled tiles and cards. |
+| Controls       | Pill buttons, 14 px keys for large ones, a glossy primary key with a glow and a sheen on hover, a light well for fields, switches in success green. |
+| Overlays       | Menus and cards float on layered shadows with a top highlight, dialogs rise from below as sheets, toasts are material with a status dot. |
 | Login          | The logo leans −6° like a Trumpf card and lands once, the headline ends in a cursor that blinks three times. |
 | Theme settings | A hub page: hero card with the logo, the main switch as a frosted row, grouped switches, a tilted preview and confetti when you switch the theme on. |
-| Motion         | Every app opens with a short fade and an 8 px rise. Reduced motion (system or Nextcloud) turns all of it off. |
+| Motion         | Every app opens with a short fade and an 8 px rise, cards lift when you point at them. Reduced motion (system or Nextcloud) turns all of it off. |
 
-No webfonts, no third-party requests: the theme ships everything it needs.
+No webfonts, no third-party requests: the theme ships everything it needs. And there is an easter
+egg for those who know the Konami code.
 
 ### The backdrop
 
@@ -74,6 +75,7 @@ This branch is a local compatibility fork for:
 
 -   Nextcloud 33
 -   Nextcloud 34
+-   Nextcloud 35 (the new app menu with coloured app icons and quick-create actions is covered)
 
 It is based on upstream Breeze Dark 29.0.0. The PHP integration, settings requests and Nextcloud
 colour variables were ported to Nextcloud 33 and 34. Run the visual regression matrix in

@@ -117,3 +117,54 @@ if (document.readyState === "loading") {
 } else {
     watchDashboardEyebrow();
 }
+
+/* Easter egg ------------------------------------------------------------------
+ * The InkCurity design system ships an ink-splash easter egg behind the Konami
+ * code. Here the same code throws confetti in the colours of the apps and
+ * shows the tagline. Nothing happens with reduced motion except the toast.
+ */
+const KONAMI = [
+    "ArrowUp",
+    "ArrowUp",
+    "ArrowDown",
+    "ArrowDown",
+    "ArrowLeft",
+    "ArrowRight",
+    "ArrowLeft",
+    "ArrowRight",
+    "b",
+    "a",
+];
+let konamiPosition = 0;
+
+document.addEventListener("keydown", (event) => {
+    const target = event.target;
+    if (
+        target instanceof HTMLElement &&
+        (target.isContentEditable || ["INPUT", "TEXTAREA", "SELECT"].includes(target.tagName))
+    ) {
+        konamiPosition = 0;
+        return;
+    }
+
+    const key = event.key.length === 1 ? event.key.toLowerCase() : event.key;
+    konamiPosition =
+        key === KONAMI[konamiPosition] ? konamiPosition + 1 : key === KONAMI[0] ? 1 : 0;
+    if (konamiPosition < KONAMI.length) {
+        return;
+    }
+
+    konamiPosition = 0;
+    const ui = window.BreezeDarkUI;
+    ui?.confetti([
+        "#336deb",
+        "#ec4899",
+        "#ff7158",
+        "#5bd49a",
+        "#7bd6eb",
+        "#f0c25e",
+        "#d48ad9",
+        "#ffffff",
+    ]);
+    ui?.showToast({ message: "▌ Ink. Privacy. Craft." });
+});

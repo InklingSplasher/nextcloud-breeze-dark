@@ -69,9 +69,17 @@
         transition-duration: 0ms !important;
     }
 
-    // Selected: tinted, semibold, no stripe.
+    // Selected: a tinted pill with a soft top light, semibold, no stripe.
     &.active {
         background-color: var(--color-primary-element-light) !important;
+        background-image: linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.07),
+            rgba(255, 255, 255, 0)
+        ) !important;
+        box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.08),
+            0 6px 16px -10px color-mix(in srgb, var(--tr-accent) 80%, transparent);
 
         &::before {
             display: none !important;
@@ -82,10 +90,6 @@
         .app-navigation-entry-button {
             color: var(--tr-ink) !important;
             font-weight: 600 !important;
-        }
-
-        .app-navigation-entry-icon {
-            color: var(--color-primary-element-light-text) !important;
         }
     }
 
@@ -98,6 +102,61 @@
             color: var(--tr-ink) !important;
         }
     }
+}
+
+// Icon tiles for top-level entries: tinted at rest, filled in the accent with
+// a glow when selected. Legacy background-image icons keep their own look.
+.app-navigation-entry:not(.app-navigation-entry__children *)
+    > :is(.app-navigation-entry-link, .app-navigation-entry-button)
+    > .app-navigation-entry-icon:not([class*="icon-"]) {
+    position: relative;
+    isolation: isolate;
+
+    &::before {
+        content: "";
+        position: absolute;
+        z-index: -1;
+        inset: calc(50% - 14px);
+        border-radius: 8px;
+        background-color: color-mix(in srgb, var(--tr-accent) 20%, transparent);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07);
+        transition:
+            background-color var(--tr-dur-fade) var(--tr-ease-soft),
+            box-shadow var(--tr-dur-fade) var(--tr-ease-soft);
+    }
+
+    // The glyph sits inside the 28 px tile at 18 px.
+    svg,
+    img {
+        width: 18px !important;
+        height: 18px !important;
+    }
+}
+
+%tr-tile-filled {
+    color: var(--tr-accent-on) !important;
+
+    &::before {
+        background-color: var(--tr-accent);
+        background-image: linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.28),
+            rgba(255, 255, 255, 0) 60%
+        );
+        box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.32),
+            0 6px 14px -4px color-mix(in srgb, var(--tr-accent) 75%, transparent);
+    }
+
+    img {
+        filter: var(--tr-accent-flip);
+    }
+}
+
+.app-navigation-entry.active:not(.app-navigation-entry__children *)
+    > :is(.app-navigation-entry-link, .app-navigation-entry-button)
+    > .app-navigation-entry-icon:not([class*="icon-"]) {
+    @extend %tr-tile-filled;
 }
 
 // Section headers: sentence case, 13 px medium, soft (Trumpf section-header).
@@ -155,19 +214,19 @@
 
 /* Settings: a hub of grouped cards ------------------------------------------------ */
 
-// The navigation shows tinted tiles behind its icons (Trumpf hub lists).
-#body-settings .app-navigation-entry-icon {
-    position: relative;
-    isolation: isolate;
+// The settings navigation is a hub list: every icon sits on a filled tile,
+// like the rows of a settings app. White icons read 4.6:1 on the blue.
+#body-settings
+    .app-navigation-entry:not(.app-navigation-entry__children *)
+    > :is(.app-navigation-entry-link, .app-navigation-entry-button)
+    > .app-navigation-entry-icon:not([class*="icon-"]) {
+    @extend %tr-tile-filled;
+}
 
-    &::before {
-        content: "";
-        position: absolute;
-        z-index: -1;
-        inset: calc(50% - 14px);
-        border-radius: var(--tr-radius-tile);
-        background-color: color-mix(in srgb, var(--tr-accent) 22%, transparent);
-    }
+#body-settings .app-navigation-entry.active {
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.08),
+        0 8px 18px -10px color-mix(in srgb, var(--tr-accent) 90%, transparent);
 }
 
 #body-settings #app-content,
@@ -182,6 +241,8 @@
     border: none !important;
     border-radius: var(--tr-radius-2xl) !important;
     background-color: var(--tr-surface);
+    background-image: var(--tr-sheen);
+    box-shadow: var(--tr-shadow-card);
 }
 
 .settings-section__name,
@@ -207,6 +268,11 @@
 
 .app-sidebar-header__figure {
     background-color: var(--tr-accent-wash) !important;
+    background-image: radial-gradient(
+        120% 120% at 0% 0%,
+        color-mix(in srgb, var(--tr-accent) 35%, transparent),
+        transparent 70%
+    ) !important;
 }
 
 .app-sidebar-header__mainname {
@@ -236,6 +302,7 @@
     --color-main-background: var(--tr-inset);
 
     background-color: var(--tr-inset) !important;
+    background-image: var(--tr-sheen);
     border: none !important;
     border-radius: var(--tr-radius-xl) !important;
 }
@@ -299,6 +366,7 @@
 
 .modal-wrapper:not(.modal-wrapper--full) .modal-container {
     background-color: var(--tr-surface) !important;
+    background-image: var(--tr-sheen);
     border-radius: var(--tr-radius-float) !important;
     box-shadow: var(--tr-shadow-sheet) !important;
     animation: tr-sheet-in var(--tr-dur-sheet) var(--tr-ease-ios) both;
@@ -369,6 +437,7 @@
         margin-inline-end: 10px;
         border-radius: 50%;
         background-color: var(--tr-accent-text);
+        box-shadow: 0 0 0 3px color-mix(in srgb, var(--tr-accent-text) 22%, transparent);
     }
 
     &.toast-success::before {

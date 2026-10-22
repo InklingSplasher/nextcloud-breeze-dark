@@ -59,7 +59,7 @@ Under the Theming section in the admin settings you can add your own custom styl
     <screenshot>https://raw.githubusercontent.com/InklingSplasher/nextcloud-breeze-dark/master/screenshot-login.jpg</screenshot>
     <dependencies>
         <php min-version="8.2" max-version="8.5"/>
-        <nextcloud min-version="33" max-version="34"/>
+        <nextcloud min-version="33" max-version="35"/>
     </dependencies>
     <repair-steps>
 		<post-migration>

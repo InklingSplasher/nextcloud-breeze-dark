@@ -52,23 +52,23 @@
  * wash, accent text on dark surfaces, icon flip on the fill. */
 /* Everything else -------------------------------------------------------------- */
 [data-themes*=breezedark] {
-  /* Surfaces, outside in: page, bg, surface, inset (Trumpf) in dusk blue. */
-  --tr-page: #121935;
-  --tr-bg: #172042;
-  --tr-surface: #1e2850;
-  --tr-surface-rgb: 30, 40, 80;
-  --tr-inset: #28335f;
-  --tr-field: #262f57;
-  --tr-hover: #2e375c;
-  --tr-border: #36427a;
-  --tr-border-strong: #6371ad;
-  --tr-material: rgba(40, 51, 95, 0.78);
+  /* Surfaces, outside in: page, bg, surface, inset (Trumpf) in a soft dusk blue. */
+  --tr-page: #1b213c;
+  --tr-bg: #212845;
+  --tr-surface: #283152;
+  --tr-surface-rgb: 40, 49, 82;
+  --tr-inset: #343d60;
+  --tr-field: #30385a;
+  --tr-hover: #394265;
+  --tr-border: #4b5681;
+  --tr-border-strong: #7a87b8;
+  --tr-material: rgba(52, 61, 96, 0.8);
   --tr-material-filter: saturate(180%) blur(20px);
-  --tr-scrim: rgba(8, 11, 28, 0.55);
-  /* Text: ink 13.2:1 on surface, soft 7.6:1 on surface and 6.2:1 on hover. */
+  --tr-scrim: rgba(10, 13, 32, 0.5);
+  /* Text: ink 11.8:1 on surface, soft 7.7:1 on surface and 5.9:1 on hover. */
   --tr-ink: #f5f6fb;
-  --tr-ink-soft: #b3bce0;
-  --tr-ink-faint: #7b86b5;
+  --tr-ink-soft: #c0c8e6;
+  --tr-ink-faint: #8a94bf;
   /* Status, identity, rank. Status always comes with a word or a glyph. */
   --tr-success: #30d158;
   --tr-danger: #ff6961;
@@ -94,12 +94,24 @@
   --tr-radius-frame: 24px;
   --tr-radius-float: 28px;
   --tr-radius-full: 999px;
-  /* Depth: what floats gets a shadow, everything else stays flat. */
-  --tr-shadow-button: 0 1px 2px rgba(0, 0, 0, 0.25);
-  --tr-shadow-float: 0 12px 32px rgba(3, 6, 20, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.06);
-  --tr-shadow-sheet: 0 24px 64px rgba(3, 6, 20, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.07);
-  --tr-shadow-frame: 0 25px 50px -12px rgba(3, 6, 20, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  /* Depth: layered shadows, a top highlight on every raised surface, and a
+     glow in the accent for the things you can press. */
+  --tr-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  --tr-sheen: linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0) 46%);
+  --tr-shadow-button: 0 1px 2px rgba(6, 9, 28, 0.3);
+  --tr-shadow-card:
+      0 1px 2px rgba(6, 9, 28, 0.25), 0 10px 28px -8px rgba(6, 9, 28, 0.5),
+      inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  --tr-shadow-float:
+      0 2px 6px rgba(6, 9, 28, 0.3), 0 20px 48px -10px rgba(6, 9, 28, 0.6),
+      0 0 0 1px rgba(255, 255, 255, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.09);
+  --tr-shadow-sheet:
+      0 4px 12px rgba(6, 9, 28, 0.3), 0 32px 80px -16px rgba(6, 9, 28, 0.7),
+      0 0 0 1px rgba(255, 255, 255, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  --tr-shadow-frame: 0 16px 40px -20px rgba(6, 9, 28, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.07);
   --tr-shadow-cta: 0 8px 24px rgba(0, 0, 0, 0.25);
+  --tr-glow: 0 8px 20px -6px color-mix(in srgb, var(--tr-accent) 65%, transparent);
+  --tr-glow-strong: 0 12px 28px -6px color-mix(in srgb, var(--tr-accent) 75%, transparent);
   /* Motion: two curves carry everything, feedback stays under 200 ms. */
   --tr-ease-ios: cubic-bezier(0.32, 0.72, 0, 1);
   --tr-ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
@@ -120,33 +132,34 @@
   /* Default accent: the logo blue. Apps override it, see tr-app-accents. */
   --tr-accent: #336deb;
   --tr-accent-on: #ffffff;
-  --tr-accent-text: #8dadf4;
-  --tr-accent-wash: #22366f;
+  --tr-accent-text: #99b6f5;
+  --tr-accent-wash: #2a3e74;
   --tr-accent-flip: no;
   --color-primary: #336deb !important;
   --color-primary-default: #336deb !important;
   --color-primary-text: #ffffff !important;
   --color-primary-hover: #2f64d8 !important;
-  --color-primary-light: #22366f !important;
-  --color-primary-light-hover: #243b7b !important;
-  --color-primary-light-text: #8dadf4 !important;
+  --color-primary-light: #2a3e74 !important;
+  --color-primary-light-hover: #2b4380 !important;
+  --color-primary-light-text: #99b6f5 !important;
   --color-primary-element: #336deb !important;
   --color-primary-element-hover: #2f64d8 !important;
   --color-primary-element-default-hover: #2f64d8 !important;
   --color-primary-element-text: #ffffff !important;
   --color-primary-element-text-dark: #ffffff !important;
-  --color-primary-element-light: #22366f !important;
-  --color-primary-element-light-hover: #243b7b !important;
-  --color-primary-element-light-text: #8dadf4 !important;
+  --color-primary-element-light: #2a3e74 !important;
+  --color-primary-element-light-hover: #2b4380 !important;
+  --color-primary-element-light-text: #99b6f5 !important;
   --primary-invert-if-bright: no !important;
   --primary-invert-if-dark: invert(100%) !important;
   --gradient-primary-background: linear-gradient(40deg, #336deb 0%, #2f64d8 100%) !important;
-  --color-text-link: #8dadf4 !important;
+  --color-text-link: #99b6f5 !important;
   --tr-app: #336deb;
+  --tr-app-on: #ffffff;
   --tr-app-flip: no;
   /* Nextcloud: surfaces --------------------------------------------------- */
   --color-main-background: var(--tr-surface) !important;
-  --color-main-background-rgb: 30, 40, 80 !important;
+  --color-main-background-rgb: 40, 49, 82 !important;
   --color-main-background-translucent: rgba(var(--tr-surface-rgb), 0.97) !important;
   --color-main-background-blur: rgba(var(--tr-surface-rgb), 0.86) !important;
   --gradient-main-background:
@@ -154,10 +167,10 @@
       transparent 100% !important;
   --color-background-hover: var(--tr-hover) !important;
   --color-background-dark: var(--tr-inset) !important;
-  --color-background-darker: #323d6d !important;
+  --color-background-darker: #40496a !important;
   --color-background-translucent: rgba(var(--tr-surface-rgb), 0.86) !important;
   --color-placeholder-light: var(--tr-inset) !important;
-  --color-placeholder-dark: #323d6d !important;
+  --color-placeholder-dark: #40496a !important;
   --color-background-plain: var(--tr-page) !important;
   --color-background-plain-text: var(--tr-ink) !important;
   --image-background: none !important;
@@ -168,7 +181,7 @@
   --color-main-text: var(--tr-ink) !important;
   --color-text-maxcontrast: var(--tr-ink-soft) !important;
   --color-text-maxcontrast-default: var(--tr-ink-soft) !important;
-  --color-text-maxcontrast-background-blur: #bcc4e6 !important;
+  --color-text-maxcontrast-background-blur: #c6cdea !important;
   --color-text-light: var(--tr-ink) !important;
   --color-text-lighter: var(--tr-ink-soft) !important;
   --color-text-dark: #0b1020 !important;
@@ -178,36 +191,36 @@
   --color-text-selection: var(--tr-ink) !important;
   /* Nextcloud: borders ---------------------------------------------------- */
   --color-border: var(--tr-border) !important;
-  --color-border-dark: #44508a !important;
+  --color-border-dark: #56628f !important;
   --color-border-maxcontrast: var(--tr-border-strong) !important;
   --color-border-error: var(--tr-danger) !important;
   --color-border-success: var(--tr-success) !important;
   /* Nextcloud: feedback. Element colour = meaning, wash = tone at 18 % over
      the surface, text on the wash passes 7.7:1 or better. ---------------- */
-  --color-error: #462d4c !important;
-  --color-error-hover: #58304a !important;
-  --color-error-text: #ffd0cc !important;
-  --color-error-rgb: 70, 45, 76 !important;
+  --color-error: #533c55 !important;
+  --color-error-hover: #644156 !important;
+  --color-error-text: #ffd6d2 !important;
+  --color-error-rgb: 83, 60, 85 !important;
   --color-element-error: var(--tr-danger) !important;
-  --color-warning: #463d43 !important;
-  --color-warning-hover: #58473e !important;
-  --color-warning-text: #ffe2b8 !important;
-  --color-warning-rgb: 70, 61, 67 !important;
+  --color-warning: #534744 !important;
+  --color-warning-hover: #64503e !important;
+  --color-warning-text: #ffe6c2 !important;
+  --color-warning-rgb: 83, 71, 68 !important;
   --color-element-warning: var(--tr-warn) !important;
-  --color-success: #214651 !important;
-  --color-success-hover: #235452 !important;
-  --color-success-text: #c8f5d5 !important;
-  --color-success-rgb: 33, 70, 81 !important;
+  --color-success: #2a5153 !important;
+  --color-success-hover: #2a5e54 !important;
+  --color-success-text: #cff7da !important;
+  --color-success-rgb: 42, 81, 83 !important;
   --color-element-success: var(--tr-success) !important;
-  --color-info: #2b4770 !important;
-  --color-info-hover: #30547e !important;
-  --color-info-text: #cdefff !important;
-  --color-info-rgb: 43, 71, 112 !important;
+  --color-info: #345175 !important;
+  --color-info-hover: #395e82 !important;
+  --color-info-text: #d3f1ff !important;
+  --color-info-rgb: 52, 81, 117 !important;
   --color-element-info: var(--tr-info) !important;
   --color-favorite: var(--tr-gold) !important;
-  --color-mark: #5b5233 !important;
+  --color-mark: #645d53 !important;
   /* Nextcloud: assistant, inside the palette ------------------------------ */
-  --color-background-assistant: #252c58 !important;
+  --color-background-assistant: #2e3664 !important;
   --color-border-assistant: linear-gradient(125deg, #336deb 50%, #ec4899 125%) !important;
   --color-element-assistant: linear-gradient(
       214deg,
@@ -260,561 +273,578 @@
 [data-themes*=breezedark]:has(> :is(#content, #content-vue).app-photos) {
   --tr-accent: #ff7158;
   --tr-accent-on: #1e120c;
-  --tr-accent-text: #ff9c8a;
-  --tr-accent-wash: #4b3752;
+  --tr-accent-text: #ffad9e;
+  --tr-accent-wash: #573f53;
   --tr-accent-flip: invert(100%);
   --color-primary: #ff7158 !important;
   --color-primary-default: #ff7158 !important;
   --color-primary-text: #1e120c !important;
   --color-primary-hover: #ff7f69 !important;
-  --color-primary-light: #4b3752 !important;
-  --color-primary-light-hover: #5d3c52 !important;
-  --color-primary-light-text: #ff9c8a !important;
+  --color-primary-light: #573f53 !important;
+  --color-primary-light-hover: #684454 !important;
+  --color-primary-light-text: #ffad9e !important;
   --color-primary-element: #ff7158 !important;
   --color-primary-element-hover: #ff7f69 !important;
   --color-primary-element-default-hover: #ff7f69 !important;
   --color-primary-element-text: #1e120c !important;
   --color-primary-element-text-dark: #1e120c !important;
-  --color-primary-element-light: #4b3752 !important;
-  --color-primary-element-light-hover: #5d3c52 !important;
-  --color-primary-element-light-text: #ff9c8a !important;
+  --color-primary-element-light: #573f53 !important;
+  --color-primary-element-light-hover: #684454 !important;
+  --color-primary-element-light-text: #ffad9e !important;
   --primary-invert-if-bright: invert(100%) !important;
   --primary-invert-if-dark: no !important;
   --gradient-primary-background: linear-gradient(40deg, #ff7158 0%, #ff7f69 100%) !important;
-  --color-text-link: #ff9c8a !important;
+  --color-text-link: #ffad9e !important;
 }
 
 [data-themes*=breezedark]:has(> :is(#content, #content-vue).app-memories) {
   --tr-accent: #ff7158;
   --tr-accent-on: #1e120c;
-  --tr-accent-text: #ff9c8a;
-  --tr-accent-wash: #4b3752;
+  --tr-accent-text: #ffad9e;
+  --tr-accent-wash: #573f53;
   --tr-accent-flip: invert(100%);
   --color-primary: #ff7158 !important;
   --color-primary-default: #ff7158 !important;
   --color-primary-text: #1e120c !important;
   --color-primary-hover: #ff7f69 !important;
-  --color-primary-light: #4b3752 !important;
-  --color-primary-light-hover: #5d3c52 !important;
-  --color-primary-light-text: #ff9c8a !important;
+  --color-primary-light: #573f53 !important;
+  --color-primary-light-hover: #684454 !important;
+  --color-primary-light-text: #ffad9e !important;
   --color-primary-element: #ff7158 !important;
   --color-primary-element-hover: #ff7f69 !important;
   --color-primary-element-default-hover: #ff7f69 !important;
   --color-primary-element-text: #1e120c !important;
   --color-primary-element-text-dark: #1e120c !important;
-  --color-primary-element-light: #4b3752 !important;
-  --color-primary-element-light-hover: #5d3c52 !important;
-  --color-primary-element-light-text: #ff9c8a !important;
+  --color-primary-element-light: #573f53 !important;
+  --color-primary-element-light-hover: #684454 !important;
+  --color-primary-element-light-text: #ffad9e !important;
   --primary-invert-if-bright: invert(100%) !important;
   --primary-invert-if-dark: no !important;
   --gradient-primary-background: linear-gradient(40deg, #ff7158 0%, #ff7f69 100%) !important;
-  --color-text-link: #ff9c8a !important;
+  --color-text-link: #ffad9e !important;
 }
 
 [data-themes*=breezedark]:has(> :is(#content, #content-vue).app-music) {
   --tr-accent: #ff7158;
   --tr-accent-on: #1e120c;
-  --tr-accent-text: #ff9c8a;
-  --tr-accent-wash: #4b3752;
+  --tr-accent-text: #ffad9e;
+  --tr-accent-wash: #573f53;
   --tr-accent-flip: invert(100%);
   --color-primary: #ff7158 !important;
   --color-primary-default: #ff7158 !important;
   --color-primary-text: #1e120c !important;
   --color-primary-hover: #ff7f69 !important;
-  --color-primary-light: #4b3752 !important;
-  --color-primary-light-hover: #5d3c52 !important;
-  --color-primary-light-text: #ff9c8a !important;
+  --color-primary-light: #573f53 !important;
+  --color-primary-light-hover: #684454 !important;
+  --color-primary-light-text: #ffad9e !important;
   --color-primary-element: #ff7158 !important;
   --color-primary-element-hover: #ff7f69 !important;
   --color-primary-element-default-hover: #ff7f69 !important;
   --color-primary-element-text: #1e120c !important;
   --color-primary-element-text-dark: #1e120c !important;
-  --color-primary-element-light: #4b3752 !important;
-  --color-primary-element-light-hover: #5d3c52 !important;
-  --color-primary-element-light-text: #ff9c8a !important;
+  --color-primary-element-light: #573f53 !important;
+  --color-primary-element-light-hover: #684454 !important;
+  --color-primary-element-light-text: #ffad9e !important;
   --primary-invert-if-bright: invert(100%) !important;
   --primary-invert-if-dark: no !important;
   --gradient-primary-background: linear-gradient(40deg, #ff7158 0%, #ff7f69 100%) !important;
-  --color-text-link: #ff9c8a !important;
+  --color-text-link: #ffad9e !important;
 }
 
 [data-themes*=breezedark]:has(> :is(#content, #content-vue).app-cookbook) {
   --tr-accent: #ff7158;
   --tr-accent-on: #1e120c;
-  --tr-accent-text: #ff9c8a;
-  --tr-accent-wash: #4b3752;
+  --tr-accent-text: #ffad9e;
+  --tr-accent-wash: #573f53;
   --tr-accent-flip: invert(100%);
   --color-primary: #ff7158 !important;
   --color-primary-default: #ff7158 !important;
   --color-primary-text: #1e120c !important;
   --color-primary-hover: #ff7f69 !important;
-  --color-primary-light: #4b3752 !important;
-  --color-primary-light-hover: #5d3c52 !important;
-  --color-primary-light-text: #ff9c8a !important;
+  --color-primary-light: #573f53 !important;
+  --color-primary-light-hover: #684454 !important;
+  --color-primary-light-text: #ffad9e !important;
   --color-primary-element: #ff7158 !important;
   --color-primary-element-hover: #ff7f69 !important;
   --color-primary-element-default-hover: #ff7f69 !important;
   --color-primary-element-text: #1e120c !important;
   --color-primary-element-text-dark: #1e120c !important;
-  --color-primary-element-light: #4b3752 !important;
-  --color-primary-element-light-hover: #5d3c52 !important;
-  --color-primary-element-light-text: #ff9c8a !important;
+  --color-primary-element-light: #573f53 !important;
+  --color-primary-element-light-hover: #684454 !important;
+  --color-primary-element-light-text: #ffad9e !important;
   --primary-invert-if-bright: invert(100%) !important;
   --primary-invert-if-dark: no !important;
   --gradient-primary-background: linear-gradient(40deg, #ff7158 0%, #ff7f69 100%) !important;
-  --color-text-link: #ff9c8a !important;
+  --color-text-link: #ffad9e !important;
 }
 
 [data-themes*=breezedark]:has(> :is(#content, #content-vue).app-spreed) {
   --tr-accent: #5bd49a;
   --tr-accent-on: #0f2419;
-  --tr-accent-text: #75dbaa;
-  --tr-accent-wash: #2a4a5f;
+  --tr-accent-text: #9de5c2;
+  --tr-accent-wash: #335562;
   --tr-accent-flip: invert(100%);
   --color-primary: #5bd49a !important;
   --color-primary-default: #5bd49a !important;
   --color-primary-text: #0f2419 !important;
   --color-primary-hover: #6bd8a4 !important;
-  --color-primary-light: #2a4a5f !important;
-  --color-primary-light-hover: #2f5865 !important;
-  --color-primary-light-text: #75dbaa !important;
+  --color-primary-light: #335562 !important;
+  --color-primary-light-hover: #376268 !important;
+  --color-primary-light-text: #9de5c2 !important;
   --color-primary-element: #5bd49a !important;
   --color-primary-element-hover: #6bd8a4 !important;
   --color-primary-element-default-hover: #6bd8a4 !important;
   --color-primary-element-text: #0f2419 !important;
   --color-primary-element-text-dark: #0f2419 !important;
-  --color-primary-element-light: #2a4a5f !important;
-  --color-primary-element-light-hover: #2f5865 !important;
-  --color-primary-element-light-text: #75dbaa !important;
+  --color-primary-element-light: #335562 !important;
+  --color-primary-element-light-hover: #376268 !important;
+  --color-primary-element-light-text: #9de5c2 !important;
   --primary-invert-if-bright: invert(100%) !important;
   --primary-invert-if-dark: no !important;
   --gradient-primary-background: linear-gradient(40deg, #5bd49a 0%, #6bd8a4 100%) !important;
-  --color-text-link: #75dbaa !important;
+  --color-text-link: #9de5c2 !important;
 }
 
 [data-themes*=breezedark]:has(> :is(#content, #content-vue).app-tasks) {
   --tr-accent: #5bd49a;
   --tr-accent-on: #0f2419;
-  --tr-accent-text: #75dbaa;
-  --tr-accent-wash: #2a4a5f;
+  --tr-accent-text: #9de5c2;
+  --tr-accent-wash: #335562;
   --tr-accent-flip: invert(100%);
   --color-primary: #5bd49a !important;
   --color-primary-default: #5bd49a !important;
   --color-primary-text: #0f2419 !important;
   --color-primary-hover: #6bd8a4 !important;
-  --color-primary-light: #2a4a5f !important;
-  --color-primary-light-hover: #2f5865 !important;
-  --color-primary-light-text: #75dbaa !important;
+  --color-primary-light: #335562 !important;
+  --color-primary-light-hover: #376268 !important;
+  --color-primary-light-text: #9de5c2 !important;
   --color-primary-element: #5bd49a !important;
   --color-primary-element-hover: #6bd8a4 !important;
   --color-primary-element-default-hover: #6bd8a4 !important;
   --color-primary-element-text: #0f2419 !important;
   --color-primary-element-text-dark: #0f2419 !important;
-  --color-primary-element-light: #2a4a5f !important;
-  --color-primary-element-light-hover: #2f5865 !important;
-  --color-primary-element-light-text: #75dbaa !important;
+  --color-primary-element-light: #335562 !important;
+  --color-primary-element-light-hover: #376268 !important;
+  --color-primary-element-light-text: #9de5c2 !important;
   --primary-invert-if-bright: invert(100%) !important;
   --primary-invert-if-dark: no !important;
   --gradient-primary-background: linear-gradient(40deg, #5bd49a 0%, #6bd8a4 100%) !important;
-  --color-text-link: #75dbaa !important;
+  --color-text-link: #9de5c2 !important;
 }
 
 [data-themes*=breezedark]:has(> :is(#content, #content-vue).app-maps) {
   --tr-accent: #5bd49a;
   --tr-accent-on: #0f2419;
-  --tr-accent-text: #75dbaa;
-  --tr-accent-wash: #2a4a5f;
+  --tr-accent-text: #9de5c2;
+  --tr-accent-wash: #335562;
   --tr-accent-flip: invert(100%);
   --color-primary: #5bd49a !important;
   --color-primary-default: #5bd49a !important;
   --color-primary-text: #0f2419 !important;
   --color-primary-hover: #6bd8a4 !important;
-  --color-primary-light: #2a4a5f !important;
-  --color-primary-light-hover: #2f5865 !important;
-  --color-primary-light-text: #75dbaa !important;
+  --color-primary-light: #335562 !important;
+  --color-primary-light-hover: #376268 !important;
+  --color-primary-light-text: #9de5c2 !important;
   --color-primary-element: #5bd49a !important;
   --color-primary-element-hover: #6bd8a4 !important;
   --color-primary-element-default-hover: #6bd8a4 !important;
   --color-primary-element-text: #0f2419 !important;
   --color-primary-element-text-dark: #0f2419 !important;
-  --color-primary-element-light: #2a4a5f !important;
-  --color-primary-element-light-hover: #2f5865 !important;
-  --color-primary-element-light-text: #75dbaa !important;
+  --color-primary-element-light: #335562 !important;
+  --color-primary-element-light-hover: #376268 !important;
+  --color-primary-element-light-text: #9de5c2 !important;
   --primary-invert-if-bright: invert(100%) !important;
   --primary-invert-if-dark: no !important;
   --gradient-primary-background: linear-gradient(40deg, #5bd49a 0%, #6bd8a4 100%) !important;
-  --color-text-link: #75dbaa !important;
+  --color-text-link: #9de5c2 !important;
 }
 
 [data-themes*=breezedark]:has(> :is(#content, #content-vue).app-calendar) {
   --tr-accent: #ff6b6b;
   --tr-accent-on: #2a0a0a;
-  --tr-accent-text: #ff9a9a;
-  --tr-accent-wash: #4b3555;
+  --tr-accent-text: #ffacac;
+  --tr-accent-wash: #573e58;
   --tr-accent-flip: invert(100%);
   --color-primary: #ff6b6b !important;
   --color-primary-default: #ff6b6b !important;
   --color-primary-text: #2a0a0a !important;
   --color-primary-hover: #ff7a7a !important;
-  --color-primary-light: #4b3555 !important;
-  --color-primary-light-hover: #5d3b58 !important;
-  --color-primary-light-text: #ff9a9a !important;
+  --color-primary-light: #573e58 !important;
+  --color-primary-light-hover: #68425a !important;
+  --color-primary-light-text: #ffacac !important;
   --color-primary-element: #ff6b6b !important;
   --color-primary-element-hover: #ff7a7a !important;
   --color-primary-element-default-hover: #ff7a7a !important;
   --color-primary-element-text: #2a0a0a !important;
   --color-primary-element-text-dark: #2a0a0a !important;
-  --color-primary-element-light: #4b3555 !important;
-  --color-primary-element-light-hover: #5d3b58 !important;
-  --color-primary-element-light-text: #ff9a9a !important;
+  --color-primary-element-light: #573e58 !important;
+  --color-primary-element-light-hover: #68425a !important;
+  --color-primary-element-light-text: #ffacac !important;
   --primary-invert-if-bright: invert(100%) !important;
   --primary-invert-if-dark: no !important;
   --gradient-primary-background: linear-gradient(40deg, #ff6b6b 0%, #ff7a7a 100%) !important;
-  --color-text-link: #ff9a9a !important;
+  --color-text-link: #ffacac !important;
 }
 
 [data-themes*=breezedark]:has(> :is(#content, #content-vue).app-contacts) {
   --tr-accent: #d48ad9;
   --tr-accent-on: #260c29;
-  --tr-accent-text: #e0abe4;
-  --tr-accent-wash: #423c6b;
+  --tr-accent-text: #e7bdea;
+  --tr-accent-wash: #4e4570;
   --tr-accent-flip: invert(100%);
   --color-primary: #d48ad9 !important;
   --color-primary-default: #d48ad9 !important;
   --color-primary-text: #260c29 !important;
   --color-primary-hover: #d896dd !important;
-  --color-primary-light: #423c6b !important;
-  --color-primary-light-hover: #514376 !important;
-  --color-primary-light-text: #e0abe4 !important;
+  --color-primary-light: #4e4570 !important;
+  --color-primary-light-hover: #5c4c7a !important;
+  --color-primary-light-text: #e7bdea !important;
   --color-primary-element: #d48ad9 !important;
   --color-primary-element-hover: #d896dd !important;
   --color-primary-element-default-hover: #d896dd !important;
   --color-primary-element-text: #260c29 !important;
   --color-primary-element-text-dark: #260c29 !important;
-  --color-primary-element-light: #423c6b !important;
-  --color-primary-element-light-hover: #514376 !important;
-  --color-primary-element-light-text: #e0abe4 !important;
+  --color-primary-element-light: #4e4570 !important;
+  --color-primary-element-light-hover: #5c4c7a !important;
+  --color-primary-element-light-text: #e7bdea !important;
   --primary-invert-if-bright: invert(100%) !important;
   --primary-invert-if-dark: no !important;
   --gradient-primary-background: linear-gradient(40deg, #d48ad9 0%, #d896dd 100%) !important;
-  --color-text-link: #e0abe4 !important;
+  --color-text-link: #e7bdea !important;
 }
 
 [data-themes*=breezedark]:has(> :is(#content, #content-vue).app-forms) {
   --tr-accent: #d48ad9;
   --tr-accent-on: #260c29;
-  --tr-accent-text: #e0abe4;
-  --tr-accent-wash: #423c6b;
+  --tr-accent-text: #e7bdea;
+  --tr-accent-wash: #4e4570;
   --tr-accent-flip: invert(100%);
   --color-primary: #d48ad9 !important;
   --color-primary-default: #d48ad9 !important;
   --color-primary-text: #260c29 !important;
   --color-primary-hover: #d896dd !important;
-  --color-primary-light: #423c6b !important;
-  --color-primary-light-hover: #514376 !important;
-  --color-primary-light-text: #e0abe4 !important;
+  --color-primary-light: #4e4570 !important;
+  --color-primary-light-hover: #5c4c7a !important;
+  --color-primary-light-text: #e7bdea !important;
   --color-primary-element: #d48ad9 !important;
   --color-primary-element-hover: #d896dd !important;
   --color-primary-element-default-hover: #d896dd !important;
   --color-primary-element-text: #260c29 !important;
   --color-primary-element-text-dark: #260c29 !important;
-  --color-primary-element-light: #423c6b !important;
-  --color-primary-element-light-hover: #514376 !important;
-  --color-primary-element-light-text: #e0abe4 !important;
+  --color-primary-element-light: #4e4570 !important;
+  --color-primary-element-light-hover: #5c4c7a !important;
+  --color-primary-element-light-text: #e7bdea !important;
   --primary-invert-if-bright: invert(100%) !important;
   --primary-invert-if-dark: no !important;
   --gradient-primary-background: linear-gradient(40deg, #d48ad9 0%, #d896dd 100%) !important;
-  --color-text-link: #e0abe4 !important;
+  --color-text-link: #e7bdea !important;
 }
 
 [data-themes*=breezedark]:has(> :is(#content, #content-vue).app-polls) {
   --tr-accent: #d48ad9;
   --tr-accent-on: #260c29;
-  --tr-accent-text: #e0abe4;
-  --tr-accent-wash: #423c6b;
+  --tr-accent-text: #e7bdea;
+  --tr-accent-wash: #4e4570;
   --tr-accent-flip: invert(100%);
   --color-primary: #d48ad9 !important;
   --color-primary-default: #d48ad9 !important;
   --color-primary-text: #260c29 !important;
   --color-primary-hover: #d896dd !important;
-  --color-primary-light: #423c6b !important;
-  --color-primary-light-hover: #514376 !important;
-  --color-primary-light-text: #e0abe4 !important;
+  --color-primary-light: #4e4570 !important;
+  --color-primary-light-hover: #5c4c7a !important;
+  --color-primary-light-text: #e7bdea !important;
   --color-primary-element: #d48ad9 !important;
   --color-primary-element-hover: #d896dd !important;
   --color-primary-element-default-hover: #d896dd !important;
   --color-primary-element-text: #260c29 !important;
   --color-primary-element-text-dark: #260c29 !important;
-  --color-primary-element-light: #423c6b !important;
-  --color-primary-element-light-hover: #514376 !important;
-  --color-primary-element-light-text: #e0abe4 !important;
+  --color-primary-element-light: #4e4570 !important;
+  --color-primary-element-light-hover: #5c4c7a !important;
+  --color-primary-element-light-text: #e7bdea !important;
   --primary-invert-if-bright: invert(100%) !important;
   --primary-invert-if-dark: no !important;
   --gradient-primary-background: linear-gradient(40deg, #d48ad9 0%, #d896dd 100%) !important;
-  --color-text-link: #e0abe4 !important;
+  --color-text-link: #e7bdea !important;
 }
 
 [data-themes*=breezedark]:has(> :is(#content, #content-vue).app-mail) {
   --tr-accent: #7bd6eb;
   --tr-accent-on: #0f2536;
-  --tr-accent-text: #88daed;
-  --tr-accent-wash: #314b6f;
+  --tr-accent-text: #abe5f2;
+  --tr-accent-wash: #3a5574;
   --tr-accent-flip: invert(100%);
   --color-primary: #7bd6eb !important;
   --color-primary-default: #7bd6eb !important;
   --color-primary-text: #0f2536 !important;
   --color-primary-hover: #88daed !important;
-  --color-primary-light: #314b6f !important;
-  --color-primary-light-hover: #38597b !important;
-  --color-primary-light-text: #88daed !important;
+  --color-primary-light: #3a5574 !important;
+  --color-primary-light-hover: #416280 !important;
+  --color-primary-light-text: #abe5f2 !important;
   --color-primary-element: #7bd6eb !important;
   --color-primary-element-hover: #88daed !important;
   --color-primary-element-default-hover: #88daed !important;
   --color-primary-element-text: #0f2536 !important;
   --color-primary-element-text-dark: #0f2536 !important;
-  --color-primary-element-light: #314b6f !important;
-  --color-primary-element-light-hover: #38597b !important;
-  --color-primary-element-light-text: #88daed !important;
+  --color-primary-element-light: #3a5574 !important;
+  --color-primary-element-light-hover: #416280 !important;
+  --color-primary-element-light-text: #abe5f2 !important;
   --primary-invert-if-bright: invert(100%) !important;
   --primary-invert-if-dark: no !important;
   --gradient-primary-background: linear-gradient(40deg, #7bd6eb 0%, #88daed 100%) !important;
-  --color-text-link: #88daed !important;
+  --color-text-link: #abe5f2 !important;
 }
 
 [data-themes*=breezedark]:has(> :is(#content, #content-vue).app-news) {
   --tr-accent: #7bd6eb;
   --tr-accent-on: #0f2536;
-  --tr-accent-text: #88daed;
-  --tr-accent-wash: #314b6f;
+  --tr-accent-text: #abe5f2;
+  --tr-accent-wash: #3a5574;
   --tr-accent-flip: invert(100%);
   --color-primary: #7bd6eb !important;
   --color-primary-default: #7bd6eb !important;
   --color-primary-text: #0f2536 !important;
   --color-primary-hover: #88daed !important;
-  --color-primary-light: #314b6f !important;
-  --color-primary-light-hover: #38597b !important;
-  --color-primary-light-text: #88daed !important;
+  --color-primary-light: #3a5574 !important;
+  --color-primary-light-hover: #416280 !important;
+  --color-primary-light-text: #abe5f2 !important;
   --color-primary-element: #7bd6eb !important;
   --color-primary-element-hover: #88daed !important;
   --color-primary-element-default-hover: #88daed !important;
   --color-primary-element-text: #0f2536 !important;
   --color-primary-element-text-dark: #0f2536 !important;
-  --color-primary-element-light: #314b6f !important;
-  --color-primary-element-light-hover: #38597b !important;
-  --color-primary-element-light-text: #88daed !important;
+  --color-primary-element-light: #3a5574 !important;
+  --color-primary-element-light-hover: #416280 !important;
+  --color-primary-element-light-text: #abe5f2 !important;
   --primary-invert-if-bright: invert(100%) !important;
   --primary-invert-if-dark: no !important;
   --gradient-primary-background: linear-gradient(40deg, #7bd6eb 0%, #88daed 100%) !important;
-  --color-text-link: #88daed !important;
+  --color-text-link: #abe5f2 !important;
 }
 
 [data-themes*=breezedark]:has(> :is(#content, #content-vue).app-bookmarks) {
   --tr-accent: #7bd6eb;
   --tr-accent-on: #0f2536;
-  --tr-accent-text: #88daed;
-  --tr-accent-wash: #314b6f;
+  --tr-accent-text: #abe5f2;
+  --tr-accent-wash: #3a5574;
   --tr-accent-flip: invert(100%);
   --color-primary: #7bd6eb !important;
   --color-primary-default: #7bd6eb !important;
   --color-primary-text: #0f2536 !important;
   --color-primary-hover: #88daed !important;
-  --color-primary-light: #314b6f !important;
-  --color-primary-light-hover: #38597b !important;
-  --color-primary-light-text: #88daed !important;
+  --color-primary-light: #3a5574 !important;
+  --color-primary-light-hover: #416280 !important;
+  --color-primary-light-text: #abe5f2 !important;
   --color-primary-element: #7bd6eb !important;
   --color-primary-element-hover: #88daed !important;
   --color-primary-element-default-hover: #88daed !important;
   --color-primary-element-text: #0f2536 !important;
   --color-primary-element-text-dark: #0f2536 !important;
-  --color-primary-element-light: #314b6f !important;
-  --color-primary-element-light-hover: #38597b !important;
-  --color-primary-element-light-text: #88daed !important;
+  --color-primary-element-light: #3a5574 !important;
+  --color-primary-element-light-hover: #416280 !important;
+  --color-primary-element-light-text: #abe5f2 !important;
   --primary-invert-if-bright: invert(100%) !important;
   --primary-invert-if-dark: no !important;
   --gradient-primary-background: linear-gradient(40deg, #7bd6eb 0%, #88daed 100%) !important;
-  --color-text-link: #88daed !important;
+  --color-text-link: #abe5f2 !important;
 }
 
 [data-themes*=breezedark]:has(> :is(#content, #content-vue).app-deck) {
   --tr-accent: #f0c25e;
   --tr-accent-on: #2a1f0a;
-  --tr-accent-text: #f1c668;
-  --tr-accent-wash: #484753;
+  --tr-accent-text: #f5d692;
+  --tr-accent-wash: #545155;
   --tr-accent-flip: invert(100%);
   --color-primary: #f0c25e !important;
   --color-primary-default: #f0c25e !important;
   --color-primary-text: #2a1f0a !important;
   --color-primary-hover: #f2c86e !important;
-  --color-primary-light: #484753 !important;
-  --color-primary-light-hover: #595354 !important;
-  --color-primary-light-text: #f1c668 !important;
+  --color-primary-light: #545155 !important;
+  --color-primary-light-hover: #645c56 !important;
+  --color-primary-light-text: #f5d692 !important;
   --color-primary-element: #f0c25e !important;
   --color-primary-element-hover: #f2c86e !important;
   --color-primary-element-default-hover: #f2c86e !important;
   --color-primary-element-text: #2a1f0a !important;
   --color-primary-element-text-dark: #2a1f0a !important;
-  --color-primary-element-light: #484753 !important;
-  --color-primary-element-light-hover: #595354 !important;
-  --color-primary-element-light-text: #f1c668 !important;
+  --color-primary-element-light: #545155 !important;
+  --color-primary-element-light-hover: #645c56 !important;
+  --color-primary-element-light-text: #f5d692 !important;
   --primary-invert-if-bright: invert(100%) !important;
   --primary-invert-if-dark: no !important;
   --gradient-primary-background: linear-gradient(40deg, #f0c25e 0%, #f2c86e 100%) !important;
-  --color-text-link: #f1c668 !important;
+  --color-text-link: #f5d692 !important;
 }
 
 [data-themes*=breezedark]:has(> :is(#content, #content-vue).app-notes) {
   --tr-accent: #f0c25e;
   --tr-accent-on: #2a1f0a;
-  --tr-accent-text: #f1c668;
-  --tr-accent-wash: #484753;
+  --tr-accent-text: #f5d692;
+  --tr-accent-wash: #545155;
   --tr-accent-flip: invert(100%);
   --color-primary: #f0c25e !important;
   --color-primary-default: #f0c25e !important;
   --color-primary-text: #2a1f0a !important;
   --color-primary-hover: #f2c86e !important;
-  --color-primary-light: #484753 !important;
-  --color-primary-light-hover: #595354 !important;
-  --color-primary-light-text: #f1c668 !important;
+  --color-primary-light: #545155 !important;
+  --color-primary-light-hover: #645c56 !important;
+  --color-primary-light-text: #f5d692 !important;
   --color-primary-element: #f0c25e !important;
   --color-primary-element-hover: #f2c86e !important;
   --color-primary-element-default-hover: #f2c86e !important;
   --color-primary-element-text: #2a1f0a !important;
   --color-primary-element-text-dark: #2a1f0a !important;
-  --color-primary-element-light: #484753 !important;
-  --color-primary-element-light-hover: #595354 !important;
-  --color-primary-element-light-text: #f1c668 !important;
+  --color-primary-element-light: #545155 !important;
+  --color-primary-element-light-hover: #645c56 !important;
+  --color-primary-element-light-text: #f5d692 !important;
   --primary-invert-if-bright: invert(100%) !important;
   --primary-invert-if-dark: no !important;
   --gradient-primary-background: linear-gradient(40deg, #f0c25e 0%, #f2c86e 100%) !important;
-  --color-text-link: #f1c668 !important;
+  --color-text-link: #f5d692 !important;
 }
 
 [data-themes*=breezedark]:has(> :is(#content, #content-vue).app-collectives) {
   --tr-accent: #f0c25e;
   --tr-accent-on: #2a1f0a;
-  --tr-accent-text: #f1c668;
-  --tr-accent-wash: #484753;
+  --tr-accent-text: #f5d692;
+  --tr-accent-wash: #545155;
   --tr-accent-flip: invert(100%);
   --color-primary: #f0c25e !important;
   --color-primary-default: #f0c25e !important;
   --color-primary-text: #2a1f0a !important;
   --color-primary-hover: #f2c86e !important;
-  --color-primary-light: #484753 !important;
-  --color-primary-light-hover: #595354 !important;
-  --color-primary-light-text: #f1c668 !important;
+  --color-primary-light: #545155 !important;
+  --color-primary-light-hover: #645c56 !important;
+  --color-primary-light-text: #f5d692 !important;
   --color-primary-element: #f0c25e !important;
   --color-primary-element-hover: #f2c86e !important;
   --color-primary-element-default-hover: #f2c86e !important;
   --color-primary-element-text: #2a1f0a !important;
   --color-primary-element-text-dark: #2a1f0a !important;
-  --color-primary-element-light: #484753 !important;
-  --color-primary-element-light-hover: #595354 !important;
-  --color-primary-element-light-text: #f1c668 !important;
+  --color-primary-element-light: #545155 !important;
+  --color-primary-element-light-hover: #645c56 !important;
+  --color-primary-element-light-text: #f5d692 !important;
   --primary-invert-if-bright: invert(100%) !important;
   --primary-invert-if-dark: no !important;
   --gradient-primary-background: linear-gradient(40deg, #f0c25e 0%, #f2c86e 100%) !important;
-  --color-text-link: #f1c668 !important;
+  --color-text-link: #f5d692 !important;
 }
 
 :is(.app-menu-entry__link, .app-item)[href*="/apps/photos/"],
 :is(.app-menu-entry__link, .app-item)[href$="/apps/photos"] {
   --tr-app: #ff7158;
+  --tr-app-on: #1e120c;
   --tr-app-flip: invert(100%);
 }
 
 :is(.app-menu-entry__link, .app-item)[href*="/apps/memories/"],
 :is(.app-menu-entry__link, .app-item)[href$="/apps/memories"] {
   --tr-app: #ff7158;
+  --tr-app-on: #1e120c;
   --tr-app-flip: invert(100%);
 }
 
 :is(.app-menu-entry__link, .app-item)[href*="/apps/music/"],
 :is(.app-menu-entry__link, .app-item)[href$="/apps/music"] {
   --tr-app: #ff7158;
+  --tr-app-on: #1e120c;
   --tr-app-flip: invert(100%);
 }
 
 :is(.app-menu-entry__link, .app-item)[href*="/apps/cookbook/"],
 :is(.app-menu-entry__link, .app-item)[href$="/apps/cookbook"] {
   --tr-app: #ff7158;
+  --tr-app-on: #1e120c;
   --tr-app-flip: invert(100%);
 }
 
 :is(.app-menu-entry__link, .app-item)[href*="/apps/spreed/"],
 :is(.app-menu-entry__link, .app-item)[href$="/apps/spreed"] {
   --tr-app: #5bd49a;
+  --tr-app-on: #0f2419;
   --tr-app-flip: invert(100%);
 }
 
 :is(.app-menu-entry__link, .app-item)[href*="/apps/tasks/"],
 :is(.app-menu-entry__link, .app-item)[href$="/apps/tasks"] {
   --tr-app: #5bd49a;
+  --tr-app-on: #0f2419;
   --tr-app-flip: invert(100%);
 }
 
 :is(.app-menu-entry__link, .app-item)[href*="/apps/maps/"],
 :is(.app-menu-entry__link, .app-item)[href$="/apps/maps"] {
   --tr-app: #5bd49a;
+  --tr-app-on: #0f2419;
   --tr-app-flip: invert(100%);
 }
 
 :is(.app-menu-entry__link, .app-item)[href*="/apps/calendar/"],
 :is(.app-menu-entry__link, .app-item)[href$="/apps/calendar"] {
   --tr-app: #ff6b6b;
+  --tr-app-on: #2a0a0a;
   --tr-app-flip: invert(100%);
 }
 
 :is(.app-menu-entry__link, .app-item)[href*="/apps/contacts/"],
 :is(.app-menu-entry__link, .app-item)[href$="/apps/contacts"] {
   --tr-app: #d48ad9;
+  --tr-app-on: #260c29;
   --tr-app-flip: invert(100%);
 }
 
 :is(.app-menu-entry__link, .app-item)[href*="/apps/forms/"],
 :is(.app-menu-entry__link, .app-item)[href$="/apps/forms"] {
   --tr-app: #d48ad9;
+  --tr-app-on: #260c29;
   --tr-app-flip: invert(100%);
 }
 
 :is(.app-menu-entry__link, .app-item)[href*="/apps/polls/"],
 :is(.app-menu-entry__link, .app-item)[href$="/apps/polls"] {
   --tr-app: #d48ad9;
+  --tr-app-on: #260c29;
   --tr-app-flip: invert(100%);
 }
 
 :is(.app-menu-entry__link, .app-item)[href*="/apps/mail/"],
 :is(.app-menu-entry__link, .app-item)[href$="/apps/mail"] {
   --tr-app: #7bd6eb;
+  --tr-app-on: #0f2536;
   --tr-app-flip: invert(100%);
 }
 
 :is(.app-menu-entry__link, .app-item)[href*="/apps/news/"],
 :is(.app-menu-entry__link, .app-item)[href$="/apps/news"] {
   --tr-app: #7bd6eb;
+  --tr-app-on: #0f2536;
   --tr-app-flip: invert(100%);
 }
 
 :is(.app-menu-entry__link, .app-item)[href*="/apps/bookmarks/"],
 :is(.app-menu-entry__link, .app-item)[href$="/apps/bookmarks"] {
   --tr-app: #7bd6eb;
+  --tr-app-on: #0f2536;
   --tr-app-flip: invert(100%);
 }
 
 :is(.app-menu-entry__link, .app-item)[href*="/apps/deck/"],
 :is(.app-menu-entry__link, .app-item)[href$="/apps/deck"] {
   --tr-app: #f0c25e;
+  --tr-app-on: #2a1f0a;
   --tr-app-flip: invert(100%);
 }
 
 :is(.app-menu-entry__link, .app-item)[href*="/apps/notes/"],
 :is(.app-menu-entry__link, .app-item)[href$="/apps/notes"] {
   --tr-app: #f0c25e;
+  --tr-app-on: #2a1f0a;
   --tr-app-flip: invert(100%);
 }
 
 :is(.app-menu-entry__link, .app-item)[href*="/apps/collectives/"],
 :is(.app-menu-entry__link, .app-item)[href$="/apps/collectives"] {
   --tr-app: #f0c25e;
+  --tr-app-on: #2a1f0a;
   --tr-app-flip: invert(100%);
 }
 
@@ -852,18 +882,41 @@
 }
 
 :is(.button-vue--primary, .button-vue--vue-primary):not(:disabled) {
-  box-shadow: var(--tr-shadow-button);
+  position: relative;
+  overflow: hidden;
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0) 62%) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28), var(--tr-glow);
+}
+:is(.button-vue--primary, .button-vue--vue-primary):not(:disabled)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 30%, rgba(255, 255, 255, 0.32) 50%, transparent 70%);
+  transform: translateX(-120%);
+  pointer-events: none;
 }
 :is(.button-vue--primary, .button-vue--vue-primary):not(:disabled):hover {
   background-color: var(--color-primary-element) !important;
-  filter: brightness(1.08);
+  filter: brightness(1.06);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28), var(--tr-glow-strong);
+}
+:is(.button-vue--primary, .button-vue--vue-primary):not(:disabled):hover::after {
+  animation: tr-sheen 700ms var(--tr-ease-soft) both;
 }
 :is(.button-vue--primary, .button-vue--vue-primary):not(:disabled):active {
-  opacity: 0.85;
+  opacity: 0.88;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
+@keyframes tr-sheen {
+  to {
+    transform: translateX(120%);
+  }
+}
 :is(.button-vue--secondary, .button-vue--vue-secondary):not(.unified-search__button):not(.property-color__color-preview) {
   background-color: var(--color-primary-element-light) !important;
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0)) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
   color: var(--color-primary-element-light-text) !important;
 }
 :is(.button-vue--secondary, .button-vue--vue-secondary):not(.unified-search__button):not(.property-color__color-preview):hover:not(:disabled) {
@@ -1006,6 +1059,16 @@ select option {
   color: var(--tr-ink-faint) !important;
 }
 
+.checkbox-radio-switch-checkbox .checkbox-radio-switch__icon > *,
+.checkbox-radio-switch-radio .checkbox-radio-switch__icon > * {
+  color: var(--tr-accent-text) !important;
+}
+
+.checkbox-radio-switch-checkbox:not(.checkbox-radio-switch--checked) .checkbox-radio-switch__icon > *,
+.checkbox-radio-switch-radio:not(.checkbox-radio-switch--checked) .checkbox-radio-switch__icon > * {
+  color: var(--tr-ink-soft) !important;
+}
+
 .checkbox-radio-switch__input:focus-visible + .checkbox-radio-switch__content {
   outline: 2px solid var(--tr-accent-text) !important;
   outline-offset: -2px;
@@ -1075,6 +1138,9 @@ progress:not(.vue)::-moz-progress-bar {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  :is(.button-vue--primary, .button-vue--vue-primary)::after {
+    animation: none !important;
+  }
   .button-vue:active:not(:disabled),
   button:active,
   .button:active {
@@ -1105,26 +1171,21 @@ progress:not(.vue)::-moz-progress-bar {
 }
 
 /* The content container: the app column standing on the page ----------------- */
-#content,
-#content-vue {
+body > #content,
+body > #content-vue {
   box-shadow: var(--tr-shadow-frame);
 }
 
-#body-user #content,
-#body-user #content-vue,
-#body-settings #content,
-#body-settings #content-vue {
-  animation: tr-page-in var(--tr-dur-rise) var(--tr-ease-soft) both;
+#app-content,
+#app-content-vue,
+#app-dashboard {
+  animation: tr-page-in var(--tr-dur-rise) var(--tr-ease-soft) backwards;
 }
 
 @keyframes tr-page-in {
   from {
     opacity: 0;
     transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
   }
 }
 /* Caret, selection, focus ------------------------------------------------------- */
@@ -1180,7 +1241,10 @@ time {
 }
 
 #app-dashboard > h2 {
-  color: var(--tr-ink);
+  background-image: linear-gradient(100deg, #ffffff 0%, #ffffff 38%, var(--tr-accent-text) 72%, #f9a8d4 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
   font-size: 34px !important;
   line-height: 41px !important;
 }
@@ -1216,13 +1280,15 @@ kbd {
 
 /* Reduced motion: system setting and Nextcloud's own switch ------------------ */
 @media (prefers-reduced-motion: reduce) {
-  #content,
-  #content-vue {
+  #app-content,
+  #app-content-vue,
+  #app-dashboard {
     animation: none !important;
   }
 }
-[data-themes*=reduced-motion] #content,
-[data-themes*=reduced-motion] #content-vue {
+[data-themes*=reduced-motion] #app-content,
+[data-themes*=reduced-motion] #app-content-vue,
+[data-themes*=reduced-motion] #app-dashboard {
   animation: none !important;
 }
 
@@ -1235,7 +1301,10 @@ kbd {
  * is not monochrome.
  *
  * Nextcloud 33: a bar of .app-menu-entry items in the header.
- * Nextcloud 34: a waffle button, the current app as a button, a popover grid.
+ * Nextcloud 34: a waffle button, the current app as a button, a popover grid
+ *               of .app-item entries with an .app-item__circle.
+ * Nextcloud 35: the same waffle, but grid entries draw an .app-icon with a
+ *               masked glyph, plus a row of quick-create actions.
  *
  * @copyright Copyright (c) 2026 inkcurity.net
  *
@@ -1314,10 +1383,19 @@ kbd {
   content: "";
   position: absolute;
   z-index: -1;
-  inset: 4px;
+  inset: 3px;
   border-radius: 9px;
   background-color: var(--tr-accent);
-  box-shadow: 0 4px 12px color-mix(in srgb, var(--tr-accent) 40%, transparent);
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.26), rgba(255, 255, 255, 0) 60%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 6px 16px -4px color-mix(in srgb, var(--tr-accent) 70%, transparent);
+}
+.app-menu__current-app .app-menu__current-app-icon {
+  width: 18px !important;
+  height: 18px !important;
+  mask: none !important;
+}
+.app-menu__current-app .app-menu__current-app-glyph {
+  background-color: var(--tr-accent-on) !important;
 }
 .app-menu__current-app .app-menu__current-app-icon {
   width: 18px !important;
@@ -1340,6 +1418,7 @@ kbd {
 }
 .app-menu__popover-base .v-popper__inner {
   background-color: var(--tr-material) !important;
+  background-image: var(--tr-sheen) !important;
   -webkit-backdrop-filter: var(--tr-material-filter);
   backdrop-filter: var(--tr-material-filter);
 }
@@ -1391,9 +1470,60 @@ kbd {
   color: var(--tr-ink) !important;
 }
 
+/* Nextcloud 35: app icons and quick-create actions ------------------------------ */
+.app-item .app-icon:not(.app-icon--outlined) {
+  border-radius: 30% !important;
+  background-color: var(--tr-app, var(--tr-accent)) !important;
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.26) 0%, rgba(255, 255, 255, 0) 55%), linear-gradient(0deg, rgba(0, 0, 0, 0.12) 0%, rgba(0, 0, 0, 0) 45%) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.32), 0 8px 18px -6px color-mix(in srgb, var(--tr-app, var(--tr-accent)) 70%, transparent) !important;
+  transform: translateY(var(--tr-lift, 0)) scale(var(--app-icon-scale, 1)) !important;
+  transition: transform var(--tr-dur-control) var(--tr-ease-soft) !important;
+}
+.app-item .app-icon:not(.app-icon--outlined) .app-icon__img {
+  background-color: var(--tr-app-on, #ffffff) !important;
+  background-image: none !important;
+}
+
+.app-item:hover,
+.app-item:focus-visible {
+  --tr-lift: -3px;
+}
+
+.app-item--active .app-icon:not(.app-icon--outlined) {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.32), 0 0 0 2px var(--tr-inset), 0 0 0 4px var(--tr-app, var(--tr-accent)), 0 10px 22px -6px color-mix(in srgb, var(--tr-app, var(--tr-accent)) 75%, transparent) !important;
+}
+
+.app-item .app-icon--outlined {
+  border-radius: 30% !important;
+  box-shadow: inset 0 0 0 1.5px var(--tr-border-strong) !important;
+}
+.app-item .app-icon--outlined .app-icon__img {
+  background-color: var(--tr-ink-soft) !important;
+}
+
+.app-item--compact:hover,
+.app-item--compact:focus-visible {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.app-menu-actions {
+  border-top: 1px solid color-mix(in srgb, var(--tr-border) 70%, transparent) !important;
+}
+
+.app-action-icon {
+  transform: translateY(var(--tr-lift, 0)) scale(var(--app-icon-scale, 1)) !important;
+  transition: transform var(--tr-dur-control) var(--tr-ease-soft) !important;
+  filter: drop-shadow(0 4px 8px rgba(6, 9, 28, 0.35));
+}
+.app-action-icon__indicator {
+  border-color: var(--tr-inset) !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .app-menu-entry .app-menu-icon::before,
-  .app-item__circle {
+  .app-item__circle,
+  .app-item .app-icon,
+  .app-action-icon {
     transition: none !important;
   }
 }
@@ -1460,6 +1590,8 @@ kbd {
 }
 .app-navigation-entry.active {
   background-color: var(--color-primary-element-light) !important;
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0)) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 6px 16px -10px color-mix(in srgb, var(--tr-accent) 80%, transparent);
 }
 .app-navigation-entry.active::before {
   display: none !important;
@@ -1470,15 +1602,44 @@ kbd {
   color: var(--tr-ink) !important;
   font-weight: 600 !important;
 }
-.app-navigation-entry.active .app-navigation-entry-icon {
-  color: var(--color-primary-element-light-text) !important;
-}
 .app-navigation-entry.app-navigation-entry--legacy.active {
   background-color: var(--color-primary-element-light) !important;
 }
 .app-navigation-entry.app-navigation-entry--legacy.active .app-navigation-entry-link,
 .app-navigation-entry.app-navigation-entry--legacy.active .app-navigation-entry-button {
   color: var(--tr-ink) !important;
+}
+
+.app-navigation-entry:not(.app-navigation-entry__children *) > :is(.app-navigation-entry-link, .app-navigation-entry-button) > .app-navigation-entry-icon:not([class*=icon-]) {
+  position: relative;
+  isolation: isolate;
+}
+.app-navigation-entry:not(.app-navigation-entry__children *) > :is(.app-navigation-entry-link, .app-navigation-entry-button) > .app-navigation-entry-icon:not([class*=icon-])::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: calc(50% - 14px);
+  border-radius: 8px;
+  background-color: color-mix(in srgb, var(--tr-accent) 20%, transparent);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  transition: background-color var(--tr-dur-fade) var(--tr-ease-soft), box-shadow var(--tr-dur-fade) var(--tr-ease-soft);
+}
+.app-navigation-entry:not(.app-navigation-entry__children *) > :is(.app-navigation-entry-link, .app-navigation-entry-button) > .app-navigation-entry-icon:not([class*=icon-]) svg,
+.app-navigation-entry:not(.app-navigation-entry__children *) > :is(.app-navigation-entry-link, .app-navigation-entry-button) > .app-navigation-entry-icon:not([class*=icon-]) img {
+  width: 18px !important;
+  height: 18px !important;
+}
+
+#body-settings .app-navigation-entry:not(.app-navigation-entry__children *) > :is(.app-navigation-entry-link, .app-navigation-entry-button) > .app-navigation-entry-icon:not([class*=icon-]), .app-navigation-entry.active:not(.app-navigation-entry__children *) > :is(.app-navigation-entry-link, .app-navigation-entry-button) > .app-navigation-entry-icon:not([class*=icon-]) {
+  color: var(--tr-accent-on) !important;
+}
+#body-settings .app-navigation-entry:not(.app-navigation-entry__children *) > :is(.app-navigation-entry-link, .app-navigation-entry-button) > .app-navigation-entry-icon:not([class*=icon-])::before, .app-navigation-entry.active:not(.app-navigation-entry__children *) > :is(.app-navigation-entry-link, .app-navigation-entry-button) > .app-navigation-entry-icon:not([class*=icon-])::before {
+  background-color: var(--tr-accent);
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0) 60%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.32), 0 6px 14px -4px color-mix(in srgb, var(--tr-accent) 75%, transparent);
+}
+#body-settings .app-navigation-entry:not(.app-navigation-entry__children *) > :is(.app-navigation-entry-link, .app-navigation-entry-button) > .app-navigation-entry-icon:not([class*=icon-]) img, .app-navigation-entry.active:not(.app-navigation-entry__children *) > :is(.app-navigation-entry-link, .app-navigation-entry-button) > .app-navigation-entry-icon:not([class*=icon-]) img {
+  filter: var(--tr-accent-flip);
 }
 
 .app-navigation-caption__name,
@@ -1528,17 +1689,8 @@ kbd {
 }
 
 /* Settings: a hub of grouped cards ------------------------------------------------ */
-#body-settings .app-navigation-entry-icon {
-  position: relative;
-  isolation: isolate;
-}
-#body-settings .app-navigation-entry-icon::before {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  inset: calc(50% - 14px);
-  border-radius: var(--tr-radius-tile);
-  background-color: color-mix(in srgb, var(--tr-accent) 22%, transparent);
+#body-settings .app-navigation-entry.active {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 8px 18px -10px color-mix(in srgb, var(--tr-accent) 90%, transparent);
 }
 
 #body-settings #app-content,
@@ -1553,6 +1705,8 @@ kbd {
   border: none !important;
   border-radius: var(--tr-radius-2xl) !important;
   background-color: var(--tr-surface);
+  background-image: var(--tr-sheen);
+  box-shadow: var(--tr-shadow-card);
 }
 
 .settings-section__name,
@@ -1577,6 +1731,7 @@ kbd {
 
 .app-sidebar-header__figure {
   background-color: var(--tr-accent-wash) !important;
+  background-image: radial-gradient(120% 120% at 0% 0%, color-mix(in srgb, var(--tr-accent) 35%, transparent), transparent 70%) !important;
 }
 
 .app-sidebar-header__mainname {
@@ -1604,6 +1759,7 @@ kbd {
   --color-background-hover: rgba(255, 255, 255, 0.08);
   --color-main-background: var(--tr-inset);
   background-color: var(--tr-inset) !important;
+  background-image: var(--tr-sheen);
   border: none !important;
   border-radius: var(--tr-radius-xl) !important;
 }
@@ -1668,6 +1824,7 @@ kbd {
 
 .modal-wrapper:not(.modal-wrapper--full) .modal-container {
   background-color: var(--tr-surface) !important;
+  background-image: var(--tr-sheen);
   border-radius: var(--tr-radius-float) !important;
   box-shadow: var(--tr-shadow-sheet) !important;
   animation: tr-sheet-in var(--tr-dur-sheet) var(--tr-ease-ios) both;
@@ -1730,6 +1887,7 @@ kbd {
   margin-inline-end: 10px;
   border-radius: 50%;
   background-color: var(--tr-accent-text);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--tr-accent-text) 22%, transparent);
 }
 .toastify.dialogs.toast-success::before {
   background-color: var(--tr-success);
@@ -2013,10 +2171,17 @@ body.dashboard--inverted.dashboard--dark .header-right > div:not(#settings) > :f
 #app-dashboard .panel,
 #app-dashboard .panels > div {
   background-color: var(--tr-surface) !important;
+  background-image: var(--tr-sheen) !important;
   border: none !important;
   border-radius: var(--tr-radius-2xl) !important;
   -webkit-backdrop-filter: none !important;
   backdrop-filter: none !important;
+  box-shadow: var(--tr-shadow-card) !important;
+  transition: transform var(--tr-dur-control) var(--tr-ease-soft), box-shadow var(--tr-dur-control) var(--tr-ease-soft);
+}
+#app-dashboard .panel:hover:not(.sortable-chosen):not(.sortable-ghost),
+#app-dashboard .panels > div:hover:not(.sortable-chosen):not(.sortable-ghost) {
+  transform: translateY(-3px);
   box-shadow: var(--tr-shadow-float) !important;
 }
 #app-dashboard .panel--header h2 {
@@ -2039,6 +2204,7 @@ body.dashboard--inverted.dashboard--dark .header-right > div:not(#settings) > :f
   position: relative;
   isolation: isolate;
   overflow: hidden;
+  box-shadow: 0 2px 6px rgba(6, 9, 28, 0.3), 0 22px 48px -14px color-mix(in srgb, #336deb 80%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
   background-color: #2f64d8 !important;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"), radial-gradient(130% 110% at 0% 0%, color-mix(in srgb, #2f64d8 82%, white) 0%, color-mix(in srgb, #2f64d8 86%, black) 46%, color-mix(in srgb, #2f64d8 48%, black) 100%) !important;
   color: #ffffff;
@@ -2050,6 +2216,20 @@ body.dashboard--inverted.dashboard--dark .header-right > div:not(#settings) > :f
 #app-dashboard .panels > :first-child .panel--header h2 img,
 #app-dashboard .panels > :first-child .panel--header h2 span[class*=icon-] {
   filter: brightness(0) invert(1);
+}
+#app-dashboard .panels > :first-child::after {
+  content: "▌//"/"";
+  position: absolute;
+  z-index: -1;
+  top: -22px;
+  right: -10px;
+  color: rgba(255, 255, 255, 0.1);
+  font-family: var(--tr-font-mono);
+  font-size: 96px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  pointer-events: none;
 }
 
 .background-selector .background.color {
@@ -2069,6 +2249,16 @@ body.dashboard--inverted.dashboard--dark .header-right > div:not(#settings) > :f
   background-color: var(--color-background-hover) !important;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  #app-dashboard .panel,
+  #app-dashboard .panels > div {
+    transition: none !important;
+  }
+  #app-dashboard .panel:hover,
+  #app-dashboard .panels > div:hover {
+    transform: none;
+  }
+}
 /***
  * @copyright Copyright (c) 2017, Magnus Walbeck <mw@mwalbeck.org>
  *
