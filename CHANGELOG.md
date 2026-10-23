@@ -1,6 +1,83 @@
 # Changelog
 
-## [Unreleased]
+## 35.3.2 - 2026-10-23
+
+### Fixed
+
+-   Login on phones: the signature line in the footer stays on one line (or breaks evenly on
+    360 px screens) instead of leaving a single word behind, so the page fits a 375 × 667 screen.
+
+## 35.3.1 - 2026-10-22
+
+### Fixed
+
+-   Login: the page fits the window from 375 × 667 to full HD, single sign-on keys included
+    (a smaller mark and tighter steps on low windows), and no longer bounces past its edges
+    when scrolled.
+-   Mobile browser bars take the ink of the page instead of Nextcloud's primary colour.
+-   Loading states (for example the setup checks in the admin overview) show the spinner on its
+    own with a quiet status line instead of a lit tile and a title.
+
+## 35.3.0 - 2026-10-22
+
+A redesign around the InkCurity identity, in blue tones only, checked view by view on a
+Nextcloud 35 instance.
+
+### Added
+
+-   Deep ink palette from the InkCurity design system: `#040b18` page, `#091629` panel,
+    `#0f1e35` raised, `#132541` menus, text at 14:1 and secondary text at 6.4:1 on the panel.
+-   One accent for every app, Splash Blue `#5cc8ff` (the light end of the Trumpf blue fire): the
+    filled key with ink text (10:1), links, selection, focus rings and the caret. Magenta only
+    marks something unread.
+-   Three faces shipped with the theme under the SIL Open Font License 1.1: Geist for the
+    interface, Space Grotesk for titles, JetBrains Mono for meta. No third-party requests.
+-   Layout: header and navigation sit on the ink, the app is a panel with a hairline edge that is
+    lit from the upper left; the details sidebar is a second panel.
+-   Mono meta: file sizes, dates, counters, column heads, menu and navigation captions, the
+    sidebar subtitle and the file list summary.
+-   One scan of light along the top edge of the panel once a page has loaded.
+-   The InkCurity splash engine, cut down: a splash of ink in the theme's blues when the theme is
+    switched on, and ink all over the page for the Konami code. Nothing flies with reduced motion.
+-   Theme settings as an ink hero card with the mark, a mono version line, redaction bars and the
+    main switch; grouped switches in the splash; a real screenshot as preview.
+-   German translations for every string of the settings pages.
+-   Dashboard: today's date as a mono tag with the cursor glyph above a greeting in Space Grotesk,
+    widget cards on the ink with a lit top edge and a glow when you point at them. The first
+    widget is the live card, the one lit block of the start page: ink under a bloom of splash and
+    electric blue, a fine grain and an edge that catches the light.
+-   Documents in Text: headings in Space Grotesk, quotes with a splash rule.
+
+### Changed
+
+-   Buttons are keys with 10 px corners instead of pills: splash key with a lamp-light glow,
+    ink keys with a hairline edge, plain keys, red outlines for destructive actions.
+-   Fields are wells with one even hairline at 3:1 and a splash ring on focus; Nextcloud 35's
+    shadow edge on inputs and selects is replaced.
+-   App menu: ink keys with the glyph in the light, the open app as the one lit key, instead of a
+    colour per app.
+-   Navigation: tinted selection with a faint lit edge and lit glyphs instead of icon tiles.
+-   Menus and popovers float on a hairline and a glow and pop in; dialogs rise onto a scrim that
+    removes the page instead of blurring it.
+-   Login: no tilt; the mark glows under one lamp, the cursor blinks a few times, the footer is a
+    redacted line with a mono signature.
+-   Checkboxes, radios and switches wear the splash.
+
+### Removed
+
+-   The accent per app, the dusk palette, the saturated live card, the pink bloom, confetti and
+    the gradient greeting.
+
+### Fixed
+
+-   The counter of the selected navigation entry no longer turns into an unread badge.
+-   The closed navigation drawer on phones no longer leaves a shadow at the left edge.
+-   The file preview in the details sidebar shows again (a background on the figure hid it).
+-   Nextcloud 33: the selected navigation entry and the settings lists are tinted instead of
+    filled, the profile card head is ink instead of a fill.
+-   Nextcloud 34: the search button in the header is an ink key.
+
+## 35.2.0 - 2026-10-22
 
 ### Added
 

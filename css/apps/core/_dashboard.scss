@@ -5,112 +5,159 @@
  * @license GNU AGPL version 3 or any later version, see COPYING file for more.
  */
 
-/* Dashboard: the start page ------------------------------------------------------ */
+/* Dashboard: the start page on the ink -------------------------------------------- */
 
-// The dashboard lives on the page, its cards lift when you point at them. Its first widget is the live card: the one
-// saturated block of the start page, in the accent, with a fine grain. Drag
-// the widget you need most into first place and it becomes the live card.
-#app-dashboard {
-    --color-background-translucent: var(--tr-surface) !important;
-
-    .statuses .button-vue,
-    .statuses .action-item__menutoggle {
-        background-color: var(--tr-surface) !important;
+// No panel here: the cards stand on the page itself, like posts on the
+// InkCurity site. A card you point at catches the splash on its edge and a
+// soft glow; it never scales.
+#content.app-dashboard,
+#content-vue.app-dashboard {
+    #app-content-vue,
+    #app-content {
+        background: transparent !important;
         box-shadow: none !important;
-        color: var(--tr-ink) !important;
+    }
+}
 
-        &:hover {
-            background-color: var(--tr-inset) !important;
+#app-dashboard {
+    --color-background-translucent: var(--ic-deep) !important;
+
+    // The greeting: the start page's large title in Space Grotesk, with the
+    // date above it as a mono tag (js/breezedark.js writes it, in the user's
+    // language).
+    > h2 {
+        font-family: var(--ic-font-display) !important;
+        font-size: 42px !important;
+        font-weight: 500 !important;
+        line-height: 46px !important;
+        letter-spacing: -0.025em;
+        color: var(--ic-hi) !important;
+        text-wrap: balance;
+
+        &[data-ic-eyebrow]::before {
+            content: "▌ " attr(data-ic-eyebrow);
+            display: block;
+            margin-bottom: 12px;
+            color: var(--ic-splash);
+            font-family: var(--ic-font-mono);
+            font-size: 11px;
+            font-weight: 500;
+            line-height: 16px;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
         }
     }
 
+    .statuses .button-vue,
+    .statuses .action-item__menutoggle {
+        background-color: rgba(var(--ic-raised-rgb), 0.7) !important;
+        box-shadow: inset 0 0 0 1px var(--ic-line) !important;
+        color: var(--ic-fg) !important;
+
+        &:hover {
+            box-shadow: inset 0 0 0 1px var(--ic-line-strong) !important;
+            background-color: var(--ic-raised) !important;
+        }
+    }
+
+    // Cards: deep ink, a hairline, and a top edge lit from the upper left.
     .panel,
     .panels > div {
-        background-color: var(--tr-surface) !important;
-        background-image: var(--tr-sheen) !important;
+        background-color: var(--ic-deep) !important;
+        background-image: linear-gradient(
+            90deg,
+            rgba(var(--ic-splash-rgb), 0.45),
+            rgba(var(--ic-splash-rgb), 0) 55%
+        ) !important;
+        background-repeat: no-repeat !important;
+        background-size: 100% 1px !important;
+        background-position: top left !important;
         border: none !important;
-        border-radius: var(--tr-radius-2xl) !important;
+        border-radius: var(--ic-r-lg) !important;
         -webkit-backdrop-filter: none !important;
         backdrop-filter: none !important;
-        box-shadow: var(--tr-shadow-card) !important;
-        transition:
-            transform var(--tr-dur-control) var(--tr-ease-soft),
-            box-shadow var(--tr-dur-control) var(--tr-ease-soft);
+        box-shadow:
+            0 0 0 1px var(--ic-line),
+            var(--ic-highlight) !important;
+        transition: box-shadow var(--ic-dur-layout) var(--ic-ease);
 
-        // A card you point at lifts a little and its shadow grows.
         &:hover:not(.sortable-chosen):not(.sortable-ghost) {
-            transform: translateY(-3px);
-            box-shadow: var(--tr-shadow-float) !important;
+            box-shadow:
+                0 0 0 1px rgba(var(--ic-splash-rgb), 0.4),
+                0 0 36px -10px rgba(var(--ic-splash-rgb), 0.4) !important;
         }
     }
 
     .panel--header h2 {
-        font-size: 17px;
-        font-weight: 600;
+        font-size: 18px !important;
+        font-weight: 500 !important;
+        letter-spacing: -0.01em;
     }
 
+    // The live card: the first widget is the one lit block of the start page
+    // (Trumpf: one signature per screen). Ink under a bloom of splash and
+    // electric blue, a fine grain, an edge that catches the light. Drag the
+    // widget you need most into first place.
     .panels > :first-child {
-        --color-main-text: #ffffff;
-        --color-text-maxcontrast: rgba(255, 255, 255, 0.8);
-        --color-text-maxcontrast-background-blur: rgba(255, 255, 255, 0.8);
-        --color-background-hover: rgba(255, 255, 255, 0.12);
-        --color-background-dark: rgba(255, 255, 255, 0.16);
-        --color-border: rgba(255, 255, 255, 0.18);
-        --color-primary-element: #ffffff;
-        --color-primary-element-text: #1e2850;
-        --color-primary-element-hover: rgba(255, 255, 255, 0.9);
-        --color-primary-element-light: rgba(255, 255, 255, 0.16);
-        --color-primary-element-light-hover: rgba(255, 255, 255, 0.25);
-        --color-primary-element-light-text: #ffffff;
+        --color-text-maxcontrast: #a9c3e3;
+        --color-main-text: #eaf1fb;
+        --color-background-hover: rgba(255, 255, 255, 0.07);
 
         position: relative;
         isolation: isolate;
         overflow: hidden;
-        box-shadow:
-            0 2px 6px rgba(6, 9, 28, 0.3),
-            0 22px 48px -14px color-mix(in srgb, #336deb 80%, transparent),
-            inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
-        background-color: #2f64d8 !important;
+        background-color: #0b1c36 !important;
         background-image:
-            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+            radial-gradient(130% 75% at 0% 0%, rgba(var(--ic-splash-rgb), 0.24), transparent 62%),
             radial-gradient(
-                130% 110% at 0% 0%,
-                color-mix(in srgb, #2f64d8 82%, white) 0%,
-                color-mix(in srgb, #2f64d8 86%, black) 46%,
-                color-mix(in srgb, #2f64d8 48%, black) 100%
+                110% 70% at 100% 0%,
+                rgba(var(--ic-electric-rgb), 0.32),
+                transparent 64%
             ) !important;
-        color: #ffffff;
+        background-size: auto !important;
+        box-shadow:
+            0 0 0 1px rgba(var(--ic-splash-rgb), 0.32),
+            inset 0 1px 0 rgba(255, 255, 255, 0.08),
+            0 30px 70px -30px rgba(var(--ic-splash-rgb), 0.5) !important;
 
-        .panel--header h2 {
-            font-size: 20px;
-            font-weight: 700;
-        }
-
-        .panel--header h2 img,
-        .panel--header h2 span[class*="icon-"] {
-            filter: brightness(0) invert(1);
-        }
-
-        // The InkCurity glyphs as a quiet watermark, like the hero card.
         &::after {
-            content: "▌//" / "";
+            content: "";
             position: absolute;
             z-index: -1;
-            top: -22px;
-            right: -10px;
-            color: rgba(255, 255, 255, 0.1);
-            font-family: var(--tr-font-mono);
-            font-size: 96px;
-            font-weight: 700;
-            line-height: 1;
-            letter-spacing: -0.05em;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            opacity: 0.05;
             pointer-events: none;
         }
+
+        &:hover:not(.sortable-chosen):not(.sortable-ghost) {
+            box-shadow:
+                0 0 0 1px rgba(var(--ic-splash-rgb), 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                0 30px 80px -26px rgba(var(--ic-splash-rgb), 0.65) !important;
+        }
+
+        .panel--header h2 {
+            color: #ffffff;
+        }
+
+        .panel--header h2 :is(img, span[class*="icon-"]) {
+            filter: brightness(0) invert(1);
+        }
+    }
+
+    // Widget icons in the light, whatever their source colour.
+    .panel--header h2 :is(img, span[class*="icon-"]) {
+        filter: brightness(0) invert(1) opacity(0.85);
+    }
+
+    .footer .button-vue {
+        font-size: 13px;
     }
 }
 
 .background-selector .background.color {
-    background-color: var(--tr-inset) !important;
+    background-color: var(--ic-raised) !important;
 }
 
 #status-weather .button-vue {
@@ -131,9 +178,5 @@
     #app-dashboard .panel,
     #app-dashboard .panels > div {
         transition: none !important;
-
-        &:hover {
-            transform: none;
-        }
     }
 }

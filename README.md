@@ -2,55 +2,59 @@
 
 <img src="img/inkcurity-logo.svg" alt="InkCurity" width="96" align="right">
 
-_Ink. Privacy. Craft._ A one-of-a-kind theme for [Nextcloud](https://nextcloud.com): calm like
-iOS, playful where it counts. Dusk blue instead of black, every app in its own colour, a large
-greeting with today's date, a live card on the dashboard and confetti when you switch it on.
+_Ink. Privacy. Craft._ A dark theme for [Nextcloud](https://nextcloud.com) in deep ink blue: calm
+like iOS, crafted like a private terminal, playful only where it counts. One splash of light
+for everything you can press, mono type for meta, a blinking cursor at the login and a splash of
+ink when you switch it on.
 
 Built on the [Breeze Dark theme](https://github.com/mwalbeck/nextcloud-breeze-dark) by Magnus
 Walbeck. The app keeps the `breezedark` app id, so existing preferences stay valid.
 
 ![Dashboard with the InkCurity Dark theme](screenshot-dashboard.jpg)
 
-| Files                                          | App menu                                           |
-| ---------------------------------------------- | -------------------------------------------------- |
-| ![Files view](screenshot-files.jpg)            | ![App grid with a colour per app](screenshot-apps.jpg) |
-| **Login**                                      | **Settings**                                       |
-| ![Login page](screenshot-login.jpg)            | ![Theme settings as a hub](screenshot-settings.jpg) |
+| Files                               | App menu                                      |
+| ----------------------------------- | --------------------------------------------- |
+| ![Files view](screenshot-files.jpg) | ![App grid as ink keys](screenshot-apps.jpg)  |
+| **Login**                           | **Settings**                                  |
+| ![Login page](screenshot-login.jpg) | ![Theme settings](screenshot-settings.jpg)    |
 
 ## The design language
 
 The theme follows two design systems:
 
--   **Trumpf** sets the structure and the manners: page, bg, surface and inset as four surfaces,
-    grouped lists, hairlines instead of frames, one filled button per view, tinted buttons and
-    tiles, success green for switches, two motion curves, a press that shrinks to 0.97, and
-    signature moments used sparingly.
--   **InkCurity** sets the identity: the logo, its blue and pink, the blinking cursor, a redacted
-    line in the login footer and mono for code.
+-   **InkCurity** sets the identity: deep sea-blue ink instead of black, one splash of light as
+    the accent, hairlines, glows instead of drop shadows, keys instead of lozenges, Space Grotesk
+    for titles, Geist for the interface, JetBrains Mono for meta, the blinking cursor, redaction
+    bars and the ink splash.
+-   **Trumpf** sets the structure and the manners: few surfaces, one filled button per view,
+    tinted selection, quiet counters, grouped settings, two motion curves, feedback under 200 ms
+    and signature moments used sparingly.
 
 What that looks like in Nextcloud:
 
-| Where          | What                                                                                     |
-| -------------- | ---------------------------------------------------------------------------------------- |
-| Palette        | Soft dusk blue (`#1b213c` page, `#283152` surface) instead of black. Text passes 4.5:1 or more. |
-| Accent per app | Files and settings blue, Photos coral, Talk mint, Calendar red, Contacts orchid, Mail sky, Deck and Notes gold. The page bloom, buttons, selection and focus follow the open app. |
-| App menu       | The open app sits on a tile in its colour (Nextcloud 33 bar). The Nextcloud 34 and 35 app grids show every app as a glossy tile in its colour. |
-| Dashboard      | Today's date as eyebrow above a large greeting. The first widget is the live card, the one saturated block of the page: drag the widget you need most into first place. |
-| Navigation     | The Trumpf sidebar: icon tiles (tinted, filled with a glow when selected), quiet counters, unread counts in pink. Settings get filled tiles and cards. |
-| Controls       | Pill buttons, 14 px keys for large ones, a glossy primary key with a glow and a sheen on hover, a light well for fields, switches in success green. |
-| Overlays       | Menus and cards float on layered shadows with a top highlight, dialogs rise from below as sheets, toasts are material with a status dot. |
-| Login          | The logo leans −6° like a Trumpf card and lands once, the headline ends in a cursor that blinks three times. |
-| Theme settings | A hub page: hero card with the logo, the main switch as a frosted row, grouped switches, a tilted preview and confetti when you switch the theme on. |
-| Motion         | Every app opens with a short fade and an 8 px rise, cards lift when you point at them. Reduced motion (system or Nextcloud) turns all of it off. |
+| Where          | What |
+| -------------- | ---- |
+| Palette        | Ink, outside in: `#040b18` page, `#091629` panel, `#0f1e35` raised, `#132541` menus. Text `#dce5f2` (14:1), secondary `#7f9cc2` (6.4:1). |
+| Accent         | Splash Blue `#5cc8ff`, the light end of the Trumpf blue fire. Filled with ink text (10:1) for the one main action, as text and focus ring everywhere else. Magenta `#ff3d8e` only for unread. |
+| Layout         | Header and navigation sit on the ink. The app is a panel in front of it with a hairline edge that catches the light from the upper left. The details sidebar is a second panel. |
+| Type           | Geist for the interface, Space Grotesk for titles and the greeting, JetBrains Mono for sizes, dates, counters, column heads and captions. All three ship with the theme. |
+| Navigation     | The Trumpf sidebar: tinted selection with a faint lit edge, glyphs that light up, mono captions, quiet mono counters, magenta for unread. |
+| Controls       | Keys with 10 px corners: a splash key with a lamp-light glow on hover, ink keys with a hairline edge, plain keys, red outlines for destructive actions. Fields are wells with a 3:1 edge and a splash ring on focus. |
+| Overlays       | Menus float on a hairline and a faint glow and pop in, dialogs rise onto a scrim that removes the page, toasts carry a status dot. |
+| App menu       | One colour for every app: ink keys with the glyph in the light, the open app is the one lit key. |
+| Dashboard      | Today's date as a mono tag above a large greeting in Space Grotesk. The first widget is the live card, the one lit block of the page: ink under a bloom of light with a fine grain. Drag the widget you need most into first place. |
+| Login          | The mark glows under one lamp, the headline ends in a cursor that blinks a few times, the footer is a redacted line and a mono signature. |
+| Theme settings | An ink hero card with the mark, mono version line and the main switch; grouped switches in the splash; a real preview; an ink splash when you switch the theme on. |
+| Motion         | Pages fade in and rise 8 px, one scan of light runs along the panel edge when a page has loaded. Reduced motion (system or Nextcloud) turns all of it off. |
 
-No webfonts, no third-party requests: the theme ships everything it needs. And there is an easter
-egg for those who know the Konami code.
+No third-party requests: the fonts and everything else come from your server. And there is an
+easter egg for those who know the Konami code.
 
 ### The backdrop
 
 The theme owns its backdrop. The body background image Nextcloud would show (the default shore
-photo, a user's upload, a shipped wallpaper) is replaced by dusk blue with a bloom in the
-colour of the open app. To bring a background image back, add this under **Custom styling**:
+photo, a user's upload, a shipped wallpaper) is replaced by ink with one bloom of light in the
+upper left and a fine grain. To bring a background image back, add this under **Custom styling**:
 
 ```css
 [data-themes*="breezedark"] #body-user,
@@ -63,11 +67,12 @@ colour of the open app. To bring a background image back, add this under **Custo
 }
 ```
 
-### Changing an app's colour
+### Changing the accent
 
-The colours live in `css/variables/_tokens.scss`: `$tr-accents` holds the contrast-checked
-colour sets, `$tr-app-accents` assigns them to app ids. Add an app id there and run
-`npm run build`.
+The tokens live in `css/variables/_tokens.scss`. The splash is `--ic-splash` with its hover,
+pressed and text variants next to it; change them together, keep the text on the fill at 4.5:1 or
+more, and run `npm run build`. For file-type icons that Nextcloud draws on the server, set the
+primary colour under **Administration › Design** to `#5cc8ff` as well.
 
 ## Supported versions
 
@@ -75,7 +80,7 @@ This branch is a local compatibility fork for:
 
 -   Nextcloud 33
 -   Nextcloud 34
--   Nextcloud 35 (the new app menu with coloured app icons and quick-create actions is covered)
+-   Nextcloud 35 (the new app menu with app icons and quick-create actions is covered)
 
 It is based on upstream Breeze Dark 29.0.0. The PHP integration, settings requests and Nextcloud
 colour variables were ported to Nextcloud 33 and 34. Run the visual regression matrix in
@@ -154,10 +159,12 @@ npm run stylelint
 ```
 
 The tokens live in `css/variables/_tokens.scss` and are included once on the theme root for
-logged-in pages and once on `:root` for the guest pages. `css/server/_signature.scss` holds the
-backdrop, the page entry and the type signatures, `css/server/_appmenu.scss` the app tiles, and
-`css/settings.css` the self-contained settings hub. Selectors target `@nextcloud/vue` 9 as used
-by Nextcloud 33 and 34, with the v8 class names kept for apps that still ship the old bundle.
+logged-in pages and once on `:root` for the guest pages. `css/base/_fonts.scss` declares the three
+faces from `fonts/`, `css/server/_signature.scss` holds the backdrop, the scan, the page entry and
+the type signatures, `css/server/_server.scss` the chrome, `css/server/_appmenu.scss` the app
+keys, and `css/settings.css` the self-contained settings hub. `js/trumpf-ui.js` provides the toast
+and the ink splash. Selectors target `@nextcloud/vue` 9 as used by Nextcloud 33 to 35, with the v8
+class names kept for apps that still ship the old bundle.
 
 ## Credits
 
@@ -165,3 +172,6 @@ by Nextcloud 33 and 34, with the v8 class names kept for apps that still ship th
     and contributors, which this theme extends. If you like the foundation, consider supporting the
     upstream author.
 -   The Breeze Dark colour scheme by the KDE Project, which inspired the original theme.
+-   [Geist](https://github.com/vercel/geist-font), [Space Grotesk](https://github.com/floriankarsten/space-grotesk)
+    and [JetBrains Mono](https://github.com/JetBrains/JetBrainsMono), shipped in `fonts/` under the
+    SIL Open Font License 1.1 (see `fonts/OFL-*.txt`).

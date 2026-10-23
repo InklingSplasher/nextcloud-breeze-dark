@@ -6,45 +6,67 @@
 
 /* Calendar ----------------------------------------------------------------- */
 
+// The grid on the panel: today is a faint splash column with its date as a
+// splash pill, the line for "now" is the screen's magenta (live), days of
+// other months sink a little deeper into the ink.
 .app-calendar .app-content {
+    --fc-now-indicator-color: var(--ic-magenta);
+
     .fc-highlight {
-        background: var(--color-background-hover);
+        background: var(--ic-wash);
         opacity: unset;
     }
 
     .fc .fc-cell-shaded {
-        background-color: var(--color-border);
+        background-color: var(--ic-line);
     }
 
     .fc-daygrid-week-number {
-        background-color: var(--color-background-darker);
-        border-bottom: 1px solid var(--color-border);
-        border-right: 1px solid var(--color-border);
-        color: var(--color-text-maxcontrast);
+        background-color: var(--ic-raised);
+        border-bottom: 1px solid var(--ic-line);
+        border-right: 1px solid var(--ic-line);
+        color: var(--ic-mute);
+        font-family: var(--ic-font-mono);
+        font-size: 11px;
     }
 
     .fc .fc-daygrid-day.fc-day-today,
     .fc .fc-timegrid-col.fc-day-today,
     .fc-day-today.fc-col-header-cell {
-        background-color: var(--color-background-hover) !important;
-    }
-
-    .fc-day-today.fc-col-header-cell a,
-    .fc-day-today.fc-col-header-cell span {
-        background-color: unset !important;
+        background-color: rgba(var(--ic-splash-rgb), 0.06) !important;
     }
 
     .fc-daygrid-day.fc-day.fc-day-other,
     .fc .fc-daygrid-day.fc-day-today.fc-day-other {
-        background-color: var(--color-background-darker) !important;
-        border-color: var(--color-border);
-        opacity: 0.5;
+        background-color: rgba(var(--ic-void-rgb), 0.45) !important;
+        border-color: var(--ic-line);
+
+        .fc-daygrid-day-number {
+            color: var(--ic-faint);
+        }
+    }
+
+    .fc .fc-timegrid-now-indicator-line {
+        border-color: var(--ic-magenta);
+        box-shadow: 0 0 6px rgba(255, 61, 142, 0.6);
+    }
+
+    .fc .fc-timegrid-now-indicator-arrow {
+        border-color: var(--ic-magenta);
+        border-top-color: transparent;
+        border-bottom-color: transparent;
     }
 
     .fc .fc-timeGridDay-view .fc-daygrid-day.fc-day-today,
     .fc .fc-timeGridDay-view .fc-timegrid-col.fc-day-today,
     .fc .fc-timeGridDay-view .fc-day-today.fc-col-header-cell {
         background-color: inherit !important;
+    }
+
+    .fc-timegrid-slot-label-cushion {
+        color: var(--ic-mute);
+        font-family: var(--ic-font-mono);
+        font-size: 11.5px;
     }
 }
 

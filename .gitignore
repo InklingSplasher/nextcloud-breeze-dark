@@ -1,5 +1,7 @@
 /build
 /node_modules
 /vendor
+/.tools
+/.composer-cache
 /.php-cs-fixer.cache
 css/*.map
