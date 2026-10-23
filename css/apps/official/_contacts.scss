@@ -27,3 +27,14 @@
         background-color: var(--color-background-darker) !important;
     }
 }
+
+// Property titles (Telefon, E-Mail-Adresse, …) are titles like every other:
+// Space Grotesk, not a heavy bold.
+#app-content-vue h3.property__value,
+.contact-details h3.property__value {
+    color: var(--ic-hi) !important;
+    font-family: var(--ic-font-display) !important;
+    font-size: 19px !important;
+    font-weight: 500 !important;
+    letter-spacing: -0.015em;
+}

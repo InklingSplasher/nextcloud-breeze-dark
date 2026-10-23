@@ -51,8 +51,8 @@ window.addEventListener("DOMContentLoaded", () => {
     const ui = () => window.BreezeDarkUI;
     const notify = (options) => ui()?.showToast(options);
     const automaticHint = automaticActivation
-        .closest(".tr-row")
-        ?.querySelector("[data-tr-when-locked]");
+        .closest(".ic-row")
+        ?.querySelector("[data-ic-when-locked]");
 
     let saveQueue = Promise.resolve();
     const settingsValues = () => ({
@@ -60,7 +60,7 @@ window.addEventListener("DOMContentLoaded", () => {
         theme_automatic_activation_enabled: automaticActivation.checked ? "1" : "0",
         theme_login_page: loginPage.checked ? "1" : "0",
     });
-    const queueSave = (url, values, celebrate = false) => {
+    const queueSave = (url, values, celebrateFrom = null) => {
         if (typeof url !== "string" || url === "") {
             notify({ message: root.dataset.errorLabel, error: true });
             return;
@@ -69,8 +69,9 @@ window.addEventListener("DOMContentLoaded", () => {
         saveQueue = saveQueue.catch(() => undefined).then(() => postBreezeDarkForm(url, values));
         saveQueue.then(
             () => {
-                if (celebrate) {
-                    ui()?.confetti();
+                if (celebrateFrom) {
+                    // The reward follows the action: one splash of ink from the switch.
+                    ui()?.splash(celebrateFrom);
                     notify({
                         message: root.dataset.enabledLabel,
                         actionLabel: root.dataset.reloadLabel,
@@ -90,10 +91,14 @@ window.addEventListener("DOMContentLoaded", () => {
         automaticActivation.disabled = !enforceTheme.checked;
         if (automaticHint instanceof HTMLElement) {
             automaticHint.textContent = enforceTheme.checked
-                ? automaticHint.dataset.trWhenOpen
-                : automaticHint.dataset.trWhenLocked;
+                ? automaticHint.dataset.icWhenOpen
+                : automaticHint.dataset.icWhenLocked;
         }
-        queueSave(root.dataset.settingsUrl, settingsValues(), enforceTheme.checked);
+        queueSave(
+            root.dataset.settingsUrl,
+            settingsValues(),
+            enforceTheme.checked ? enforceTheme : null,
+        );
     });
 
     automaticActivation.addEventListener("change", () => {

@@ -1,10 +1,11 @@
 /***
- * InkCurity Dark — chrome, Trumpf edition
+ * InkCurity Dark — chrome
  *
- * Navigation like the Trumpf sidebar (on bg, tinted selection, icons in the
- * accent), grouped settings sections as cards, raised menus with a float
- * shadow, sheets that rise from below, material toasts, empty states with a
- * tinted glyph. Hairlines stay quiet, nothing glows.
+ * Header and navigation sit on the ink. The app is a panel in front of it:
+ * deep ink, a hairline edge, 16 px corners. Navigation follows the Trumpf
+ * sidebar (tinted selection, quiet counters) with InkCurity mono captions.
+ * Menus float on a lamp-light glow, dialogs rise from below onto a scrim
+ * that removes the page instead of blurring it.
  *
  * @copyright Copyright (c) 2017, Magnus Walbeck <mw@mwalbeck.org>
  * @copyright Copyright (c) 2026 inkcurity.net
@@ -12,74 +13,257 @@
  * @license GNU AGPL version 3 or any later version, see COPYING file for more.
  */
 
-/* Header -------------------------------------------------------------------- */
+/* Header: on the ink --------------------------------------------------------- */
+
+#header {
+    background: transparent !important;
+
+    // The mark glows a little under the terminal lamp.
+    #nextcloud .logo {
+        filter: drop-shadow(0 0 10px rgba(var(--ic-splash-rgb), 0.25));
+    }
+}
 
 #body-login #header {
     background-color: unset !important;
 }
 
-#header:not(.header-guest) .avatardiv,
-.header-end .account-menu__avatar,
-#user-menu .avatardiv {
+// Icon buttons in the header: soft glyphs that brighten, a faint key behind.
+#header .header-end .header-menu__trigger,
+#header .app-menu__waffle {
+    border-radius: var(--ic-r-md) !important;
+    color: var(--ic-mute) !important;
+    opacity: 1 !important;
+
+    &:hover,
+    &:focus-visible,
+    &[aria-expanded="true"] {
+        background-color: var(--ic-fill) !important;
+        color: var(--ic-hi) !important;
+    }
+
+    svg,
+    .material-design-icon {
+        color: inherit !important;
+        fill: currentColor;
+    }
+}
+
+.header-menu__trigger .notifications-button__icon,
+.header-menu__trigger .contactsmenu__trigger-icon {
+    color: inherit !important;
+}
+
+// Something unread: the screen's magenta, glowing a little.
+.notification__dot {
+    fill: var(--ic-magenta) !important;
+    filter: drop-shadow(0 0 3px rgba(255, 61, 142, 0.8));
+}
+
+// The current app: its glyph in the splash, its name set like a terminal tag.
+.app-menu__current-app {
+    border-radius: var(--ic-r-md) !important;
+
+    &:hover,
+    &:focus-visible {
+        background-color: var(--ic-fill) !important;
+    }
+
+    // The wrapper only fades the glyph; the glyph itself takes the light.
+    .app-menu__current-app-glyph {
+        background-color: var(--ic-splash) !important;
+        filter: none !important;
+    }
+
+    .app-menu__current-app-icon {
+        mask-image: none !important;
+        -webkit-mask-image: none !important;
+    }
+
+    .app-menu__current-app-name {
+        color: var(--ic-hi) !important;
+        font-family: var(--ic-font-mono) !important;
+        font-size: 12px !important;
+        font-weight: 500 !important;
+        letter-spacing: 0.14em !important;
+        text-transform: uppercase;
+    }
+}
+
+// Unified search: a key in the header with mono shortcut keys. Nextcloud 35
+// draws a field, Nextcloud 34 a button that opens the search.
+.unified-search-input__button {
+    border-radius: var(--ic-r-md) !important;
+    background-color: rgba(var(--ic-raised-rgb), 0.85) !important;
     box-shadow:
-        0 0 0 2px var(--tr-page),
-        0 0 0 3.5px color-mix(in srgb, var(--tr-accent) 80%, transparent);
+        inset 0 0 0 1px var(--ic-line),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04) !important;
+    color: var(--ic-mute) !important;
+    transition: box-shadow var(--ic-dur-micro) var(--ic-ease);
+
+    &:hover,
+    &:focus-visible {
+        box-shadow: inset 0 0 0 1px var(--ic-line-strong) !important;
+    }
 }
 
-.header-menu__wrapper,
-.header-menu__content {
-    border-radius: var(--tr-radius-card) !important;
+.unified-search-input__icon {
+    color: var(--ic-mute) !important;
 }
 
-.header-menu__wrapper {
-    background-color: var(--tr-inset) !important;
+.unified-search-input__field {
+    border-radius: var(--ic-r-md) !important;
+    background-color: rgba(var(--ic-raised-rgb), 0.85) !important;
+    box-shadow:
+        inset 0 0 0 1px var(--ic-line),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    transition:
+        box-shadow var(--ic-dur-micro) var(--ic-ease),
+        background-color var(--ic-dur-micro) var(--ic-ease);
+
+    &:hover {
+        box-shadow: inset 0 0 0 1px var(--ic-line-strong);
+    }
+
+    &:focus-within {
+        background-color: var(--ic-well) !important;
+        box-shadow:
+            inset 0 0 0 1px var(--ic-splash),
+            0 0 0 3px rgba(var(--ic-splash-rgb), 0.16);
+    }
+}
+
+.unified-search-input__input {
+    background: transparent !important;
     border: none !important;
-    box-shadow: var(--tr-shadow-float) !important;
+    box-shadow: none !important;
 }
 
-.header-menu__carret {
-    display: none !important;
+.unified-search-input__label,
+.unified-search-input__resting {
+    color: var(--ic-mute) !important;
 }
 
-/* Navigation: the Trumpf sidebar ------------------------------------------------ */
+.unified-search-input__shortcut kbd {
+    padding: 0 5px;
+    border: 1px solid var(--ic-line-strong);
+    border-radius: 5px;
+    background: transparent;
+    color: var(--ic-mute);
+    font-family: var(--ic-font-mono) !important;
+    font-size: 10.5px;
+    line-height: 16px;
+}
+
+// Avatar: a hairline ring in the splash.
+#header:not(.header-guest) .avatardiv,
+.header-end .account-menu__avatar {
+    box-shadow:
+        0 0 0 2px var(--ic-void),
+        0 0 0 3px rgba(var(--ic-splash-rgb), 0.55);
+}
+
+/* The panel ----------------------------------------------------------------------- */
+
+// The outer container only frames; the panel is the app content itself. The
+// container still clips (it hides the navigation while it slides away), but
+// leaves 1 px around for the hairline edges of the panels.
+body > #content,
+body > #content-vue {
+    background: transparent !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    box-shadow: none !important;
+    overflow: clip !important;
+    overflow-clip-margin: 1px;
+}
+
+// The panel's top edge catches the bloom from the upper left.
+#app-content,
+#app-content-vue,
+.app-content {
+    background-color: var(--ic-deep) !important;
+    background-image: linear-gradient(
+        90deg,
+        rgba(var(--ic-splash-rgb), 0.4),
+        rgba(var(--ic-splash-rgb), 0.08) 45%,
+        rgba(var(--ic-splash-rgb), 0) 80%
+    );
+    background-repeat: no-repeat;
+    background-size: 100% 1px;
+    border-radius: var(--ic-r-panel) !important;
+    box-shadow:
+        0 0 0 1px var(--ic-line),
+        var(--ic-highlight);
+}
+
+// Nested app-content (some apps nest one in another): only the outer panel draws.
+:is(#app-content, #app-content-vue, .app-content)
+    :is(#app-content, #app-content-vue, .app-content) {
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+/* Navigation: on the ink, the Trumpf sidebar ----------------------------------- */
 
 .app-navigation,
 #app-navigation:not(.vue) {
-    background-color: var(--tr-bg) !important;
+    background-color: transparent !important;
     -webkit-backdrop-filter: none !important;
     backdrop-filter: none !important;
-    border-inline-end: 1px solid color-mix(in srgb, var(--tr-border) 70%, transparent) !important;
+    border-inline-end: none !important;
+}
+
+// Phones and narrow windows: the navigation slides over the panel, so it needs ink.
+@media (max-width: 1024px) {
+    .app-navigation,
+    #app-navigation:not(.vue) {
+        background-color: var(--ic-void) !important;
+    }
+
+    // The shadow only while it is out, so the closed drawer leaves no trace.
+    .app-navigation:not(.app-navigation--close) {
+        box-shadow:
+            1px 0 0 var(--ic-line),
+            24px 0 48px -24px rgba(0, 0, 0, 0.8);
+    }
 }
 
 .app-navigation-entry {
-    border-radius: var(--tr-radius-lg) !important;
+    border-radius: var(--ic-r-md) !important;
+    transition: background-color var(--ic-dur-micro) var(--ic-ease);
 
-    // Icons in the accent, like the sidebar of a Trumpf app.
+    .app-navigation-entry__name,
+    .app-navigation-entry-link,
+    .app-navigation-entry-button {
+        color: var(--ic-fg) !important;
+    }
+
     .app-navigation-entry-icon {
-        color: var(--tr-accent-text);
+        color: var(--ic-mute);
+        transition: color var(--ic-dur-micro) var(--ic-ease);
     }
 
     &:not(.app-navigation-entry--legacy):hover:not(.active),
     &:not(.app-navigation-entry--legacy):focus-within:not(.active) {
-        background-color: rgba(255, 255, 255, 0.06) !important;
+        background-color: var(--ic-fill) !important;
+
+        .app-navigation-entry-icon {
+            color: var(--ic-fg);
+        }
     }
 
     &:active:not(.active) {
-        background-color: rgba(255, 255, 255, 0.1) !important;
-        transition-duration: 0ms !important;
+        background-color: var(--ic-fill-pressed) !important;
+        transition-duration: 0ms;
     }
 
-    // Selected: a tinted pill with a soft top light, semibold, no stripe.
+    // Selected: tinted, semibold, the glyph in the splash, a faint lit edge.
     &.active {
-        background-color: var(--color-primary-element-light) !important;
-        background-image: linear-gradient(
-            180deg,
-            rgba(255, 255, 255, 0.07),
-            rgba(255, 255, 255, 0)
-        ) !important;
+        background-color: var(--ic-wash) !important;
         box-shadow:
-            inset 0 1px 0 rgba(255, 255, 255, 0.08),
-            0 6px 16px -10px color-mix(in srgb, var(--tr-accent) 80%, transparent);
+            inset 0 0 0 1px rgba(var(--ic-splash-rgb), 0.1),
+            inset 0 1px 0 rgba(255, 255, 255, 0.04);
 
         &::before {
             display: none !important;
@@ -88,102 +272,95 @@
         .app-navigation-entry__name,
         .app-navigation-entry-link,
         .app-navigation-entry-button {
-            color: var(--tr-ink) !important;
+            color: var(--ic-hi) !important;
             font-weight: 600 !important;
         }
-    }
 
-    // Legacy entries (filled selection in nextcloud-vue 8) become tinted too.
-    &.app-navigation-entry--legacy.active {
-        background-color: var(--color-primary-element-light) !important;
+        .app-navigation-entry-icon {
+            color: var(--ic-splash) !important;
+        }
 
-        .app-navigation-entry-link,
-        .app-navigation-entry-button {
-            color: var(--tr-ink) !important;
+        // Legacy background-image icons can only brighten.
+        .app-navigation-entry-icon[class*="icon-"] {
+            filter: none;
+            opacity: 1;
         }
     }
-}
 
-// Icon tiles for top-level entries: tinted at rest, filled in the accent with
-// a glow when selected. Legacy background-image icons keep their own look.
-.app-navigation-entry:not(.app-navigation-entry__children *)
-    > :is(.app-navigation-entry-link, .app-navigation-entry-button)
-    > .app-navigation-entry-icon:not([class*="icon-"]) {
-    position: relative;
-    isolation: isolate;
-
-    &::before {
-        content: "";
-        position: absolute;
-        z-index: -1;
-        inset: calc(50% - 14px);
-        border-radius: 8px;
-        background-color: color-mix(in srgb, var(--tr-accent) 20%, transparent);
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07);
-        transition:
-            background-color var(--tr-dur-fade) var(--tr-ease-soft),
-            box-shadow var(--tr-dur-fade) var(--tr-ease-soft);
-    }
-
-    // The glyph sits inside the 28 px tile at 18 px.
-    svg,
-    img {
-        width: 18px !important;
-        height: 18px !important;
+    &.app-navigation-entry--legacy.active {
+        background-color: var(--ic-wash) !important;
     }
 }
 
-%tr-tile-filled {
-    color: var(--tr-accent-on) !important;
-
-    &::before {
-        background-color: var(--tr-accent);
-        background-image: linear-gradient(
-            180deg,
-            rgba(255, 255, 255, 0.28),
-            rgba(255, 255, 255, 0) 60%
-        );
-        box-shadow:
-            inset 0 1px 0 rgba(255, 255, 255, 0.32),
-            0 6px 14px -4px color-mix(in srgb, var(--tr-accent) 75%, transparent);
-    }
-
-    img {
-        filter: var(--tr-accent-flip);
-    }
+// Nextcloud 33 ships the filled selection of nextcloud-vue 8 as
+// .app-navigation-entry--legacy.active[data-v-…] (0,4,0); the container id
+// keeps the tint ahead of it.
+:is(#content, #content-vue) .app-navigation-entry.active {
+    background-color: var(--ic-wash) !important;
 }
 
-.app-navigation-entry.active:not(.app-navigation-entry__children *)
-    > :is(.app-navigation-entry-link, .app-navigation-entry-button)
-    > .app-navigation-entry-icon:not([class*="icon-"]) {
-    @extend %tr-tile-filled;
-}
-
-// Section headers: sentence case, 13 px medium, soft (Trumpf section-header).
+// Captions: InkCurity mono labels.
 .app-navigation-caption__name,
 #app-navigation:not(.vue) .app-navigation-caption {
-    color: var(--tr-ink-soft) !important;
-    font-size: 13px !important;
+    font-family: var(--ic-font-mono) !important;
+    font-size: 11px !important;
     font-weight: 500 !important;
-    letter-spacing: 0 !important;
-    text-transform: none !important;
+    letter-spacing: 0.16em !important;
+    text-transform: uppercase !important;
+    color: var(--ic-mute) !important;
     box-shadow: none !important;
 }
 
-// Counters: quiet numbers; the highlighted ones (unread) in the logo pink.
+// Counters: quiet mono numbers; the unread ones are the screen's magenta.
 .counter-bubble__counter {
     background-color: transparent !important;
-    color: var(--tr-ink-soft) !important;
-    font-weight: 600;
+    color: var(--ic-mute) !important;
+    font-family: var(--ic-font-mono);
+    font-size: 12px !important;
+    font-weight: 500 !important;
 
     &--highlighted {
-        background-color: var(--tr-pink-strong) !important;
-        color: #ffffff !important;
+        background-color: var(--ic-magenta) !important;
+        color: var(--ic-void) !important;
+        font-weight: 700 !important;
     }
 
     &--outlined {
         background-color: transparent !important;
-        color: var(--tr-accent-text) !important;
+        box-shadow: inset 0 0 0 1px var(--ic-line-strong);
+        color: var(--ic-splash-text) !important;
+    }
+}
+
+// In the selected entry the counter only lights up; magenta stays for unread.
+.app-navigation-entry.active .counter-bubble__counter {
+    background-color: transparent !important;
+    color: var(--ic-splash-text) !important;
+    font-weight: 600 !important;
+}
+
+// Nextcloud 33 settings: two legacy lists with a filled selection.
+:is(.app-navigation-personal, .app-navigation-administration) > ul > li {
+    border-radius: var(--ic-r-md);
+
+    > a {
+        border-radius: var(--ic-r-md);
+        color: var(--ic-fg) !important;
+    }
+
+    &:not(.active) > a:hover {
+        background-color: var(--ic-fill) !important;
+    }
+
+    &.active,
+    &.active > a {
+        background-color: var(--ic-wash) !important;
+        color: var(--ic-hi) !important;
+        font-weight: 600;
+    }
+
+    &.active > a img {
+        filter: none !important;
     }
 }
 
@@ -194,14 +371,25 @@
 
     > ul > li.active > a,
     > ul > li > a.active {
-        background-color: var(--color-primary-element-light) !important;
-        color: var(--tr-ink) !important;
+        background-color: var(--ic-wash) !important;
+        color: var(--ic-hi) !important;
         font-weight: 600;
     }
 }
 
-.app-navigation-new .button-vue {
-    border-radius: var(--tr-radius-full) !important;
+// The nav toggle sits on the panel's corner.
+.app-navigation-toggle {
+    background-color: transparent !important;
+    color: var(--ic-mute) !important;
+
+    &:hover {
+        background-color: var(--ic-fill) !important;
+        color: var(--ic-hi) !important;
+    }
+}
+
+.app-navigation-search__input .input-field__input {
+    background-color: rgba(var(--ic-raised-rgb), 0.6) !important;
 }
 
 .app-settings__header .settings-button,
@@ -212,83 +400,105 @@
     opacity: 1;
 }
 
-/* Settings: a hub of grouped cards ------------------------------------------------ */
-
-// The settings navigation is a hub list: every icon sits on a filled tile,
-// like the rows of a settings app. White icons read 4.6:1 on the blue.
-#body-settings
-    .app-navigation-entry:not(.app-navigation-entry__children *)
-    > :is(.app-navigation-entry-link, .app-navigation-entry-button)
-    > .app-navigation-entry-icon:not([class*="icon-"]) {
-    @extend %tr-tile-filled;
-}
-
-#body-settings .app-navigation-entry.active {
-    box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.08),
-        0 8px 18px -10px color-mix(in srgb, var(--tr-accent) 90%, transparent);
-}
-
-#body-settings #app-content,
-#body-settings #app-content-vue {
-    background-color: var(--tr-bg) !important;
-}
+/* Settings: sections on the panel, separated by hairlines ---------------------- */
 
 #body-settings #app-content :is(.section, .settings-section),
 #body-settings #app-content-vue :is(.section, .settings-section) {
-    margin: 12px 16px !important;
-    padding: 20px 24px !important;
+    margin: 0 !important;
+    padding: 28px 36px 32px !important;
     border: none !important;
-    border-radius: var(--tr-radius-2xl) !important;
-    background-color: var(--tr-surface);
-    background-image: var(--tr-sheen);
-    box-shadow: var(--tr-shadow-card);
+    border-bottom: 1px solid var(--ic-line) !important;
+    border-radius: 0 !important;
+    background: none !important;
+    box-shadow: none !important;
+
+    &:last-child {
+        border-bottom: none !important;
+    }
 }
 
 .settings-section__name,
 .section > h2 {
-    font-size: 20px !important;
-    line-height: 25px !important;
+    font-size: 22px !important;
+    line-height: 28px !important;
+}
+
+// Subheads inside a section (two-factor providers, app settings) are titles too.
+#body-settings :is(.section, .settings-section):not(#breezedark) h3 {
+    font-family: var(--ic-font-display) !important;
+    font-size: 18px !important;
+    font-weight: 500 !important;
+    line-height: 24px !important;
+    letter-spacing: -0.015em;
+    color: var(--ic-hi);
 }
 
 .settings-section__desc,
 .settings-hint,
 .section .hint,
 .section em {
-    color: var(--tr-ink-soft) !important;
+    color: var(--ic-mute) !important;
 }
 
-/* Sidebar ------------------------------------------------------------------- */
+/* Sidebar (details) ---------------------------------------------------------------- */
 
 .app-sidebar,
 #app-sidebar {
-    background-color: var(--tr-surface) !important;
-    border-inline-start: 1px solid color-mix(in srgb, var(--tr-border) 70%, transparent) !important;
+    background-color: var(--ic-deep) !important;
+    border-inline-start: none !important;
+    box-shadow:
+        0 0 0 1px var(--ic-line),
+        var(--ic-highlight);
 }
 
+@media (min-width: 1025px) {
+    body > :is(#content, #content-vue) > :is(.app-sidebar, #app-sidebar, aside.app-sidebar) {
+        margin-inline-start: 8px;
+        border-radius: var(--ic-r-panel) !important;
+    }
+}
+
+// The figure carries the file preview as its background image: only the ink
+// behind it changes.
 .app-sidebar-header__figure {
-    background-color: var(--tr-accent-wash) !important;
-    background-image: radial-gradient(
-        120% 120% at 0% 0%,
-        color-mix(in srgb, var(--tr-accent) 35%, transparent),
-        transparent 70%
-    ) !important;
+    background-color: var(--ic-raised) !important;
 }
 
 .app-sidebar-header__mainname {
     font-size: 20px !important;
 }
 
-#app-sidebar-vue .star--starred,
-#app-sidebar .star--starred {
-    color: var(--tr-gold) !important;
+.app-sidebar-header__subname {
+    font-family: var(--ic-font-mono);
+    font-size: 12px !important;
+    color: var(--ic-mute) !important;
 }
 
-/* Menus and popovers --------------------------------------------------------------- */
+.app-sidebar-tabs__nav .checkbox-radio-switch--button-variant {
+    background-color: transparent !important;
+}
+
+#app-sidebar-vue .star--starred,
+#app-sidebar .star--starred {
+    color: var(--ic-gold) !important;
+}
+
+/* Menus and popovers: float on a lamp-light glow -------------------------------- */
 
 .v-popper__popper:not(.v-popper--theme-tooltip) .v-popper__wrapper {
-    border-radius: var(--tr-radius-xl) !important;
-    box-shadow: var(--tr-shadow-float) !important;
+    border-radius: var(--ic-r-lg) !important;
+    box-shadow: var(--ic-shadow-float) !important;
+}
+
+.v-popper__popper--shown:not(.v-popper--theme-tooltip) .v-popper__wrapper {
+    animation: ic-pop var(--ic-dur-micro) var(--ic-ease-soft) both;
+}
+
+@keyframes ic-pop {
+    from {
+        opacity: 0;
+        transform: translateY(-4px) scale(0.98);
+    }
 }
 
 .v-popper__popper:not(.v-popper--theme-tooltip) .v-popper__inner,
@@ -298,13 +508,12 @@
 .popover,
 .app-navigation-entry-menu,
 .action-item__menu {
-    --color-background-hover: rgba(255, 255, 255, 0.08);
-    --color-main-background: var(--tr-inset);
+    --color-background-hover: var(--ic-fill-strong);
+    --color-main-background: var(--ic-float);
 
-    background-color: var(--tr-inset) !important;
-    background-image: var(--tr-sheen);
+    background-color: var(--ic-float) !important;
     border: none !important;
-    border-radius: var(--tr-radius-xl) !important;
+    border-radius: var(--ic-r-lg) !important;
 }
 
 .popovermenu,
@@ -312,14 +521,15 @@
 .bubble,
 .popover,
 .action-item__menu {
-    box-shadow: var(--tr-shadow-float) !important;
+    box-shadow: var(--ic-shadow-float) !important;
 }
 
 .bubble::after,
 .app-navigation-entry-menu::after,
 .menu::after,
 .popovermenu::after,
-.action-item__menu .action-item__menu_arrow {
+.action-item__menu .action-item__menu_arrow,
+.v-popper__arrow-container {
     display: none !important;
 }
 
@@ -328,58 +538,120 @@
 .action-router,
 .action-checkbox__label,
 .action-radio__label {
-    border-radius: var(--tr-radius-lg) !important;
-    transition: background-color var(--tr-dur-fade) var(--tr-ease-soft);
+    border-radius: var(--ic-r-md) !important;
+    transition: background-color var(--ic-dur-micro) var(--ic-ease);
+
+    &:hover,
+    &:focus-visible {
+        background-color: var(--ic-fill-strong) !important;
+    }
 
     &:active {
-        background-color: rgba(255, 255, 255, 0.12) !important;
+        background-color: var(--ic-fill-pressed) !important;
         transition-duration: 0ms;
     }
 }
 
-.action-separator {
-    border-color: color-mix(in srgb, var(--tr-border) 80%, transparent) !important;
+.action-button__icon,
+.action-link__icon,
+.action-router__icon {
+    color: var(--ic-mute);
 }
 
-/* Tooltips ----------------------------------------------------------------------- */
+.action-button:hover .action-button__icon,
+.action-link:hover .action-link__icon {
+    color: var(--ic-fg);
+}
+
+// Destructive menu entries keep their red.
+.action-button.action-button--error,
+.action-button--error .action-button__text,
+.action-button--error .action-button__icon {
+    color: var(--ic-danger) !important;
+}
+
+.action-separator {
+    border-color: var(--ic-line) !important;
+}
+
+// Captions in menus: InkCurity mono labels, like the navigation captions.
+.action-caption,
+.action-caption__name {
+    color: var(--ic-mute) !important;
+    font-family: var(--ic-font-mono) !important;
+    font-size: 10.5px !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.16em !important;
+    text-transform: uppercase;
+}
+
+/* Header menus: notifications, contacts, account ------------------------------- */
+
+.header-menu__wrapper {
+    background-color: var(--ic-float) !important;
+    border: none !important;
+    border-radius: var(--ic-r-lg) !important;
+    box-shadow: var(--ic-shadow-float) !important;
+}
+
+.header-menu__content {
+    border-radius: var(--ic-r-lg) !important;
+}
+
+.header-menu__carret {
+    display: none !important;
+}
+
+.account-menu__list .list-item {
+    border-radius: var(--ic-r-md) !important;
+}
+
+/* Tooltips -------------------------------------------------------------------- */
 
 .v-popper--theme-tooltip .v-popper__inner {
-    background-color: var(--tr-inset) !important;
-    border-radius: var(--tr-radius-lg) !important;
-    box-shadow: var(--tr-shadow-float) !important;
-    color: var(--tr-ink) !important;
-    font-size: 13px;
+    padding: 5px 9px !important;
+    background-color: var(--ic-float) !important;
+    border-radius: var(--ic-r-sm) !important;
+    box-shadow:
+        0 0 0 1px var(--ic-line-strong),
+        0 8px 20px -6px rgba(0, 0, 0, 0.7) !important;
+    color: var(--ic-fg) !important;
+    font-size: 12.5px;
 }
 
 .v-popper--theme-tooltip .v-popper__arrow-outer,
 .v-popper--theme-tooltip .v-popper__arrow-inner {
-    border-color: var(--tr-inset) !important;
+    border-color: var(--ic-float) !important;
 }
 
-/* Sheets: modals and dialogs rise from below ----------------------------------- */
+/* Dialogs: rise from below onto a scrim that removes the page -------------------- */
 
 .modal-mask {
-    background-color: var(--tr-scrim) !important;
+    background-color: rgba(var(--ic-void-rgb), 0.72) !important;
     -webkit-backdrop-filter: none !important;
     backdrop-filter: none !important;
+
+    // Full-screen viewers (images, videos, documents) put the page away entirely.
+    &:has(.modal-wrapper--full) {
+        background-color: rgba(var(--ic-void-rgb), 0.96) !important;
+    }
 }
 
 .modal-wrapper:not(.modal-wrapper--full) .modal-container {
-    background-color: var(--tr-surface) !important;
-    background-image: var(--tr-sheen);
-    border-radius: var(--tr-radius-float) !important;
-    box-shadow: var(--tr-shadow-sheet) !important;
-    animation: tr-sheet-in var(--tr-dur-sheet) var(--tr-ease-ios) both;
+    background-color: var(--ic-deep) !important;
+    border-radius: var(--ic-r-xl) !important;
+    box-shadow: var(--ic-shadow-sheet) !important;
+    animation: ic-sheet-in var(--ic-dur-sheet) var(--ic-ease-ios) both;
 }
 
 .dialog__modal .modal-wrapper.modal-wrapper--small .modal-container {
-    border-radius: var(--tr-radius-card) !important;
+    border-radius: var(--ic-r-xl) !important;
 }
 
-@keyframes tr-sheet-in {
+@keyframes ic-sheet-in {
     from {
         opacity: 0;
-        transform: translateY(32px) scale(0.98);
+        transform: translateY(24px) scale(0.985);
     }
 
     to {
@@ -391,34 +663,32 @@
 .dialog__name,
 .modal-header .modal-name {
     font-size: 20px !important;
-    line-height: 25px !important;
+    line-height: 26px !important;
 }
 
 .oc-dialog {
     border: none !important;
-    border-radius: var(--tr-radius-float) !important;
-    box-shadow: var(--tr-shadow-sheet) !important;
+    border-radius: var(--ic-r-xl) !important;
+    box-shadow: var(--ic-shadow-sheet) !important;
 }
 
 .oc-dialog-dim {
-    background-color: var(--tr-scrim) !important;
+    background-color: rgba(var(--ic-void-rgb), 0.72) !important;
 }
 
-/* Toasts: material from above ------------------------------------------------------ */
+/* Toasts: a raised key with a status dot ------------------------------------------ */
 
 .toastify.dialogs {
-    min-height: 48px;
-    padding: 10px 12px 10px 16px !important;
+    min-height: 44px;
+    padding: 8px 10px 8px 16px !important;
     border: none !important;
-    border-radius: var(--tr-radius-card) !important;
-    background-color: var(--tr-material) !important;
-    -webkit-backdrop-filter: var(--tr-material-filter);
-    backdrop-filter: var(--tr-material-filter);
-    box-shadow: var(--tr-shadow-float) !important;
-    color: var(--tr-ink) !important;
+    border-radius: var(--ic-r-lg) !important;
+    background-color: var(--ic-float) !important;
+    box-shadow: var(--ic-shadow-float) !important;
+    color: var(--ic-fg) !important;
     font-weight: 500;
-    transition-duration: var(--tr-dur-toast) !important;
-    transition-timing-function: var(--tr-ease-ios) !important;
+    transition-duration: 480ms !important;
+    transition-timing-function: var(--ic-ease-ios) !important;
 
     &.toast-success,
     &.toast-error,
@@ -427,51 +697,101 @@
         border-inline-start: none !important;
     }
 
-    // A status dot carries the meaning next to the words.
+    // The status dot carries the meaning next to the words.
     &::before {
         content: "";
         flex-shrink: 0;
         align-self: center;
-        width: 8px;
-        height: 8px;
-        margin-inline-end: 10px;
+        width: 7px;
+        height: 7px;
+        margin-inline-end: 12px;
         border-radius: 50%;
-        background-color: var(--tr-accent-text);
-        box-shadow: 0 0 0 3px color-mix(in srgb, var(--tr-accent-text) 22%, transparent);
+        background-color: var(--ic-splash);
+        box-shadow: 0 0 10px rgba(var(--ic-splash-rgb), 0.8);
     }
 
     &.toast-success::before {
-        background-color: var(--tr-success);
+        background-color: var(--ic-ok);
+        box-shadow: 0 0 10px rgba(74, 222, 128, 0.7);
     }
 
     &.toast-error::before {
-        background-color: var(--tr-danger);
+        background-color: var(--ic-danger);
+        box-shadow: 0 0 10px rgba(255, 85, 119, 0.7);
     }
 
     &.toast-warning::before {
-        background-color: var(--tr-warn);
+        background-color: var(--ic-warn);
+        box-shadow: 0 0 10px rgba(248, 225, 108, 0.6);
     }
 
     .toast-undo-button,
     .toast-close {
-        border-radius: var(--tr-radius-full) !important;
+        border-radius: var(--ic-r-md) !important;
     }
 
     .toast-undo-button {
-        background-color: var(--color-primary-element-light) !important;
-        color: var(--color-primary-element-light-text) !important;
+        background-color: var(--ic-wash) !important;
+        color: var(--ic-splash-text) !important;
     }
 }
 
-/* Empty states: a tinted glyph, a statement, a sentence ---------------------------- */
+// Nextcloud 35 toasts come from CSS modules with hashed names: the toast is a
+// status element whose class starts with _toast_ (container, message and close
+// button carry _toastContainer_, _toastMessage_ and _toastClose_ instead).
+:is([role="status"], [role="alert"])[class*="_toast_"] {
+    align-items: center;
+    padding: 6px 6px 6px 16px !important;
+    border: none !important;
+    border-radius: var(--ic-r-lg) !important;
+    background-color: var(--ic-float) !important;
+    box-shadow: var(--ic-shadow-float) !important;
+    color: var(--ic-fg) !important;
+    font-weight: 500;
+
+    &::before {
+        content: "";
+        flex-shrink: 0;
+        width: 7px;
+        height: 7px;
+        margin-inline-end: 12px;
+        border-radius: 50%;
+        background-color: var(--ic-splash);
+        box-shadow: 0 0 10px rgba(var(--ic-splash-rgb), 0.8);
+    }
+
+    &[class*="_toast_success_"]::before {
+        background-color: var(--ic-ok);
+        box-shadow: 0 0 10px rgba(74, 222, 128, 0.7);
+    }
+
+    &[class*="_toast_error_"]::before {
+        background-color: var(--ic-danger);
+        box-shadow: 0 0 10px rgba(255, 85, 119, 0.7);
+    }
+
+    &[class*="_toast_warning_"]::before {
+        background-color: var(--ic-warn);
+        box-shadow: 0 0 10px rgba(248, 225, 108, 0.6);
+    }
+
+    [class*="_toastClose_"] {
+        color: var(--ic-mute) !important;
+    }
+}
+
+/* Empty states: a glyph under the lamp, a statement, a sentence ----------------------- */
 
 .empty-content__icon {
     width: 64px !important;
     height: 64px !important;
-    border-radius: 50%;
-    background-color: color-mix(in srgb, var(--tr-accent) 18%, transparent);
+    border-radius: 18px;
+    background-color: var(--ic-raised);
     background-size: 30px !important;
-    color: var(--tr-accent-text);
+    box-shadow:
+        inset 0 0 0 1px var(--ic-line-strong),
+        0 0 40px -10px rgba(var(--ic-splash-rgb), 0.45);
+    color: var(--ic-splash) !important;
     opacity: 1 !important;
 
     svg {
@@ -480,30 +800,106 @@
     }
 }
 
+// A loading state is not an empty state: the spinner stands on its own and
+// the line under it is a quiet status, not a title.
+.empty-content__icon:has(.loading-icon, .icon-loading, .icon-loading-small) {
+    background: none !important;
+    box-shadow: none !important;
+}
+
+.empty-content:has(.empty-content__icon :is(.loading-icon, .icon-loading, .icon-loading-small))
+    .empty-content__name {
+    color: var(--ic-mute) !important;
+    font-family: var(--ic-font-body) !important;
+    font-size: 15px !important;
+    font-weight: 500 !important;
+    line-height: 22px !important;
+    letter-spacing: 0;
+}
+
 .empty-content__name {
-    font-size: 20px !important;
-    line-height: 25px !important;
+    font-size: 21px !important;
+    line-height: 27px !important;
 }
 
 .empty-content__description {
-    max-width: 22rem;
-    color: var(--tr-ink-soft) !important;
+    max-width: 24rem;
+    color: var(--ic-mute) !important;
 }
 
-/* Note cards and badges ----------------------------------------------------------- */
+// Inside a header menu the statement stays the size of a menu.
+.header-menu .empty-content__name {
+    font-size: 16px !important;
+    line-height: 22px !important;
+    text-wrap: balance;
+}
+
+/* Note cards: InkCurity callouts ----------------------------------------------------- */
 
 .notecard {
-    border-radius: var(--tr-radius-xl) !important;
-    border-inline-start-width: 0 !important;
+    border: 1px solid rgba(var(--ic-splash-rgb), 0.3) !important;
+    border-radius: 12px !important;
+    background-color: rgba(var(--ic-splash-rgb), 0.05) !important;
+
+    &.notecard--success {
+        border-color: rgba(74, 222, 128, 0.3) !important;
+        background-color: rgba(74, 222, 128, 0.05) !important;
+    }
+
+    &.notecard--warning {
+        border-color: rgba(248, 225, 108, 0.3) !important;
+        background-color: rgba(248, 225, 108, 0.05) !important;
+    }
+
+    &.notecard--error {
+        border-color: rgba(255, 85, 119, 0.32) !important;
+        background-color: rgba(255, 85, 119, 0.06) !important;
+    }
 }
 
 .app-level .official,
 .app-level .supported {
-    border-color: var(--tr-success) !important;
-    border-radius: var(--tr-radius-full);
+    border-color: var(--ic-ok) !important;
+    border-radius: var(--ic-r-sm);
 }
 
-/* Search ---------------------------------------------------------------------- */
+/* Lists and breadcrumbs ------------------------------------------------------------------- */
+
+.list-item {
+    border-radius: var(--ic-r-md) !important;
+
+    &:hover,
+    &:focus-within {
+        background-color: var(--ic-fill) !important;
+    }
+
+    &.list-item--active,
+    &.active {
+        background-color: var(--ic-wash) !important;
+    }
+}
+
+.list-item-content__name,
+.line-one__name {
+    color: var(--ic-fg) !important;
+}
+
+.list-item-content__subname,
+.line-two__subname {
+    color: var(--ic-mute) !important;
+}
+
+.breadcrumb .vue-crumb__separator {
+    color: var(--ic-faint) !important;
+}
+
+.vue-crumb:last-child .button-vue__text,
+.vue-crumb--current .button-vue__text {
+    color: var(--ic-hi) !important;
+    font-weight: 600 !important;
+}
+
+/* Search -------------------------------------------------------------------------- */
 
 .unified-search__form-reset {
     background-color: transparent !important;
@@ -511,21 +907,36 @@
 
 .unified-search-modal .result-items__item:hover,
 .unified-search-modal .result-items__item:focus-within {
-    background-color: rgba(255, 255, 255, 0.06) !important;
-    border-radius: var(--tr-radius-lg);
+    background-color: var(--ic-fill) !important;
+    border-radius: var(--ic-r-md);
 }
 
 /* Profile, user management, image cropper ---------------------------------------- */
 
 .preview-card .preview-card__footer {
-    border-bottom-left-radius: var(--tr-radius-xl);
-    border-bottom-right-radius: var(--tr-radius-xl);
+    border-bottom-left-radius: var(--ic-r-lg);
+    border-bottom-right-radius: var(--ic-r-lg);
+}
+
+// The profile card: its head is ink with a wash of the splash, not a fill.
+.preview-card :is(.preview-card__header, .preview-card__banner) {
+    background-color: var(--ic-raised) !important;
+    background-image: radial-gradient(
+        120% 160% at 0% 0%,
+        rgba(var(--ic-splash-rgb), 0.22),
+        transparent 70%
+    ) !important;
+    box-shadow: inset 0 -1px 0 var(--ic-line);
+
+    span {
+        color: var(--ic-hi) !important;
+    }
 }
 
 #cropper .inner-container {
-    background-color: var(--tr-surface) !important;
-    border-radius: var(--tr-radius-2xl);
-    color: var(--tr-ink) !important;
+    background-color: var(--ic-deep) !important;
+    border-radius: var(--ic-r-lg);
+    color: var(--ic-fg) !important;
 }
 
 #addgroup {
@@ -536,17 +947,19 @@
 }
 
 .followupsection {
-    color: var(--tr-ink) !important;
+    color: var(--ic-fg) !important;
 }
 
 /* Reduced motion ------------------------------------------------------------------ */
 
 @media (prefers-reduced-motion: reduce) {
-    .modal-wrapper .modal-container {
+    .modal-wrapper .modal-container,
+    .v-popper__popper--shown .v-popper__wrapper {
         animation: none !important;
     }
 }
 
-[data-themes*="reduced-motion"] .modal-wrapper .modal-container {
+[data-themes*="reduced-motion"]
+    :is(.modal-wrapper .modal-container, .v-popper__popper--shown .v-popper__wrapper) {
     animation: none !important;
 }

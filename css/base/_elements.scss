@@ -1,14 +1,15 @@
 /***
- * InkCurity Dark — controls, Trumpf edition
+ * InkCurity Dark — controls
  *
- * Buttons: filled for the one main action, tinted for actions with weight,
- * plain for quiet ones, a red wash for the way into something destructive.
- * Small buttons are pills, large ones 14 px keys. Every press shrinks to 0.97.
- * Switches turn success green. Fields sit in a light well with a 2 px ring in
- * the accent while focused.
+ * Buttons are keys, not lozenges: 10 px corners. Filled for the one main
+ * action of a view (splash with ink text, a lamp-light glow on hover), keyed
+ * with a hairline edge for actions with weight, plain for quiet ones, a red
+ * outline for the way into something destructive. Every press sinks to 0.985.
+ * Fields are wells with a hairline that turns splash with a 3 px ring while
+ * focused. Checkboxes, radios and switches wear the splash.
  *
- * Selectors cover @nextcloud/vue 9 (Nextcloud 33/34: .button-vue--primary) and
- * the v8 bundles some apps still ship (.button-vue--vue-primary).
+ * Selectors cover @nextcloud/vue 9 (.button-vue--primary) and the v8 names
+ * (.button-vue--vue-primary) that Nextcloud 35 still emits.
  *
  * @copyright Copyright (c) 2020, Magnus Walbeck <mw@mwalbeck.org>
  * @copyright Copyright (c) 2026 inkcurity.net
@@ -19,123 +20,107 @@
 /* Buttons ------------------------------------------------------------------- */
 
 .button-vue {
-    border-radius: var(--tr-radius-full) !important;
+    border-radius: var(--ic-r-md) !important;
     transition:
-        background-color var(--tr-dur-fade) var(--tr-ease-soft),
-        color var(--tr-dur-fade) var(--tr-ease-soft),
-        opacity var(--tr-dur-fade) var(--tr-ease-soft),
-        filter var(--tr-dur-fade) var(--tr-ease-soft),
-        transform var(--tr-dur-press) var(--tr-ease-soft) !important;
+        background-color var(--ic-dur-micro) var(--ic-ease),
+        box-shadow var(--ic-dur-micro) var(--ic-ease),
+        color var(--ic-dur-micro) var(--ic-ease),
+        transform var(--ic-dur-micro) var(--ic-ease) !important;
 
     .button-vue__text {
-        font-weight: 600 !important;
+        font-weight: 500 !important;
         letter-spacing: -0.005em;
     }
 
     &:active:not(:disabled) {
-        transform: scale(var(--tr-press-scale)) !important;
+        transform: scale(var(--ic-press)) !important;
     }
 
-    // Large buttons are keys, not pills (Trumpf md/lg).
-    &--size-large {
-        border-radius: var(--tr-radius-xl) !important;
+    &:focus-visible {
+        outline: 2px solid var(--ic-splash) !important;
+        outline-offset: 2px !important;
+        box-shadow: none !important;
     }
 }
 
-// Filled: the one main action of a view. A glossy top, a glow in the accent,
-// and a sheen that sweeps across once on hover.
+// Filled: the one main action of a view.
 :is(.button-vue--primary, .button-vue--vue-primary):not(:disabled) {
-    position: relative;
-    overflow: hidden;
-    background-image: linear-gradient(
-        180deg,
-        rgba(255, 255, 255, 0.18),
-        rgba(255, 255, 255, 0) 62%
-    ) !important;
-    box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.28),
-        var(--tr-glow);
+    background-color: var(--ic-splash) !important;
+    color: var(--ic-on-splash) !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
 
-    &::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(
-            105deg,
-            transparent 30%,
-            rgba(255, 255, 255, 0.32) 50%,
-            transparent 70%
-        );
-        transform: translateX(-120%);
-        pointer-events: none;
+    .button-vue__text {
+        font-weight: 600 !important;
     }
 
     &:hover {
-        background-color: var(--color-primary-element) !important;
-        filter: brightness(1.06);
+        background-color: var(--ic-splash-hover) !important;
         box-shadow:
-            inset 0 1px 0 rgba(255, 255, 255, 0.28),
-            var(--tr-glow-strong);
-
-        &::after {
-            animation: tr-sheen 700ms var(--tr-ease-soft) both;
-        }
+            inset 0 1px 0 rgba(255, 255, 255, 0.35),
+            var(--ic-glow-sm);
     }
 
     &:active {
-        opacity: 0.88;
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        background-color: var(--ic-splash-pressed) !important;
+        box-shadow: none;
     }
 }
 
-@keyframes tr-sheen {
-    to {
-        transform: translateX(120%);
-    }
-}
-
-// Tinted: the accent at a wash, text in the accent.
+// Keyed: raised ink with a hairline edge; the edge and text light up on hover.
 :is(.button-vue--secondary, .button-vue--vue-secondary):not(.unified-search__button):not(
         .property-color__color-preview
-    ) {
-    background-color: var(--color-primary-element-light) !important;
-    background-image: linear-gradient(
-        180deg,
-        rgba(255, 255, 255, 0.07),
-        rgba(255, 255, 255, 0)
-    ) !important;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
-    color: var(--color-primary-element-light-text) !important;
+    ):not(:disabled) {
+    background-color: var(--ic-raised) !important;
+    box-shadow:
+        inset 0 0 0 1px var(--ic-line-strong),
+        var(--ic-highlight);
+    color: var(--ic-fg) !important;
 
-    &:hover:not(:disabled) {
-        background-color: var(--color-primary-element-light-hover) !important;
+    &:hover {
+        background-color: var(--ic-float) !important;
+        box-shadow: inset 0 0 0 1px rgba(var(--ic-splash-rgb), 0.5);
+        color: var(--ic-splash-text) !important;
     }
 }
 
 // Plain: a faint fill fades in, nothing moves.
-:is(.button-vue--tertiary, .button-vue--vue-tertiary):hover:not(:disabled) {
-    background-color: rgba(255, 255, 255, 0.08) !important;
+:is(
+        .button-vue--tertiary,
+        .button-vue--vue-tertiary,
+        .button-vue--tertiary-no-background
+    ):hover:not(:disabled) {
+    background-color: var(--ic-fill) !important;
 }
 
-// Destructive entry: red wash, red text (Trumpf dangerTinted).
+:is(.button-vue--tertiary, .button-vue--vue-tertiary):active:not(:disabled) {
+    background-color: var(--ic-fill-pressed) !important;
+}
+
+// Destructive: red text on a red outline at 30 %.
 :is(.button-vue--error, .button-vue--vue-error):not(:disabled) {
-    background-color: var(--color-error) !important;
-    color: var(--color-error-text) !important;
+    background-color: rgba(255, 85, 119, 0.06) !important;
+    box-shadow: inset 0 0 0 1px rgba(255, 85, 119, 0.35);
+    color: var(--ic-danger) !important;
 
     &:hover {
-        background-color: var(--color-error-hover) !important;
+        background-color: rgba(255, 85, 119, 0.12) !important;
     }
 }
 
 :is(.button-vue--success, .button-vue--vue-success):not(:disabled) {
-    background-color: var(--color-success) !important;
-    color: var(--color-success-text) !important;
+    background-color: rgba(74, 222, 128, 0.08) !important;
+    box-shadow: inset 0 0 0 1px rgba(74, 222, 128, 0.3);
+    color: var(--ic-ok) !important;
 }
 
-.button-vue:focus-visible {
-    outline: 2px solid var(--tr-accent-text) !important;
-    outline-offset: 2px !important;
-    box-shadow: none !important;
+:is(.button-vue--warning, .button-vue--vue-warning):not(:disabled) {
+    background-color: rgba(248, 225, 108, 0.08) !important;
+    box-shadow: inset 0 0 0 1px rgba(248, 225, 108, 0.3);
+    color: var(--ic-warn) !important;
+}
+
+.button-vue:disabled {
+    opacity: 0.45 !important;
 }
 
 // Legacy buttons (older settings pages and apps without nextcloud-vue), only
@@ -150,131 +135,177 @@
         input[type="submit"],
         input[type="reset"]
     ) {
-    border-radius: var(--tr-radius-full);
-    font-weight: 600;
+    border-radius: var(--ic-r-md);
+    font-weight: 500;
     transition:
-        background-color var(--tr-dur-fade) var(--tr-ease-soft),
-        transform var(--tr-dur-press) var(--tr-ease-soft);
+        background-color var(--ic-dur-micro) var(--ic-ease),
+        box-shadow var(--ic-dur-micro) var(--ic-ease),
+        transform var(--ic-dur-micro) var(--ic-ease);
 
     &:not(.primary):not(:disabled):not(.icon-confirm):not([class*="icon-"]) {
-        background-color: rgba(255, 255, 255, 0.1);
-        border: none;
-        color: var(--tr-ink);
+        background-color: var(--ic-raised);
+        border: 1px solid var(--ic-line-strong);
+        color: var(--ic-fg);
 
         &:hover {
-            background-color: rgba(255, 255, 255, 0.16);
+            border-color: rgba(var(--ic-splash-rgb), 0.5);
+            color: var(--ic-splash-text);
         }
     }
 
     &.primary:not(:disabled) {
-        background-color: var(--color-primary-element);
+        background-color: var(--ic-splash);
         border: none;
-        color: var(--color-primary-element-text);
-        box-shadow: var(--tr-shadow-button);
+        color: var(--ic-on-splash);
+        font-weight: 600;
 
         &:hover {
-            background-color: var(--color-primary-element-hover);
+            background-color: var(--ic-splash-hover);
+            box-shadow: var(--ic-glow-sm);
         }
     }
 
     &:active:not(:disabled) {
-        transform: scale(var(--tr-press-scale));
+        transform: scale(var(--ic-press));
     }
 }
 
-/* Fields -------------------------------------------------------------------- */
+/* Fields: wells with a hairline ---------------------------------------------- */
 
+// Control edges stay at 3:1 against the ink (edge on deep 3.3:1).
 .input-field {
-    --input-border-color: var(--tr-border-strong) !important;
+    --input-border-color: var(--ic-edge) !important;
+    --input-border-radius: var(--ic-r-md) !important;
 
-    &:not(.input-field--pill) {
-        --input-border-radius: 12px !important;
+    &.input-field--pill {
+        --input-border-radius: var(--ic-r-md) !important;
     }
 }
 
+// Nextcloud 35 draws the edge as a shadow (a strong bottom line, a faint
+// ring); here it is one even hairline that turns splash with a ring on focus.
 .input-field__input {
-    background-color: var(--tr-field) !important;
+    background-color: var(--ic-well) !important;
+    color: var(--ic-fg) !important;
+    box-shadow: 0 0 0 1px var(--input-border-color) !important;
+    transition: box-shadow var(--ic-dur-micro) var(--ic-ease) !important;
+
+    &::placeholder {
+        color: var(--ic-mute) !important;
+        opacity: 1;
+    }
+
+    &:hover:not(:disabled):not(:focus) {
+        --input-border-color: var(--ic-edge-hover) !important;
+    }
 
     &:focus,
-    &:focus-within,
-    &:active {
-        --input-border-color: var(--tr-accent-text) !important;
+    &:focus-visible {
+        --input-border-color: var(--ic-splash) !important;
+
+        box-shadow:
+            0 0 0 1px var(--ic-splash),
+            0 0 0 4px rgba(var(--ic-splash-rgb), 0.16) !important;
     }
+}
+
+.input-field--error .input-field__input {
+    --input-border-color: var(--ic-danger) !important;
+}
+
+.input-field--success .input-field__input {
+    --input-border-color: var(--ic-ok) !important;
 }
 
 .input-field__label {
-    color: var(--tr-ink-soft) !important;
+    color: var(--ic-mute) !important;
+}
+
+.input-field__helper-text-message {
+    color: var(--ic-mute) !important;
 }
 
 input:not([type="range"]):not([type="button"]):not([type="submit"]):not([type="reset"]):not(
         [type="checkbox"]
     ):not([type="radio"]):not([type="color"]):not([type="file"]):not(.input-field__input):not(
         .vs__search
-    ):not(.app-navigation-search__input),
+    ):not(.app-navigation-search__input):not(.unified-search-input__input),
 textarea:not(.input-field__input),
 select {
-    background-color: var(--tr-field) !important;
-    border: 1px solid var(--tr-border-strong) !important;
-    border-radius: 12px;
-    color: var(--tr-ink);
+    background-color: var(--ic-well) !important;
+    border: 1px solid var(--ic-edge) !important;
+    border-radius: var(--ic-r-md);
+    color: var(--ic-fg);
     transition:
-        border-color var(--tr-dur-fade) var(--tr-ease-soft),
-        box-shadow var(--tr-dur-fade) var(--tr-ease-soft);
+        border-color var(--ic-dur-micro) var(--ic-ease),
+        box-shadow var(--ic-dur-micro) var(--ic-ease);
 
     &::placeholder {
-        color: var(--tr-ink-soft);
+        color: var(--ic-mute);
         opacity: 1;
     }
 
     &:hover:not(:disabled):not(:focus) {
-        border-color: var(--tr-ink-soft) !important;
+        border-color: var(--ic-edge-hover) !important;
     }
 
     &:focus,
     &:focus-visible {
-        border-color: var(--tr-accent-text) !important;
-        box-shadow: 0 0 0 3px color-mix(in srgb, var(--tr-accent) 35%, transparent) !important;
+        border-color: var(--ic-splash) !important;
+        box-shadow: 0 0 0 3px rgba(var(--ic-splash-rgb), 0.16) !important;
         outline: none;
+    }
+}
+
+// Rich text fields (Talk composer, comments): the same well with one hairline.
+.rich-contenteditable__input {
+    border: 1px solid var(--ic-edge) !important;
+    border-radius: var(--ic-r-md) !important;
+    background-color: var(--ic-well) !important;
+    transition:
+        border-color var(--ic-dur-micro) var(--ic-ease),
+        box-shadow var(--ic-dur-micro) var(--ic-ease);
+
+    &:hover:not(:focus) {
+        border-color: var(--ic-edge-hover) !important;
+    }
+
+    &:focus,
+    &:focus-visible {
+        border-color: var(--ic-splash) !important;
+        box-shadow: 0 0 0 3px rgba(var(--ic-splash-rgb), 0.16) !important;
+        outline: none !important;
     }
 }
 
 // To prevent white text on white background on Windows
 select option {
-    background-color: var(--tr-inset);
-    color: var(--tr-ink);
+    background-color: var(--ic-raised);
+    color: var(--ic-fg);
 }
 
-/* Switches, checkboxes, radios --------------------------------------------------- */
+/* Checkboxes, radios, switches: the splash ----------------------------------- */
 
-// Switches turn success green when on (Trumpf Toggle); off stays a soft grey.
-.checkbox-radio-switch-switch.checkbox-radio-switch--checked:not(.checkbox-radio-switch--disabled)
-    .checkbox-radio-switch__icon
-    > * {
-    color: var(--tr-success) !important;
+.checkbox-radio-switch__icon > * {
+    color: var(--ic-splash) !important;
+}
+
+.checkbox-radio-switch:not(.checkbox-radio-switch--checked) .checkbox-radio-switch__icon > * {
+    color: var(--ic-edge) !important;
 }
 
 .checkbox-radio-switch-switch:not(.checkbox-radio-switch--checked)
     .checkbox-radio-switch__icon
     > * {
-    color: var(--tr-ink-faint) !important;
+    color: var(--ic-line-strong) !important;
 }
 
-// Checkboxes and radios: the accent text colour reads 5:1 or better on every
-// surface; the filled accent would sit under 3:1 on the dusk blue.
-.checkbox-radio-switch-checkbox .checkbox-radio-switch__icon > *,
-.checkbox-radio-switch-radio .checkbox-radio-switch__icon > * {
-    color: var(--tr-accent-text) !important;
-}
-
-.checkbox-radio-switch-checkbox:not(.checkbox-radio-switch--checked)
-    .checkbox-radio-switch__icon
-    > *,
-.checkbox-radio-switch-radio:not(.checkbox-radio-switch--checked) .checkbox-radio-switch__icon > * {
-    color: var(--tr-ink-soft) !important;
+.checkbox-radio-switch--disabled .checkbox-radio-switch__icon > * {
+    opacity: 0.5;
 }
 
 .checkbox-radio-switch__input:focus-visible + .checkbox-radio-switch__content {
-    outline: 2px solid var(--tr-accent-text) !important;
+    outline: 2px solid var(--ic-splash) !important;
     outline-offset: -2px;
 }
 
@@ -282,50 +313,73 @@ select option {
         .checkbox-radio-switch--button-variant
     )
     .checkbox-radio-switch__content:hover {
-    background-color: rgba(255, 255, 255, 0.06) !important;
+    background-color: var(--ic-fill) !important;
 }
 
 // Button-variant groups read like a segmented control.
 .checkbox-radio-switch--button-variant.checkbox-radio-switch {
-    border-color: var(--tr-border) !important;
-    background-color: var(--tr-field) !important;
+    border-color: var(--ic-line-strong) !important;
+    background-color: var(--ic-well) !important;
 
     &.checkbox-radio-switch--checked .checkbox-radio-switch__content {
-        background-color: var(--color-primary-element-light) !important;
-        color: var(--color-primary-element-light-text) !important;
+        background-color: var(--ic-wash) !important;
+        color: var(--ic-splash-text) !important;
     }
 
     &.checkbox-radio-switch--checked .checkbox-radio-switch__icon > * {
-        color: var(--color-primary-element-light-text) !important;
+        color: var(--ic-splash-text) !important;
     }
 }
 
 /* Selects (NcSelect / vue-select) ----------------------------------------------- */
 
+// Nextcloud 35 adds a shadow edge (strong bottom line, faint ring) on top of
+// the border; one even hairline is enough.
 .v-select.select .vs__dropdown-toggle,
 .select .vs__dropdown-toggle {
-    background-color: var(--tr-field) !important;
-    border-radius: 12px !important;
+    background-color: var(--ic-well) !important;
+    border: 1px solid var(--ic-edge) !important;
+    border-radius: var(--ic-r-md) !important;
+    box-shadow: none !important;
+    transition:
+        border-color var(--ic-dur-micro) var(--ic-ease),
+        box-shadow var(--ic-dur-micro) var(--ic-ease);
+}
+
+.v-select.select:hover:not(.vs--open) .vs__dropdown-toggle {
+    border-color: var(--ic-edge-hover) !important;
+}
+
+.v-select.select.vs--open .vs__dropdown-toggle,
+.v-select.select:focus-within .vs__dropdown-toggle {
+    border-color: var(--ic-splash) !important;
+    box-shadow: 0 0 0 3px rgba(var(--ic-splash-rgb), 0.16) !important;
 }
 
 .vs__dropdown-menu {
-    background-color: var(--tr-inset) !important;
-    border-color: var(--tr-border) !important;
-    border-radius: var(--tr-radius-xl) !important;
-    box-shadow: var(--tr-shadow-float) !important;
+    background-color: var(--ic-float) !important;
+    border: none !important;
+    border-radius: var(--ic-r-lg) !important;
+    box-shadow: var(--ic-shadow-float) !important;
 
     .vs__dropdown-option--highlight {
-        background-color: rgba(255, 255, 255, 0.08) !important;
-        color: var(--tr-ink) !important;
+        background-color: var(--ic-fill-strong) !important;
+        color: var(--ic-hi) !important;
     }
 
     .vs__dropdown-option--selected {
-        color: var(--tr-accent-text) !important;
+        color: var(--ic-splash-text) !important;
     }
 }
 
 .vs__search {
     background-color: transparent !important;
+}
+
+.vs__selected {
+    background-color: var(--ic-raised) !important;
+    border-color: var(--ic-line-strong) !important;
+    border-radius: var(--ic-r-sm) !important;
 }
 
 /* Tables -------------------------------------------------------------------- */
@@ -338,28 +392,28 @@ tbody tr:focus-within {
 /* Progress ------------------------------------------------------------------ */
 
 progress:not(.vue) {
-    background-color: var(--tr-inset);
-    border-radius: var(--tr-radius-full);
+    background-color: var(--ic-raised);
+    border-radius: var(--ic-r-full);
     overflow: hidden;
 
     &::-webkit-progress-bar {
-        background-color: var(--tr-inset);
+        background-color: var(--ic-raised);
     }
 
     &::-webkit-progress-value {
-        background-color: var(--tr-accent);
+        background-color: var(--ic-splash);
     }
 
     &::-moz-progress-bar {
-        background-color: var(--tr-accent);
+        background-color: var(--ic-splash);
     }
 }
 
-@media (prefers-reduced-motion: reduce) {
-    :is(.button-vue--primary, .button-vue--vue-primary)::after {
-        animation: none !important;
-    }
+.progress-bar--linear {
+    --progress-bar-color: var(--ic-splash);
+}
 
+@media (prefers-reduced-motion: reduce) {
     .button-vue:active:not(:disabled),
     button:active,
     .button:active {
