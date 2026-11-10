@@ -1,10 +1,10 @@
 /**
- * InkCurity Dark — the theme's own settings pages as a Trumpf hub
+ * InkCurity Dark — the theme's own settings pages
  *
  * Self-contained: these pages are often opened while the theme is still off,
- * so neutral surfaces come from Nextcloud's own variables and only the brand
- * colours are fixed. Hero card, grouped toggle rows with tinted tiles, a
- * tilted preview card and the signature line.
+ * on a light Nextcloud. The hero card is always ink (it shows the theme), the
+ * grouped rows below take Nextcloud's own surfaces and text colours, the
+ * splash marks what is on.
  *
  * @copyright Copyright (c) 2020, Magnus Walbeck <mw@mwalbeck.org>
  * @copyright Copyright (c) 2026 inkcurity.net
@@ -12,172 +12,162 @@
  * @license GNU AGPL version 3 or any later version, see COPYING file for more.
  */
 
-#breezedark.tr-hub {
-    --hub-accent: #336deb;
-    --hub-accent-text: var(--tr-accent-text, #336deb);
-    --hub-success: #30d158;
-    --hub-pink: #ec4899;
-    --hub-ease-ios: cubic-bezier(0.32, 0.72, 0, 1);
+#breezedark.ic-hub {
+    --hub-splash: #5cc8ff;
+    --hub-on-splash: #031021;
+    --hub-splash-ink: color-mix(in srgb, #5cc8ff 62%, var(--color-main-text, #222));
+    --hub-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
     --hub-ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
-    --hub-ease-spring: cubic-bezier(0.34, 1.45, 0.64, 1);
+    --hub-mono:
+        "JetBrains Mono", ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+    --hub-display: "Space Grotesk", var(--font-face, system-ui), sans-serif;
     --hub-group: var(--color-background-dark);
-    --hub-hairline: color-mix(in srgb, var(--color-border-dark, #888) 70%, transparent);
+    --hub-hairline: var(--color-border, rgba(128, 128, 128, 0.3));
 
     max-width: 640px;
 }
 
-/* Hero card --------------------------------------------------------------- */
+/* Hero card: the theme itself, ink under one lamp ------------------------------- */
 
-#breezedark .tr-hero {
+#breezedark .ic-hero {
     position: relative;
     overflow: hidden;
-    padding: 16px;
-    border-radius: 18px;
-    background: linear-gradient(
-        to bottom right,
-        var(--hub-accent),
-        color-mix(in srgb, var(--hub-accent) 72%, #121935)
-    );
-    box-shadow: 0 12px 32px rgba(3, 6, 20, 0.35);
-    color: #ffffff;
+    padding: 22px 20px 16px;
+    border-radius: 20px;
+    background-color: #091629;
+    background-image:
+        radial-gradient(520px 260px at 0% -30%, rgba(92, 200, 255, 0.22), transparent 70%),
+        radial-gradient(420px 240px at 40% -60%, rgba(47, 77, 255, 0.3), transparent 70%);
+    box-shadow:
+        0 0 0 1px #2a4568,
+        inset 0 1px 0 rgba(255, 255, 255, 0.05),
+        0 24px 60px -28px rgba(92, 200, 255, 0.35);
+    color: #dce5f2;
+    color-scheme: dark;
 }
 
-#breezedark .tr-hero__mark {
-    position: absolute;
-    color: rgba(255, 255, 255, 0.12);
-    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-    font-weight: 700;
-    line-height: 1;
-    pointer-events: none;
-    user-select: none;
-}
-
-#breezedark .tr-hero__mark--a {
-    top: -18px;
-    right: -6px;
-    font-size: 96px;
-    letter-spacing: -0.05em;
-}
-
-#breezedark .tr-hero__mark--b {
-    right: 96px;
-    bottom: -30px;
-    color: rgba(255, 255, 255, 0.08);
-    font-size: 72px;
-}
-
-#breezedark .tr-hero__head {
+#breezedark .ic-hero__head {
     position: relative;
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 14px;
 }
 
-#breezedark .tr-hero__icon {
+#breezedark .ic-hero__mark {
     display: block;
     flex-shrink: 0;
     width: 52px;
     height: 52px;
-    border-radius: 13px;
-    box-shadow:
-        0 1px 2px rgba(0, 0, 0, 0.25),
-        0 0 0 1px rgba(255, 255, 255, 0.3);
-    transform: rotate(-6deg);
+    border-radius: 12px;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08);
+    filter: drop-shadow(0 0 14px rgba(92, 200, 255, 0.35));
 }
 
-#breezedark .tr-hero__title {
+#breezedark .ic-hero__title {
     margin: 0;
     padding: 0;
     color: #ffffff;
-    font-size: 20px;
-    font-weight: 700;
-    line-height: 25px;
-    letter-spacing: -0.01em;
+    font-family: var(--hub-display);
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 30px;
+    letter-spacing: -0.02em;
 }
 
-#breezedark .tr-hero__subtitle {
-    margin: 0;
-    color: rgba(255, 255, 255, 0.82);
-    font-size: 13px;
-    line-height: 18px;
+#breezedark .ic-hero__cursor {
+    margin-inline-start: 2px;
+    color: var(--hub-splash);
+    text-shadow: 0 0 12px rgba(92, 200, 255, 0.8);
+    animation: ic-hub-blink 1s steps(1, end) 0.6s 4;
+}
+
+#breezedark .ic-hero__meta {
+    margin: 4px 0 0;
+    color: #7f9cc2;
+    font-family: var(--hub-mono);
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 16px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
     font-variant-numeric: tabular-nums;
 }
 
-/* The most important row sits in the card as frosted glass. */
-#breezedark .tr-hero__row {
+/* Redaction bars: atmosphere, a wink. Decorative only. */
+#breezedark .ic-hero__bars {
+    position: absolute;
+    top: 26px;
+    right: 22px;
+    margin: 0;
+    color: #2a4568;
+    font-family: var(--hub-mono);
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    line-height: 1;
+    user-select: none;
+}
+
+#breezedark .ic-hero__bars span:nth-child(3) {
+    color: rgba(92, 200, 255, 0.55);
+}
+
+/* The main switch sits in the card as a raised ink row. */
+#breezedark .ic-hero__row {
     position: relative;
     display: flex;
     align-items: center;
-    gap: 12px;
-    margin-top: 16px;
-    padding: 10px 12px;
+    gap: 14px;
+    margin-top: 20px;
+    padding: 12px 14px;
     border-radius: 14px;
-    background: rgba(255, 255, 255, 0.16);
-    -webkit-backdrop-filter: blur(4px);
-    backdrop-filter: blur(4px);
+    background: #0f1e35;
+    box-shadow: inset 0 0 0 1px #1a2d49;
     cursor: pointer;
-    transition: background-color 220ms var(--hub-ease-soft);
+    transition: box-shadow 180ms var(--hub-ease);
 }
 
-#breezedark .tr-hero__row:active {
-    background: rgba(255, 255, 255, 0.25);
-    transition-duration: 0ms;
+#breezedark .ic-hero__row:hover {
+    box-shadow: inset 0 0 0 1px rgba(92, 200, 255, 0.45);
 }
 
-#breezedark .tr-hero__disc {
-    display: grid;
-    flex-shrink: 0;
-    width: 40px;
-    height: 40px;
-    place-items: center;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.25);
-}
-
-#breezedark .tr-hero__who {
-    display: flex;
-    flex: 1;
-    min-width: 0;
-    flex-direction: column;
-}
-
-#breezedark .tr-hero__name {
-    font-size: 16px;
+#breezedark .ic-hero .ic-row__title {
+    color: #ffffff;
     font-weight: 600;
-    line-height: 21px;
 }
 
-#breezedark .tr-hero__handle {
-    color: rgba(255, 255, 255, 0.82);
-    font-size: 13px;
-    line-height: 18px;
+#breezedark .ic-hero .ic-row__subtitle {
+    color: #7f9cc2;
 }
 
-/* Grouped list ------------------------------------------------------------ */
+/* Grouped rows ------------------------------------------------------------------ */
 
-#breezedark .tr-section__title {
-    margin: 28px 16px 6px;
+#breezedark .ic-section__title {
+    margin: 28px 4px 8px;
     padding: 0;
     color: var(--color-text-maxcontrast);
-    font-size: 13px;
+    font-family: var(--hub-mono);
+    font-size: 11px;
     font-weight: 500;
-    line-height: 18px;
+    line-height: 16px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
 }
 
-#breezedark .tr-section__group {
+#breezedark .ic-section__group {
     margin: 0;
     padding: 0;
     overflow: hidden;
     list-style: none;
     border-radius: 14px;
     background: var(--hub-group);
+    box-shadow: inset 0 0 0 1px var(--hub-hairline);
 }
 
-#breezedark .tr-section__group--padded {
+#breezedark .ic-section__group--padded {
     padding: 14px 16px 16px;
 }
 
-#breezedark .tr-section__group > li + li .tr-row::before {
+#breezedark .ic-section__group > li + li .ic-row::before {
     content: "";
     position: absolute;
     top: 0;
@@ -185,90 +175,96 @@
     left: 60px;
     height: 1px;
     background: var(--hub-hairline);
-    transform: scaleY(0.5);
-    transform-origin: top;
 }
 
-#breezedark .tr-section__foot {
-    margin: 6px 16px 0;
+#breezedark .ic-section__foot {
+    margin: 8px 4px 0;
     color: var(--color-text-maxcontrast);
     font-size: 13px;
     line-height: 18px;
 }
 
-#breezedark .tr-row {
+#breezedark .ic-row {
     position: relative;
     display: flex;
     min-height: 44px;
     box-sizing: border-box;
     align-items: center;
     gap: 14px;
-    padding: 10px 16px;
+    padding: 12px 16px;
     cursor: pointer;
-    transition: background-color 220ms var(--hub-ease-soft);
+    transition: background-color 180ms var(--hub-ease);
 }
 
-#breezedark .tr-row:hover {
-    background: color-mix(in srgb, var(--color-main-text) 6%, transparent);
+#breezedark .ic-section__group .ic-row:hover {
+    background: color-mix(in srgb, var(--color-main-text) 5%, transparent);
 }
 
-#breezedark .tr-row:active {
-    background: color-mix(in srgb, var(--color-main-text) 12%, transparent);
+#breezedark .ic-section__group .ic-row:active {
+    background: color-mix(in srgb, var(--color-main-text) 10%, transparent);
     transition-duration: 0ms;
 }
 
-#breezedark .tr-row:has(.tr-switch:disabled) {
+#breezedark .ic-row:has(.ic-switch:disabled) {
     cursor: default;
 }
 
-#breezedark .tr-row:has(.tr-switch:disabled) .tr-row__title {
+#breezedark .ic-row:has(.ic-switch:disabled) .ic-row__title {
     opacity: 0.55;
 }
 
-#breezedark .tr-row__text {
+#breezedark .ic-row__text {
     display: flex;
     flex: 1;
     min-width: 0;
     flex-direction: column;
 }
 
-#breezedark .tr-row__title {
+#breezedark .ic-row__title {
     color: var(--color-main-text);
     font-size: 15px;
     line-height: 20px;
 }
 
-#breezedark .tr-row__subtitle {
+#breezedark .ic-row__subtitle {
     margin-top: 2px;
     color: var(--color-text-maxcontrast);
     font-size: 13px;
     line-height: 18px;
 }
 
-/* Tinted tiles: the accent at a wash, the symbol in the accent. */
-#breezedark .tr-tile {
+/* Tiles: the splash at a wash, the glyph in the splash; lit in the hero. */
+#breezedark .ic-tile {
     display: grid;
     flex-shrink: 0;
-    width: 30px;
-    height: 30px;
+    width: 32px;
+    height: 32px;
     place-items: center;
-    border-radius: 7px;
-    background: color-mix(in srgb, var(--hub-accent) 18%, transparent);
-    color: var(--hub-accent-text);
+    border-radius: 9px;
+    background: color-mix(in srgb, var(--hub-splash) 16%, transparent);
+    color: var(--hub-splash-ink);
 }
 
-#breezedark .tr-field-label {
+#breezedark .ic-tile--lit {
+    background: var(--hub-splash);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.4),
+        0 6px 18px -6px rgba(92, 200, 255, 0.8);
+    color: var(--hub-on-splash);
+}
+
+#breezedark .ic-field-label {
     display: flex;
     align-items: center;
     gap: 12px;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
     color: var(--color-text-maxcontrast);
     font-size: 13px;
 }
 
-/* Switch: iOS geometry, success green when on ----------------------------- */
+/* Switch: iOS geometry, the splash when on ---------------------------------------- */
 
-#breezedark input.tr-switch {
+#breezedark input.ic-switch {
     position: relative;
     flex-shrink: 0;
     width: 51px;
@@ -283,10 +279,16 @@
     cursor: pointer;
     appearance: none;
     -webkit-appearance: none;
-    transition: background-color 300ms var(--hub-ease-soft);
+    transition:
+        background-color 300ms var(--hub-ease-soft),
+        box-shadow 300ms var(--hub-ease-soft);
 }
 
-#breezedark input.tr-switch::before {
+#breezedark .ic-hero input.ic-switch:not(:checked) {
+    background: #2a4568;
+}
+
+#breezedark input.ic-switch::before {
     content: "";
     position: absolute;
     top: 2px;
@@ -296,48 +298,41 @@
     border-radius: 999px;
     background: #ffffff;
     box-shadow:
-        0 3px 8px rgba(0, 0, 0, 0.15),
+        0 3px 8px rgba(0, 0, 0, 0.2),
         0 3px 1px rgba(0, 0, 0, 0.06);
     transition:
         transform 300ms var(--hub-ease-soft),
         width 300ms var(--hub-ease-soft);
 }
 
-#breezedark input.tr-switch:active:not(:disabled)::before {
+#breezedark input.ic-switch:active:not(:disabled)::before {
     width: 34px;
 }
 
-#breezedark input.tr-switch:checked {
-    background: var(--hub-success);
+#breezedark input.ic-switch:checked {
+    background: var(--hub-splash);
+    box-shadow: 0 0 18px -4px rgba(92, 200, 255, 0.7);
 }
 
-#breezedark input.tr-switch:checked::before {
+#breezedark input.ic-switch:checked::before {
     transform: translateX(20px);
 }
 
-#breezedark input.tr-switch:checked:active:not(:disabled)::before {
+#breezedark input.ic-switch:checked:active:not(:disabled)::before {
     transform: translateX(13px);
 }
 
-#breezedark input.tr-switch:disabled {
+#breezedark input.ic-switch:disabled {
     cursor: default;
     opacity: 0.5;
 }
 
-#breezedark input.tr-switch:focus-visible {
-    outline: 2px solid var(--hub-accent-text);
+#breezedark input.ic-switch:focus-visible {
+    outline: 2px solid var(--hub-splash);
     outline-offset: 2px;
 }
 
-#breezedark .tr-hero input.tr-switch:not(:checked) {
-    background: rgba(255, 255, 255, 0.28);
-}
-
-#breezedark .tr-hero input.tr-switch:focus-visible {
-    outline-color: #ffffff;
-}
-
-/* Custom CSS field and the one filled button ------------------------------ */
+/* Custom CSS field and the one filled key ---------------------------------------- */
 
 #breezedark .breezedark-custom-styling {
     display: block;
@@ -345,99 +340,112 @@
     min-height: 180px;
     box-sizing: border-box;
     padding: 12px;
-    border-radius: 12px;
-    font-family: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+    border-radius: 10px;
+    font-family: var(--hub-mono);
     font-size: 13px;
-    line-height: 1.5;
+    line-height: 1.55;
     resize: vertical;
 }
 
-#breezedark .tr-actions {
+#breezedark .ic-actions {
     display: flex;
     justify-content: flex-end;
     margin-top: 12px;
 }
 
-#breezedark .tr-button {
-    min-height: 34px;
+#breezedark .ic-button {
+    min-height: 36px;
     padding: 0 18px;
     border: 0;
-    border-radius: 999px;
-    font-size: 15px;
+    border-radius: 10px;
+    background: var(--hub-splash) !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    color: var(--hub-on-splash) !important;
+    font-size: 14px;
     font-weight: 600;
     cursor: pointer;
     transition:
-        transform 180ms var(--hub-ease-soft),
-        filter 200ms var(--hub-ease-soft);
+        transform 180ms var(--hub-ease),
+        box-shadow 180ms var(--hub-ease),
+        background-color 180ms var(--hub-ease);
 }
 
-#breezedark .tr-button--filled {
-    background: var(--hub-accent) !important;
-    color: #ffffff !important;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+#breezedark .ic-button:hover {
+    background: #7dd4ff !important;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.35),
+        0 0 24px -4px rgba(92, 200, 255, 0.55);
 }
 
-#breezedark .tr-button--filled:hover {
-    filter: brightness(1.08);
+#breezedark .ic-button:active {
+    transform: scale(0.985);
 }
 
-#breezedark .tr-button:active {
-    opacity: 0.85;
-    transform: scale(0.97);
+#breezedark .ic-button:focus-visible {
+    outline: 2px solid var(--hub-splash);
+    outline-offset: 2px;
 }
 
-/* Preview: the theme as an identity card, leaning -6° -------------------- */
+/* Preview: the theme on a lit stage --------------------------------------------- */
 
-#breezedark .tr-preview {
-    display: flex;
-    justify-content: center;
-    padding: 28px 16px 20px;
-    border-radius: 14px;
-    background: radial-gradient(
-        120% 120% at 20% 0%,
-        color-mix(in srgb, var(--hub-accent) 28%, transparent),
+#breezedark .ic-preview {
+    margin: 0;
+    padding: 20px;
+    border-radius: 18px;
+    background-color: #040b18;
+    background-image: radial-gradient(
+        120% 90% at 10% 0%,
+        rgba(92, 200, 255, 0.16),
         transparent 70%
     );
+    box-shadow: 0 0 0 1px #1a2d49;
 }
 
-#breezedark .tr-preview__card {
+#breezedark .ic-preview__shot {
     display: block;
-    width: min(100%, 420px);
+    width: 100%;
     height: auto;
-    border-radius: 14px;
+    border-radius: 10px;
     box-shadow:
-        0 18px 40px color-mix(in srgb, var(--hub-accent) 40%, transparent),
-        0 4px 12px color-mix(in srgb, var(--hub-pink) 22%, transparent),
-        0 0 0 1px rgba(255, 255, 255, 0.12);
-    transform: rotate(-6deg);
-    transition: transform 460ms var(--hub-ease-spring);
+        0 0 0 1px #2a4568,
+        0 24px 48px -24px rgba(0, 0, 0, 0.9),
+        0 20px 60px -30px rgba(92, 200, 255, 0.35);
 }
 
-#breezedark .tr-preview:hover .tr-preview__card {
-    transform: rotate(-3deg) scale(1.01);
-}
+/* Signature line ----------------------------------------------------------------- */
 
-/* Signature line ------------------------------------------------------------ */
-
-#breezedark .tr-signature {
-    margin: 0;
-    padding-top: 32px;
+#breezedark .ic-signature {
+    margin: 32px 0 8px;
     color: var(--color-text-maxcontrast);
+    font-family: var(--hub-mono);
     font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.14em;
+    font-weight: 500;
+    line-height: 16px;
+    letter-spacing: 0.16em;
     text-align: center;
     text-transform: uppercase;
     opacity: 0.8;
 }
 
-#breezedark .tr-icon {
+#breezedark .ic-icon {
     display: block;
 }
 
+@keyframes ic-hub-blink {
+    50% {
+        opacity: 0;
+    }
+}
+
 @media (prefers-reduced-motion: reduce) {
-    #breezedark *,
-    #breezedark *::before {
-        transition: none !important;
+    #breezedark .ic-hero__cursor {
+        animation: none;
+    }
+
+    #breezedark input.ic-switch,
+    #breezedark input.ic-switch::before,
+    #breezedark .ic-row,
+    #breezedark .ic-button {
+        transition: none;
     }
 }

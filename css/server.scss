@@ -30,13 +30,11 @@
 
 // Tokens: included on the theme root. Guest pages include them on :root instead.
 @import "variables/tokens";
+@import "base/fonts";
 
 [data-themes*="breezedark"] {
     @include ic-tokens;
 }
-
-// Every app wears its accent: Photos coral, Talk mint, Calendar red, …
-@include tr-app-accents('[data-themes*="breezedark"]');
 
 // General and Nextcloud Core
 @import "base/elements";

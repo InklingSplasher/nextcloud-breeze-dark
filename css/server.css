@@ -29,836 +29,322 @@
  * 
  */
 /***
- * InkCurity Dark — design tokens, Trumpf edition
+ * InkCurity Dark — design tokens
  *
- * Structure and manners come from Trumpf: page, bg, surface and inset as the
- * four surfaces, one accent that tints buttons, selection and tiles, success
- * green for switches, identity colours, two motion curves. The palette is a
- * lifted dusk blue instead of black, and the accent changes with the app:
- * Files and the hub pages wear the logo blue, Photos coral, Talk mint,
- * Calendar red, Contacts orchid, Mail sky, Deck and Notes gold.
+ * Identity from InkCurity: deep sea-blue ink, one splash of light, hairlines,
+ * mono for meta, keys instead of lozenges, glows instead of drop shadows.
+ * Structure and manners from Trumpf: few surfaces, one filled button per
+ * view, tinted selection, two motion curves, feedback under 200 ms.
  *
- * Every pairing below was checked for contrast (see the PR): text on fills
- * and on tinted washes reaches 4.5:1, the default blue fill reaches 3:1
- * against the surface.
+ * The accent is Splash Blue (#5cc8ff), the light end of the Trumpf blue fire.
+ * Filled, it carries ink text (10:1); as text it reads 9:1 or more on every
+ * surface. Magenta is a guest star: unread counts and nothing else.
  *
  * @copyright Copyright (c) 2019, Magnus Walbeck <mw@mwalbeck.org>
  * @copyright Copyright (c) 2026 inkcurity.net
  *
  * @license GNU AGPL version 3 or any later version, see COPYING file for more.
  */
-/* Accents --------------------------------------------------------------------
- * fill, text on fill, filled hover, tinted wash, wash on hover, text on the
- * wash, accent text on dark surfaces, icon flip on the fill. */
-/* Everything else -------------------------------------------------------------- */
+/***
+ * InkCurity Dark — the three faces, shipped with the theme
+ *
+ * Geist for the interface, Space Grotesk for titles, JetBrains Mono for meta
+ * and code. All three are variable fonts under the SIL Open Font License 1.1
+ * (see fonts/OFL-*.txt) and load from the Nextcloud server itself: no
+ * third-party requests. Latin and Latin Extended only; other scripts fall
+ * back to the system face.
+ *
+ * @copyright Copyright (c) 2026 inkcurity.net
+ *
+ * @license GNU AGPL version 3 or any later version, see COPYING file for more.
+ */
+@font-face {
+  font-family: "Geist";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url("../fonts/geist-latin-ext-wght-normal.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Geist";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url("../fonts/geist-latin-wght-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Space Grotesk";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url("../fonts/space-grotesk-latin-ext-wght-normal.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Space Grotesk";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url("../fonts/space-grotesk-latin-wght-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url("../fonts/jetbrains-mono-latin-ext-wght-normal.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url("../fonts/jetbrains-mono-latin-wght-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
 [data-themes*=breezedark] {
-  /* Surfaces, outside in: page, bg, surface, inset (Trumpf) in a soft dusk blue. */
-  --tr-page: #1b213c;
-  --tr-bg: #212845;
-  --tr-surface: #283152;
-  --tr-surface-rgb: 40, 49, 82;
-  --tr-inset: #343d60;
-  --tr-field: #30385a;
-  --tr-hover: #394265;
-  --tr-border: #4b5681;
-  --tr-border-strong: #7a87b8;
-  --tr-material: rgba(52, 61, 96, 0.8);
-  --tr-material-filter: saturate(180%) blur(20px);
-  --tr-scrim: rgba(10, 13, 32, 0.5);
-  /* Text: ink 11.8:1 on surface, soft 7.7:1 on surface and 5.9:1 on hover. */
-  --tr-ink: #f5f6fb;
-  --tr-ink-soft: #c0c8e6;
-  --tr-ink-faint: #8a94bf;
-  /* Status, identity, rank. Status always comes with a word or a glyph. */
-  --tr-success: #30d158;
-  --tr-danger: #ff6961;
-  --tr-warn: #ff9f0a;
-  --tr-info: #64d2ff;
-  --tr-gold: #f0c454;
-  --tr-pink: #ec4899;
-  --tr-pink-strong: #db2777;
-  --tr-identity-1: #ff7158;
-  --tr-identity-2: #3d6fb5;
-  --tr-identity-3: #5bd49a;
-  --tr-identity-4: #f0c25e;
-  --tr-identity-5: #b85fbf;
-  --tr-identity-6: #7bd6eb;
-  --tr-identity-7: #a8423a;
-  --tr-identity-8: #2d5a3a;
-  /* Shape: groups 14, cards 18, live card and toast 22, body 24, sheets 28. */
-  --tr-radius-tile: 7px;
-  --tr-radius-lg: 10px;
-  --tr-radius-xl: 14px;
-  --tr-radius-2xl: 18px;
-  --tr-radius-card: 22px;
-  --tr-radius-frame: 24px;
-  --tr-radius-float: 28px;
-  --tr-radius-full: 999px;
-  /* Depth: layered shadows, a top highlight on every raised surface, and a
-     glow in the accent for the things you can press. */
-  --tr-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.08);
-  --tr-sheen: linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0) 46%);
-  --tr-shadow-button: 0 1px 2px rgba(6, 9, 28, 0.3);
-  --tr-shadow-card:
-      0 1px 2px rgba(6, 9, 28, 0.25), 0 10px 28px -8px rgba(6, 9, 28, 0.5),
-      inset 0 1px 0 rgba(255, 255, 255, 0.07);
-  --tr-shadow-float:
-      0 2px 6px rgba(6, 9, 28, 0.3), 0 20px 48px -10px rgba(6, 9, 28, 0.6),
-      0 0 0 1px rgba(255, 255, 255, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.09);
-  --tr-shadow-sheet:
-      0 4px 12px rgba(6, 9, 28, 0.3), 0 32px 80px -16px rgba(6, 9, 28, 0.7),
-      0 0 0 1px rgba(255, 255, 255, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  --tr-shadow-frame: 0 16px 40px -20px rgba(6, 9, 28, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.07);
-  --tr-shadow-cta: 0 8px 24px rgba(0, 0, 0, 0.25);
-  --tr-glow: 0 8px 20px -6px color-mix(in srgb, var(--tr-accent) 65%, transparent);
-  --tr-glow-strong: 0 12px 28px -6px color-mix(in srgb, var(--tr-accent) 75%, transparent);
-  /* Motion: two curves carry everything, feedback stays under 200 ms. */
-  --tr-ease-ios: cubic-bezier(0.32, 0.72, 0, 1);
-  --tr-ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
-  --tr-ease-spring: cubic-bezier(0.34, 1.45, 0.64, 1);
-  --tr-dur-press: 180ms;
-  --tr-dur-fade: 200ms;
-  --tr-dur-release: 220ms;
-  --tr-dur-rise: 260ms;
-  --tr-dur-control: 300ms;
-  --tr-dur-push: 420ms;
-  --tr-dur-toast: 480ms;
-  --tr-dur-sheet: 500ms;
-  --tr-dur-settle: 640ms;
-  --tr-press-scale: 0.97;
-  /* Type: the system face only; mono stays for code. */
-  --tr-font-mono:
-      ui-monospace, "SF Mono", "Cascadia Mono", "JetBrains Mono", Menlo, Consolas, monospace;
-  /* Default accent: the logo blue. Apps override it, see tr-app-accents. */
-  --tr-accent: #336deb;
-  --tr-accent-on: #ffffff;
-  --tr-accent-text: #99b6f5;
-  --tr-accent-wash: #2a3e74;
-  --tr-accent-flip: no;
-  --color-primary: #336deb !important;
-  --color-primary-default: #336deb !important;
-  --color-primary-text: #ffffff !important;
-  --color-primary-hover: #2f64d8 !important;
-  --color-primary-light: #2a3e74 !important;
-  --color-primary-light-hover: #2b4380 !important;
-  --color-primary-light-text: #99b6f5 !important;
-  --color-primary-element: #336deb !important;
-  --color-primary-element-hover: #2f64d8 !important;
-  --color-primary-element-default-hover: #2f64d8 !important;
-  --color-primary-element-text: #ffffff !important;
-  --color-primary-element-text-dark: #ffffff !important;
-  --color-primary-element-light: #2a3e74 !important;
-  --color-primary-element-light-hover: #2b4380 !important;
-  --color-primary-element-light-text: #99b6f5 !important;
-  --primary-invert-if-bright: no !important;
-  --primary-invert-if-dark: invert(100%) !important;
-  --gradient-primary-background: linear-gradient(40deg, #336deb 0%, #2f64d8 100%) !important;
-  --color-text-link: #99b6f5 !important;
-  --tr-app: #336deb;
-  --tr-app-on: #ffffff;
-  --tr-app-flip: no;
+  /* Ink, outside in: void (page), deep (panel), raised (cards, menus), float. */
+  --ic-void: #040b18;
+  --ic-void-rgb: 4, 11, 24;
+  --ic-deep: #091629;
+  --ic-deep-rgb: 9, 22, 41;
+  --ic-raised: #0f1e35;
+  --ic-raised-rgb: 15, 30, 53;
+  --ic-float: #132541;
+  --ic-well: #06101f;
+  /* Hairlines: decorative lines, and a stronger edge for controls (3:1). */
+  --ic-line: #1a2d49;
+  --ic-line-soft: rgba(120, 165, 230, 0.1);
+  --ic-line-strong: #2a4568;
+  --ic-edge: #4a6a96;
+  --ic-edge-hover: #6383b2;
+  /* Fills on any ink surface: hover, pressed, selected. */
+  --ic-fill: rgba(130, 175, 240, 0.07);
+  --ic-fill-strong: rgba(130, 175, 240, 0.12);
+  --ic-fill-pressed: rgba(130, 175, 240, 0.16);
+  /* Text: fg 14:1 on deep, mute 6.5:1, faint only for glyphs and chevrons. */
+  --ic-hi: #ffffff;
+  --ic-fg: #dce5f2;
+  --ic-mute: #7f9cc2;
+  --ic-faint: #4f6a8e;
+  /* The splash: one accent in two strengths, plus the deep end of the fire. */
+  --ic-splash: #5cc8ff;
+  --ic-splash-rgb: 92, 200, 255;
+  --ic-splash-hover: #7dd4ff;
+  --ic-splash-pressed: #46b4ec;
+  --ic-splash-text: #8fd6ff;
+  --ic-on-splash: #031021;
+  --ic-wash: rgba(92, 200, 255, 0.12);
+  --ic-wash-strong: rgba(92, 200, 255, 0.18);
+  --ic-electric: #2f4dff;
+  --ic-electric-rgb: 47, 77, 255;
+  /* Status: always with a word or a glyph. */
+  --ic-ok: #4ade80;
+  --ic-warn: #f8e16c;
+  --ic-danger: #ff5577;
+  --ic-magenta: #ff3d8e;
+  --ic-gold: #f5c84c;
+  /* Type: Geist for the interface, Space Grotesk for titles, JetBrains Mono for meta. */
+  --ic-font-body: "Geist", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --ic-font-display: "Space Grotesk", "Geist", system-ui, sans-serif;
+  --ic-font-mono:
+      "JetBrains Mono", ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+  /* Shape: keys 10, cards 14, panels 16, sheets 20. */
+  --ic-r-sm: 6px;
+  --ic-r-md: 10px;
+  --ic-r-lg: 14px;
+  --ic-r-panel: 16px;
+  --ic-r-xl: 20px;
+  --ic-r-full: 999px;
+  /* Depth: glows replace drop shadows; floating things get a soft shadow
+     underneath, a hairline around and a lamp-light glow in the splash. */
+  --ic-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  --ic-shadow-float:
+      0 0 0 1px var(--ic-line-strong), 0 18px 40px -12px rgba(0, 0, 0, 0.7),
+      0 24px 60px -30px rgba(var(--ic-splash-rgb), 0.18);
+  --ic-shadow-sheet:
+      0 0 0 1px var(--ic-line-strong), 0 32px 80px -20px rgba(0, 0, 0, 0.85),
+      0 30px 90px -40px rgba(var(--ic-splash-rgb), 0.22);
+  --ic-glow-sm: 0 0 24px -4px rgba(var(--ic-splash-rgb), 0.55);
+  --ic-glow-md:
+      0 0 36px -6px rgba(var(--ic-splash-rgb), 0.6), 0 0 0 1px rgba(var(--ic-splash-rgb), 0.18);
+  /* Motion: Trumpf's two curves, InkCurity's confident ease-out for hovers. */
+  --ic-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ic-ease-ios: cubic-bezier(0.32, 0.72, 0, 1);
+  --ic-ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --ic-dur-micro: 180ms;
+  --ic-dur-fade: 200ms;
+  --ic-dur-rise: 260ms;
+  --ic-dur-layout: 320ms;
+  --ic-dur-sheet: 460ms;
+  --ic-press: 0.985;
+  /* Nextcloud: type and size ---------------------------------------------- */
+  --font-face: var(--ic-font-body) !important;
+  --font-weight-default: 400 !important;
+  --font-weight-element: 500 !important;
+  --font-weight-heading: 600 !important;
   /* Nextcloud: surfaces --------------------------------------------------- */
-  --color-main-background: var(--tr-surface) !important;
-  --color-main-background-rgb: 40, 49, 82 !important;
-  --color-main-background-translucent: rgba(var(--tr-surface-rgb), 0.97) !important;
-  --color-main-background-blur: rgba(var(--tr-surface-rgb), 0.86) !important;
+  --color-main-background: var(--ic-deep) !important;
+  --color-main-background-rgb: var(--ic-deep-rgb) !important;
+  --color-main-background-translucent: rgba(var(--ic-deep-rgb), 0.97) !important;
+  --color-main-background-blur: rgba(var(--ic-deep-rgb), 0.86) !important;
   --gradient-main-background:
-      var(--color-main-background) 0%, var(--color-main-background-translucent) 85%,
-      transparent 100% !important;
-  --color-background-hover: var(--tr-hover) !important;
-  --color-background-dark: var(--tr-inset) !important;
-  --color-background-darker: #40496a !important;
-  --color-background-translucent: rgba(var(--tr-surface-rgb), 0.86) !important;
-  --color-placeholder-light: var(--tr-inset) !important;
-  --color-placeholder-dark: #40496a !important;
-  --color-background-plain: var(--tr-page) !important;
-  --color-background-plain-text: var(--tr-ink) !important;
+      var(--ic-deep) 0%, rgba(var(--ic-deep-rgb), 0.97) 85%, transparent 100% !important;
+  --color-background-hover: #0f1e35 !important;
+  --color-background-dark: var(--ic-raised) !important;
+  --color-background-darker: var(--ic-float) !important;
+  --color-background-translucent: rgba(var(--ic-deep-rgb), 0.86) !important;
+  --color-placeholder-light: var(--ic-raised) !important;
+  --color-placeholder-dark: var(--ic-float) !important;
+  --filter-background-blur: none !important;
+  --color-background-plain: var(--ic-void) !important;
+  --color-background-plain-text: var(--ic-fg) !important;
   --image-background: none !important;
   --background-image-invert-if-bright: no !important;
   --background-invert-if-dark: invert(100%) !important;
   --background-invert-if-bright: no !important;
   /* Nextcloud: text ------------------------------------------------------- */
-  --color-main-text: var(--tr-ink) !important;
-  --color-text-maxcontrast: var(--tr-ink-soft) !important;
-  --color-text-maxcontrast-default: var(--tr-ink-soft) !important;
-  --color-text-maxcontrast-background-blur: #c6cdea !important;
-  --color-text-light: var(--tr-ink) !important;
-  --color-text-lighter: var(--tr-ink-soft) !important;
-  --color-text-dark: #0b1020 !important;
-  --color-text-error: var(--tr-danger) !important;
-  --color-text-success: var(--tr-success) !important;
-  --color-background-selection: color-mix(in srgb, var(--tr-accent) 40%, transparent) !important;
-  --color-text-selection: var(--tr-ink) !important;
+  --color-main-text: var(--ic-fg) !important;
+  --color-text-maxcontrast: var(--ic-mute) !important;
+  --color-text-maxcontrast-default: var(--ic-mute) !important;
+  --color-text-maxcontrast-background-blur: var(--ic-mute) !important;
+  --color-text-light: var(--ic-fg) !important;
+  --color-text-lighter: var(--ic-mute) !important;
+  --color-text-dark: var(--ic-on-splash) !important;
+  --color-text-error: var(--ic-danger) !important;
+  --color-text-success: var(--ic-ok) !important;
+  --color-text-warning: var(--ic-warn) !important;
+  --color-text-link: var(--ic-splash-text) !important;
+  --color-background-selection: rgba(var(--ic-splash-rgb), 0.3) !important;
+  --color-text-selection: var(--ic-hi) !important;
+  /* Nextcloud: the accent ------------------------------------------------- */
+  --color-primary: var(--ic-splash) !important;
+  --color-primary-default: var(--ic-splash) !important;
+  --color-primary-text: var(--ic-on-splash) !important;
+  --color-primary-hover: var(--ic-splash-hover) !important;
+  --color-primary-light: var(--ic-wash) !important;
+  --color-primary-light-hover: var(--ic-wash-strong) !important;
+  --color-primary-light-text: var(--ic-splash-text) !important;
+  --color-primary-element: var(--ic-splash) !important;
+  --color-primary-element-hover: var(--ic-splash-hover) !important;
+  --color-primary-element-default-hover: var(--ic-splash-hover) !important;
+  --color-primary-element-text: var(--ic-on-splash) !important;
+  --color-primary-element-text-dark: var(--ic-on-splash) !important;
+  --color-primary-element-light: var(--ic-wash) !important;
+  --color-primary-element-light-hover: var(--ic-wash-strong) !important;
+  --color-primary-element-light-text: var(--ic-splash-text) !important;
+  --color-primary-element-extra-light: rgba(var(--ic-splash-rgb), 0.06) !important;
+  --color-primary-element-extra-light-hover: rgba(var(--ic-splash-rgb), 0.1) !important;
+  --primary-invert-if-bright: invert(100%) !important;
+  --primary-invert-if-dark: no !important;
+  --gradient-primary-background: linear-gradient(
+      40deg,
+      var(--ic-splash) 0%,
+      #4ab4f0 100%
+  ) !important;
   /* Nextcloud: borders ---------------------------------------------------- */
-  --color-border: var(--tr-border) !important;
-  --color-border-dark: #56628f !important;
-  --color-border-maxcontrast: var(--tr-border-strong) !important;
-  --color-border-error: var(--tr-danger) !important;
-  --color-border-success: var(--tr-success) !important;
-  /* Nextcloud: feedback. Element colour = meaning, wash = tone at 18 % over
-     the surface, text on the wash passes 7.7:1 or better. ---------------- */
-  --color-error: #533c55 !important;
-  --color-error-hover: #644156 !important;
-  --color-error-text: #ffd6d2 !important;
-  --color-error-rgb: 83, 60, 85 !important;
-  --color-element-error: var(--tr-danger) !important;
-  --color-warning: #534744 !important;
-  --color-warning-hover: #64503e !important;
-  --color-warning-text: #ffe6c2 !important;
-  --color-warning-rgb: 83, 71, 68 !important;
-  --color-element-warning: var(--tr-warn) !important;
-  --color-success: #2a5153 !important;
-  --color-success-hover: #2a5e54 !important;
-  --color-success-text: #cff7da !important;
-  --color-success-rgb: 42, 81, 83 !important;
-  --color-element-success: var(--tr-success) !important;
-  --color-info: #345175 !important;
-  --color-info-hover: #395e82 !important;
-  --color-info-text: #d3f1ff !important;
-  --color-info-rgb: 52, 81, 117 !important;
-  --color-element-info: var(--tr-info) !important;
-  --color-favorite: var(--tr-gold) !important;
-  --color-mark: #645d53 !important;
-  /* Nextcloud: assistant, inside the palette ------------------------------ */
-  --color-background-assistant: #2e3664 !important;
-  --color-border-assistant: linear-gradient(125deg, #336deb 50%, #ec4899 125%) !important;
+  --color-border: var(--ic-line) !important;
+  --color-border-dark: var(--ic-line-strong) !important;
+  --color-border-maxcontrast: var(--ic-edge) !important;
+  --color-border-error: var(--ic-danger) !important;
+  --color-border-success: var(--ic-ok) !important;
+  --border-width-input: 1px !important;
+  --border-width-input-focused: 1px !important;
+  /* Nextcloud: feedback. The element colour carries the meaning, the wash is
+     the tone at a low alpha over deep, text on the wash reads 7:1 or more. */
+  --color-error: #2a1626 !important;
+  --color-error-hover: #36182d !important;
+  --color-error-text: #ffb3c2 !important;
+  --color-error-rgb: 42, 22, 38 !important;
+  --color-element-error: var(--ic-danger) !important;
+  --color-warning: #26261c !important;
+  --color-warning-hover: #313020 !important;
+  --color-warning-text: #fbeaa0 !important;
+  --color-warning-rgb: 38, 38, 28 !important;
+  --color-element-warning: var(--ic-warn) !important;
+  --color-success: #0f2a26 !important;
+  --color-success-hover: #12332c !important;
+  --color-success-text: #a6f0c2 !important;
+  --color-success-rgb: 15, 42, 38 !important;
+  --color-element-success: var(--ic-ok) !important;
+  --color-info: #0c2236 !important;
+  --color-info-hover: #0f2a42 !important;
+  --color-info-text: #b5e3ff !important;
+  --color-info-rgb: 12, 34, 54 !important;
+  --color-element-info: var(--ic-splash) !important;
+  --color-favorite: var(--ic-gold) !important;
+  --color-mark: rgba(248, 225, 108, 0.22) !important;
+  /* Nextcloud: assistant, kept inside the blues ---------------------------- */
+  --color-background-assistant: #0c1b33 !important;
+  --color-border-assistant: linear-gradient(
+      125deg,
+      var(--ic-splash) 30%,
+      var(--ic-electric) 100%
+  ) !important;
   --color-element-assistant: linear-gradient(
       214deg,
-      #7bd6eb 12%,
-      #336deb 45%,
-      #ec4899 92%
+      #9fdcff 10%,
+      var(--ic-splash) 40%,
+      var(--ic-electric) 95%
   ) !important;
   --color-element-assistant-icon: linear-gradient(
       214deg,
-      #7bd6eb 15%,
-      #336deb 45%,
-      #ec4899 85%
+      #9fdcff 10%,
+      var(--ic-splash) 40%,
+      var(--ic-electric) 95%
   ) !important;
   /* Nextcloud: loading, scrollbar, shadow --------------------------------- */
-  --color-loading-light: var(--tr-border) !important;
-  --color-loading-dark: var(--tr-ink) !important;
-  --color-scrollbar: var(--tr-border-strong) transparent !important;
-  --color-box-shadow-rgb: 3, 6, 20 !important;
-  --color-box-shadow: rgba(3, 6, 20, 0.5) !important;
+  --color-loading-light: var(--ic-line-strong) !important;
+  --color-loading-dark: var(--ic-splash) !important;
+  --color-scrollbar: var(--ic-line-strong) transparent !important;
+  --color-box-shadow-rgb: 0, 0, 0 !important;
+  --color-box-shadow: rgba(0, 0, 0, 0.6) !important;
   /* Nextcloud: shape ------------------------------------------------------ */
-  --border-radius-small: 6px !important;
-  --border-radius-element: var(--tr-radius-lg) !important;
-  --border-radius-container: var(--tr-radius-xl) !important;
-  --border-radius-container-large: var(--tr-radius-frame) !important;
-  --border-radius: 6px !important;
-  --border-radius-large: var(--tr-radius-lg) !important;
-  --border-radius-rounded: var(--tr-radius-card) !important;
-  --border-radius-pill: var(--tr-radius-full) !important;
-  --body-container-radius: var(--tr-radius-frame) !important;
-  --body-container-margin: 12px !important;
+  --border-radius-small: var(--ic-r-sm) !important;
+  --border-radius-element: var(--ic-r-md) !important;
+  --border-radius-container: var(--ic-r-lg) !important;
+  --border-radius-container-large: var(--ic-r-panel) !important;
+  --border-radius: var(--ic-r-sm) !important;
+  --border-radius-large: var(--ic-r-md) !important;
+  --border-radius-rounded: var(--ic-r-xl) !important;
+  --border-radius-pill: var(--ic-r-full) !important;
+  --body-container-radius: var(--ic-r-panel) !important;
+  --body-container-margin: 10px !important;
   /* Nextcloud: motion ----------------------------------------------------- */
-  --animation-quick: var(--tr-dur-press) !important;
-  --animation-slow: var(--tr-dur-control) !important;
+  --animation-quick: var(--ic-dur-micro) !important;
+  --animation-slow: var(--ic-dur-layout) !important;
   /* Aliases for the per-app partials -------------------------------------- */
-  --color-text-inactive: var(--tr-ink-soft) !important;
-  --color-icon: var(--tr-ink) !important;
-  --color-icon-yellow: var(--tr-gold) !important;
-  --color-selected-blue: color-mix(in srgb, var(--tr-accent) 22%, transparent) !important;
-  --color-dashboard-grey: rgba(var(--tr-surface-rgb), 0.86) !important;
-  --color-border-grey: var(--tr-border) !important;
-  --color-hover-blue: var(--tr-hover) !important;
-  --table-color-border: var(--tr-border) !important;
-  --table-color-heading: var(--tr-ink) !important;
-  --table-color-heading-border: var(--tr-border-strong) !important;
-  --table-color-background: var(--tr-surface) !important;
-  --table-color-background-hover: var(--tr-hover) !important;
-  --table-border-radius: var(--tr-radius-lg) !important;
-}
-
-[data-themes*=breezedark]:has(> :is(#content, #content-vue).app-photos) {
-  --tr-accent: #ff7158;
-  --tr-accent-on: #1e120c;
-  --tr-accent-text: #ffad9e;
-  --tr-accent-wash: #573f53;
-  --tr-accent-flip: invert(100%);
-  --color-primary: #ff7158 !important;
-  --color-primary-default: #ff7158 !important;
-  --color-primary-text: #1e120c !important;
-  --color-primary-hover: #ff7f69 !important;
-  --color-primary-light: #573f53 !important;
-  --color-primary-light-hover: #684454 !important;
-  --color-primary-light-text: #ffad9e !important;
-  --color-primary-element: #ff7158 !important;
-  --color-primary-element-hover: #ff7f69 !important;
-  --color-primary-element-default-hover: #ff7f69 !important;
-  --color-primary-element-text: #1e120c !important;
-  --color-primary-element-text-dark: #1e120c !important;
-  --color-primary-element-light: #573f53 !important;
-  --color-primary-element-light-hover: #684454 !important;
-  --color-primary-element-light-text: #ffad9e !important;
-  --primary-invert-if-bright: invert(100%) !important;
-  --primary-invert-if-dark: no !important;
-  --gradient-primary-background: linear-gradient(40deg, #ff7158 0%, #ff7f69 100%) !important;
-  --color-text-link: #ffad9e !important;
-}
-
-[data-themes*=breezedark]:has(> :is(#content, #content-vue).app-memories) {
-  --tr-accent: #ff7158;
-  --tr-accent-on: #1e120c;
-  --tr-accent-text: #ffad9e;
-  --tr-accent-wash: #573f53;
-  --tr-accent-flip: invert(100%);
-  --color-primary: #ff7158 !important;
-  --color-primary-default: #ff7158 !important;
-  --color-primary-text: #1e120c !important;
-  --color-primary-hover: #ff7f69 !important;
-  --color-primary-light: #573f53 !important;
-  --color-primary-light-hover: #684454 !important;
-  --color-primary-light-text: #ffad9e !important;
-  --color-primary-element: #ff7158 !important;
-  --color-primary-element-hover: #ff7f69 !important;
-  --color-primary-element-default-hover: #ff7f69 !important;
-  --color-primary-element-text: #1e120c !important;
-  --color-primary-element-text-dark: #1e120c !important;
-  --color-primary-element-light: #573f53 !important;
-  --color-primary-element-light-hover: #684454 !important;
-  --color-primary-element-light-text: #ffad9e !important;
-  --primary-invert-if-bright: invert(100%) !important;
-  --primary-invert-if-dark: no !important;
-  --gradient-primary-background: linear-gradient(40deg, #ff7158 0%, #ff7f69 100%) !important;
-  --color-text-link: #ffad9e !important;
-}
-
-[data-themes*=breezedark]:has(> :is(#content, #content-vue).app-music) {
-  --tr-accent: #ff7158;
-  --tr-accent-on: #1e120c;
-  --tr-accent-text: #ffad9e;
-  --tr-accent-wash: #573f53;
-  --tr-accent-flip: invert(100%);
-  --color-primary: #ff7158 !important;
-  --color-primary-default: #ff7158 !important;
-  --color-primary-text: #1e120c !important;
-  --color-primary-hover: #ff7f69 !important;
-  --color-primary-light: #573f53 !important;
-  --color-primary-light-hover: #684454 !important;
-  --color-primary-light-text: #ffad9e !important;
-  --color-primary-element: #ff7158 !important;
-  --color-primary-element-hover: #ff7f69 !important;
-  --color-primary-element-default-hover: #ff7f69 !important;
-  --color-primary-element-text: #1e120c !important;
-  --color-primary-element-text-dark: #1e120c !important;
-  --color-primary-element-light: #573f53 !important;
-  --color-primary-element-light-hover: #684454 !important;
-  --color-primary-element-light-text: #ffad9e !important;
-  --primary-invert-if-bright: invert(100%) !important;
-  --primary-invert-if-dark: no !important;
-  --gradient-primary-background: linear-gradient(40deg, #ff7158 0%, #ff7f69 100%) !important;
-  --color-text-link: #ffad9e !important;
-}
-
-[data-themes*=breezedark]:has(> :is(#content, #content-vue).app-cookbook) {
-  --tr-accent: #ff7158;
-  --tr-accent-on: #1e120c;
-  --tr-accent-text: #ffad9e;
-  --tr-accent-wash: #573f53;
-  --tr-accent-flip: invert(100%);
-  --color-primary: #ff7158 !important;
-  --color-primary-default: #ff7158 !important;
-  --color-primary-text: #1e120c !important;
-  --color-primary-hover: #ff7f69 !important;
-  --color-primary-light: #573f53 !important;
-  --color-primary-light-hover: #684454 !important;
-  --color-primary-light-text: #ffad9e !important;
-  --color-primary-element: #ff7158 !important;
-  --color-primary-element-hover: #ff7f69 !important;
-  --color-primary-element-default-hover: #ff7f69 !important;
-  --color-primary-element-text: #1e120c !important;
-  --color-primary-element-text-dark: #1e120c !important;
-  --color-primary-element-light: #573f53 !important;
-  --color-primary-element-light-hover: #684454 !important;
-  --color-primary-element-light-text: #ffad9e !important;
-  --primary-invert-if-bright: invert(100%) !important;
-  --primary-invert-if-dark: no !important;
-  --gradient-primary-background: linear-gradient(40deg, #ff7158 0%, #ff7f69 100%) !important;
-  --color-text-link: #ffad9e !important;
-}
-
-[data-themes*=breezedark]:has(> :is(#content, #content-vue).app-spreed) {
-  --tr-accent: #5bd49a;
-  --tr-accent-on: #0f2419;
-  --tr-accent-text: #9de5c2;
-  --tr-accent-wash: #335562;
-  --tr-accent-flip: invert(100%);
-  --color-primary: #5bd49a !important;
-  --color-primary-default: #5bd49a !important;
-  --color-primary-text: #0f2419 !important;
-  --color-primary-hover: #6bd8a4 !important;
-  --color-primary-light: #335562 !important;
-  --color-primary-light-hover: #376268 !important;
-  --color-primary-light-text: #9de5c2 !important;
-  --color-primary-element: #5bd49a !important;
-  --color-primary-element-hover: #6bd8a4 !important;
-  --color-primary-element-default-hover: #6bd8a4 !important;
-  --color-primary-element-text: #0f2419 !important;
-  --color-primary-element-text-dark: #0f2419 !important;
-  --color-primary-element-light: #335562 !important;
-  --color-primary-element-light-hover: #376268 !important;
-  --color-primary-element-light-text: #9de5c2 !important;
-  --primary-invert-if-bright: invert(100%) !important;
-  --primary-invert-if-dark: no !important;
-  --gradient-primary-background: linear-gradient(40deg, #5bd49a 0%, #6bd8a4 100%) !important;
-  --color-text-link: #9de5c2 !important;
-}
-
-[data-themes*=breezedark]:has(> :is(#content, #content-vue).app-tasks) {
-  --tr-accent: #5bd49a;
-  --tr-accent-on: #0f2419;
-  --tr-accent-text: #9de5c2;
-  --tr-accent-wash: #335562;
-  --tr-accent-flip: invert(100%);
-  --color-primary: #5bd49a !important;
-  --color-primary-default: #5bd49a !important;
-  --color-primary-text: #0f2419 !important;
-  --color-primary-hover: #6bd8a4 !important;
-  --color-primary-light: #335562 !important;
-  --color-primary-light-hover: #376268 !important;
-  --color-primary-light-text: #9de5c2 !important;
-  --color-primary-element: #5bd49a !important;
-  --color-primary-element-hover: #6bd8a4 !important;
-  --color-primary-element-default-hover: #6bd8a4 !important;
-  --color-primary-element-text: #0f2419 !important;
-  --color-primary-element-text-dark: #0f2419 !important;
-  --color-primary-element-light: #335562 !important;
-  --color-primary-element-light-hover: #376268 !important;
-  --color-primary-element-light-text: #9de5c2 !important;
-  --primary-invert-if-bright: invert(100%) !important;
-  --primary-invert-if-dark: no !important;
-  --gradient-primary-background: linear-gradient(40deg, #5bd49a 0%, #6bd8a4 100%) !important;
-  --color-text-link: #9de5c2 !important;
-}
-
-[data-themes*=breezedark]:has(> :is(#content, #content-vue).app-maps) {
-  --tr-accent: #5bd49a;
-  --tr-accent-on: #0f2419;
-  --tr-accent-text: #9de5c2;
-  --tr-accent-wash: #335562;
-  --tr-accent-flip: invert(100%);
-  --color-primary: #5bd49a !important;
-  --color-primary-default: #5bd49a !important;
-  --color-primary-text: #0f2419 !important;
-  --color-primary-hover: #6bd8a4 !important;
-  --color-primary-light: #335562 !important;
-  --color-primary-light-hover: #376268 !important;
-  --color-primary-light-text: #9de5c2 !important;
-  --color-primary-element: #5bd49a !important;
-  --color-primary-element-hover: #6bd8a4 !important;
-  --color-primary-element-default-hover: #6bd8a4 !important;
-  --color-primary-element-text: #0f2419 !important;
-  --color-primary-element-text-dark: #0f2419 !important;
-  --color-primary-element-light: #335562 !important;
-  --color-primary-element-light-hover: #376268 !important;
-  --color-primary-element-light-text: #9de5c2 !important;
-  --primary-invert-if-bright: invert(100%) !important;
-  --primary-invert-if-dark: no !important;
-  --gradient-primary-background: linear-gradient(40deg, #5bd49a 0%, #6bd8a4 100%) !important;
-  --color-text-link: #9de5c2 !important;
-}
-
-[data-themes*=breezedark]:has(> :is(#content, #content-vue).app-calendar) {
-  --tr-accent: #ff6b6b;
-  --tr-accent-on: #2a0a0a;
-  --tr-accent-text: #ffacac;
-  --tr-accent-wash: #573e58;
-  --tr-accent-flip: invert(100%);
-  --color-primary: #ff6b6b !important;
-  --color-primary-default: #ff6b6b !important;
-  --color-primary-text: #2a0a0a !important;
-  --color-primary-hover: #ff7a7a !important;
-  --color-primary-light: #573e58 !important;
-  --color-primary-light-hover: #68425a !important;
-  --color-primary-light-text: #ffacac !important;
-  --color-primary-element: #ff6b6b !important;
-  --color-primary-element-hover: #ff7a7a !important;
-  --color-primary-element-default-hover: #ff7a7a !important;
-  --color-primary-element-text: #2a0a0a !important;
-  --color-primary-element-text-dark: #2a0a0a !important;
-  --color-primary-element-light: #573e58 !important;
-  --color-primary-element-light-hover: #68425a !important;
-  --color-primary-element-light-text: #ffacac !important;
-  --primary-invert-if-bright: invert(100%) !important;
-  --primary-invert-if-dark: no !important;
-  --gradient-primary-background: linear-gradient(40deg, #ff6b6b 0%, #ff7a7a 100%) !important;
-  --color-text-link: #ffacac !important;
-}
-
-[data-themes*=breezedark]:has(> :is(#content, #content-vue).app-contacts) {
-  --tr-accent: #d48ad9;
-  --tr-accent-on: #260c29;
-  --tr-accent-text: #e7bdea;
-  --tr-accent-wash: #4e4570;
-  --tr-accent-flip: invert(100%);
-  --color-primary: #d48ad9 !important;
-  --color-primary-default: #d48ad9 !important;
-  --color-primary-text: #260c29 !important;
-  --color-primary-hover: #d896dd !important;
-  --color-primary-light: #4e4570 !important;
-  --color-primary-light-hover: #5c4c7a !important;
-  --color-primary-light-text: #e7bdea !important;
-  --color-primary-element: #d48ad9 !important;
-  --color-primary-element-hover: #d896dd !important;
-  --color-primary-element-default-hover: #d896dd !important;
-  --color-primary-element-text: #260c29 !important;
-  --color-primary-element-text-dark: #260c29 !important;
-  --color-primary-element-light: #4e4570 !important;
-  --color-primary-element-light-hover: #5c4c7a !important;
-  --color-primary-element-light-text: #e7bdea !important;
-  --primary-invert-if-bright: invert(100%) !important;
-  --primary-invert-if-dark: no !important;
-  --gradient-primary-background: linear-gradient(40deg, #d48ad9 0%, #d896dd 100%) !important;
-  --color-text-link: #e7bdea !important;
-}
-
-[data-themes*=breezedark]:has(> :is(#content, #content-vue).app-forms) {
-  --tr-accent: #d48ad9;
-  --tr-accent-on: #260c29;
-  --tr-accent-text: #e7bdea;
-  --tr-accent-wash: #4e4570;
-  --tr-accent-flip: invert(100%);
-  --color-primary: #d48ad9 !important;
-  --color-primary-default: #d48ad9 !important;
-  --color-primary-text: #260c29 !important;
-  --color-primary-hover: #d896dd !important;
-  --color-primary-light: #4e4570 !important;
-  --color-primary-light-hover: #5c4c7a !important;
-  --color-primary-light-text: #e7bdea !important;
-  --color-primary-element: #d48ad9 !important;
-  --color-primary-element-hover: #d896dd !important;
-  --color-primary-element-default-hover: #d896dd !important;
-  --color-primary-element-text: #260c29 !important;
-  --color-primary-element-text-dark: #260c29 !important;
-  --color-primary-element-light: #4e4570 !important;
-  --color-primary-element-light-hover: #5c4c7a !important;
-  --color-primary-element-light-text: #e7bdea !important;
-  --primary-invert-if-bright: invert(100%) !important;
-  --primary-invert-if-dark: no !important;
-  --gradient-primary-background: linear-gradient(40deg, #d48ad9 0%, #d896dd 100%) !important;
-  --color-text-link: #e7bdea !important;
-}
-
-[data-themes*=breezedark]:has(> :is(#content, #content-vue).app-polls) {
-  --tr-accent: #d48ad9;
-  --tr-accent-on: #260c29;
-  --tr-accent-text: #e7bdea;
-  --tr-accent-wash: #4e4570;
-  --tr-accent-flip: invert(100%);
-  --color-primary: #d48ad9 !important;
-  --color-primary-default: #d48ad9 !important;
-  --color-primary-text: #260c29 !important;
-  --color-primary-hover: #d896dd !important;
-  --color-primary-light: #4e4570 !important;
-  --color-primary-light-hover: #5c4c7a !important;
-  --color-primary-light-text: #e7bdea !important;
-  --color-primary-element: #d48ad9 !important;
-  --color-primary-element-hover: #d896dd !important;
-  --color-primary-element-default-hover: #d896dd !important;
-  --color-primary-element-text: #260c29 !important;
-  --color-primary-element-text-dark: #260c29 !important;
-  --color-primary-element-light: #4e4570 !important;
-  --color-primary-element-light-hover: #5c4c7a !important;
-  --color-primary-element-light-text: #e7bdea !important;
-  --primary-invert-if-bright: invert(100%) !important;
-  --primary-invert-if-dark: no !important;
-  --gradient-primary-background: linear-gradient(40deg, #d48ad9 0%, #d896dd 100%) !important;
-  --color-text-link: #e7bdea !important;
-}
-
-[data-themes*=breezedark]:has(> :is(#content, #content-vue).app-mail) {
-  --tr-accent: #7bd6eb;
-  --tr-accent-on: #0f2536;
-  --tr-accent-text: #abe5f2;
-  --tr-accent-wash: #3a5574;
-  --tr-accent-flip: invert(100%);
-  --color-primary: #7bd6eb !important;
-  --color-primary-default: #7bd6eb !important;
-  --color-primary-text: #0f2536 !important;
-  --color-primary-hover: #88daed !important;
-  --color-primary-light: #3a5574 !important;
-  --color-primary-light-hover: #416280 !important;
-  --color-primary-light-text: #abe5f2 !important;
-  --color-primary-element: #7bd6eb !important;
-  --color-primary-element-hover: #88daed !important;
-  --color-primary-element-default-hover: #88daed !important;
-  --color-primary-element-text: #0f2536 !important;
-  --color-primary-element-text-dark: #0f2536 !important;
-  --color-primary-element-light: #3a5574 !important;
-  --color-primary-element-light-hover: #416280 !important;
-  --color-primary-element-light-text: #abe5f2 !important;
-  --primary-invert-if-bright: invert(100%) !important;
-  --primary-invert-if-dark: no !important;
-  --gradient-primary-background: linear-gradient(40deg, #7bd6eb 0%, #88daed 100%) !important;
-  --color-text-link: #abe5f2 !important;
-}
-
-[data-themes*=breezedark]:has(> :is(#content, #content-vue).app-news) {
-  --tr-accent: #7bd6eb;
-  --tr-accent-on: #0f2536;
-  --tr-accent-text: #abe5f2;
-  --tr-accent-wash: #3a5574;
-  --tr-accent-flip: invert(100%);
-  --color-primary: #7bd6eb !important;
-  --color-primary-default: #7bd6eb !important;
-  --color-primary-text: #0f2536 !important;
-  --color-primary-hover: #88daed !important;
-  --color-primary-light: #3a5574 !important;
-  --color-primary-light-hover: #416280 !important;
-  --color-primary-light-text: #abe5f2 !important;
-  --color-primary-element: #7bd6eb !important;
-  --color-primary-element-hover: #88daed !important;
-  --color-primary-element-default-hover: #88daed !important;
-  --color-primary-element-text: #0f2536 !important;
-  --color-primary-element-text-dark: #0f2536 !important;
-  --color-primary-element-light: #3a5574 !important;
-  --color-primary-element-light-hover: #416280 !important;
-  --color-primary-element-light-text: #abe5f2 !important;
-  --primary-invert-if-bright: invert(100%) !important;
-  --primary-invert-if-dark: no !important;
-  --gradient-primary-background: linear-gradient(40deg, #7bd6eb 0%, #88daed 100%) !important;
-  --color-text-link: #abe5f2 !important;
-}
-
-[data-themes*=breezedark]:has(> :is(#content, #content-vue).app-bookmarks) {
-  --tr-accent: #7bd6eb;
-  --tr-accent-on: #0f2536;
-  --tr-accent-text: #abe5f2;
-  --tr-accent-wash: #3a5574;
-  --tr-accent-flip: invert(100%);
-  --color-primary: #7bd6eb !important;
-  --color-primary-default: #7bd6eb !important;
-  --color-primary-text: #0f2536 !important;
-  --color-primary-hover: #88daed !important;
-  --color-primary-light: #3a5574 !important;
-  --color-primary-light-hover: #416280 !important;
-  --color-primary-light-text: #abe5f2 !important;
-  --color-primary-element: #7bd6eb !important;
-  --color-primary-element-hover: #88daed !important;
-  --color-primary-element-default-hover: #88daed !important;
-  --color-primary-element-text: #0f2536 !important;
-  --color-primary-element-text-dark: #0f2536 !important;
-  --color-primary-element-light: #3a5574 !important;
-  --color-primary-element-light-hover: #416280 !important;
-  --color-primary-element-light-text: #abe5f2 !important;
-  --primary-invert-if-bright: invert(100%) !important;
-  --primary-invert-if-dark: no !important;
-  --gradient-primary-background: linear-gradient(40deg, #7bd6eb 0%, #88daed 100%) !important;
-  --color-text-link: #abe5f2 !important;
-}
-
-[data-themes*=breezedark]:has(> :is(#content, #content-vue).app-deck) {
-  --tr-accent: #f0c25e;
-  --tr-accent-on: #2a1f0a;
-  --tr-accent-text: #f5d692;
-  --tr-accent-wash: #545155;
-  --tr-accent-flip: invert(100%);
-  --color-primary: #f0c25e !important;
-  --color-primary-default: #f0c25e !important;
-  --color-primary-text: #2a1f0a !important;
-  --color-primary-hover: #f2c86e !important;
-  --color-primary-light: #545155 !important;
-  --color-primary-light-hover: #645c56 !important;
-  --color-primary-light-text: #f5d692 !important;
-  --color-primary-element: #f0c25e !important;
-  --color-primary-element-hover: #f2c86e !important;
-  --color-primary-element-default-hover: #f2c86e !important;
-  --color-primary-element-text: #2a1f0a !important;
-  --color-primary-element-text-dark: #2a1f0a !important;
-  --color-primary-element-light: #545155 !important;
-  --color-primary-element-light-hover: #645c56 !important;
-  --color-primary-element-light-text: #f5d692 !important;
-  --primary-invert-if-bright: invert(100%) !important;
-  --primary-invert-if-dark: no !important;
-  --gradient-primary-background: linear-gradient(40deg, #f0c25e 0%, #f2c86e 100%) !important;
-  --color-text-link: #f5d692 !important;
-}
-
-[data-themes*=breezedark]:has(> :is(#content, #content-vue).app-notes) {
-  --tr-accent: #f0c25e;
-  --tr-accent-on: #2a1f0a;
-  --tr-accent-text: #f5d692;
-  --tr-accent-wash: #545155;
-  --tr-accent-flip: invert(100%);
-  --color-primary: #f0c25e !important;
-  --color-primary-default: #f0c25e !important;
-  --color-primary-text: #2a1f0a !important;
-  --color-primary-hover: #f2c86e !important;
-  --color-primary-light: #545155 !important;
-  --color-primary-light-hover: #645c56 !important;
-  --color-primary-light-text: #f5d692 !important;
-  --color-primary-element: #f0c25e !important;
-  --color-primary-element-hover: #f2c86e !important;
-  --color-primary-element-default-hover: #f2c86e !important;
-  --color-primary-element-text: #2a1f0a !important;
-  --color-primary-element-text-dark: #2a1f0a !important;
-  --color-primary-element-light: #545155 !important;
-  --color-primary-element-light-hover: #645c56 !important;
-  --color-primary-element-light-text: #f5d692 !important;
-  --primary-invert-if-bright: invert(100%) !important;
-  --primary-invert-if-dark: no !important;
-  --gradient-primary-background: linear-gradient(40deg, #f0c25e 0%, #f2c86e 100%) !important;
-  --color-text-link: #f5d692 !important;
-}
-
-[data-themes*=breezedark]:has(> :is(#content, #content-vue).app-collectives) {
-  --tr-accent: #f0c25e;
-  --tr-accent-on: #2a1f0a;
-  --tr-accent-text: #f5d692;
-  --tr-accent-wash: #545155;
-  --tr-accent-flip: invert(100%);
-  --color-primary: #f0c25e !important;
-  --color-primary-default: #f0c25e !important;
-  --color-primary-text: #2a1f0a !important;
-  --color-primary-hover: #f2c86e !important;
-  --color-primary-light: #545155 !important;
-  --color-primary-light-hover: #645c56 !important;
-  --color-primary-light-text: #f5d692 !important;
-  --color-primary-element: #f0c25e !important;
-  --color-primary-element-hover: #f2c86e !important;
-  --color-primary-element-default-hover: #f2c86e !important;
-  --color-primary-element-text: #2a1f0a !important;
-  --color-primary-element-text-dark: #2a1f0a !important;
-  --color-primary-element-light: #545155 !important;
-  --color-primary-element-light-hover: #645c56 !important;
-  --color-primary-element-light-text: #f5d692 !important;
-  --primary-invert-if-bright: invert(100%) !important;
-  --primary-invert-if-dark: no !important;
-  --gradient-primary-background: linear-gradient(40deg, #f0c25e 0%, #f2c86e 100%) !important;
-  --color-text-link: #f5d692 !important;
-}
-
-:is(.app-menu-entry__link, .app-item)[href*="/apps/photos/"],
-:is(.app-menu-entry__link, .app-item)[href$="/apps/photos"] {
-  --tr-app: #ff7158;
-  --tr-app-on: #1e120c;
-  --tr-app-flip: invert(100%);
-}
-
-:is(.app-menu-entry__link, .app-item)[href*="/apps/memories/"],
-:is(.app-menu-entry__link, .app-item)[href$="/apps/memories"] {
-  --tr-app: #ff7158;
-  --tr-app-on: #1e120c;
-  --tr-app-flip: invert(100%);
-}
-
-:is(.app-menu-entry__link, .app-item)[href*="/apps/music/"],
-:is(.app-menu-entry__link, .app-item)[href$="/apps/music"] {
-  --tr-app: #ff7158;
-  --tr-app-on: #1e120c;
-  --tr-app-flip: invert(100%);
-}
-
-:is(.app-menu-entry__link, .app-item)[href*="/apps/cookbook/"],
-:is(.app-menu-entry__link, .app-item)[href$="/apps/cookbook"] {
-  --tr-app: #ff7158;
-  --tr-app-on: #1e120c;
-  --tr-app-flip: invert(100%);
-}
-
-:is(.app-menu-entry__link, .app-item)[href*="/apps/spreed/"],
-:is(.app-menu-entry__link, .app-item)[href$="/apps/spreed"] {
-  --tr-app: #5bd49a;
-  --tr-app-on: #0f2419;
-  --tr-app-flip: invert(100%);
-}
-
-:is(.app-menu-entry__link, .app-item)[href*="/apps/tasks/"],
-:is(.app-menu-entry__link, .app-item)[href$="/apps/tasks"] {
-  --tr-app: #5bd49a;
-  --tr-app-on: #0f2419;
-  --tr-app-flip: invert(100%);
-}
-
-:is(.app-menu-entry__link, .app-item)[href*="/apps/maps/"],
-:is(.app-menu-entry__link, .app-item)[href$="/apps/maps"] {
-  --tr-app: #5bd49a;
-  --tr-app-on: #0f2419;
-  --tr-app-flip: invert(100%);
-}
-
-:is(.app-menu-entry__link, .app-item)[href*="/apps/calendar/"],
-:is(.app-menu-entry__link, .app-item)[href$="/apps/calendar"] {
-  --tr-app: #ff6b6b;
-  --tr-app-on: #2a0a0a;
-  --tr-app-flip: invert(100%);
-}
-
-:is(.app-menu-entry__link, .app-item)[href*="/apps/contacts/"],
-:is(.app-menu-entry__link, .app-item)[href$="/apps/contacts"] {
-  --tr-app: #d48ad9;
-  --tr-app-on: #260c29;
-  --tr-app-flip: invert(100%);
-}
-
-:is(.app-menu-entry__link, .app-item)[href*="/apps/forms/"],
-:is(.app-menu-entry__link, .app-item)[href$="/apps/forms"] {
-  --tr-app: #d48ad9;
-  --tr-app-on: #260c29;
-  --tr-app-flip: invert(100%);
-}
-
-:is(.app-menu-entry__link, .app-item)[href*="/apps/polls/"],
-:is(.app-menu-entry__link, .app-item)[href$="/apps/polls"] {
-  --tr-app: #d48ad9;
-  --tr-app-on: #260c29;
-  --tr-app-flip: invert(100%);
-}
-
-:is(.app-menu-entry__link, .app-item)[href*="/apps/mail/"],
-:is(.app-menu-entry__link, .app-item)[href$="/apps/mail"] {
-  --tr-app: #7bd6eb;
-  --tr-app-on: #0f2536;
-  --tr-app-flip: invert(100%);
-}
-
-:is(.app-menu-entry__link, .app-item)[href*="/apps/news/"],
-:is(.app-menu-entry__link, .app-item)[href$="/apps/news"] {
-  --tr-app: #7bd6eb;
-  --tr-app-on: #0f2536;
-  --tr-app-flip: invert(100%);
-}
-
-:is(.app-menu-entry__link, .app-item)[href*="/apps/bookmarks/"],
-:is(.app-menu-entry__link, .app-item)[href$="/apps/bookmarks"] {
-  --tr-app: #7bd6eb;
-  --tr-app-on: #0f2536;
-  --tr-app-flip: invert(100%);
-}
-
-:is(.app-menu-entry__link, .app-item)[href*="/apps/deck/"],
-:is(.app-menu-entry__link, .app-item)[href$="/apps/deck"] {
-  --tr-app: #f0c25e;
-  --tr-app-on: #2a1f0a;
-  --tr-app-flip: invert(100%);
-}
-
-:is(.app-menu-entry__link, .app-item)[href*="/apps/notes/"],
-:is(.app-menu-entry__link, .app-item)[href$="/apps/notes"] {
-  --tr-app: #f0c25e;
-  --tr-app-on: #2a1f0a;
-  --tr-app-flip: invert(100%);
-}
-
-:is(.app-menu-entry__link, .app-item)[href*="/apps/collectives/"],
-:is(.app-menu-entry__link, .app-item)[href$="/apps/collectives"] {
-  --tr-app: #f0c25e;
-  --tr-app-on: #2a1f0a;
-  --tr-app-flip: invert(100%);
+  --color-text-inactive: var(--ic-mute) !important;
+  --color-icon: var(--ic-fg) !important;
+  --color-icon-yellow: var(--ic-gold) !important;
+  --color-selected-blue: var(--ic-wash) !important;
+  --color-dashboard-grey: rgba(var(--ic-raised-rgb), 0.9) !important;
+  --color-border-grey: var(--ic-line) !important;
+  --color-hover-blue: var(--ic-fill-strong) !important;
+  --table-color-border: var(--ic-line) !important;
+  --table-color-heading: var(--ic-hi) !important;
+  --table-color-heading-border: var(--ic-line-strong) !important;
+  --table-color-background: var(--ic-deep) !important;
+  --table-color-background-hover: var(--color-background-hover) !important;
+  --table-border-radius: var(--ic-r-md) !important;
 }
 
 /***
- * InkCurity Dark — controls, Trumpf edition
+ * InkCurity Dark — controls
  *
- * Buttons: filled for the one main action, tinted for actions with weight,
- * plain for quiet ones, a red wash for the way into something destructive.
- * Small buttons are pills, large ones 14 px keys. Every press shrinks to 0.97.
- * Switches turn success green. Fields sit in a light well with a 2 px ring in
- * the accent while focused.
+ * Buttons are keys, not lozenges: 10 px corners. Filled for the one main
+ * action of a view (splash with ink text, a lamp-light glow on hover), keyed
+ * with a hairline edge for actions with weight, plain for quiet ones, a red
+ * outline for the way into something destructive. Every press sinks to 0.985.
+ * Fields are wells with a hairline that turns splash with a 3 px ring while
+ * focused. Checkboxes, radios and switches wear the splash.
  *
- * Selectors cover @nextcloud/vue 9 (Nextcloud 33/34: .button-vue--primary) and
- * the v8 bundles some apps still ship (.button-vue--vue-primary).
+ * Selectors cover @nextcloud/vue 9 (.button-vue--primary) and the v8 names
+ * (.button-vue--vue-primary) that Nextcloud 35 still emits.
  *
  * @copyright Copyright (c) 2020, Magnus Walbeck <mw@mwalbeck.org>
  * @copyright Copyright (c) 2026 inkcurity.net
@@ -867,83 +353,83 @@
  */
 /* Buttons ------------------------------------------------------------------- */
 .button-vue {
-  border-radius: var(--tr-radius-full) !important;
-  transition: background-color var(--tr-dur-fade) var(--tr-ease-soft), color var(--tr-dur-fade) var(--tr-ease-soft), opacity var(--tr-dur-fade) var(--tr-ease-soft), filter var(--tr-dur-fade) var(--tr-ease-soft), transform var(--tr-dur-press) var(--tr-ease-soft) !important;
+  border-radius: var(--ic-r-md) !important;
+  transition: background-color var(--ic-dur-micro) var(--ic-ease), box-shadow var(--ic-dur-micro) var(--ic-ease), color var(--ic-dur-micro) var(--ic-ease), transform var(--ic-dur-micro) var(--ic-ease) !important;
 }
 .button-vue .button-vue__text {
-  font-weight: 600 !important;
+  font-weight: 500 !important;
   letter-spacing: -0.005em;
 }
 .button-vue:active:not(:disabled) {
-  transform: scale(var(--tr-press-scale)) !important;
+  transform: scale(var(--ic-press)) !important;
 }
-.button-vue--size-large {
-  border-radius: var(--tr-radius-xl) !important;
+.button-vue:focus-visible {
+  outline: 2px solid var(--ic-splash) !important;
+  outline-offset: 2px !important;
+  box-shadow: none !important;
 }
 
 :is(.button-vue--primary, .button-vue--vue-primary):not(:disabled) {
-  position: relative;
-  overflow: hidden;
-  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0) 62%) !important;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28), var(--tr-glow);
+  background-color: var(--ic-splash) !important;
+  color: var(--ic-on-splash) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
 }
-:is(.button-vue--primary, .button-vue--vue-primary):not(:disabled)::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(105deg, transparent 30%, rgba(255, 255, 255, 0.32) 50%, transparent 70%);
-  transform: translateX(-120%);
-  pointer-events: none;
+:is(.button-vue--primary, .button-vue--vue-primary):not(:disabled) .button-vue__text {
+  font-weight: 600 !important;
 }
 :is(.button-vue--primary, .button-vue--vue-primary):not(:disabled):hover {
-  background-color: var(--color-primary-element) !important;
-  filter: brightness(1.06);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28), var(--tr-glow-strong);
-}
-:is(.button-vue--primary, .button-vue--vue-primary):not(:disabled):hover::after {
-  animation: tr-sheen 700ms var(--tr-ease-soft) both;
+  background-color: var(--ic-splash-hover) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), var(--ic-glow-sm);
 }
 :is(.button-vue--primary, .button-vue--vue-primary):not(:disabled):active {
-  opacity: 0.88;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  background-color: var(--ic-splash-pressed) !important;
+  box-shadow: none;
 }
 
-@keyframes tr-sheen {
-  to {
-    transform: translateX(120%);
-  }
+:is(.button-vue--secondary, .button-vue--vue-secondary):not(.unified-search__button):not(.property-color__color-preview):not(:disabled) {
+  background-color: var(--ic-raised) !important;
+  box-shadow: inset 0 0 0 1px var(--ic-line-strong), var(--ic-highlight);
+  color: var(--ic-fg) !important;
 }
-:is(.button-vue--secondary, .button-vue--vue-secondary):not(.unified-search__button):not(.property-color__color-preview) {
-  background-color: var(--color-primary-element-light) !important;
-  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0)) !important;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
-  color: var(--color-primary-element-light-text) !important;
-}
-:is(.button-vue--secondary, .button-vue--vue-secondary):not(.unified-search__button):not(.property-color__color-preview):hover:not(:disabled) {
-  background-color: var(--color-primary-element-light-hover) !important;
+:is(.button-vue--secondary, .button-vue--vue-secondary):not(.unified-search__button):not(.property-color__color-preview):not(:disabled):hover {
+  background-color: var(--ic-float) !important;
+  box-shadow: inset 0 0 0 1px rgba(var(--ic-splash-rgb), 0.5);
+  color: var(--ic-splash-text) !important;
 }
 
-:is(.button-vue--tertiary, .button-vue--vue-tertiary):hover:not(:disabled) {
-  background-color: rgba(255, 255, 255, 0.08) !important;
+:is(.button-vue--tertiary,
+.button-vue--vue-tertiary,
+.button-vue--tertiary-no-background):hover:not(:disabled) {
+  background-color: var(--ic-fill) !important;
+}
+
+:is(.button-vue--tertiary, .button-vue--vue-tertiary):active:not(:disabled) {
+  background-color: var(--ic-fill-pressed) !important;
 }
 
 :is(.button-vue--error, .button-vue--vue-error):not(:disabled) {
-  background-color: var(--color-error) !important;
-  color: var(--color-error-text) !important;
+  background-color: rgba(255, 85, 119, 0.06) !important;
+  box-shadow: inset 0 0 0 1px rgba(255, 85, 119, 0.35);
+  color: var(--ic-danger) !important;
 }
 :is(.button-vue--error, .button-vue--vue-error):not(:disabled):hover {
-  background-color: var(--color-error-hover) !important;
+  background-color: rgba(255, 85, 119, 0.12) !important;
 }
 
 :is(.button-vue--success, .button-vue--vue-success):not(:disabled) {
-  background-color: var(--color-success) !important;
-  color: var(--color-success-text) !important;
+  background-color: rgba(74, 222, 128, 0.08) !important;
+  box-shadow: inset 0 0 0 1px rgba(74, 222, 128, 0.3);
+  color: var(--ic-ok) !important;
 }
 
-.button-vue:focus-visible {
-  outline: 2px solid var(--tr-accent-text) !important;
-  outline-offset: 2px !important;
-  box-shadow: none !important;
+:is(.button-vue--warning, .button-vue--vue-warning):not(:disabled) {
+  background-color: rgba(248, 225, 108, 0.08) !important;
+  box-shadow: inset 0 0 0 1px rgba(248, 225, 108, 0.3);
+  color: var(--ic-warn) !important;
+}
+
+.button-vue:disabled {
+  opacity: 0.45 !important;
 }
 
 :is(#content, #content-vue, .oc-dialog, .modal-container) :is(button:not(.button-vue):not([class*=color-picker]):not(.action-button):not([class^=vs__]):not(.files-list__row-name-link),
@@ -951,168 +437,226 @@
 input[type=button],
 input[type=submit],
 input[type=reset]) {
-  border-radius: var(--tr-radius-full);
-  font-weight: 600;
-  transition: background-color var(--tr-dur-fade) var(--tr-ease-soft), transform var(--tr-dur-press) var(--tr-ease-soft);
+  border-radius: var(--ic-r-md);
+  font-weight: 500;
+  transition: background-color var(--ic-dur-micro) var(--ic-ease), box-shadow var(--ic-dur-micro) var(--ic-ease), transform var(--ic-dur-micro) var(--ic-ease);
 }
 :is(#content, #content-vue, .oc-dialog, .modal-container) :is(button:not(.button-vue):not([class*=color-picker]):not(.action-button):not([class^=vs__]):not(.files-list__row-name-link),
 .button:not(.button-vue),
 input[type=button],
 input[type=submit],
 input[type=reset]):not(.primary):not(:disabled):not(.icon-confirm):not([class*=icon-]) {
-  background-color: rgba(255, 255, 255, 0.1);
-  border: none;
-  color: var(--tr-ink);
+  background-color: var(--ic-raised);
+  border: 1px solid var(--ic-line-strong);
+  color: var(--ic-fg);
 }
 :is(#content, #content-vue, .oc-dialog, .modal-container) :is(button:not(.button-vue):not([class*=color-picker]):not(.action-button):not([class^=vs__]):not(.files-list__row-name-link),
 .button:not(.button-vue),
 input[type=button],
 input[type=submit],
 input[type=reset]):not(.primary):not(:disabled):not(.icon-confirm):not([class*=icon-]):hover {
-  background-color: rgba(255, 255, 255, 0.16);
+  border-color: rgba(var(--ic-splash-rgb), 0.5);
+  color: var(--ic-splash-text);
 }
 :is(#content, #content-vue, .oc-dialog, .modal-container) :is(button:not(.button-vue):not([class*=color-picker]):not(.action-button):not([class^=vs__]):not(.files-list__row-name-link),
 .button:not(.button-vue),
 input[type=button],
 input[type=submit],
 input[type=reset]).primary:not(:disabled) {
-  background-color: var(--color-primary-element);
+  background-color: var(--ic-splash);
   border: none;
-  color: var(--color-primary-element-text);
-  box-shadow: var(--tr-shadow-button);
+  color: var(--ic-on-splash);
+  font-weight: 600;
 }
 :is(#content, #content-vue, .oc-dialog, .modal-container) :is(button:not(.button-vue):not([class*=color-picker]):not(.action-button):not([class^=vs__]):not(.files-list__row-name-link),
 .button:not(.button-vue),
 input[type=button],
 input[type=submit],
 input[type=reset]).primary:not(:disabled):hover {
-  background-color: var(--color-primary-element-hover);
+  background-color: var(--ic-splash-hover);
+  box-shadow: var(--ic-glow-sm);
 }
 :is(#content, #content-vue, .oc-dialog, .modal-container) :is(button:not(.button-vue):not([class*=color-picker]):not(.action-button):not([class^=vs__]):not(.files-list__row-name-link),
 .button:not(.button-vue),
 input[type=button],
 input[type=submit],
 input[type=reset]):active:not(:disabled) {
-  transform: scale(var(--tr-press-scale));
+  transform: scale(var(--ic-press));
 }
 
-/* Fields -------------------------------------------------------------------- */
+/* Fields: wells with a hairline ---------------------------------------------- */
 .input-field {
-  --input-border-color: var(--tr-border-strong) !important;
+  --input-border-color: var(--ic-edge) !important;
+  --input-border-radius: var(--ic-r-md) !important;
 }
-.input-field:not(.input-field--pill) {
-  --input-border-radius: 12px !important;
+.input-field.input-field--pill {
+  --input-border-radius: var(--ic-r-md) !important;
 }
 
 .input-field__input {
-  background-color: var(--tr-field) !important;
+  background-color: var(--ic-well) !important;
+  color: var(--ic-fg) !important;
+  box-shadow: 0 0 0 1px var(--input-border-color) !important;
+  transition: box-shadow var(--ic-dur-micro) var(--ic-ease) !important;
 }
-.input-field__input:focus, .input-field__input:focus-within, .input-field__input:active {
-  --input-border-color: var(--tr-accent-text) !important;
+.input-field__input::placeholder {
+  color: var(--ic-mute) !important;
+  opacity: 1;
+}
+.input-field__input:hover:not(:disabled):not(:focus) {
+  --input-border-color: var(--ic-edge-hover) !important;
+}
+.input-field__input:focus, .input-field__input:focus-visible {
+  --input-border-color: var(--ic-splash) !important;
+  box-shadow: 0 0 0 1px var(--ic-splash), 0 0 0 4px rgba(var(--ic-splash-rgb), 0.16) !important;
+}
+
+.input-field--error .input-field__input {
+  --input-border-color: var(--ic-danger) !important;
+}
+
+.input-field--success .input-field__input {
+  --input-border-color: var(--ic-ok) !important;
 }
 
 .input-field__label {
-  color: var(--tr-ink-soft) !important;
+  color: var(--ic-mute) !important;
 }
 
-input:not([type=range]):not([type=button]):not([type=submit]):not([type=reset]):not([type=checkbox]):not([type=radio]):not([type=color]):not([type=file]):not(.input-field__input):not(.vs__search):not(.app-navigation-search__input),
+.input-field__helper-text-message {
+  color: var(--ic-mute) !important;
+}
+
+input:not([type=range]):not([type=button]):not([type=submit]):not([type=reset]):not([type=checkbox]):not([type=radio]):not([type=color]):not([type=file]):not(.input-field__input):not(.vs__search):not(.app-navigation-search__input):not(.unified-search-input__input),
 textarea:not(.input-field__input),
 select {
-  background-color: var(--tr-field) !important;
-  border: 1px solid var(--tr-border-strong) !important;
-  border-radius: 12px;
-  color: var(--tr-ink);
-  transition: border-color var(--tr-dur-fade) var(--tr-ease-soft), box-shadow var(--tr-dur-fade) var(--tr-ease-soft);
+  background-color: var(--ic-well) !important;
+  border: 1px solid var(--ic-edge) !important;
+  border-radius: var(--ic-r-md);
+  color: var(--ic-fg);
+  transition: border-color var(--ic-dur-micro) var(--ic-ease), box-shadow var(--ic-dur-micro) var(--ic-ease);
 }
-input:not([type=range]):not([type=button]):not([type=submit]):not([type=reset]):not([type=checkbox]):not([type=radio]):not([type=color]):not([type=file]):not(.input-field__input):not(.vs__search):not(.app-navigation-search__input)::placeholder,
+input:not([type=range]):not([type=button]):not([type=submit]):not([type=reset]):not([type=checkbox]):not([type=radio]):not([type=color]):not([type=file]):not(.input-field__input):not(.vs__search):not(.app-navigation-search__input):not(.unified-search-input__input)::placeholder,
 textarea:not(.input-field__input)::placeholder,
 select::placeholder {
-  color: var(--tr-ink-soft);
+  color: var(--ic-mute);
   opacity: 1;
 }
-input:not([type=range]):not([type=button]):not([type=submit]):not([type=reset]):not([type=checkbox]):not([type=radio]):not([type=color]):not([type=file]):not(.input-field__input):not(.vs__search):not(.app-navigation-search__input):hover:not(:disabled):not(:focus),
+input:not([type=range]):not([type=button]):not([type=submit]):not([type=reset]):not([type=checkbox]):not([type=radio]):not([type=color]):not([type=file]):not(.input-field__input):not(.vs__search):not(.app-navigation-search__input):not(.unified-search-input__input):hover:not(:disabled):not(:focus),
 textarea:not(.input-field__input):hover:not(:disabled):not(:focus),
 select:hover:not(:disabled):not(:focus) {
-  border-color: var(--tr-ink-soft) !important;
+  border-color: var(--ic-edge-hover) !important;
 }
-input:not([type=range]):not([type=button]):not([type=submit]):not([type=reset]):not([type=checkbox]):not([type=radio]):not([type=color]):not([type=file]):not(.input-field__input):not(.vs__search):not(.app-navigation-search__input):focus, input:not([type=range]):not([type=button]):not([type=submit]):not([type=reset]):not([type=checkbox]):not([type=radio]):not([type=color]):not([type=file]):not(.input-field__input):not(.vs__search):not(.app-navigation-search__input):focus-visible,
+input:not([type=range]):not([type=button]):not([type=submit]):not([type=reset]):not([type=checkbox]):not([type=radio]):not([type=color]):not([type=file]):not(.input-field__input):not(.vs__search):not(.app-navigation-search__input):not(.unified-search-input__input):focus, input:not([type=range]):not([type=button]):not([type=submit]):not([type=reset]):not([type=checkbox]):not([type=radio]):not([type=color]):not([type=file]):not(.input-field__input):not(.vs__search):not(.app-navigation-search__input):not(.unified-search-input__input):focus-visible,
 textarea:not(.input-field__input):focus,
 textarea:not(.input-field__input):focus-visible,
 select:focus,
 select:focus-visible {
-  border-color: var(--tr-accent-text) !important;
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--tr-accent) 35%, transparent) !important;
+  border-color: var(--ic-splash) !important;
+  box-shadow: 0 0 0 3px rgba(var(--ic-splash-rgb), 0.16) !important;
   outline: none;
 }
 
-select option {
-  background-color: var(--tr-inset);
-  color: var(--tr-ink);
+.rich-contenteditable__input {
+  border: 1px solid var(--ic-edge) !important;
+  border-radius: var(--ic-r-md) !important;
+  background-color: var(--ic-well) !important;
+  transition: border-color var(--ic-dur-micro) var(--ic-ease), box-shadow var(--ic-dur-micro) var(--ic-ease);
+}
+.rich-contenteditable__input:hover:not(:focus) {
+  border-color: var(--ic-edge-hover) !important;
+}
+.rich-contenteditable__input:focus, .rich-contenteditable__input:focus-visible {
+  border-color: var(--ic-splash) !important;
+  box-shadow: 0 0 0 3px rgba(var(--ic-splash-rgb), 0.16) !important;
+  outline: none !important;
 }
 
-/* Switches, checkboxes, radios --------------------------------------------------- */
-.checkbox-radio-switch-switch.checkbox-radio-switch--checked:not(.checkbox-radio-switch--disabled) .checkbox-radio-switch__icon > * {
-  color: var(--tr-success) !important;
+select option {
+  background-color: var(--ic-raised);
+  color: var(--ic-fg);
+}
+
+/* Checkboxes, radios, switches: the splash ----------------------------------- */
+.checkbox-radio-switch__icon > * {
+  color: var(--ic-splash) !important;
+}
+
+.checkbox-radio-switch:not(.checkbox-radio-switch--checked) .checkbox-radio-switch__icon > * {
+  color: var(--ic-edge) !important;
 }
 
 .checkbox-radio-switch-switch:not(.checkbox-radio-switch--checked) .checkbox-radio-switch__icon > * {
-  color: var(--tr-ink-faint) !important;
+  color: var(--ic-line-strong) !important;
 }
 
-.checkbox-radio-switch-checkbox .checkbox-radio-switch__icon > *,
-.checkbox-radio-switch-radio .checkbox-radio-switch__icon > * {
-  color: var(--tr-accent-text) !important;
-}
-
-.checkbox-radio-switch-checkbox:not(.checkbox-radio-switch--checked) .checkbox-radio-switch__icon > *,
-.checkbox-radio-switch-radio:not(.checkbox-radio-switch--checked) .checkbox-radio-switch__icon > * {
-  color: var(--tr-ink-soft) !important;
+.checkbox-radio-switch--disabled .checkbox-radio-switch__icon > * {
+  opacity: 0.5;
 }
 
 .checkbox-radio-switch__input:focus-visible + .checkbox-radio-switch__content {
-  outline: 2px solid var(--tr-accent-text) !important;
+  outline: 2px solid var(--ic-splash) !important;
   outline-offset: -2px;
 }
 
 .checkbox-radio-switch:not(.checkbox-radio-switch--disabled):not(.checkbox-radio-switch--button-variant) .checkbox-radio-switch__content:hover {
-  background-color: rgba(255, 255, 255, 0.06) !important;
+  background-color: var(--ic-fill) !important;
 }
 
 .checkbox-radio-switch--button-variant.checkbox-radio-switch {
-  border-color: var(--tr-border) !important;
-  background-color: var(--tr-field) !important;
+  border-color: var(--ic-line-strong) !important;
+  background-color: var(--ic-well) !important;
 }
 .checkbox-radio-switch--button-variant.checkbox-radio-switch.checkbox-radio-switch--checked .checkbox-radio-switch__content {
-  background-color: var(--color-primary-element-light) !important;
-  color: var(--color-primary-element-light-text) !important;
+  background-color: var(--ic-wash) !important;
+  color: var(--ic-splash-text) !important;
 }
 .checkbox-radio-switch--button-variant.checkbox-radio-switch.checkbox-radio-switch--checked .checkbox-radio-switch__icon > * {
-  color: var(--color-primary-element-light-text) !important;
+  color: var(--ic-splash-text) !important;
 }
 
 /* Selects (NcSelect / vue-select) ----------------------------------------------- */
 .v-select.select .vs__dropdown-toggle,
 .select .vs__dropdown-toggle {
-  background-color: var(--tr-field) !important;
-  border-radius: 12px !important;
+  background-color: var(--ic-well) !important;
+  border: 1px solid var(--ic-edge) !important;
+  border-radius: var(--ic-r-md) !important;
+  box-shadow: none !important;
+  transition: border-color var(--ic-dur-micro) var(--ic-ease), box-shadow var(--ic-dur-micro) var(--ic-ease);
+}
+
+.v-select.select:hover:not(.vs--open) .vs__dropdown-toggle {
+  border-color: var(--ic-edge-hover) !important;
+}
+
+.v-select.select.vs--open .vs__dropdown-toggle,
+.v-select.select:focus-within .vs__dropdown-toggle {
+  border-color: var(--ic-splash) !important;
+  box-shadow: 0 0 0 3px rgba(var(--ic-splash-rgb), 0.16) !important;
 }
 
 .vs__dropdown-menu {
-  background-color: var(--tr-inset) !important;
-  border-color: var(--tr-border) !important;
-  border-radius: var(--tr-radius-xl) !important;
-  box-shadow: var(--tr-shadow-float) !important;
+  background-color: var(--ic-float) !important;
+  border: none !important;
+  border-radius: var(--ic-r-lg) !important;
+  box-shadow: var(--ic-shadow-float) !important;
 }
 .vs__dropdown-menu .vs__dropdown-option--highlight {
-  background-color: rgba(255, 255, 255, 0.08) !important;
-  color: var(--tr-ink) !important;
+  background-color: var(--ic-fill-strong) !important;
+  color: var(--ic-hi) !important;
 }
 .vs__dropdown-menu .vs__dropdown-option--selected {
-  color: var(--tr-accent-text) !important;
+  color: var(--ic-splash-text) !important;
 }
 
 .vs__search {
   background-color: transparent !important;
+}
+
+.vs__selected {
+  background-color: var(--ic-raised) !important;
+  border-color: var(--ic-line-strong) !important;
+  border-radius: var(--ic-r-sm) !important;
 }
 
 /* Tables -------------------------------------------------------------------- */
@@ -1123,24 +667,25 @@ tbody tr:focus-within {
 
 /* Progress ------------------------------------------------------------------ */
 progress:not(.vue) {
-  background-color: var(--tr-inset);
-  border-radius: var(--tr-radius-full);
+  background-color: var(--ic-raised);
+  border-radius: var(--ic-r-full);
   overflow: hidden;
 }
 progress:not(.vue)::-webkit-progress-bar {
-  background-color: var(--tr-inset);
+  background-color: var(--ic-raised);
 }
 progress:not(.vue)::-webkit-progress-value {
-  background-color: var(--tr-accent);
+  background-color: var(--ic-splash);
 }
 progress:not(.vue)::-moz-progress-bar {
-  background-color: var(--tr-accent);
+  background-color: var(--ic-splash);
+}
+
+.progress-bar--linear {
+  --progress-bar-color: var(--ic-splash);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  :is(.button-vue--primary, .button-vue--vue-primary)::after {
-    animation: none !important;
-  }
   .button-vue:active:not(:disabled),
   button:active,
   .button:active {
@@ -1148,85 +693,124 @@ progress:not(.vue)::-moz-progress-bar {
   }
 }
 /***
- * InkCurity Dark — signatures, Trumpf edition
+ * InkCurity Dark — signatures
  *
- * The page carries a bloom in the colour of the open app, the content
- * container stands on it like the app column of a device, and every app
- * switch fades the new page in while it rises 8 px. The dashboard greeting is
- * a large title with the date as eyebrow. Nothing moves just for decoration.
+ * Ink with one bloom of light in the upper left and a barely-there grain.
+ * The panel catches a single scan of light along its top edge when a page
+ * opens, then rests. Titles are set in Space Grotesk, meta in mono. Nothing
+ * else moves for decoration.
  *
  * @copyright Copyright (c) 2026 inkcurity.net
  *
  * @license GNU AGPL version 3 or any later version, see COPYING file for more.
  */
-/* Backdrop: dusk with the app's bloom ----------------------------------------- */
+/* Backdrop: ink, one bloom, grain --------------------------------------------- */
 #body-user,
 #body-settings,
 #body-public {
-  background-color: var(--tr-page) !important;
-  background-image: radial-gradient(1100px 720px at 8% -12%, color-mix(in srgb, var(--tr-accent) 34%, transparent), transparent 64%), radial-gradient(760px 560px at 104% 108%, color-mix(in srgb, var(--tr-pink) 16%, transparent), transparent 62%), radial-gradient(600px 420px at 70% -20%, color-mix(in srgb, var(--tr-accent) 14%, transparent), transparent 60%) !important;
+  background-color: var(--ic-void) !important;
+  background-image: radial-gradient(900px 600px at 4% -6%, rgba(var(--ic-splash-rgb), 0.15), transparent 62%), radial-gradient(760px 560px at 30% -22%, rgba(var(--ic-electric-rgb), 0.18), transparent 64%) !important;
   background-repeat: no-repeat !important;
   background-attachment: fixed !important;
   background-size: auto !important;
 }
-
-/* The content container: the app column standing on the page ----------------- */
-body > #content,
-body > #content-vue {
-  box-shadow: var(--tr-shadow-frame);
+#body-user::before,
+#body-settings::before,
+#body-public::before {
+  content: "";
+  position: fixed;
+  z-index: -1;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  opacity: 0.025;
+  pointer-events: none;
 }
 
+/* The scan: one sweep of light along the top of the panel per page ---------------- */
+#body-user.ic-scan::after,
+#body-settings.ic-scan::after {
+  content: "";
+  position: fixed;
+  z-index: 2000;
+  top: var(--header-height, 44px);
+  right: var(--body-container-margin);
+  left: var(--body-container-margin);
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(var(--ic-splash-rgb), 0) 30%, rgba(var(--ic-splash-rgb), 0.9) 46%, rgba(255, 61, 142, 0.85) 50%, rgba(var(--ic-splash-rgb), 0.9) 54%, rgba(var(--ic-splash-rgb), 0) 70%, transparent 100%) no-repeat;
+  background-size: 50% 100%;
+  filter: drop-shadow(0 0 6px rgba(var(--ic-splash-rgb), 0.6));
+  opacity: 0;
+  pointer-events: none;
+  animation: ic-scan 1600ms cubic-bezier(0.65, 0, 0.35, 1) 80ms both;
+}
+
+@keyframes ic-scan {
+  0% {
+    opacity: 0;
+    background-position: -60% 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    background-position: 160% 0;
+  }
+}
+/* App switch: the main pane fades in and rises 8 px ----------------------------- */
 #app-content,
 #app-content-vue,
 #app-dashboard {
-  animation: tr-page-in var(--tr-dur-rise) var(--tr-ease-soft) backwards;
+  animation: ic-page-in var(--ic-dur-rise) var(--ic-ease-soft) backwards;
 }
 
-@keyframes tr-page-in {
+@keyframes ic-page-in {
   from {
     opacity: 0;
     transform: translateY(8px);
   }
 }
-/* Caret, selection, focus ------------------------------------------------------- */
+/* Caret, selection, focus, scrollbars --------------------------------------------- */
 input,
 textarea,
 [contenteditable=true] {
-  caret-color: var(--tr-accent-text);
+  caret-color: var(--ic-splash);
+}
+
+::selection {
+  background-color: rgba(var(--ic-splash-rgb), 0.3);
+  color: var(--ic-hi);
 }
 
 :focus-visible {
-  outline-color: var(--tr-accent-text) !important;
+  outline-color: var(--ic-splash) !important;
 }
 
 * {
+  scrollbar-color: var(--ic-line-strong) transparent;
   scrollbar-width: thin;
 }
 
-/* Type: large titles, eyebrow, overline, signature line ------------------------ */
-#app-dashboard > h2, .settings-section__name,
+/* Type: display titles, mono meta ---------------------------------------------------- */
+.settings-section__name,
 .settings-section__title,
 .section > h2,
+#app-content > .section > h2,
 .app-sidebar-header__mainname,
 .modal-header .modal-name,
 .modal-header__name,
 .dialog__name,
 .empty-content__name,
 .panel--header h2 {
-  font-weight: 700;
-  letter-spacing: -0.015em;
+  font-family: var(--ic-font-display) !important;
+  font-weight: 500 !important;
+  letter-spacing: -0.02em;
+  color: var(--ic-hi);
   text-wrap: balance;
-  hyphens: auto;
-}
-
-#app-dashboard > h2[data-tr-eyebrow]::before {
-  display: block;
-  color: var(--tr-accent-text);
-  font-size: 13px;
-  font-weight: 600;
-  line-height: 18px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
 }
 
 .files-list__row-size,
@@ -1240,65 +824,66 @@ time {
   font-variant-numeric: tabular-nums;
 }
 
-#app-dashboard > h2 {
-  background-image: linear-gradient(100deg, #ffffff 0%, #ffffff 38%, var(--tr-accent-text) 72%, #f9a8d4 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  font-size: 34px !important;
-  line-height: 41px !important;
-}
-#app-dashboard > h2[data-tr-eyebrow]::before {
-  content: attr(data-tr-eyebrow);
-  margin-bottom: 4px;
-}
-
-/* Code: mono chips in the accent ---------------------------------------------- */
+/* Code: mono chips in the splash ----------------------------------------------------- */
 code,
 kbd,
 samp,
 pre {
-  font-family: var(--tr-font-mono);
+  font-family: var(--ic-font-mono) !important;
   font-variant-numeric: tabular-nums;
 }
 
 :not(pre) > code {
-  padding: 0.1em 0.4em;
-  border-radius: 6px;
-  background: color-mix(in srgb, var(--tr-accent) 16%, transparent);
-  color: var(--tr-accent-text);
+  padding: 0.12em 0.4em;
+  border: 1px solid rgba(var(--ic-splash-rgb), 0.18);
+  border-radius: 4px;
+  background: rgba(var(--ic-splash-rgb), 0.08);
+  color: var(--ic-splash-text);
+  font-size: 0.92em;
+}
+
+pre {
+  border: 1px solid var(--ic-line);
+  border-radius: var(--ic-r-md);
+  background: var(--ic-well);
 }
 
 kbd {
-  padding: 0.1em 0.45em;
-  border: 1px solid var(--tr-border-strong);
+  padding: 0.05em 0.45em;
+  border: 1px solid var(--ic-line-strong);
   border-bottom-width: 2px;
-  border-radius: 6px;
-  background: var(--tr-inset);
-  color: var(--tr-ink);
+  border-radius: var(--ic-r-sm);
+  background: var(--ic-raised);
+  color: var(--ic-fg);
+  font-size: 0.85em;
 }
 
 /* Reduced motion: system setting and Nextcloud's own switch ------------------ */
 @media (prefers-reduced-motion: reduce) {
-  #app-content,
-  #app-content-vue,
-  #app-dashboard {
+  body #app-content,
+  body #app-content-vue,
+  body #app-dashboard {
     animation: none !important;
   }
+  body::after {
+    display: none !important;
+  }
 }
-[data-themes*=reduced-motion] #app-content,
-[data-themes*=reduced-motion] #app-content-vue,
-[data-themes*=reduced-motion] #app-dashboard {
+body[data-themes*=reduced-motion] #app-content,
+body[data-themes*=reduced-motion] #app-content-vue,
+body[data-themes*=reduced-motion] #app-dashboard {
   animation: none !important;
+}
+body[data-themes*=reduced-motion]::after {
+  display: none !important;
 }
 
 /***
- * InkCurity Dark — app menus as tiles, Trumpf edition
+ * InkCurity Dark — app menus
  *
- * Every app wears its colour: the open app sits on a tile in its accent, and
- * in the Nextcloud 34 app grid every app is a tile in its own colour. Colour
- * means something here (which app), so this is the one place where the menu
- * is not monochrome.
+ * One colour for every app: the grid is a set of ink keys with the glyph in
+ * the light, the open app is the one key that is lit. A key you point at
+ * catches the splash on its edge and a soft glow; nothing scales.
  *
  * Nextcloud 33: a bar of .app-menu-entry items in the header.
  * Nextcloud 34: a waffle button, the current app as a button, a popover grid
@@ -1311,116 +896,36 @@ kbd {
  * @license GNU AGPL version 3 or any later version, see COPYING file for more.
  */
 /* Nextcloud 33: the header bar ------------------------------------------------ */
-.app-menu-entry .app-menu-icon {
-  isolation: isolate;
+.app-menu-entry .app-menu-entry__icon,
+.app-menu-entry .app-menu-icon__icon {
+  opacity: 0.72;
+  transition: opacity var(--ic-dur-micro) var(--ic-ease);
 }
-.app-menu-entry .app-menu-icon::before {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  inset: -7px;
-  border-radius: 10px;
-  background-color: var(--tr-app, var(--tr-accent));
-  opacity: 0;
-  transform: scale(0.8);
-  transition: opacity var(--tr-dur-fade) var(--tr-ease-soft), transform var(--tr-dur-control) var(--tr-ease-soft);
-}
-.app-menu-entry:hover .app-menu-icon::before, .app-menu-entry:focus-within .app-menu-icon::before {
-  opacity: 0.35;
-  transform: none;
+.app-menu-entry:hover .app-menu-entry__icon, .app-menu-entry:hover .app-menu-icon__icon, .app-menu-entry:focus-within .app-menu-icon__icon {
+  opacity: 1;
 }
 .app-menu-entry--active::before {
-  display: none !important;
-}
-.app-menu-entry--active .app-menu-icon::before {
-  background-color: var(--tr-accent);
-  box-shadow: 0 6px 16px color-mix(in srgb, var(--tr-accent) 45%, transparent);
-  opacity: 1 !important;
-  transform: none;
+  width: 14px !important;
+  height: 2px !important;
+  border-radius: 2px !important;
+  background-color: var(--ic-splash) !important;
+  box-shadow: 0 0 8px rgba(var(--ic-splash-rgb), 0.8);
 }
 .app-menu-entry--active .app-menu-icon__icon {
-  filter: var(--tr-accent-flip) !important;
+  opacity: 1;
 }
 .app-menu-entry--active .app-menu-entry__label {
-  font-weight: 700 !important;
-}
-.app-menu-entry:active .app-menu-icon {
-  transform: scale(var(--tr-press-scale));
-  transition: transform var(--tr-dur-press) var(--tr-ease-soft);
+  font-weight: 600 !important;
 }
 
 .app-menu-icon__unread {
-  color: var(--tr-pink) !important;
+  color: var(--ic-magenta) !important;
 }
 
-/* Nextcloud 34: waffle, current app, grid ------------------------------------- */
-.app-menu__waffle,
-.app-menu__current-app {
-  border-radius: var(--tr-radius-full) !important;
-}
-.app-menu__waffle:hover:not(:disabled), .app-menu__waffle:focus-visible,
-.app-menu__current-app:hover:not(:disabled),
-.app-menu__current-app:focus-visible {
-  background-color: rgba(255, 255, 255, 0.1) !important;
-}
-.app-menu__waffle:active:not(:disabled),
-.app-menu__current-app:active:not(:disabled) {
-  background-color: rgba(255, 255, 255, 0.16) !important;
-}
-
-.app-menu__trigger::before {
-  border-radius: var(--tr-radius-full) !important;
-}
-.app-menu__trigger:hover::before, .app-menu__trigger--open::before {
-  background-color: rgba(255, 255, 255, 0.1) !important;
-}
-
-.app-menu__current-app .button-vue__icon {
-  position: relative;
-  isolation: isolate;
-}
-.app-menu__current-app .button-vue__icon::before {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  inset: 3px;
-  border-radius: 9px;
-  background-color: var(--tr-accent);
-  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.26), rgba(255, 255, 255, 0) 60%);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 6px 16px -4px color-mix(in srgb, var(--tr-accent) 70%, transparent);
-}
-.app-menu__current-app .app-menu__current-app-icon {
-  width: 18px !important;
-  height: 18px !important;
-  mask: none !important;
-}
-.app-menu__current-app .app-menu__current-app-glyph {
-  background-color: var(--tr-accent-on) !important;
-}
-.app-menu__current-app .app-menu__current-app-icon {
-  width: 18px !important;
-  height: 18px !important;
-  filter: var(--tr-accent-flip) !important;
-  mask: none !important;
-}
-.app-menu__current-app .app-menu__current-app-cog {
-  color: var(--tr-accent-on);
-  mask: none !important;
-}
-.app-menu__current-app .app-menu__current-app-name {
-  font-weight: 600 !important;
-  letter-spacing: -0.01em !important;
-}
-
+/* Nextcloud 34 and 35: the popover --------------------------------------------- */
 .app-menu__popover-base {
-  --border-radius-large: var(--tr-radius-card);
-  --border-radius-element: var(--tr-radius-card);
-}
-.app-menu__popover-base .v-popper__inner {
-  background-color: var(--tr-material) !important;
-  background-image: var(--tr-sheen) !important;
-  -webkit-backdrop-filter: var(--tr-material-filter);
-  backdrop-filter: var(--tr-material-filter);
+  --border-radius-large: var(--ic-r-lg);
+  --border-radius-element: var(--ic-r-lg);
 }
 
 .app-menu__popover {
@@ -1428,170 +933,313 @@ kbd {
 }
 
 .app-item {
-  border-radius: var(--tr-radius-xl) !important;
-  transition: background-color var(--tr-dur-fade) var(--tr-ease-soft);
+  border-radius: var(--ic-r-lg) !important;
+  transition: background-color var(--ic-dur-micro) var(--ic-ease);
 }
 .app-item:hover, .app-item:focus-visible {
-  background-color: rgba(255, 255, 255, 0.08) !important;
-}
-.app-item__circle {
-  border-radius: 12px !important;
-  background-color: var(--tr-app, var(--tr-accent)) !important;
-  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0) 50%) !important;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 4px 10px color-mix(in srgb, var(--tr-app, var(--tr-accent)) 35%, transparent) !important;
-  transition: transform var(--tr-dur-control) var(--tr-ease-soft);
-}
-.app-item:hover .app-item__circle, .app-item:focus-visible .app-item__circle {
-  transform: translateY(-2px);
-}
-.app-item:active .app-item__circle {
-  transform: scale(var(--tr-press-scale));
-  transition-duration: var(--tr-dur-press);
-}
-.app-item__icon {
-  filter: var(--tr-app-flip, var(--tr-accent-flip)) !important;
-  mask: none !important;
-}
-.app-item--active .app-item__circle {
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 0 0 2px var(--tr-surface), 0 0 0 4px var(--tr-app, var(--tr-accent)) !important;
-}
-.app-item--outlined .app-item__circle {
-  background: transparent !important;
-  box-shadow: inset 0 0 0 1.5px var(--tr-border-strong) !important;
-}
-.app-item--outlined .app-item__icon {
-  filter: none !important;
-}
-.app-item__unread {
-  background-color: var(--tr-pink) !important;
-  border-color: var(--tr-surface) !important;
+  background-color: transparent !important;
 }
 .app-item__label {
-  color: var(--tr-ink) !important;
+  color: var(--ic-mute) !important;
+  font-size: 12px !important;
+  transition: color var(--ic-dur-micro) var(--ic-ease);
+}
+.app-item:hover .app-item__label, .app-item:focus-visible .app-item__label, .app-item--active .app-item__label {
+  color: var(--ic-hi) !important;
+}
+.app-item--active .app-item__label {
+  font-weight: 600 !important;
+}
+.app-item__unread {
+  background-color: var(--ic-magenta) !important;
+  border-color: var(--ic-float) !important;
 }
 
-/* Nextcloud 35: app icons and quick-create actions ------------------------------ */
+.app-item__circle, .app-item .app-icon:not(.app-icon--outlined) {
+  border-radius: 14px !important;
+  background-color: var(--ic-raised) !important;
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0) 60%) !important;
+  box-shadow: inset 0 0 0 1px var(--ic-line-strong), inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
+  transition: box-shadow var(--ic-dur-micro) var(--ic-ease), background-color var(--ic-dur-micro) var(--ic-ease) !important;
+}
+
+.app-item:hover .app-item__circle,
+.app-item:focus-visible .app-item__circle, .app-item:hover .app-icon:not(.app-icon--outlined),
+.app-item:focus-visible .app-icon:not(.app-icon--outlined) {
+  box-shadow: inset 0 0 0 1px rgba(var(--ic-splash-rgb), 0.55), 0 0 22px -6px rgba(var(--ic-splash-rgb), 0.55) !important;
+}
+
+.app-item--active .app-item__circle, .app-item--active .app-icon:not(.app-icon--outlined) {
+  background-color: var(--ic-splash) !important;
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0) 60%) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 6px 22px -6px rgba(var(--ic-splash-rgb), 0.75) !important;
+}
+
 .app-item .app-icon:not(.app-icon--outlined) {
-  border-radius: 30% !important;
-  background-color: var(--tr-app, var(--tr-accent)) !important;
-  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.26) 0%, rgba(255, 255, 255, 0) 55%), linear-gradient(0deg, rgba(0, 0, 0, 0.12) 0%, rgba(0, 0, 0, 0) 45%) !important;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.32), 0 8px 18px -6px color-mix(in srgb, var(--tr-app, var(--tr-accent)) 70%, transparent) !important;
-  transform: translateY(var(--tr-lift, 0)) scale(var(--app-icon-scale, 1)) !important;
-  transition: transform var(--tr-dur-control) var(--tr-ease-soft) !important;
+  transform: scale(var(--app-icon-scale, 1)) !important;
 }
 .app-item .app-icon:not(.app-icon--outlined) .app-icon__img {
-  background-color: var(--tr-app-on, #ffffff) !important;
+  background-color: var(--ic-splash-text) !important;
   background-image: none !important;
 }
 
-.app-item:hover,
-.app-item:focus-visible {
-  --tr-lift: -3px;
-}
-
-.app-item--active .app-icon:not(.app-icon--outlined) {
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.32), 0 0 0 2px var(--tr-inset), 0 0 0 4px var(--tr-app, var(--tr-accent)), 0 10px 22px -6px color-mix(in srgb, var(--tr-app, var(--tr-accent)) 75%, transparent) !important;
+.app-item--active .app-icon:not(.app-icon--outlined) .app-icon__img {
+  background-color: var(--ic-on-splash) !important;
 }
 
 .app-item .app-icon--outlined {
-  border-radius: 30% !important;
-  box-shadow: inset 0 0 0 1.5px var(--tr-border-strong) !important;
+  border-radius: 14px !important;
+  box-shadow: none !important;
+  outline: 1px dashed var(--ic-edge);
+  outline-offset: -1px;
 }
 .app-item .app-icon--outlined .app-icon__img {
-  background-color: var(--tr-ink-soft) !important;
+  background-color: var(--ic-mute) !important;
+}
+
+.app-item__icon {
+  filter: none !important;
+  mask: none !important;
+}
+
+.app-item--active .app-item__icon {
+  filter: invert(100%) !important;
+}
+
+.app-item--outlined .app-item__circle {
+  background: transparent !important;
+  box-shadow: none !important;
+  outline: 1px dashed var(--ic-edge);
+  outline-offset: -1px;
 }
 
 .app-item--compact:hover,
 .app-item--compact:focus-visible {
-  background-color: rgba(255, 255, 255, 0.08) !important;
+  background-color: var(--ic-fill) !important;
 }
 
 .app-menu-actions {
-  border-top: 1px solid color-mix(in srgb, var(--tr-border) 70%, transparent) !important;
+  background-color: transparent !important;
+  border-top: 1px solid var(--ic-line) !important;
 }
 
-.app-action-icon {
-  transform: translateY(var(--tr-lift, 0)) scale(var(--app-icon-scale, 1)) !important;
-  transition: transform var(--tr-dur-control) var(--tr-ease-soft) !important;
-  filter: drop-shadow(0 4px 8px rgba(6, 9, 28, 0.35));
-}
 .app-action-icon__indicator {
-  border-color: var(--tr-inset) !important;
+  border-color: var(--ic-float) !important;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .app-menu-entry .app-menu-icon::before,
-  .app-item__circle,
   .app-item .app-icon,
-  .app-action-icon {
+  .app-item__circle {
     transition: none !important;
   }
 }
 /***
- * InkCurity Dark — chrome, Trumpf edition
+ * InkCurity Dark — chrome
  *
- * Navigation like the Trumpf sidebar (on bg, tinted selection, icons in the
- * accent), grouped settings sections as cards, raised menus with a float
- * shadow, sheets that rise from below, material toasts, empty states with a
- * tinted glyph. Hairlines stay quiet, nothing glows.
+ * Header and navigation sit on the ink. The app is a panel in front of it:
+ * deep ink, a hairline edge, 16 px corners. Navigation follows the Trumpf
+ * sidebar (tinted selection, quiet counters) with InkCurity mono captions.
+ * Menus float on a lamp-light glow, dialogs rise from below onto a scrim
+ * that removes the page instead of blurring it.
  *
  * @copyright Copyright (c) 2017, Magnus Walbeck <mw@mwalbeck.org>
  * @copyright Copyright (c) 2026 inkcurity.net
  *
  * @license GNU AGPL version 3 or any later version, see COPYING file for more.
  */
-/* Header -------------------------------------------------------------------- */
+/* Header: on the ink --------------------------------------------------------- */
+#header {
+  background: transparent !important;
+}
+#header #nextcloud .logo {
+  filter: drop-shadow(0 0 10px rgba(var(--ic-splash-rgb), 0.25));
+}
+
 #body-login #header {
   background-color: unset !important;
 }
 
-#header:not(.header-guest) .avatardiv,
-.header-end .account-menu__avatar,
-#user-menu .avatardiv {
-  box-shadow: 0 0 0 2px var(--tr-page), 0 0 0 3.5px color-mix(in srgb, var(--tr-accent) 80%, transparent);
+#header .header-end .header-menu__trigger,
+#header .app-menu__waffle {
+  border-radius: var(--ic-r-md) !important;
+  color: var(--ic-mute) !important;
+  opacity: 1 !important;
+}
+#header .header-end .header-menu__trigger:hover, #header .header-end .header-menu__trigger:focus-visible, #header .header-end .header-menu__trigger[aria-expanded=true],
+#header .app-menu__waffle:hover,
+#header .app-menu__waffle:focus-visible,
+#header .app-menu__waffle[aria-expanded=true] {
+  background-color: var(--ic-fill) !important;
+  color: var(--ic-hi) !important;
+}
+#header .header-end .header-menu__trigger svg,
+#header .header-end .header-menu__trigger .material-design-icon,
+#header .app-menu__waffle svg,
+#header .app-menu__waffle .material-design-icon {
+  color: inherit !important;
+  fill: currentColor;
 }
 
-.header-menu__wrapper,
-.header-menu__content {
-  border-radius: var(--tr-radius-card) !important;
+.header-menu__trigger .notifications-button__icon,
+.header-menu__trigger .contactsmenu__trigger-icon {
+  color: inherit !important;
 }
 
-.header-menu__wrapper {
-  background-color: var(--tr-inset) !important;
+.notification__dot {
+  fill: var(--ic-magenta) !important;
+  filter: drop-shadow(0 0 3px rgba(255, 61, 142, 0.8));
+}
+
+.app-menu__current-app {
+  border-radius: var(--ic-r-md) !important;
+}
+.app-menu__current-app:hover, .app-menu__current-app:focus-visible {
+  background-color: var(--ic-fill) !important;
+}
+.app-menu__current-app .app-menu__current-app-glyph {
+  background-color: var(--ic-splash) !important;
+  filter: none !important;
+}
+.app-menu__current-app .app-menu__current-app-icon {
+  mask-image: none !important;
+  -webkit-mask-image: none !important;
+}
+.app-menu__current-app .app-menu__current-app-name {
+  color: var(--ic-hi) !important;
+  font-family: var(--ic-font-mono) !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase;
+}
+
+.unified-search-input__button {
+  border-radius: var(--ic-r-md) !important;
+  background-color: rgba(var(--ic-raised-rgb), 0.85) !important;
+  box-shadow: inset 0 0 0 1px var(--ic-line), inset 0 1px 0 rgba(255, 255, 255, 0.04) !important;
+  color: var(--ic-mute) !important;
+  transition: box-shadow var(--ic-dur-micro) var(--ic-ease);
+}
+.unified-search-input__button:hover, .unified-search-input__button:focus-visible {
+  box-shadow: inset 0 0 0 1px var(--ic-line-strong) !important;
+}
+
+.unified-search-input__icon {
+  color: var(--ic-mute) !important;
+}
+
+.unified-search-input__field {
+  border-radius: var(--ic-r-md) !important;
+  background-color: rgba(var(--ic-raised-rgb), 0.85) !important;
+  box-shadow: inset 0 0 0 1px var(--ic-line), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  transition: box-shadow var(--ic-dur-micro) var(--ic-ease), background-color var(--ic-dur-micro) var(--ic-ease);
+}
+.unified-search-input__field:hover {
+  box-shadow: inset 0 0 0 1px var(--ic-line-strong);
+}
+.unified-search-input__field:focus-within {
+  background-color: var(--ic-well) !important;
+  box-shadow: inset 0 0 0 1px var(--ic-splash), 0 0 0 3px rgba(var(--ic-splash-rgb), 0.16);
+}
+
+.unified-search-input__input {
+  background: transparent !important;
   border: none !important;
-  box-shadow: var(--tr-shadow-float) !important;
+  box-shadow: none !important;
 }
 
-.header-menu__carret {
-  display: none !important;
+.unified-search-input__label,
+.unified-search-input__resting {
+  color: var(--ic-mute) !important;
 }
 
-/* Navigation: the Trumpf sidebar ------------------------------------------------ */
-.app-navigation,
-#app-navigation:not(.vue) {
-  background-color: var(--tr-bg) !important;
+.unified-search-input__shortcut kbd {
+  padding: 0 5px;
+  border: 1px solid var(--ic-line-strong);
+  border-radius: 5px;
+  background: transparent;
+  color: var(--ic-mute);
+  font-family: var(--ic-font-mono) !important;
+  font-size: 10.5px;
+  line-height: 16px;
+}
+
+#header:not(.header-guest) .avatardiv,
+.header-end .account-menu__avatar {
+  box-shadow: 0 0 0 2px var(--ic-void), 0 0 0 3px rgba(var(--ic-splash-rgb), 0.55);
+}
+
+/* The panel ----------------------------------------------------------------------- */
+body > #content,
+body > #content-vue {
+  background: transparent !important;
   -webkit-backdrop-filter: none !important;
   backdrop-filter: none !important;
-  border-inline-end: 1px solid color-mix(in srgb, var(--tr-border) 70%, transparent) !important;
+  box-shadow: none !important;
+  overflow: clip !important;
+  overflow-clip-margin: 1px;
 }
 
+#app-content,
+#app-content-vue,
+.app-content {
+  background-color: var(--ic-deep) !important;
+  background-image: linear-gradient(90deg, rgba(var(--ic-splash-rgb), 0.4), rgba(var(--ic-splash-rgb), 0.08) 45%, rgba(var(--ic-splash-rgb), 0) 80%);
+  background-repeat: no-repeat;
+  background-size: 100% 1px;
+  border-radius: var(--ic-r-panel) !important;
+  box-shadow: 0 0 0 1px var(--ic-line), var(--ic-highlight);
+}
+
+:is(#app-content, #app-content-vue, .app-content) :is(#app-content, #app-content-vue, .app-content) {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Navigation: on the ink, the Trumpf sidebar ----------------------------------- */
+.app-navigation,
+#app-navigation:not(.vue) {
+  background-color: transparent !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  border-inline-end: none !important;
+}
+
+@media (max-width: 1024px) {
+  .app-navigation,
+  #app-navigation:not(.vue) {
+    background-color: var(--ic-void) !important;
+  }
+  .app-navigation:not(.app-navigation--close) {
+    box-shadow: 1px 0 0 var(--ic-line), 24px 0 48px -24px rgba(0, 0, 0, 0.8);
+  }
+}
 .app-navigation-entry {
-  border-radius: var(--tr-radius-lg) !important;
+  border-radius: var(--ic-r-md) !important;
+  transition: background-color var(--ic-dur-micro) var(--ic-ease);
+}
+.app-navigation-entry .app-navigation-entry__name,
+.app-navigation-entry .app-navigation-entry-link,
+.app-navigation-entry .app-navigation-entry-button {
+  color: var(--ic-fg) !important;
 }
 .app-navigation-entry .app-navigation-entry-icon {
-  color: var(--tr-accent-text);
+  color: var(--ic-mute);
+  transition: color var(--ic-dur-micro) var(--ic-ease);
 }
 .app-navigation-entry:not(.app-navigation-entry--legacy):hover:not(.active), .app-navigation-entry:not(.app-navigation-entry--legacy):focus-within:not(.active) {
-  background-color: rgba(255, 255, 255, 0.06) !important;
+  background-color: var(--ic-fill) !important;
+}
+.app-navigation-entry:not(.app-navigation-entry--legacy):hover:not(.active) .app-navigation-entry-icon, .app-navigation-entry:not(.app-navigation-entry--legacy):focus-within:not(.active) .app-navigation-entry-icon {
+  color: var(--ic-fg);
 }
 .app-navigation-entry:active:not(.active) {
-  background-color: rgba(255, 255, 255, 0.1) !important;
-  transition-duration: 0ms !important;
+  background-color: var(--ic-fill-pressed) !important;
+  transition-duration: 0ms;
 }
 .app-navigation-entry.active {
-  background-color: var(--color-primary-element-light) !important;
-  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0)) !important;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 6px 16px -10px color-mix(in srgb, var(--tr-accent) 80%, transparent);
+  background-color: var(--ic-wash) !important;
+  box-shadow: inset 0 0 0 1px rgba(var(--ic-splash-rgb), 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 .app-navigation-entry.active::before {
   display: none !important;
@@ -1599,71 +1247,76 @@ kbd {
 .app-navigation-entry.active .app-navigation-entry__name,
 .app-navigation-entry.active .app-navigation-entry-link,
 .app-navigation-entry.active .app-navigation-entry-button {
-  color: var(--tr-ink) !important;
+  color: var(--ic-hi) !important;
   font-weight: 600 !important;
 }
+.app-navigation-entry.active .app-navigation-entry-icon {
+  color: var(--ic-splash) !important;
+}
+.app-navigation-entry.active .app-navigation-entry-icon[class*=icon-] {
+  filter: none;
+  opacity: 1;
+}
 .app-navigation-entry.app-navigation-entry--legacy.active {
-  background-color: var(--color-primary-element-light) !important;
-}
-.app-navigation-entry.app-navigation-entry--legacy.active .app-navigation-entry-link,
-.app-navigation-entry.app-navigation-entry--legacy.active .app-navigation-entry-button {
-  color: var(--tr-ink) !important;
+  background-color: var(--ic-wash) !important;
 }
 
-.app-navigation-entry:not(.app-navigation-entry__children *) > :is(.app-navigation-entry-link, .app-navigation-entry-button) > .app-navigation-entry-icon:not([class*=icon-]) {
-  position: relative;
-  isolation: isolate;
-}
-.app-navigation-entry:not(.app-navigation-entry__children *) > :is(.app-navigation-entry-link, .app-navigation-entry-button) > .app-navigation-entry-icon:not([class*=icon-])::before {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  inset: calc(50% - 14px);
-  border-radius: 8px;
-  background-color: color-mix(in srgb, var(--tr-accent) 20%, transparent);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07);
-  transition: background-color var(--tr-dur-fade) var(--tr-ease-soft), box-shadow var(--tr-dur-fade) var(--tr-ease-soft);
-}
-.app-navigation-entry:not(.app-navigation-entry__children *) > :is(.app-navigation-entry-link, .app-navigation-entry-button) > .app-navigation-entry-icon:not([class*=icon-]) svg,
-.app-navigation-entry:not(.app-navigation-entry__children *) > :is(.app-navigation-entry-link, .app-navigation-entry-button) > .app-navigation-entry-icon:not([class*=icon-]) img {
-  width: 18px !important;
-  height: 18px !important;
-}
-
-#body-settings .app-navigation-entry:not(.app-navigation-entry__children *) > :is(.app-navigation-entry-link, .app-navigation-entry-button) > .app-navigation-entry-icon:not([class*=icon-]), .app-navigation-entry.active:not(.app-navigation-entry__children *) > :is(.app-navigation-entry-link, .app-navigation-entry-button) > .app-navigation-entry-icon:not([class*=icon-]) {
-  color: var(--tr-accent-on) !important;
-}
-#body-settings .app-navigation-entry:not(.app-navigation-entry__children *) > :is(.app-navigation-entry-link, .app-navigation-entry-button) > .app-navigation-entry-icon:not([class*=icon-])::before, .app-navigation-entry.active:not(.app-navigation-entry__children *) > :is(.app-navigation-entry-link, .app-navigation-entry-button) > .app-navigation-entry-icon:not([class*=icon-])::before {
-  background-color: var(--tr-accent);
-  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0) 60%);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.32), 0 6px 14px -4px color-mix(in srgb, var(--tr-accent) 75%, transparent);
-}
-#body-settings .app-navigation-entry:not(.app-navigation-entry__children *) > :is(.app-navigation-entry-link, .app-navigation-entry-button) > .app-navigation-entry-icon:not([class*=icon-]) img, .app-navigation-entry.active:not(.app-navigation-entry__children *) > :is(.app-navigation-entry-link, .app-navigation-entry-button) > .app-navigation-entry-icon:not([class*=icon-]) img {
-  filter: var(--tr-accent-flip);
+:is(#content, #content-vue) .app-navigation-entry.active {
+  background-color: var(--ic-wash) !important;
 }
 
 .app-navigation-caption__name,
 #app-navigation:not(.vue) .app-navigation-caption {
-  color: var(--tr-ink-soft) !important;
-  font-size: 13px !important;
+  font-family: var(--ic-font-mono) !important;
+  font-size: 11px !important;
   font-weight: 500 !important;
-  letter-spacing: 0 !important;
-  text-transform: none !important;
+  letter-spacing: 0.16em !important;
+  text-transform: uppercase !important;
+  color: var(--ic-mute) !important;
   box-shadow: none !important;
 }
 
 .counter-bubble__counter {
   background-color: transparent !important;
-  color: var(--tr-ink-soft) !important;
-  font-weight: 600;
+  color: var(--ic-mute) !important;
+  font-family: var(--ic-font-mono);
+  font-size: 12px !important;
+  font-weight: 500 !important;
 }
 .counter-bubble__counter--highlighted {
-  background-color: var(--tr-pink-strong) !important;
-  color: #ffffff !important;
+  background-color: var(--ic-magenta) !important;
+  color: var(--ic-void) !important;
+  font-weight: 700 !important;
 }
 .counter-bubble__counter--outlined {
   background-color: transparent !important;
-  color: var(--tr-accent-text) !important;
+  box-shadow: inset 0 0 0 1px var(--ic-line-strong);
+  color: var(--ic-splash-text) !important;
+}
+
+.app-navigation-entry.active .counter-bubble__counter {
+  background-color: transparent !important;
+  color: var(--ic-splash-text) !important;
+  font-weight: 600 !important;
+}
+
+:is(.app-navigation-personal, .app-navigation-administration) > ul > li {
+  border-radius: var(--ic-r-md);
+}
+:is(.app-navigation-personal, .app-navigation-administration) > ul > li > a {
+  border-radius: var(--ic-r-md);
+  color: var(--ic-fg) !important;
+}
+:is(.app-navigation-personal, .app-navigation-administration) > ul > li:not(.active) > a:hover {
+  background-color: var(--ic-fill) !important;
+}
+:is(.app-navigation-personal, .app-navigation-administration) > ul > li.active, :is(.app-navigation-personal, .app-navigation-administration) > ul > li.active > a {
+  background-color: var(--ic-wash) !important;
+  color: var(--ic-hi) !important;
+  font-weight: 600;
+}
+:is(.app-navigation-personal, .app-navigation-administration) > ul > li.active > a img {
+  filter: none !important;
 }
 
 #app-navigation:not(.vue) > ul > li > a {
@@ -1671,13 +1324,22 @@ kbd {
 }
 #app-navigation:not(.vue) > ul > li.active > a,
 #app-navigation:not(.vue) > ul > li > a.active {
-  background-color: var(--color-primary-element-light) !important;
-  color: var(--tr-ink) !important;
+  background-color: var(--ic-wash) !important;
+  color: var(--ic-hi) !important;
   font-weight: 600;
 }
 
-.app-navigation-new .button-vue {
-  border-radius: var(--tr-radius-full) !important;
+.app-navigation-toggle {
+  background-color: transparent !important;
+  color: var(--ic-mute) !important;
+}
+.app-navigation-toggle:hover {
+  background-color: var(--ic-fill) !important;
+  color: var(--ic-hi) !important;
+}
+
+.app-navigation-search__input .input-field__input {
+  background-color: rgba(var(--ic-raised-rgb), 0.6) !important;
 }
 
 .app-settings__header .settings-button,
@@ -1688,67 +1350,97 @@ kbd {
   opacity: 1;
 }
 
-/* Settings: a hub of grouped cards ------------------------------------------------ */
-#body-settings .app-navigation-entry.active {
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 8px 18px -10px color-mix(in srgb, var(--tr-accent) 90%, transparent);
-}
-
-#body-settings #app-content,
-#body-settings #app-content-vue {
-  background-color: var(--tr-bg) !important;
-}
-
+/* Settings: sections on the panel, separated by hairlines ---------------------- */
 #body-settings #app-content :is(.section, .settings-section),
 #body-settings #app-content-vue :is(.section, .settings-section) {
-  margin: 12px 16px !important;
-  padding: 20px 24px !important;
+  margin: 0 !important;
+  padding: 28px 36px 32px !important;
   border: none !important;
-  border-radius: var(--tr-radius-2xl) !important;
-  background-color: var(--tr-surface);
-  background-image: var(--tr-sheen);
-  box-shadow: var(--tr-shadow-card);
+  border-bottom: 1px solid var(--ic-line) !important;
+  border-radius: 0 !important;
+  background: none !important;
+  box-shadow: none !important;
+}
+#body-settings #app-content :is(.section, .settings-section):last-child,
+#body-settings #app-content-vue :is(.section, .settings-section):last-child {
+  border-bottom: none !important;
 }
 
 .settings-section__name,
 .section > h2 {
-  font-size: 20px !important;
-  line-height: 25px !important;
+  font-size: 22px !important;
+  line-height: 28px !important;
+}
+
+#body-settings :is(.section, .settings-section):not(#breezedark) h3 {
+  font-family: var(--ic-font-display) !important;
+  font-size: 18px !important;
+  font-weight: 500 !important;
+  line-height: 24px !important;
+  letter-spacing: -0.015em;
+  color: var(--ic-hi);
 }
 
 .settings-section__desc,
 .settings-hint,
 .section .hint,
 .section em {
-  color: var(--tr-ink-soft) !important;
+  color: var(--ic-mute) !important;
 }
 
-/* Sidebar ------------------------------------------------------------------- */
+/* Sidebar (details) ---------------------------------------------------------------- */
 .app-sidebar,
 #app-sidebar {
-  background-color: var(--tr-surface) !important;
-  border-inline-start: 1px solid color-mix(in srgb, var(--tr-border) 70%, transparent) !important;
+  background-color: var(--ic-deep) !important;
+  border-inline-start: none !important;
+  box-shadow: 0 0 0 1px var(--ic-line), var(--ic-highlight);
 }
 
+@media (min-width: 1025px) {
+  body > :is(#content, #content-vue) > :is(.app-sidebar, #app-sidebar, aside.app-sidebar) {
+    margin-inline-start: 8px;
+    border-radius: var(--ic-r-panel) !important;
+  }
+}
 .app-sidebar-header__figure {
-  background-color: var(--tr-accent-wash) !important;
-  background-image: radial-gradient(120% 120% at 0% 0%, color-mix(in srgb, var(--tr-accent) 35%, transparent), transparent 70%) !important;
+  background-color: var(--ic-raised) !important;
 }
 
 .app-sidebar-header__mainname {
   font-size: 20px !important;
 }
 
+.app-sidebar-header__subname {
+  font-family: var(--ic-font-mono);
+  font-size: 12px !important;
+  color: var(--ic-mute) !important;
+}
+
+.app-sidebar-tabs__nav .checkbox-radio-switch--button-variant {
+  background-color: transparent !important;
+}
+
 #app-sidebar-vue .star--starred,
 #app-sidebar .star--starred {
-  color: var(--tr-gold) !important;
+  color: var(--ic-gold) !important;
 }
 
-/* Menus and popovers --------------------------------------------------------------- */
+/* Menus and popovers: float on a lamp-light glow -------------------------------- */
 .v-popper__popper:not(.v-popper--theme-tooltip) .v-popper__wrapper {
-  border-radius: var(--tr-radius-xl) !important;
-  box-shadow: var(--tr-shadow-float) !important;
+  border-radius: var(--ic-r-lg) !important;
+  box-shadow: var(--ic-shadow-float) !important;
 }
 
+.v-popper__popper--shown:not(.v-popper--theme-tooltip) .v-popper__wrapper {
+  animation: ic-pop var(--ic-dur-micro) var(--ic-ease-soft) both;
+}
+
+@keyframes ic-pop {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.98);
+  }
+}
 .v-popper__popper:not(.v-popper--theme-tooltip) .v-popper__inner,
 .popovermenu,
 .menu,
@@ -1756,12 +1448,11 @@ kbd {
 .popover,
 .app-navigation-entry-menu,
 .action-item__menu {
-  --color-background-hover: rgba(255, 255, 255, 0.08);
-  --color-main-background: var(--tr-inset);
-  background-color: var(--tr-inset) !important;
-  background-image: var(--tr-sheen);
+  --color-background-hover: var(--ic-fill-strong);
+  --color-main-background: var(--ic-float);
+  background-color: var(--ic-float) !important;
   border: none !important;
-  border-radius: var(--tr-radius-xl) !important;
+  border-radius: var(--ic-r-lg) !important;
 }
 
 .popovermenu,
@@ -1769,14 +1460,15 @@ kbd {
 .bubble,
 .popover,
 .action-item__menu {
-  box-shadow: var(--tr-shadow-float) !important;
+  box-shadow: var(--ic-shadow-float) !important;
 }
 
 .bubble::after,
 .app-navigation-entry-menu::after,
 .menu::after,
 .popovermenu::after,
-.action-item__menu .action-item__menu_arrow {
+.action-item__menu .action-item__menu_arrow,
+.v-popper__arrow-container {
   display: none !important;
 }
 
@@ -1785,59 +1477,120 @@ kbd {
 .action-router,
 .action-checkbox__label,
 .action-radio__label {
-  border-radius: var(--tr-radius-lg) !important;
-  transition: background-color var(--tr-dur-fade) var(--tr-ease-soft);
+  border-radius: var(--ic-r-md) !important;
+  transition: background-color var(--ic-dur-micro) var(--ic-ease);
+}
+.action-button:hover, .action-button:focus-visible,
+.action-link:hover,
+.action-link:focus-visible,
+.action-router:hover,
+.action-router:focus-visible,
+.action-checkbox__label:hover,
+.action-checkbox__label:focus-visible,
+.action-radio__label:hover,
+.action-radio__label:focus-visible {
+  background-color: var(--ic-fill-strong) !important;
 }
 .action-button:active,
 .action-link:active,
 .action-router:active,
 .action-checkbox__label:active,
 .action-radio__label:active {
-  background-color: rgba(255, 255, 255, 0.12) !important;
+  background-color: var(--ic-fill-pressed) !important;
   transition-duration: 0ms;
 }
 
-.action-separator {
-  border-color: color-mix(in srgb, var(--tr-border) 80%, transparent) !important;
+.action-button__icon,
+.action-link__icon,
+.action-router__icon {
+  color: var(--ic-mute);
 }
 
-/* Tooltips ----------------------------------------------------------------------- */
+.action-button:hover .action-button__icon,
+.action-link:hover .action-link__icon {
+  color: var(--ic-fg);
+}
+
+.action-button.action-button--error,
+.action-button--error .action-button__text,
+.action-button--error .action-button__icon {
+  color: var(--ic-danger) !important;
+}
+
+.action-separator {
+  border-color: var(--ic-line) !important;
+}
+
+.action-caption,
+.action-caption__name {
+  color: var(--ic-mute) !important;
+  font-family: var(--ic-font-mono) !important;
+  font-size: 10.5px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.16em !important;
+  text-transform: uppercase;
+}
+
+/* Header menus: notifications, contacts, account ------------------------------- */
+.header-menu__wrapper {
+  background-color: var(--ic-float) !important;
+  border: none !important;
+  border-radius: var(--ic-r-lg) !important;
+  box-shadow: var(--ic-shadow-float) !important;
+}
+
+.header-menu__content {
+  border-radius: var(--ic-r-lg) !important;
+}
+
+.header-menu__carret {
+  display: none !important;
+}
+
+.account-menu__list .list-item {
+  border-radius: var(--ic-r-md) !important;
+}
+
+/* Tooltips -------------------------------------------------------------------- */
 .v-popper--theme-tooltip .v-popper__inner {
-  background-color: var(--tr-inset) !important;
-  border-radius: var(--tr-radius-lg) !important;
-  box-shadow: var(--tr-shadow-float) !important;
-  color: var(--tr-ink) !important;
-  font-size: 13px;
+  padding: 5px 9px !important;
+  background-color: var(--ic-float) !important;
+  border-radius: var(--ic-r-sm) !important;
+  box-shadow: 0 0 0 1px var(--ic-line-strong), 0 8px 20px -6px rgba(0, 0, 0, 0.7) !important;
+  color: var(--ic-fg) !important;
+  font-size: 12.5px;
 }
 
 .v-popper--theme-tooltip .v-popper__arrow-outer,
 .v-popper--theme-tooltip .v-popper__arrow-inner {
-  border-color: var(--tr-inset) !important;
+  border-color: var(--ic-float) !important;
 }
 
-/* Sheets: modals and dialogs rise from below ----------------------------------- */
+/* Dialogs: rise from below onto a scrim that removes the page -------------------- */
 .modal-mask {
-  background-color: var(--tr-scrim) !important;
+  background-color: rgba(var(--ic-void-rgb), 0.72) !important;
   -webkit-backdrop-filter: none !important;
   backdrop-filter: none !important;
 }
+.modal-mask:has(.modal-wrapper--full) {
+  background-color: rgba(var(--ic-void-rgb), 0.96) !important;
+}
 
 .modal-wrapper:not(.modal-wrapper--full) .modal-container {
-  background-color: var(--tr-surface) !important;
-  background-image: var(--tr-sheen);
-  border-radius: var(--tr-radius-float) !important;
-  box-shadow: var(--tr-shadow-sheet) !important;
-  animation: tr-sheet-in var(--tr-dur-sheet) var(--tr-ease-ios) both;
+  background-color: var(--ic-deep) !important;
+  border-radius: var(--ic-r-xl) !important;
+  box-shadow: var(--ic-shadow-sheet) !important;
+  animation: ic-sheet-in var(--ic-dur-sheet) var(--ic-ease-ios) both;
 }
 
 .dialog__modal .modal-wrapper.modal-wrapper--small .modal-container {
-  border-radius: var(--tr-radius-card) !important;
+  border-radius: var(--ic-r-xl) !important;
 }
 
-@keyframes tr-sheet-in {
+@keyframes ic-sheet-in {
   from {
     opacity: 0;
-    transform: translateY(32px) scale(0.98);
+    transform: translateY(24px) scale(0.985);
   }
   to {
     opacity: 1;
@@ -1847,33 +1600,31 @@ kbd {
 .dialog__name,
 .modal-header .modal-name {
   font-size: 20px !important;
-  line-height: 25px !important;
+  line-height: 26px !important;
 }
 
 .oc-dialog {
   border: none !important;
-  border-radius: var(--tr-radius-float) !important;
-  box-shadow: var(--tr-shadow-sheet) !important;
+  border-radius: var(--ic-r-xl) !important;
+  box-shadow: var(--ic-shadow-sheet) !important;
 }
 
 .oc-dialog-dim {
-  background-color: var(--tr-scrim) !important;
+  background-color: rgba(var(--ic-void-rgb), 0.72) !important;
 }
 
-/* Toasts: material from above ------------------------------------------------------ */
+/* Toasts: a raised key with a status dot ------------------------------------------ */
 .toastify.dialogs {
-  min-height: 48px;
-  padding: 10px 12px 10px 16px !important;
+  min-height: 44px;
+  padding: 8px 10px 8px 16px !important;
   border: none !important;
-  border-radius: var(--tr-radius-card) !important;
-  background-color: var(--tr-material) !important;
-  -webkit-backdrop-filter: var(--tr-material-filter);
-  backdrop-filter: var(--tr-material-filter);
-  box-shadow: var(--tr-shadow-float) !important;
-  color: var(--tr-ink) !important;
+  border-radius: var(--ic-r-lg) !important;
+  background-color: var(--ic-float) !important;
+  box-shadow: var(--ic-shadow-float) !important;
+  color: var(--ic-fg) !important;
   font-weight: 500;
-  transition-duration: var(--tr-dur-toast) !important;
-  transition-timing-function: var(--tr-ease-ios) !important;
+  transition-duration: 480ms !important;
+  transition-timing-function: var(--ic-ease-ios) !important;
 }
 .toastify.dialogs.toast-success, .toastify.dialogs.toast-error, .toastify.dialogs.toast-warning, .toastify.dialogs.toast-info {
   border-inline-start: none !important;
@@ -1882,39 +1633,79 @@ kbd {
   content: "";
   flex-shrink: 0;
   align-self: center;
-  width: 8px;
-  height: 8px;
-  margin-inline-end: 10px;
+  width: 7px;
+  height: 7px;
+  margin-inline-end: 12px;
   border-radius: 50%;
-  background-color: var(--tr-accent-text);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--tr-accent-text) 22%, transparent);
+  background-color: var(--ic-splash);
+  box-shadow: 0 0 10px rgba(var(--ic-splash-rgb), 0.8);
 }
 .toastify.dialogs.toast-success::before {
-  background-color: var(--tr-success);
+  background-color: var(--ic-ok);
+  box-shadow: 0 0 10px rgba(74, 222, 128, 0.7);
 }
 .toastify.dialogs.toast-error::before {
-  background-color: var(--tr-danger);
+  background-color: var(--ic-danger);
+  box-shadow: 0 0 10px rgba(255, 85, 119, 0.7);
 }
 .toastify.dialogs.toast-warning::before {
-  background-color: var(--tr-warn);
+  background-color: var(--ic-warn);
+  box-shadow: 0 0 10px rgba(248, 225, 108, 0.6);
 }
 .toastify.dialogs .toast-undo-button,
 .toastify.dialogs .toast-close {
-  border-radius: var(--tr-radius-full) !important;
+  border-radius: var(--ic-r-md) !important;
 }
 .toastify.dialogs .toast-undo-button {
-  background-color: var(--color-primary-element-light) !important;
-  color: var(--color-primary-element-light-text) !important;
+  background-color: var(--ic-wash) !important;
+  color: var(--ic-splash-text) !important;
 }
 
-/* Empty states: a tinted glyph, a statement, a sentence ---------------------------- */
+:is([role=status], [role=alert])[class*=_toast_] {
+  align-items: center;
+  padding: 6px 6px 6px 16px !important;
+  border: none !important;
+  border-radius: var(--ic-r-lg) !important;
+  background-color: var(--ic-float) !important;
+  box-shadow: var(--ic-shadow-float) !important;
+  color: var(--ic-fg) !important;
+  font-weight: 500;
+}
+:is([role=status], [role=alert])[class*=_toast_]::before {
+  content: "";
+  flex-shrink: 0;
+  width: 7px;
+  height: 7px;
+  margin-inline-end: 12px;
+  border-radius: 50%;
+  background-color: var(--ic-splash);
+  box-shadow: 0 0 10px rgba(var(--ic-splash-rgb), 0.8);
+}
+:is([role=status], [role=alert])[class*=_toast_][class*=_toast_success_]::before {
+  background-color: var(--ic-ok);
+  box-shadow: 0 0 10px rgba(74, 222, 128, 0.7);
+}
+:is([role=status], [role=alert])[class*=_toast_][class*=_toast_error_]::before {
+  background-color: var(--ic-danger);
+  box-shadow: 0 0 10px rgba(255, 85, 119, 0.7);
+}
+:is([role=status], [role=alert])[class*=_toast_][class*=_toast_warning_]::before {
+  background-color: var(--ic-warn);
+  box-shadow: 0 0 10px rgba(248, 225, 108, 0.6);
+}
+:is([role=status], [role=alert])[class*=_toast_] [class*=_toastClose_] {
+  color: var(--ic-mute) !important;
+}
+
+/* Empty states: a glyph under the lamp, a statement, a sentence ----------------------- */
 .empty-content__icon {
   width: 64px !important;
   height: 64px !important;
-  border-radius: 50%;
-  background-color: color-mix(in srgb, var(--tr-accent) 18%, transparent);
+  border-radius: 18px;
+  background-color: var(--ic-raised);
   background-size: 30px !important;
-  color: var(--tr-accent-text);
+  box-shadow: inset 0 0 0 1px var(--ic-line-strong), 0 0 40px -10px rgba(var(--ic-splash-rgb), 0.45);
+  color: var(--ic-splash) !important;
   opacity: 1 !important;
 }
 .empty-content__icon svg {
@@ -1922,49 +1713,122 @@ kbd {
   height: 30px !important;
 }
 
+.empty-content__icon:has(.loading-icon, .icon-loading, .icon-loading-small) {
+  background: none !important;
+  box-shadow: none !important;
+}
+
+.empty-content:has(.empty-content__icon :is(.loading-icon, .icon-loading, .icon-loading-small)) .empty-content__name {
+  color: var(--ic-mute) !important;
+  font-family: var(--ic-font-body) !important;
+  font-size: 15px !important;
+  font-weight: 500 !important;
+  line-height: 22px !important;
+  letter-spacing: 0;
+}
+
 .empty-content__name {
-  font-size: 20px !important;
-  line-height: 25px !important;
+  font-size: 21px !important;
+  line-height: 27px !important;
 }
 
 .empty-content__description {
-  max-width: 22rem;
-  color: var(--tr-ink-soft) !important;
+  max-width: 24rem;
+  color: var(--ic-mute) !important;
 }
 
-/* Note cards and badges ----------------------------------------------------------- */
+.header-menu .empty-content__name {
+  font-size: 16px !important;
+  line-height: 22px !important;
+  text-wrap: balance;
+}
+
+/* Note cards: InkCurity callouts ----------------------------------------------------- */
 .notecard {
-  border-radius: var(--tr-radius-xl) !important;
-  border-inline-start-width: 0 !important;
+  border: 1px solid rgba(var(--ic-splash-rgb), 0.3) !important;
+  border-radius: 12px !important;
+  background-color: rgba(var(--ic-splash-rgb), 0.05) !important;
+}
+.notecard.notecard--success {
+  border-color: rgba(74, 222, 128, 0.3) !important;
+  background-color: rgba(74, 222, 128, 0.05) !important;
+}
+.notecard.notecard--warning {
+  border-color: rgba(248, 225, 108, 0.3) !important;
+  background-color: rgba(248, 225, 108, 0.05) !important;
+}
+.notecard.notecard--error {
+  border-color: rgba(255, 85, 119, 0.32) !important;
+  background-color: rgba(255, 85, 119, 0.06) !important;
 }
 
 .app-level .official,
 .app-level .supported {
-  border-color: var(--tr-success) !important;
-  border-radius: var(--tr-radius-full);
+  border-color: var(--ic-ok) !important;
+  border-radius: var(--ic-r-sm);
 }
 
-/* Search ---------------------------------------------------------------------- */
+/* Lists and breadcrumbs ------------------------------------------------------------------- */
+.list-item {
+  border-radius: var(--ic-r-md) !important;
+}
+.list-item:hover, .list-item:focus-within {
+  background-color: var(--ic-fill) !important;
+}
+.list-item.list-item--active, .list-item.active {
+  background-color: var(--ic-wash) !important;
+}
+
+.list-item-content__name,
+.line-one__name {
+  color: var(--ic-fg) !important;
+}
+
+.list-item-content__subname,
+.line-two__subname {
+  color: var(--ic-mute) !important;
+}
+
+.breadcrumb .vue-crumb__separator {
+  color: var(--ic-faint) !important;
+}
+
+.vue-crumb:last-child .button-vue__text,
+.vue-crumb--current .button-vue__text {
+  color: var(--ic-hi) !important;
+  font-weight: 600 !important;
+}
+
+/* Search -------------------------------------------------------------------------- */
 .unified-search__form-reset {
   background-color: transparent !important;
 }
 
 .unified-search-modal .result-items__item:hover,
 .unified-search-modal .result-items__item:focus-within {
-  background-color: rgba(255, 255, 255, 0.06) !important;
-  border-radius: var(--tr-radius-lg);
+  background-color: var(--ic-fill) !important;
+  border-radius: var(--ic-r-md);
 }
 
 /* Profile, user management, image cropper ---------------------------------------- */
 .preview-card .preview-card__footer {
-  border-bottom-left-radius: var(--tr-radius-xl);
-  border-bottom-right-radius: var(--tr-radius-xl);
+  border-bottom-left-radius: var(--ic-r-lg);
+  border-bottom-right-radius: var(--ic-r-lg);
+}
+
+.preview-card :is(.preview-card__header, .preview-card__banner) {
+  background-color: var(--ic-raised) !important;
+  background-image: radial-gradient(120% 160% at 0% 0%, rgba(var(--ic-splash-rgb), 0.22), transparent 70%) !important;
+  box-shadow: inset 0 -1px 0 var(--ic-line);
+}
+.preview-card :is(.preview-card__header, .preview-card__banner) span {
+  color: var(--ic-hi) !important;
 }
 
 #cropper .inner-container {
-  background-color: var(--tr-surface) !important;
-  border-radius: var(--tr-radius-2xl);
-  color: var(--tr-ink) !important;
+  background-color: var(--ic-deep) !important;
+  border-radius: var(--ic-r-lg);
+  color: var(--ic-fg) !important;
 }
 
 #addgroup button.icon-confirm,
@@ -1973,16 +1837,17 @@ kbd {
 }
 
 .followupsection {
-  color: var(--tr-ink) !important;
+  color: var(--ic-fg) !important;
 }
 
 /* Reduced motion ------------------------------------------------------------------ */
 @media (prefers-reduced-motion: reduce) {
-  .modal-wrapper .modal-container {
+  .modal-wrapper .modal-container,
+  .v-popper__popper--shown .v-popper__wrapper {
     animation: none !important;
   }
 }
-[data-themes*=reduced-motion] .modal-wrapper .modal-container {
+[data-themes*=reduced-motion] :is(.modal-wrapper .modal-container, .v-popper__popper--shown .v-popper__wrapper) {
   animation: none !important;
 }
 
@@ -2154,86 +2019,112 @@ body.dashboard--inverted.dashboard--dark .header-right > div:not(#settings) > :f
  *
  * @license GNU AGPL version 3 or any later version, see COPYING file for more.
  */
-/* Dashboard: the start page ------------------------------------------------------ */
+/* Dashboard: the start page on the ink -------------------------------------------- */
+#content.app-dashboard #app-content-vue,
+#content.app-dashboard #app-content,
+#content-vue.app-dashboard #app-content-vue,
+#content-vue.app-dashboard #app-content {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
 #app-dashboard {
-  --color-background-translucent: var(--tr-surface) !important;
+  --color-background-translucent: var(--ic-deep) !important;
+}
+#app-dashboard > h2 {
+  font-family: var(--ic-font-display) !important;
+  font-size: 42px !important;
+  font-weight: 500 !important;
+  line-height: 46px !important;
+  letter-spacing: -0.025em;
+  color: var(--ic-hi) !important;
+  text-wrap: balance;
+}
+#app-dashboard > h2[data-ic-eyebrow]::before {
+  content: "▌ " attr(data-ic-eyebrow);
+  display: block;
+  margin-bottom: 12px;
+  color: var(--ic-splash);
+  font-family: var(--ic-font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 16px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
 }
 #app-dashboard .statuses .button-vue,
 #app-dashboard .statuses .action-item__menutoggle {
-  background-color: var(--tr-surface) !important;
-  box-shadow: none !important;
-  color: var(--tr-ink) !important;
+  background-color: rgba(var(--ic-raised-rgb), 0.7) !important;
+  box-shadow: inset 0 0 0 1px var(--ic-line) !important;
+  color: var(--ic-fg) !important;
 }
 #app-dashboard .statuses .button-vue:hover,
 #app-dashboard .statuses .action-item__menutoggle:hover {
-  background-color: var(--tr-inset) !important;
+  box-shadow: inset 0 0 0 1px var(--ic-line-strong) !important;
+  background-color: var(--ic-raised) !important;
 }
 #app-dashboard .panel,
 #app-dashboard .panels > div {
-  background-color: var(--tr-surface) !important;
-  background-image: var(--tr-sheen) !important;
+  background-color: var(--ic-deep) !important;
+  background-image: linear-gradient(90deg, rgba(var(--ic-splash-rgb), 0.45), rgba(var(--ic-splash-rgb), 0) 55%) !important;
+  background-repeat: no-repeat !important;
+  background-size: 100% 1px !important;
+  background-position: top left !important;
   border: none !important;
-  border-radius: var(--tr-radius-2xl) !important;
+  border-radius: var(--ic-r-lg) !important;
   -webkit-backdrop-filter: none !important;
   backdrop-filter: none !important;
-  box-shadow: var(--tr-shadow-card) !important;
-  transition: transform var(--tr-dur-control) var(--tr-ease-soft), box-shadow var(--tr-dur-control) var(--tr-ease-soft);
+  box-shadow: 0 0 0 1px var(--ic-line), var(--ic-highlight) !important;
+  transition: box-shadow var(--ic-dur-layout) var(--ic-ease);
 }
 #app-dashboard .panel:hover:not(.sortable-chosen):not(.sortable-ghost),
 #app-dashboard .panels > div:hover:not(.sortable-chosen):not(.sortable-ghost) {
-  transform: translateY(-3px);
-  box-shadow: var(--tr-shadow-float) !important;
+  box-shadow: 0 0 0 1px rgba(var(--ic-splash-rgb), 0.4), 0 0 36px -10px rgba(var(--ic-splash-rgb), 0.4) !important;
 }
 #app-dashboard .panel--header h2 {
-  font-size: 17px;
-  font-weight: 600;
+  font-size: 18px !important;
+  font-weight: 500 !important;
+  letter-spacing: -0.01em;
 }
 #app-dashboard .panels > :first-child {
-  --color-main-text: #ffffff;
-  --color-text-maxcontrast: rgba(255, 255, 255, 0.8);
-  --color-text-maxcontrast-background-blur: rgba(255, 255, 255, 0.8);
-  --color-background-hover: rgba(255, 255, 255, 0.12);
-  --color-background-dark: rgba(255, 255, 255, 0.16);
-  --color-border: rgba(255, 255, 255, 0.18);
-  --color-primary-element: #ffffff;
-  --color-primary-element-text: #1e2850;
-  --color-primary-element-hover: rgba(255, 255, 255, 0.9);
-  --color-primary-element-light: rgba(255, 255, 255, 0.16);
-  --color-primary-element-light-hover: rgba(255, 255, 255, 0.25);
-  --color-primary-element-light-text: #ffffff;
+  --color-text-maxcontrast: #a9c3e3;
+  --color-main-text: #eaf1fb;
+  --color-background-hover: rgba(255, 255, 255, 0.07);
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  box-shadow: 0 2px 6px rgba(6, 9, 28, 0.3), 0 22px 48px -14px color-mix(in srgb, #336deb 80%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
-  background-color: #2f64d8 !important;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"), radial-gradient(130% 110% at 0% 0%, color-mix(in srgb, #2f64d8 82%, white) 0%, color-mix(in srgb, #2f64d8 86%, black) 46%, color-mix(in srgb, #2f64d8 48%, black) 100%) !important;
-  color: #ffffff;
-}
-#app-dashboard .panels > :first-child .panel--header h2 {
-  font-size: 20px;
-  font-weight: 700;
-}
-#app-dashboard .panels > :first-child .panel--header h2 img,
-#app-dashboard .panels > :first-child .panel--header h2 span[class*=icon-] {
-  filter: brightness(0) invert(1);
+  background-color: #0b1c36 !important;
+  background-image: radial-gradient(130% 75% at 0% 0%, rgba(var(--ic-splash-rgb), 0.24), transparent 62%), radial-gradient(110% 70% at 100% 0%, rgba(var(--ic-electric-rgb), 0.32), transparent 64%) !important;
+  background-size: auto !important;
+  box-shadow: 0 0 0 1px rgba(var(--ic-splash-rgb), 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 30px 70px -30px rgba(var(--ic-splash-rgb), 0.5) !important;
 }
 #app-dashboard .panels > :first-child::after {
-  content: "▌//"/"";
+  content: "";
   position: absolute;
   z-index: -1;
-  top: -22px;
-  right: -10px;
-  color: rgba(255, 255, 255, 0.1);
-  font-family: var(--tr-font-mono);
-  font-size: 96px;
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: -0.05em;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.05;
   pointer-events: none;
+}
+#app-dashboard .panels > :first-child:hover:not(.sortable-chosen):not(.sortable-ghost) {
+  box-shadow: 0 0 0 1px rgba(var(--ic-splash-rgb), 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 30px 80px -26px rgba(var(--ic-splash-rgb), 0.65) !important;
+}
+#app-dashboard .panels > :first-child .panel--header h2 {
+  color: #ffffff;
+}
+#app-dashboard .panels > :first-child .panel--header h2 :is(img, span[class*=icon-]) {
+  filter: brightness(0) invert(1);
+}
+#app-dashboard .panel--header h2 :is(img, span[class*=icon-]) {
+  filter: brightness(0) invert(1) opacity(0.85);
+}
+#app-dashboard .footer .button-vue {
+  font-size: 13px;
 }
 
 .background-selector .background.color {
-  background-color: var(--tr-inset) !important;
+  background-color: var(--ic-raised) !important;
 }
 
 #status-weather .button-vue {
@@ -2253,10 +2144,6 @@ body.dashboard--inverted.dashboard--dark .header-right > div:not(#settings) > :f
   #app-dashboard .panel,
   #app-dashboard .panels > div {
     transition: none !important;
-  }
-  #app-dashboard .panel:hover,
-  #app-dashboard .panels > div:hover {
-    transform: none;
   }
 }
 /***
@@ -2322,63 +2209,107 @@ table tr.mouseOver td {
   background-color: unset !important;
 }
 
-/* Files list (Nextcloud 28+): a Trumpf list ------------------------------------ */
-.files-list__thead {
-  background-color: var(--tr-surface) !important;
+/* Files list (Nextcloud 28+): a calm list with mono meta ------------------------ */
+.files-list__thead,
+.files-list__thead-overlay {
+  background-color: var(--ic-deep) !important;
 }
+
 .files-list__thead .files-list__column,
 .files-list__thead .files-list__column-sort-button,
 .files-list__thead .files-list__column-sort-button-text,
 .files-list__thead .files-list__row-head {
-  color: var(--tr-ink-soft);
-  font-size: 13px;
-  font-weight: 500;
+  color: var(--ic-mute) !important;
+  font-family: var(--ic-font-mono) !important;
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.files-list__thead .files-list__column-sort-button {
+  padding-inline: 6px !important;
+}
+.files-list__thead .files-list__column-sort-button .button-vue__icon {
+  width: 18px !important;
+  min-width: 18px !important;
+}
+.files-list__thead .files-list__column-sort-button:not(.files-list__column-sort-button--active) .button-vue__icon {
+  display: none !important;
 }
 .files-list__thead .files-list__column-sort-button--active,
 .files-list__thead .files-list__column-sort-button--active .files-list__column-sort-button-text {
-  color: var(--tr-accent-text) !important;
-  font-weight: 600;
+  color: var(--ic-splash-text) !important;
+}
+.files-list__thead .files-list__column-sort-button-icon {
+  color: var(--ic-splash-text) !important;
 }
 
 .files-list__row {
-  transition: background-color var(--tr-dur-release) var(--tr-ease-soft);
+  transition: background-color var(--ic-dur-micro) var(--ic-ease);
 }
 .files-list__row:hover, .files-list__row:focus-within {
-  background-color: rgba(255, 255, 255, 0.05) !important;
+  background-color: var(--ic-fill) !important;
 }
 .files-list__row:active {
-  background-color: rgba(255, 255, 255, 0.1) !important;
+  background-color: var(--ic-fill-strong) !important;
   transition-duration: 0ms;
 }
-.files-list__row--active, .files-list__row--dragover, .files-list__row[data-cy-files-list-row-selected=true] {
-  background-color: color-mix(in srgb, var(--tr-accent) 18%, transparent) !important;
+.files-list__row--active, .files-list__row--dragover, .files-list__row[data-cy-files-list-row-selected=true], .files-list__row:has(.files-list__row-checkbox .checkbox-radio-switch--checked) {
+  background-color: var(--ic-wash) !important;
 }
 
 .files-list__row td,
-.files-list__row-head {
-  border-color: color-mix(in srgb, var(--tr-border) 60%, transparent) !important;
+.files-list__row-head,
+.files-list__thead th,
+.files-list__tfoot td {
+  border-color: var(--ic-line) !important;
+}
+
+.files-list__row-name-text {
+  color: var(--ic-fg);
+}
+
+.files-list__row-name-ext {
+  color: var(--ic-mute) !important;
 }
 
 .files-list__row-size,
-.files-list__row-mtime {
-  color: var(--tr-ink-soft) !important;
+.files-list__row-mtime,
+.files-list__row-column-custom {
+  color: var(--ic-mute) !important;
+  font-family: var(--ic-font-mono);
+  font-size: 12px;
+  letter-spacing: -0.01em;
 }
 
 .files-list__row-icon-favorite {
-  color: var(--tr-gold) !important;
+  color: var(--ic-gold) !important;
 }
 
 .files-list__row-icon-preview {
-  border-radius: var(--tr-radius-tile);
+  border-radius: 6px;
 }
 
-.files-list__tfoot td {
-  color: var(--tr-ink-soft);
+.files-list__tfoot td,
+.files-list__tfoot .files-list__row-name {
+  color: var(--ic-mute) !important;
+  font-family: var(--ic-font-mono);
+  font-size: 12px;
+}
+
+.files-list__row-actions .button-vue,
+.files-list__row-sharing-icon {
+  color: var(--ic-mute) !important;
 }
 
 .files-list__filters .button-vue,
-.files-list__header .button-vue--secondary {
-  font-size: 13px;
+.files-list__header .button-vue--tertiary {
+  color: var(--ic-fg) !important;
+}
+
+#rich-workspace .text-editor__wrapper,
+.files-list__before #rich-workspace {
+  background: transparent !important;
 }
 
 /***
@@ -2496,6 +2427,21 @@ table tr.mouseOver td {
   fill: var(--color-primary-text) !important;
 }
 
+/* Documents: headings in Space Grotesk, code in mono ------------------------------ */
+:is(#editor-wrapper, #text-wrapper, .text-editor) .ProseMirror :is(h1, h2, h3, h4) {
+  font-family: var(--ic-font-display) !important;
+  font-weight: 500 !important;
+  letter-spacing: -0.02em;
+  color: var(--ic-hi);
+}
+:is(#editor-wrapper, #text-wrapper, .text-editor) .ProseMirror blockquote {
+  border-inline-start-color: rgba(var(--ic-splash-rgb), 0.5) !important;
+  color: var(--ic-mute);
+}
+:is(#editor-wrapper, #text-wrapper, .text-editor) .ProseMirror hr {
+  border-color: var(--ic-line) !important;
+}
+
 /***
  * @copyright Copyright (c) 2017, Magnus Walbeck <mw@mwalbeck.org>
  *
@@ -2515,38 +2461,56 @@ table tr.mouseOver td {
  * @license GNU AGPL version 3 or any later version, see COPYING file for more.
  */
 /* Calendar ----------------------------------------------------------------- */
+.app-calendar .app-content {
+  --fc-now-indicator-color: var(--ic-magenta);
+}
 .app-calendar .app-content .fc-highlight {
-  background: var(--color-background-hover);
+  background: var(--ic-wash);
   opacity: unset;
 }
 .app-calendar .app-content .fc .fc-cell-shaded {
-  background-color: var(--color-border);
+  background-color: var(--ic-line);
 }
 .app-calendar .app-content .fc-daygrid-week-number {
-  background-color: var(--color-background-darker);
-  border-bottom: 1px solid var(--color-border);
-  border-right: 1px solid var(--color-border);
-  color: var(--color-text-maxcontrast);
+  background-color: var(--ic-raised);
+  border-bottom: 1px solid var(--ic-line);
+  border-right: 1px solid var(--ic-line);
+  color: var(--ic-mute);
+  font-family: var(--ic-font-mono);
+  font-size: 11px;
 }
 .app-calendar .app-content .fc .fc-daygrid-day.fc-day-today,
 .app-calendar .app-content .fc .fc-timegrid-col.fc-day-today,
 .app-calendar .app-content .fc-day-today.fc-col-header-cell {
-  background-color: var(--color-background-hover) !important;
-}
-.app-calendar .app-content .fc-day-today.fc-col-header-cell a,
-.app-calendar .app-content .fc-day-today.fc-col-header-cell span {
-  background-color: unset !important;
+  background-color: rgba(var(--ic-splash-rgb), 0.06) !important;
 }
 .app-calendar .app-content .fc-daygrid-day.fc-day.fc-day-other,
 .app-calendar .app-content .fc .fc-daygrid-day.fc-day-today.fc-day-other {
-  background-color: var(--color-background-darker) !important;
-  border-color: var(--color-border);
-  opacity: 0.5;
+  background-color: rgba(var(--ic-void-rgb), 0.45) !important;
+  border-color: var(--ic-line);
+}
+.app-calendar .app-content .fc-daygrid-day.fc-day.fc-day-other .fc-daygrid-day-number,
+.app-calendar .app-content .fc .fc-daygrid-day.fc-day-today.fc-day-other .fc-daygrid-day-number {
+  color: var(--ic-faint);
+}
+.app-calendar .app-content .fc .fc-timegrid-now-indicator-line {
+  border-color: var(--ic-magenta);
+  box-shadow: 0 0 6px rgba(255, 61, 142, 0.6);
+}
+.app-calendar .app-content .fc .fc-timegrid-now-indicator-arrow {
+  border-color: var(--ic-magenta);
+  border-top-color: transparent;
+  border-bottom-color: transparent;
 }
 .app-calendar .app-content .fc .fc-timeGridDay-view .fc-daygrid-day.fc-day-today,
 .app-calendar .app-content .fc .fc-timeGridDay-view .fc-timegrid-col.fc-day-today,
 .app-calendar .app-content .fc .fc-timeGridDay-view .fc-day-today.fc-col-header-cell {
   background-color: inherit !important;
+}
+.app-calendar .app-content .fc-timegrid-slot-label-cushion {
+  color: var(--ic-mute);
+  font-family: var(--ic-font-mono);
+  font-size: 11.5px;
 }
 
 .app-calendar .app-sidebar .app-sidebar-tabs__nav .app-sidebar-tabs__tab a.active {
@@ -2626,6 +2590,15 @@ table tr.mouseOver td {
 }
 .app-contacts .contact-header__infos input:active, .app-contacts .contact-header__infos input:focus {
   background-color: var(--color-background-darker) !important;
+}
+
+#app-content-vue h3.property__value,
+.contact-details h3.property__value {
+  color: var(--ic-hi) !important;
+  font-family: var(--ic-font-display) !important;
+  font-size: 19px !important;
+  font-weight: 500 !important;
+  letter-spacing: -0.015em;
 }
 
 /***

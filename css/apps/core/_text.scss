@@ -78,3 +78,23 @@
 .text-menubar button.entry-action__button.is-active .material-design-icon > svg {
     fill: var(--color-primary-text) !important;
 }
+
+/* Documents: headings in Space Grotesk, code in mono ------------------------------ */
+
+:is(#editor-wrapper, #text-wrapper, .text-editor) .ProseMirror {
+    :is(h1, h2, h3, h4) {
+        font-family: var(--ic-font-display) !important;
+        font-weight: 500 !important;
+        letter-spacing: -0.02em;
+        color: var(--ic-hi);
+    }
+
+    blockquote {
+        border-inline-start-color: rgba(var(--ic-splash-rgb), 0.5) !important;
+        color: var(--ic-mute);
+    }
+
+    hr {
+        border-color: var(--ic-line) !important;
+    }
+}

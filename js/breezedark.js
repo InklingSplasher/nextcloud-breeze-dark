@@ -62,16 +62,41 @@ function updateColorScheme() {
     setThemeEnabled(body, "breezedark", darkEnabled);
 }
 
-cssMediaDark.addEventListener("change", updateColorScheme);
-if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", updateColorScheme, { once: true });
-} else {
+/* Browser bars ------------------------------------------------------------
+ * Nextcloud announces its primary colour as theme-color, which tints the
+ * address bar and toolbars of mobile browsers. While the theme is on, they
+ * take the ink of the page; when it is off, Nextcloud's colour returns.
+ */
+const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+const nextcloudThemeColor = themeColorMeta?.getAttribute("content") ?? null;
+
+function syncThemeColor() {
+    if (!themeColorMeta || !document.body) {
+        return;
+    }
+    const ink = getComputedStyle(document.body).getPropertyValue("--ic-void").trim();
+    const color = ink || nextcloudThemeColor;
+    if (color) {
+        themeColorMeta.setAttribute("content", color);
+    }
+}
+
+function updateTheme() {
     updateColorScheme();
+    syncThemeColor();
+}
+
+cssMediaDark.addEventListener("change", updateTheme);
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", updateTheme, { once: true });
+} else {
+    updateTheme();
 }
 
 /* Dashboard eyebrow ---------------------------------------------------------
- * Trumpf puts the context above the large title of a start page: today's
- * date, in the user's language. The stylesheet shows it from data-tr-eyebrow.
+ * Above the large title of the start page sits today's date as a mono tag,
+ * in the user's language: "DONNERSTAG · 22. OKTOBER". The stylesheet shows it
+ * from data-ic-eyebrow.
  */
 function setDashboardEyebrow() {
     const title = document.querySelector("#app-dashboard > h2");
@@ -90,7 +115,7 @@ function setDashboardEyebrow() {
     } catch {
         label = new Date().toDateString();
     }
-    title.dataset.trEyebrow = label;
+    title.dataset.icEyebrow = label.replace(/,\s*/, " · ");
     return true;
 }
 
@@ -118,10 +143,32 @@ if (document.readyState === "loading") {
     watchDashboardEyebrow();
 }
 
+/* The scan ---------------------------------------------------------------------
+ * One sweep of light along the top edge of the panel when a page has loaded,
+ * like the scan line under the InkCurity nav. It runs once and then rests;
+ * reduced motion hides it in the stylesheet.
+ */
+function scanOnce() {
+    const body = document.body;
+    if (!body || !["body-user", "body-settings"].includes(body.id)) {
+        return;
+    }
+    window.requestAnimationFrame(() => {
+        body.classList.add("ic-scan");
+        window.setTimeout(() => body.classList.remove("ic-scan"), 2000);
+    });
+}
+
+if (document.readyState === "complete") {
+    scanOnce();
+} else {
+    window.addEventListener("load", scanOnce, { once: true });
+}
+
 /* Easter egg ------------------------------------------------------------------
- * The InkCurity design system ships an ink-splash easter egg behind the Konami
- * code. Here the same code throws confetti in the colours of the apps and
- * shows the tagline. Nothing happens with reduced motion except the toast.
+ * The InkCurity design system hides an ink splash behind the Konami code, and
+ * so does the theme: ink in the blues of the theme all over the page, and the
+ * tagline. With reduced motion only the toast appears.
  */
 const KONAMI = [
     "ArrowUp",
@@ -156,15 +203,6 @@ document.addEventListener("keydown", (event) => {
 
     konamiPosition = 0;
     const ui = window.BreezeDarkUI;
-    ui?.confetti([
-        "#336deb",
-        "#ec4899",
-        "#ff7158",
-        "#5bd49a",
-        "#7bd6eb",
-        "#f0c25e",
-        "#d48ad9",
-        "#ffffff",
-    ]);
+    ui?.burst(16);
     ui?.showToast({ message: "▌ Ink. Privacy. Craft." });
 });

@@ -1,10 +1,9 @@
 /***
- * InkCurity Dark — app menus as tiles, Trumpf edition
+ * InkCurity Dark — app menus
  *
- * Every app wears its colour: the open app sits on a tile in its accent, and
- * in the Nextcloud 34 app grid every app is a tile in its own colour. Colour
- * means something here (which app), so this is the one place where the menu
- * is not monochrome.
+ * One colour for every app: the grid is a set of ink keys with the glyph in
+ * the light, the open app is the one key that is lit. A key you point at
+ * catches the splash on its edge and a soft glow; nothing scales.
  *
  * Nextcloud 33: a bar of .app-menu-entry items in the header.
  * Nextcloud 34: a waffle button, the current app as a button, a popover grid
@@ -20,296 +19,204 @@
 /* Nextcloud 33: the header bar ------------------------------------------------ */
 
 .app-menu-entry {
-    .app-menu-icon {
-        isolation: isolate;
-
-        // The tile: hidden at rest, a hint on hover, solid on the open app.
-        &::before {
-            content: "";
-            position: absolute;
-            z-index: -1;
-            inset: -7px;
-            border-radius: 10px;
-            background-color: var(--tr-app, var(--tr-accent));
-            opacity: 0;
-            transform: scale(0.8);
-            transition:
-                opacity var(--tr-dur-fade) var(--tr-ease-soft),
-                transform var(--tr-dur-control) var(--tr-ease-soft);
-        }
+    .app-menu-entry__icon,
+    .app-menu-icon__icon {
+        opacity: 0.72;
+        transition: opacity var(--ic-dur-micro) var(--ic-ease);
     }
 
-    &:hover .app-menu-icon::before,
-    &:focus-within .app-menu-icon::before {
-        opacity: 0.35;
-        transform: none;
+    &:hover .app-menu-entry__icon,
+    &:hover .app-menu-icon__icon,
+    &:focus-within .app-menu-icon__icon {
+        opacity: 1;
     }
 
+    // The open app: lit glyph and a short splash line under it instead of the white bar.
     &--active {
-        // The open app's tile replaces the white indicator line.
         &::before {
-            display: none !important;
-        }
-
-        .app-menu-icon::before {
-            background-color: var(--tr-accent);
-            box-shadow: 0 6px 16px color-mix(in srgb, var(--tr-accent) 45%, transparent);
-            opacity: 1 !important;
-            transform: none;
+            width: 14px !important;
+            height: 2px !important;
+            border-radius: 2px !important;
+            background-color: var(--ic-splash) !important;
+            box-shadow: 0 0 8px rgba(var(--ic-splash-rgb), 0.8);
         }
 
         .app-menu-icon__icon {
-            filter: var(--tr-accent-flip) !important;
+            opacity: 1;
         }
 
         .app-menu-entry__label {
-            font-weight: 700 !important;
+            font-weight: 600 !important;
         }
-    }
-
-    &:active .app-menu-icon {
-        transform: scale(var(--tr-press-scale));
-        transition: transform var(--tr-dur-press) var(--tr-ease-soft);
     }
 }
 
-// Unread dot: the pink of the logo shield.
+// Unread dot: the screen's magenta.
 .app-menu-icon__unread {
-    color: var(--tr-pink) !important;
+    color: var(--ic-magenta) !important;
 }
 
-/* Nextcloud 34: waffle, current app, grid ------------------------------------- */
-
-.app-menu__waffle,
-.app-menu__current-app {
-    border-radius: var(--tr-radius-full) !important;
-
-    &:hover:not(:disabled),
-    &:focus-visible {
-        background-color: rgba(255, 255, 255, 0.1) !important;
-    }
-
-    &:active:not(:disabled) {
-        background-color: rgba(255, 255, 255, 0.16) !important;
-    }
-}
-
-.app-menu__trigger {
-    &::before {
-        border-radius: var(--tr-radius-full) !important;
-    }
-
-    &:hover::before,
-    &--open::before {
-        background-color: rgba(255, 255, 255, 0.1) !important;
-    }
-}
-
-// The current app sits on a tile in its accent, like the grid below.
-.app-menu__current-app {
-    .button-vue__icon {
-        position: relative;
-        isolation: isolate;
-
-        &::before {
-            content: "";
-            position: absolute;
-            z-index: -1;
-            inset: 3px;
-            border-radius: 9px;
-            background-color: var(--tr-accent);
-            background-image: linear-gradient(
-                180deg,
-                rgba(255, 255, 255, 0.26),
-                rgba(255, 255, 255, 0) 60%
-            );
-            box-shadow:
-                inset 0 1px 0 rgba(255, 255, 255, 0.3),
-                0 6px 16px -4px color-mix(in srgb, var(--tr-accent) 70%, transparent);
-        }
-    }
-
-    // Nextcloud 35 draws the glyph as a mask: colour it for the tile.
-    .app-menu__current-app-icon {
-        width: 18px !important;
-        height: 18px !important;
-        mask: none !important;
-    }
-
-    .app-menu__current-app-glyph {
-        background-color: var(--tr-accent-on) !important;
-    }
-
-    .app-menu__current-app-icon {
-        width: 18px !important;
-        height: 18px !important;
-        filter: var(--tr-accent-flip) !important;
-        mask: none !important;
-    }
-
-    .app-menu__current-app-cog {
-        color: var(--tr-accent-on);
-        mask: none !important;
-    }
-
-    .app-menu__current-app-name {
-        font-weight: 600 !important;
-        letter-spacing: -0.01em !important;
-    }
-}
+/* Nextcloud 34 and 35: the popover --------------------------------------------- */
 
 .app-menu__popover-base {
-    --border-radius-large: var(--tr-radius-card);
-    --border-radius-element: var(--tr-radius-card);
-
-    .v-popper__inner {
-        background-color: var(--tr-material) !important;
-        background-image: var(--tr-sheen) !important;
-        -webkit-backdrop-filter: var(--tr-material-filter);
-        backdrop-filter: var(--tr-material-filter);
-    }
+    --border-radius-large: var(--ic-r-lg);
+    --border-radius-element: var(--ic-r-lg);
 }
 
 .app-menu__popover {
     background-color: transparent !important;
 }
 
-// Grid entries: squircle tiles in the app's colour, icon flipped dark on the
-// light colours, a little lift on hover, the press shrinks to 0.97.
 .app-item {
-    border-radius: var(--tr-radius-xl) !important;
-    transition: background-color var(--tr-dur-fade) var(--tr-ease-soft);
+    border-radius: var(--ic-r-lg) !important;
+    transition: background-color var(--ic-dur-micro) var(--ic-ease);
 
     &:hover,
     &:focus-visible {
-        background-color: rgba(255, 255, 255, 0.08) !important;
-    }
-
-    &__circle {
-        border-radius: 12px !important;
-        background-color: var(--tr-app, var(--tr-accent)) !important;
-        background-image: linear-gradient(
-            to bottom,
-            rgba(255, 255, 255, 0.22) 0%,
-            rgba(255, 255, 255, 0) 50%
-        ) !important;
-        box-shadow:
-            inset 0 1px 0 rgba(255, 255, 255, 0.25),
-            0 4px 10px color-mix(in srgb, var(--tr-app, var(--tr-accent)) 35%, transparent) !important;
-        transition: transform var(--tr-dur-control) var(--tr-ease-soft);
-    }
-
-    &:hover &__circle,
-    &:focus-visible &__circle {
-        transform: translateY(-2px);
-    }
-
-    &:active &__circle {
-        transform: scale(var(--tr-press-scale));
-        transition-duration: var(--tr-dur-press);
-    }
-
-    &__icon {
-        filter: var(--tr-app-flip, var(--tr-accent-flip)) !important;
-        mask: none !important;
-    }
-
-    &--active &__circle {
-        box-shadow:
-            inset 0 1px 0 rgba(255, 255, 255, 0.25),
-            0 0 0 2px var(--tr-surface),
-            0 0 0 4px var(--tr-app, var(--tr-accent)) !important;
-    }
-
-    &--outlined &__circle {
-        background: transparent !important;
-        box-shadow: inset 0 0 0 1.5px var(--tr-border-strong) !important;
-    }
-
-    &--outlined &__icon {
-        filter: none !important;
-    }
-
-    &__unread {
-        background-color: var(--tr-pink) !important;
-        border-color: var(--tr-surface) !important;
+        background-color: transparent !important;
     }
 
     &__label {
-        color: var(--tr-ink) !important;
+        color: var(--ic-mute) !important;
+        font-size: 12px !important;
+        transition: color var(--ic-dur-micro) var(--ic-ease);
+    }
+
+    &:hover &__label,
+    &:focus-visible &__label,
+    &--active &__label {
+        color: var(--ic-hi) !important;
+    }
+
+    &--active &__label {
+        font-weight: 600 !important;
+    }
+
+    &__unread {
+        background-color: var(--ic-magenta) !important;
+        border-color: var(--ic-float) !important;
     }
 }
 
-/* Nextcloud 35: app icons and quick-create actions ------------------------------ */
-
-// Grid entries: squircle tiles in the app's colour with a glossy top, a soft
-// coloured shadow, and the glyph in the colour that reads on the tile.
-.app-item .app-icon:not(.app-icon--outlined) {
-    border-radius: 30% !important;
-    background-color: var(--tr-app, var(--tr-accent)) !important;
-    background-image:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.26) 0%, rgba(255, 255, 255, 0) 55%),
-        linear-gradient(0deg, rgba(0, 0, 0, 0.12) 0%, rgba(0, 0, 0, 0) 45%) !important;
+// The key: ink with a hairline edge and a faint top light, the glyph in the light.
+%ic-app-key {
+    border-radius: 14px !important;
+    background-color: var(--ic-raised) !important;
+    background-image: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.05),
+        rgba(255, 255, 255, 0) 60%
+    ) !important;
     box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.32),
-        0 8px 18px -6px color-mix(in srgb, var(--tr-app, var(--tr-accent)) 70%, transparent) !important;
-    transform: translateY(var(--tr-lift, 0)) scale(var(--app-icon-scale, 1)) !important;
-    transition: transform var(--tr-dur-control) var(--tr-ease-soft) !important;
+        inset 0 0 0 1px var(--ic-line-strong),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
+    transition:
+        box-shadow var(--ic-dur-micro) var(--ic-ease),
+        background-color var(--ic-dur-micro) var(--ic-ease) !important;
+}
+
+%ic-app-key-hover {
+    box-shadow:
+        inset 0 0 0 1px rgba(var(--ic-splash-rgb), 0.55),
+        0 0 22px -6px rgba(var(--ic-splash-rgb), 0.55) !important;
+}
+
+%ic-app-key-lit {
+    background-color: var(--ic-splash) !important;
+    background-image: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.3),
+        rgba(255, 255, 255, 0) 60%
+    ) !important;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.4),
+        0 6px 22px -6px rgba(var(--ic-splash-rgb), 0.75) !important;
+}
+
+// Nextcloud 35: .app-icon with a masked .app-icon__img.
+.app-item .app-icon:not(.app-icon--outlined) {
+    @extend %ic-app-key;
+
+    transform: scale(var(--app-icon-scale, 1)) !important;
 
     .app-icon__img {
-        background-color: var(--tr-app-on, #ffffff) !important;
+        background-color: var(--ic-splash-text) !important;
         background-image: none !important;
     }
 }
 
-.app-item:hover,
-.app-item:focus-visible {
-    --tr-lift: -3px;
+.app-item:hover .app-icon:not(.app-icon--outlined),
+.app-item:focus-visible .app-icon:not(.app-icon--outlined) {
+    @extend %ic-app-key-hover;
 }
 
 .app-item--active .app-icon:not(.app-icon--outlined) {
-    box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.32),
-        0 0 0 2px var(--tr-inset),
-        0 0 0 4px var(--tr-app, var(--tr-accent)),
-        0 10px 22px -6px color-mix(in srgb, var(--tr-app, var(--tr-accent)) 75%, transparent) !important;
+    @extend %ic-app-key-lit;
+
+    .app-icon__img {
+        background-color: var(--ic-on-splash) !important;
+    }
 }
 
 .app-item .app-icon--outlined {
-    border-radius: 30% !important;
-    box-shadow: inset 0 0 0 1.5px var(--tr-border-strong) !important;
+    border-radius: 14px !important;
+    box-shadow: none !important;
+    outline: 1px dashed var(--ic-edge);
+    outline-offset: -1px;
 
     .app-icon__img {
-        background-color: var(--tr-ink-soft) !important;
+        background-color: var(--ic-mute) !important;
     }
+}
+
+// Nextcloud 34: .app-item__circle with an image icon.
+.app-item__circle {
+    @extend %ic-app-key;
+}
+
+.app-item:hover .app-item__circle,
+.app-item:focus-visible .app-item__circle {
+    @extend %ic-app-key-hover;
+}
+
+.app-item--active .app-item__circle {
+    @extend %ic-app-key-lit;
+}
+
+.app-item__icon {
+    filter: none !important;
+    mask: none !important;
+}
+
+.app-item--active .app-item__icon {
+    filter: invert(100%) !important;
+}
+
+.app-item--outlined .app-item__circle {
+    background: transparent !important;
+    box-shadow: none !important;
+    outline: 1px dashed var(--ic-edge);
+    outline-offset: -1px;
 }
 
 .app-item--compact:hover,
 .app-item--compact:focus-visible {
-    background-color: rgba(255, 255, 255, 0.08) !important;
+    background-color: var(--ic-fill) !important;
 }
 
-// Quick-create row (text document, spreadsheet, …): the app colours stay, the
-// row gets a hairline and the entries lift like the app tiles.
+// Quick-create row (text document, spreadsheet, …): the file-type colours stay.
 .app-menu-actions {
-    border-top: 1px solid color-mix(in srgb, var(--tr-border) 70%, transparent) !important;
+    background-color: transparent !important;
+    border-top: 1px solid var(--ic-line) !important;
 }
 
-.app-action-icon {
-    transform: translateY(var(--tr-lift, 0)) scale(var(--app-icon-scale, 1)) !important;
-    transition: transform var(--tr-dur-control) var(--tr-ease-soft) !important;
-    filter: drop-shadow(0 4px 8px rgba(6, 9, 28, 0.35));
-
-    &__indicator {
-        border-color: var(--tr-inset) !important;
-    }
+.app-action-icon__indicator {
+    border-color: var(--ic-float) !important;
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .app-menu-entry .app-menu-icon::before,
-    .app-item__circle,
     .app-item .app-icon,
-    .app-action-icon {
+    .app-item__circle {
         transition: none !important;
     }
 }

@@ -90,73 +90,127 @@ table tr.mouseOver td {
     background-color: unset !important;
 }
 
-/* Files list (Nextcloud 28+): a Trumpf list ------------------------------------ */
+/* Files list (Nextcloud 28+): a calm list with mono meta ------------------------ */
 
-// Column heads read like section headers: sentence case, 13 px medium, soft.
+// Column heads are InkCurity labels: mono, uppercase, wide.
+.files-list__thead,
+.files-list__thead-overlay {
+    background-color: var(--ic-deep) !important;
+}
+
 .files-list__thead {
-    background-color: var(--tr-surface) !important;
-
     .files-list__column,
     .files-list__column-sort-button,
     .files-list__column-sort-button-text,
     .files-list__row-head {
-        color: var(--tr-ink-soft);
-        font-size: 13px;
-        font-weight: 500;
+        color: var(--ic-mute) !important;
+        font-family: var(--ic-font-mono) !important;
+        font-size: 11px !important;
+        font-weight: 500 !important;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+    }
+
+    // Narrow columns: tighter keys, the sort arrow only where it sorts.
+    .files-list__column-sort-button {
+        padding-inline: 6px !important;
+
+        .button-vue__icon {
+            width: 18px !important;
+            min-width: 18px !important;
+        }
+
+        &:not(.files-list__column-sort-button--active) .button-vue__icon {
+            display: none !important;
+        }
     }
 
     .files-list__column-sort-button--active,
     .files-list__column-sort-button--active .files-list__column-sort-button-text {
-        color: var(--tr-accent-text) !important;
-        font-weight: 600;
+        color: var(--ic-splash-text) !important;
+    }
+
+    .files-list__column-sort-button-icon {
+        color: var(--ic-splash-text) !important;
     }
 }
 
 .files-list__row {
-    transition: background-color var(--tr-dur-release) var(--tr-ease-soft);
+    transition: background-color var(--ic-dur-micro) var(--ic-ease);
 
     &:hover,
     &:focus-within {
-        background-color: rgba(255, 255, 255, 0.05) !important;
+        background-color: var(--ic-fill) !important;
     }
 
     &:active {
-        background-color: rgba(255, 255, 255, 0.1) !important;
+        background-color: var(--ic-fill-strong) !important;
         transition-duration: 0ms;
     }
 
+    // Nextcloud 35 marks a selected row only with its checkbox.
     &--active,
     &--dragover,
-    &[data-cy-files-list-row-selected="true"] {
-        background-color: color-mix(in srgb, var(--tr-accent) 18%, transparent) !important;
+    &[data-cy-files-list-row-selected="true"],
+    &:has(.files-list__row-checkbox .checkbox-radio-switch--checked) {
+        background-color: var(--ic-wash) !important;
     }
 }
 
 .files-list__row td,
-.files-list__row-head {
-    border-color: color-mix(in srgb, var(--tr-border) 60%, transparent) !important;
+.files-list__row-head,
+.files-list__thead th,
+.files-list__tfoot td {
+    border-color: var(--ic-line) !important;
 }
 
+.files-list__row-name-text {
+    color: var(--ic-fg);
+}
+
+.files-list__row-name-ext {
+    color: var(--ic-mute) !important;
+}
+
+// Size and date: mono numerals, quiet.
 .files-list__row-size,
-.files-list__row-mtime {
-    color: var(--tr-ink-soft) !important;
+.files-list__row-mtime,
+.files-list__row-column-custom {
+    color: var(--ic-mute) !important;
+    font-family: var(--ic-font-mono);
+    font-size: 12px;
+    letter-spacing: -0.01em;
 }
 
-// Favourites in gold: the medal colour, not a warning.
+// Favourites in gold.
 .files-list__row-icon-favorite {
-    color: var(--tr-gold) !important;
+    color: var(--ic-gold) !important;
 }
 
 .files-list__row-icon-preview {
-    border-radius: var(--tr-radius-tile);
+    border-radius: 6px;
 }
 
-.files-list__tfoot td {
-    color: var(--tr-ink-soft);
+.files-list__tfoot td,
+.files-list__tfoot .files-list__row-name {
+    color: var(--ic-mute) !important;
+    font-family: var(--ic-font-mono);
+    font-size: 12px;
 }
 
-// The "new" button and the filter strip read like Trumpf chips.
+.files-list__row-actions .button-vue,
+.files-list__row-sharing-icon {
+    color: var(--ic-mute) !important;
+}
+
+// Filter strip: quiet keys.
 .files-list__filters .button-vue,
-.files-list__header .button-vue--secondary {
-    font-size: 13px;
+.files-list__header .button-vue--tertiary {
+    color: var(--ic-fg) !important;
+}
+
+// The rich workspace (Readme.md above the list) sits on the panel, not on a card.
+#rich-workspace .text-editor__wrapper,
+.files-list__before #rich-workspace {
+    background: transparent !important;
 }

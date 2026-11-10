@@ -18,7 +18,7 @@ $breezedarkIcon = static function (string $name): string {
 		'sparkles' => '<path d="M12 3 13.9 8.1 19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9Z"/><path d="M19 15v4"/><path d="M17 17h4"/>',
 	];
 
-	return '<svg class="tr-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" '
+	return '<svg class="ic-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" '
 		. 'stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">'
 		. ($paths[$name] ?? '') . '</svg>';
 };

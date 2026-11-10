@@ -1,6 +1,6 @@
 <?php
 /**
- * InkCurity Dark theme for Nextcloud — admin settings, a Trumpf hub
+ * InkCurity Dark theme for Nextcloud — admin settings
  *
  * @copyright Copyright (C) 2020  Magnus Walbeck <mw@mwalbeck.org>
  * @copyright Copyright (C) 2026 inkcurity.net
@@ -30,7 +30,7 @@ require __DIR__ . '/_icons.php';
 
 <div
     id="breezedark"
-    class="breezedark-admin section tr-hub"
+    class="breezedark-admin section ic-hub"
     data-settings-url="<?php p($settingsUrl); ?>"
     data-custom-styling-url="<?php p($customStylingUrl); ?>"
     data-saved-label="<?php p($l->t('Saved')); ?>"
@@ -38,64 +38,63 @@ require __DIR__ . '/_icons.php';
     data-enabled-label="<?php p($l->t('InkCurity Dark is on for everyone')); ?>"
     data-reload-label="<?php p($l->t('Reload')); ?>"
 >
-    <div class="tr-hero">
-        <span class="tr-hero__mark tr-hero__mark--a" aria-hidden="true">▌//</span>
-        <span class="tr-hero__mark tr-hero__mark--b" aria-hidden="true">█▮</span>
-        <div class="tr-hero__head">
-            <img class="tr-hero__icon" src="<?php p($appWebPath); ?>/img/inkcurity-logo.svg" alt="" width="52" height="52">
-            <div class="tr-hero__titles">
-                <h2 class="tr-hero__title"><?php p($l->t('InkCurity Dark')); ?></h2>
-                <p class="tr-hero__subtitle">v<?php p($appVersion); ?> · <?php p($l->t('Based on Breeze Dark')); ?></p>
+    <div class="ic-hero">
+        <div class="ic-hero__head">
+            <img class="ic-hero__mark" src="<?php p($appWebPath); ?>/img/inkcurity-logo.svg" alt="" width="52" height="52">
+            <div class="ic-hero__titles">
+                <h2 class="ic-hero__title"><?php p($l->t('InkCurity Dark')); ?><span class="ic-hero__cursor" aria-hidden="true">▌</span></h2>
+                <p class="ic-hero__meta">v<?php p($appVersion); ?> · <?php p($l->t('Based on Breeze Dark')); ?></p>
             </div>
         </div>
-        <label class="tr-hero__row" for="breezedark-theme-enabled">
-            <span class="tr-hero__disc"><?php print_unescaped($breezedarkIcon('users')); ?></span>
-            <span class="tr-hero__who">
-                <span class="tr-hero__name"><?php p($l->t('Enforce InkCurity Dark theme use globally')); ?></span>
-                <span class="tr-hero__handle"><?php p($l->t('Everyone sees the theme and cannot switch it off')); ?></span>
+        <p class="ic-hero__bars" aria-hidden="true"><span>████</span> <span>██</span> <span>███████</span> <span>█</span> <span>█████</span></p>
+        <label class="ic-hero__row" for="breezedark-theme-enabled">
+            <span class="ic-tile ic-tile--lit"><?php print_unescaped($breezedarkIcon('users')); ?></span>
+            <span class="ic-row__text">
+                <span class="ic-row__title"><?php p($l->t('Enforce InkCurity Dark theme use globally')); ?></span>
+                <span class="ic-row__subtitle"><?php p($l->t('Everyone sees the theme and cannot switch it off')); ?></span>
             </span>
-            <input type="checkbox" role="switch" class="tr-switch tr-switch--glass" id="breezedark-theme-enabled" <?php p($themeEnforced ? 'checked' : ''); ?>>
+            <input type="checkbox" role="switch" class="ic-switch" id="breezedark-theme-enabled" <?php p($themeEnforced ? 'checked' : ''); ?>>
         </label>
     </div>
 
-    <h3 class="tr-section__title"><?php p($l->t('Activation')); ?></h3>
-    <ul class="tr-section__group">
+    <h3 class="ic-section__title"><?php p($l->t('Activation')); ?></h3>
+    <ul class="ic-section__group">
         <li>
-            <label class="tr-row" for="breezedark-automatic-activation-enabled">
-                <span class="tr-tile"><?php print_unescaped($breezedarkIcon('monitor')); ?></span>
-                <span class="tr-row__text">
-                    <span class="tr-row__title"><?php p($l->t('Follow the system setting by default')); ?></span>
-                    <span class="tr-row__subtitle" data-tr-when-locked="<?php p($l->t('Needs the theme enforced for everyone')); ?>" data-tr-when-open="<?php p($l->t('For guests and users without a preference')); ?>">
+            <label class="ic-row" for="breezedark-automatic-activation-enabled">
+                <span class="ic-tile"><?php print_unescaped($breezedarkIcon('monitor')); ?></span>
+                <span class="ic-row__text">
+                    <span class="ic-row__title"><?php p($l->t('Follow the system setting by default')); ?></span>
+                    <span class="ic-row__subtitle" data-ic-when-locked="<?php p($l->t('Needs the theme enforced for everyone')); ?>" data-ic-when-open="<?php p($l->t('For guests and users without a preference')); ?>">
                         <?php p($themeEnforced ? $l->t('For guests and users without a preference') : $l->t('Needs the theme enforced for everyone')); ?>
                     </span>
                 </span>
-                <input type="checkbox" role="switch" class="tr-switch" id="breezedark-automatic-activation-enabled" <?php p($themeEnforced ? '' : 'disabled');?> <?php p($themeAutomaticActivation ? 'checked' : ''); ?>>
+                <input type="checkbox" role="switch" class="ic-switch" id="breezedark-automatic-activation-enabled" <?php p($themeEnforced ? '' : 'disabled');?> <?php p($themeAutomaticActivation ? 'checked' : ''); ?>>
             </label>
         </li>
         <li>
-            <label class="tr-row" for="breezedark-theme-login-page">
-                <span class="tr-tile"><?php print_unescaped($breezedarkIcon('log-in')); ?></span>
-                <span class="tr-row__text">
-                    <span class="tr-row__title"><?php p($l->t('Enable InkCurity Dark theme for the login page')); ?></span>
-                    <span class="tr-row__subtitle"><?php p($l->t('When enforced, or while a user with the theme logs in')); ?></span>
+            <label class="ic-row" for="breezedark-theme-login-page">
+                <span class="ic-tile"><?php print_unescaped($breezedarkIcon('log-in')); ?></span>
+                <span class="ic-row__text">
+                    <span class="ic-row__title"><?php p($l->t('Enable InkCurity Dark theme for the login page')); ?></span>
+                    <span class="ic-row__subtitle"><?php p($l->t('When enforced, or while a user with the theme logs in')); ?></span>
                 </span>
-                <input type="checkbox" role="switch" class="tr-switch" id="breezedark-theme-login-page" <?php p($themeLoginPage ? 'checked' : ''); ?>>
+                <input type="checkbox" role="switch" class="ic-switch" id="breezedark-theme-login-page" <?php p($themeLoginPage ? 'checked' : ''); ?>>
             </label>
         </li>
     </ul>
-    <p class="tr-section__foot"><?php p($l->t('Changes apply after a reload.')); ?></p>
+    <p class="ic-section__foot"><?php p($l->t('Changes apply after a reload.')); ?></p>
 
-    <h3 class="tr-section__title"><?php p($l->t('Custom Styling')); ?></h3>
-    <div class="tr-section__group tr-section__group--padded">
-        <label class="tr-field-label" for="breezedark-theme-custom-styling">
-            <span class="tr-tile"><?php print_unescaped($breezedarkIcon('code')); ?></span>
+    <h3 class="ic-section__title"><?php p($l->t('Custom Styling')); ?></h3>
+    <div class="ic-section__group ic-section__group--padded">
+        <label class="ic-field-label" for="breezedark-theme-custom-styling">
+            <span class="ic-tile"><?php print_unescaped($breezedarkIcon('code')); ?></span>
             <span><?php p($l->t('Plain CSS, applied whenever the theme is on')); ?></span>
         </label>
         <textarea id="breezedark-theme-custom-styling" class="breezedark-custom-styling" spellcheck="false" placeholder="<?php p($l->t('Insert custom styling here …')); ?>"><?php p($themeCustomStyling); ?></textarea>
-        <div class="tr-actions">
-            <button type="button" class="tr-button tr-button--filled" id="breezedark-theme-custom-styling-button"><?php p($l->t('Save')); ?></button>
+        <div class="ic-actions">
+            <button type="button" class="ic-button" id="breezedark-theme-custom-styling-button"><?php p($l->t('Save')); ?></button>
         </div>
     </div>
 
-    <p class="tr-signature">InkCurity Dark · v<?php p($appVersion); ?></p>
+    <p class="ic-signature">InkCurity Dark · v<?php p($appVersion); ?></p>
 </div>

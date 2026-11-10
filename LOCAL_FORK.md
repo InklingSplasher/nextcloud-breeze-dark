@@ -23,6 +23,13 @@ InkCurity Dark redesign builds on that port: the PHP integration is unchanged,
 the stylesheets were rewritten around `css/variables/_tokens.scss`. The visual
 regression matrix above applies to it as well.
 
+Release 35.3.0 was checked view by view on a Nextcloud 35.0.2 test instance
+(official Docker image, SQLite, Calendar, Contacts, Deck, Notes, Tasks and Talk
+from the app store) with screenshots from headless Chromium, desktop and phone
+width, and on Nextcloud 34.0.5 and 33.0.10 instances for the core views (login,
+dashboard, files, menus, settings and the theme's own settings page). The theme ships Geist, Space Grotesk and JetBrains Mono under the SIL Open
+Font License 1.1 in `fonts/`; keep the `OFL-*.txt` files next to the fonts.
+
 Nextcloud 34 compatibility is declared after updating the development API to
 OCP 34. Nextcloud 35 is declared because the theme runs on a 35 instance and its
 stylesheets cover the 35 app menu; repeat the matrix there as well. Repeat the visual regression matrix after the core upgrade because core

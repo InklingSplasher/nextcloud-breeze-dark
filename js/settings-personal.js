@@ -49,7 +49,7 @@ window.addEventListener("DOMContentLoaded", () => {
         theme_enabled: themeEnabled.checked ? "1" : "0",
         theme_automatic_activation_enabled: automaticActivation.checked ? "1" : "0",
     });
-    const queueSave = (celebrate) => {
+    const queueSave = (celebrateFrom) => {
         if (typeof root.dataset.settingsUrl !== "string" || root.dataset.settingsUrl === "") {
             notify({ message: root.dataset.errorLabel, error: true });
             return;
@@ -60,9 +60,9 @@ window.addEventListener("DOMContentLoaded", () => {
             .then(() => postBreezeDarkPersonalForm(root.dataset.settingsUrl, values()));
         saveQueue.then(
             () => {
-                if (celebrate) {
-                    // The reward follows the action: switching the theme on.
-                    ui()?.confetti();
+                if (celebrateFrom) {
+                    // The reward follows the action: one splash of ink from the switch.
+                    ui()?.splash(celebrateFrom);
                     notify({
                         message: root.dataset.enabledLabel,
                         actionLabel: root.dataset.reloadLabel,
@@ -77,6 +77,8 @@ window.addEventListener("DOMContentLoaded", () => {
         );
     };
 
-    themeEnabled.addEventListener("change", () => queueSave(themeEnabled.checked));
-    automaticActivation.addEventListener("change", () => queueSave(false));
+    themeEnabled.addEventListener("change", () =>
+        queueSave(themeEnabled.checked ? themeEnabled : null),
+    );
+    automaticActivation.addEventListener("change", () => queueSave(null));
 });

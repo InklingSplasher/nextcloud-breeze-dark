@@ -36,6 +36,8 @@ appstore: build
 	mkdir -p $(sign_directory)
 	rsync -a \
 	--exclude=".git" \
+	--exclude=".composer-cache" \
+	--exclude=".tools" \
 	--exclude=".github" \
 	--exclude=".tx" \
 	--exclude=".vscode" \
@@ -56,7 +58,7 @@ appstore: build
 	--exclude="package-lock.json" \
 	--exclude="package.json" \
 	--exclude="screenshot*" \
-	../$(app_name)/ $(sign_directory)/$(app_name)
+	$(CURDIR)/ $(sign_directory)/$(app_name)
 	@if [ -f $(cert_directory)/$(app_name).key ]; then \
 		echo "Signing app files…"; \
 		php ../occ integrity:sign-app \

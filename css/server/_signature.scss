@@ -1,35 +1,29 @@
 /***
- * InkCurity Dark — signatures, Trumpf edition
+ * InkCurity Dark — signatures
  *
- * The page carries a bloom in the colour of the open app, the content
- * container stands on it like the app column of a device, and every app
- * switch fades the new page in while it rises 8 px. The dashboard greeting is
- * a large title with the date as eyebrow. Nothing moves just for decoration.
+ * Ink with one bloom of light in the upper left and a barely-there grain.
+ * The panel catches a single scan of light along its top edge when a page
+ * opens, then rests. Titles are set in Space Grotesk, meta in mono. Nothing
+ * else moves for decoration.
  *
  * @copyright Copyright (c) 2026 inkcurity.net
  *
  * @license GNU AGPL version 3 or any later version, see COPYING file for more.
  */
 
-/* Backdrop: dusk with the app's bloom ----------------------------------------- */
+/* Backdrop: ink, one bloom, grain --------------------------------------------- */
 
-@mixin tr-backdrop {
-    background-color: var(--tr-page) !important;
+// Fractal noise, white at 50 %, laid over the ink at a few percent.
+$ic-noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+
+@mixin ic-backdrop {
+    background-color: var(--ic-void) !important;
     background-image:
+        radial-gradient(900px 600px at 4% -6%, rgba(var(--ic-splash-rgb), 0.15), transparent 62%),
         radial-gradient(
-            1100px 720px at 8% -12%,
-            color-mix(in srgb, var(--tr-accent) 34%, transparent),
+            760px 560px at 30% -22%,
+            rgba(var(--ic-electric-rgb), 0.18),
             transparent 64%
-        ),
-        radial-gradient(
-            760px 560px at 104% 108%,
-            color-mix(in srgb, var(--tr-pink) 16%, transparent),
-            transparent 62%
-        ),
-        radial-gradient(
-            600px 420px at 70% -20%,
-            color-mix(in srgb, var(--tr-accent) 14%, transparent),
-            transparent 60%
         ) !important;
     background-repeat: no-repeat !important;
     background-attachment: fixed !important;
@@ -39,89 +33,144 @@
 #body-user,
 #body-settings,
 #body-public {
-    @include tr-backdrop;
+    @include ic-backdrop;
+
+    // The grain sits under everything, over the ink only.
+    &::before {
+        content: "";
+        position: fixed;
+        z-index: -1;
+        inset: 0;
+        background-image: $ic-noise;
+        background-size: 200px 200px;
+        opacity: 0.025;
+        pointer-events: none;
+    }
 }
 
-/* The content container: the app column standing on the page ----------------- */
+/* The scan: one sweep of light along the top of the panel per page ---------------- */
 
-// Only the outermost container gets the frame. Some apps nest #content-vue in
-// #content; framing both drew a second box with bars at the right and bottom.
-body > #content,
-body > #content-vue {
-    box-shadow: var(--tr-shadow-frame);
+// js/breezedark.js sets .ic-scan once the page has loaded, so the light runs
+// over the finished page instead of the empty one.
+#body-user.ic-scan,
+#body-settings.ic-scan {
+    &::after {
+        content: "";
+        position: fixed;
+        z-index: 2000;
+        top: var(--header-height, 44px);
+        right: var(--body-container-margin);
+        left: var(--body-container-margin);
+        height: 1px;
+        background: linear-gradient(
+                90deg,
+                transparent 0%,
+                rgba(var(--ic-splash-rgb), 0) 30%,
+                rgba(var(--ic-splash-rgb), 0.9) 46%,
+                rgba(255, 61, 142, 0.85) 50%,
+                rgba(var(--ic-splash-rgb), 0.9) 54%,
+                rgba(var(--ic-splash-rgb), 0) 70%,
+                transparent 100%
+            )
+            no-repeat;
+        background-size: 50% 100%;
+        filter: drop-shadow(0 0 6px rgba(var(--ic-splash-rgb), 0.6));
+        opacity: 0;
+        pointer-events: none;
+        animation: ic-scan 1600ms cubic-bezier(0.65, 0, 0.35, 1) 80ms both;
+    }
 }
 
-// App switch = tab switch: the main pane fades in and rises 8 px. The
-// animation only fills backwards, so no transform stays on the element and
+@keyframes ic-scan {
+    0% {
+        opacity: 0;
+        background-position: -60% 0;
+    }
+
+    12% {
+        opacity: 1;
+    }
+
+    80% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        background-position: 160% 0;
+    }
+}
+
+/* App switch: the main pane fades in and rises 8 px ----------------------------- */
+
+// The animation only fills backwards, so no transform stays on the element and
 // fixed-position children keep their place once it has run.
 #app-content,
 #app-content-vue,
 #app-dashboard {
-    animation: tr-page-in var(--tr-dur-rise) var(--tr-ease-soft) backwards;
+    animation: ic-page-in var(--ic-dur-rise) var(--ic-ease-soft) backwards;
 }
 
-@keyframes tr-page-in {
+@keyframes ic-page-in {
     from {
         opacity: 0;
         transform: translateY(8px);
     }
 }
 
-/* Caret, selection, focus ------------------------------------------------------- */
+/* Caret, selection, focus, scrollbars --------------------------------------------- */
 
 input,
 textarea,
 [contenteditable="true"] {
-    caret-color: var(--tr-accent-text);
+    caret-color: var(--ic-splash);
+}
+
+::selection {
+    background-color: rgba(var(--ic-splash-rgb), 0.3);
+    color: var(--ic-hi);
 }
 
 :focus-visible {
-    outline-color: var(--tr-accent-text) !important;
+    outline-color: var(--ic-splash) !important;
 }
 
 * {
+    scrollbar-color: var(--ic-line-strong) transparent;
     scrollbar-width: thin;
 }
 
-/* Type: large titles, eyebrow, overline, signature line ------------------------ */
+/* Type: display titles, mono meta ---------------------------------------------------- */
 
-%tr-title {
-    font-weight: 700;
-    letter-spacing: -0.015em;
+%ic-display {
+    font-family: var(--ic-font-display) !important;
+    font-weight: 500 !important;
+    letter-spacing: -0.02em;
+    color: var(--ic-hi);
     text-wrap: balance;
-    hyphens: auto;
 }
 
-%tr-eyebrow {
-    display: block;
-    color: var(--tr-accent-text);
-    font-size: 13px;
-    font-weight: 600;
-    line-height: 18px;
-    letter-spacing: 0.06em;
+%ic-label {
+    font-family: var(--ic-font-mono) !important;
+    font-size: 11px !important;
+    font-weight: 500 !important;
+    line-height: 16px;
+    letter-spacing: 0.16em !important;
     text-transform: uppercase;
-}
-
-%tr-overline {
-    display: block;
-    color: var(--tr-ink-faint);
-    font-size: 11px;
-    font-weight: 700;
-    line-height: 13px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
+    color: var(--ic-mute) !important;
 }
 
 .settings-section__name,
 .settings-section__title,
 .section > h2,
+#app-content > .section > h2,
 .app-sidebar-header__mainname,
 .modal-header .modal-name,
 .modal-header__name,
 .dialog__name,
 .empty-content__name,
 .panel--header h2 {
-    @extend %tr-title;
+    @extend %ic-display;
 }
 
 // Numbers that change line up: sizes, dates, counters, quotas.
@@ -136,73 +185,61 @@ time {
     font-variant-numeric: tabular-nums;
 }
 
-// The dashboard greeting is the start page's large title; js/breezedark.js
-// writes today's date into data-tr-eyebrow, in the user's language.
-#app-dashboard > h2 {
-    @extend %tr-title;
-
-    // A little shine on the greeting: white into the accent into the logo pink.
-    background-image: linear-gradient(
-        100deg,
-        #ffffff 0%,
-        #ffffff 38%,
-        var(--tr-accent-text) 72%,
-        #f9a8d4 100%
-    );
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    font-size: 34px !important;
-    line-height: 41px !important;
-
-    &[data-tr-eyebrow]::before {
-        @extend %tr-eyebrow;
-
-        content: attr(data-tr-eyebrow);
-        margin-bottom: 4px;
-    }
-}
-
-/* Code: mono chips in the accent ---------------------------------------------- */
+/* Code: mono chips in the splash ----------------------------------------------------- */
 
 code,
 kbd,
 samp,
 pre {
-    font-family: var(--tr-font-mono);
+    font-family: var(--ic-font-mono) !important;
     font-variant-numeric: tabular-nums;
 }
 
 :not(pre) > code {
-    padding: 0.1em 0.4em;
-    border-radius: 6px;
-    background: color-mix(in srgb, var(--tr-accent) 16%, transparent);
-    color: var(--tr-accent-text);
+    padding: 0.12em 0.4em;
+    border: 1px solid rgba(var(--ic-splash-rgb), 0.18);
+    border-radius: 4px;
+    background: rgba(var(--ic-splash-rgb), 0.08);
+    color: var(--ic-splash-text);
+    font-size: 0.92em;
+}
+
+pre {
+    border: 1px solid var(--ic-line);
+    border-radius: var(--ic-r-md);
+    background: var(--ic-well);
 }
 
 kbd {
-    padding: 0.1em 0.45em;
-    border: 1px solid var(--tr-border-strong);
+    padding: 0.05em 0.45em;
+    border: 1px solid var(--ic-line-strong);
     border-bottom-width: 2px;
-    border-radius: 6px;
-    background: var(--tr-inset);
-    color: var(--tr-ink);
+    border-radius: var(--ic-r-sm);
+    background: var(--ic-raised);
+    color: var(--ic-fg);
+    font-size: 0.85em;
 }
 
 /* Reduced motion: system setting and Nextcloud's own switch ------------------ */
 
-@media (prefers-reduced-motion: reduce) {
+@mixin ic-still {
     #app-content,
     #app-content-vue,
     #app-dashboard {
         animation: none !important;
+    }
+
+    &::after {
+        display: none !important;
     }
 }
 
-[data-themes*="reduced-motion"] {
-    #app-content,
-    #app-content-vue,
-    #app-dashboard {
-        animation: none !important;
+@media (prefers-reduced-motion: reduce) {
+    body {
+        @include ic-still;
     }
+}
+
+body[data-themes*="reduced-motion"] {
+    @include ic-still;
 }
